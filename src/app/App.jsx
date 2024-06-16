@@ -5,6 +5,7 @@ import viteLogo from "/vite.svg";
 import SpecieDashboard from "../features/specie/SpecieDashboard";
 
 import "./App.css";
+import "../output.css";
 
 function App() {
   const [count, setCount] = useState(0);

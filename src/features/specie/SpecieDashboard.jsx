@@ -7,9 +7,9 @@ export default function SpecieDashboard() {
   const [selectedSpecie, setSelectedSpecie] = useState();
 
   return (
-    <>
+    <div id="specie-dashboard" className="flex flex-row">
       <SpecieList onSelectionChange={setSelectedSpecie}></SpecieList>
       <SpecieDetail specie={selectedSpecie}></SpecieDetail>
-    </>
+    </div>
   );
 }

@@ -39,18 +39,19 @@
 
 
 .specie {
-  background-color: white;
+  /*background-color: white;*/
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  padding:  10px 50px;
-  margin: 0 20px;;
+  padding:  10px 20px;
+  margin: 0 10px;;
 }
 .specie-header{
   padding: 1em 1em 0.7em 2em;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin: 0 0px;;
+  background-color: green;
 }
 .specie-actions{
   display: flex;
@@ -62,11 +63,11 @@
 }
 
 .selectable{
-  background-color: var(--bg-main);
+  /*background-color: var(--bg-main);*/
   transition: background-color 0.05s;
   transition: border 0.5s;
   border-radius: 10px;
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0);
   
 }
 
@@ -94,6 +95,7 @@ input{
   background-color: white;
 }
 
+/*
 main{
   background-color: white;
   flex: 1;
@@ -101,6 +103,7 @@ main{
   display: flex;
   flex-direction: row;
 }
+*/
 
 .ellipsis{
   white-space: nowrap;
@@ -115,6 +118,7 @@ main{
 }
 
 .specie-list{
+  background-color: red;
   flex: 1;
   width: 100%;
   min-width: 220px;

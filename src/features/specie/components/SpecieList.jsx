@@ -30,21 +30,20 @@ export default function SpecieList({ onSelectionChange }) {
   };
 
   return (
-    <>
-      <div className="">
-        <input className={""} type="text" placeholder="Buscar especies" />
-        <ul role="list" className="specie-list">
-          {species.map((specie, index) => (
-            <Specie
-              key={specie.id}
-              specie={specie}
-              index={index}
-              selectedIndex={selectedIndex}
-              onClick={handleSelection}
-            />
-          ))}
-        </ul>
-      </div>
-    </>
+    <ul
+      role="list"
+      className="border-solid border-2 border-black flex-1 bg-red-500 h-screen w-full overflow-auto"
+    >
+      SpecieList
+      {species.map((specie, index) => (
+        <Specie
+          key={specie.id}
+          specie={specie}
+          index={index}
+          selectedIndex={selectedIndex}
+          onClick={handleSelection}
+        />
+      ))}
+    </ul>
   );
 }
