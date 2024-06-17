@@ -40,12 +40,12 @@ export default function Specie({
         {!isListItem && (
           <div className="specie-actions">
             <Button
-              label="Editar"
+              label="Editar especie"
               variant={"secondary"}
               icon={<EditIcon></EditIcon>}
             ></Button>
             <Button
-              label="Eliminar"
+              label="Eliminar especie"
               variant={"secondary"}
               icon={<DeleteIcon />}
             ></Button>

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import SpecieDashboard from "../features/specie/SpecieDashboard";
+import NewSpecie from "../features/specie/NewSpecie";
 
 import "./App.css";
 
@@ -16,7 +16,14 @@ function App() {
         <input type="search" placeholder="Buscar especies" />
       </nav>
       <main>
+        <Routes>
+          {/* 
         <SpecieDashboard></SpecieDashboard>
+        
+        */}
+          <Route path={"/coleccion"} element={<SpecieDashboard />}></Route>
+          <Route path={"/nuevaEspecie"} element={<NewSpecie />}></Route>
+        </Routes>
       </main>
     </>
   );

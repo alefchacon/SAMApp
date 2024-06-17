@@ -13,33 +13,23 @@
 }
   
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
 .specie-view{
-  flex: 3;
-  background-color: blue;
+  flex: 2;
+
   display: flex;
   flex-direction: column;
-  width: 50%;
-  
+  width: 10%;
+  max-height: 100%;
   /*overflow: scroll;*/
 }
 
 
 
 .specie {
+  /*
   background-color: white;
+  */
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -48,7 +38,7 @@
   margin: 0 20px;;
 }
 .specie-header{
-  padding: 1em 1em 0.7em 2em;
+  padding: 0.5em 1em 0.7em 2em;
   font-size: 1.4rem;
   margin: 0 0px;;
 }
@@ -62,12 +52,16 @@
 }
 
 .selectable{
+  /*
   background-color: var(--bg-main);
+  */
   transition: background-color 0.05s;
   transition: border 0.5s;
   border-radius: 10px;
+
+  /*
   border: 1px solid white;
-  
+  */
 }
 
 .selectable:hover {
@@ -95,11 +89,18 @@ input{
 }
 
 main{
+  /*
   background-color: white;
+  */
+  
   flex: 1;
   width: 100%;
   display: flex;
   flex-direction: row;
+  border: 4px solid red;
+  
+  height: 100vh;
+  width: 100%;
 }
 
 .ellipsis{
@@ -115,11 +116,10 @@ main{
 }
 
 .specie-list{
-  flex: 1;
-  width: 100%;
-  min-width: 220px;
-  max-height: 80vh;
-  overflow: auto;
+  width: 20%;
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
@@ -127,10 +127,15 @@ main{
   font-size: 0.7em;
 }
 
+.icon{
+  size: 1px;
+}
+
 .sam-button{
-  padding: 0.5em 1.2em;
-  font-size: 0.9em;
-  font-weight: 500;
+  text-transform: uppercase;
+  padding: 5px 20px;
+  font-size: 0.7em;
+  font-weight: 400;
   font-family: inherit;
   display: flex;
   cursor: pointer;
@@ -138,9 +143,8 @@ main{
   border: none;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   transition: background-color 0.3s;
-  
 }
 .sam-button.primary{
   background-color: var(--uv-green);
@@ -156,10 +160,11 @@ main{
   background-color: rgb(181, 191, 201);
 }
 
-.specimens-actions{
+.action-bar{
   display: flex;
-  padding: 20px 50px;
+  padding: 0.3em 50px;
   justify-content: space-between;
+  background-color: green;
 }
 .specimens-actions > div:first-child{
   display: flex;
@@ -171,6 +176,7 @@ main{
   background-color: rgb(240, 240, 240);
   */
   overflow: auto;
+
 }
 table{
   width: 100%;
@@ -192,12 +198,11 @@ th,
 td,
 .td {
   box-shadow: inset 0 0 0 1px lightgray;
-  padding: 0.4rem;
+  padding: 0.1rem 1rem;
 }
 
 th,
 .th {
-  padding: 2px 4px;
   position: relative;
   font-weight: bold;
   text-align: center;
@@ -234,6 +239,32 @@ td,
   opacity: 1;
 }
 
+.table-actions-bottom{
+  background-color: green;
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  padding: 10px 50px;
+}
+.table-page-buttons{
+  display: flex;
+  flex-direction: row;
+}
+.table-page-buttons > button{
+  background-color: blue;
+}
+.table-page-label{
+  display: flex;
+  padding: 0 20px;
+}
+
+#page-size{
+  display: flex;
+  gap: 10px
+}
+
+
+
 @media (hover: hover) {
   .resizer {
     opacity: 0;
@@ -268,4 +299,15 @@ td,
 
 .read-the-docs {
   color: #888;
+}
+
+
+
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
+.align-items-center{
+  align-items: center;
 }

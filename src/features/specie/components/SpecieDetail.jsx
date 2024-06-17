@@ -32,19 +32,18 @@ export default function SpecieDetail({
   return (
     <div className="specie-view">
       <Specie isListItem={false} specie={specie}></Specie>
-      <div className="specimens-actions">
-        <div>
-          <Button
-            variant={"primary"}
-            label="Agregar espécimen"
-            icon={<AddIcon />}
-          ></Button>
-          <Button
-            variant={"secondary"}
-            label="Descargar .CSV"
-            icon={<DownloadIcon />}
-          ></Button>
-        </div>
+      <div className="test action-bar flex-row align-items-center">
+        <Button
+          variant={"primary"}
+          label="Agregar espécimen"
+          icon={<AddIcon />}
+        ></Button>
+        <Button
+          variant={"secondary"}
+          label="Descargar .CSV"
+          icon={<DownloadIcon />}
+        ></Button>
+        <div></div>
         <Button variant={"secondary"} label="Administrar columnas"></Button>
         <input
           type="search"
