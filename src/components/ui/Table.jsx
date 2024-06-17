@@ -151,6 +151,13 @@ export default function Table() {
     getData();
   }, []);
 
+  const handlePageSizeChange = (e) => {
+    setPagination({
+      pageIndex: pagination.pageIndex,
+      pageSize: e.target.value,
+    });
+  };
+
   const table = useReactTable({
     data: data,
     columns,
@@ -244,42 +251,57 @@ export default function Table() {
         </table>
       </div>
 
-      <div className="flex items-center gap-2">
-        <button
-          className="border rounded p-1"
-          onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<<"}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<"}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">"}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.lastPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">>"}
-        </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount().toLocaleString()}
-          </strong>
-        </span>
+      <div className="table-actions-bottom">
+        <div className="table-page-buttons">
+          <button
+            className="border rounded p-1"
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<<"}
+          </button>
+          <button
+            className="border rounded p-1"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<"}
+          </button>
+          <button
+            className="border rounded p-1"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">"}
+          </button>
+          <button
+            className="border rounded p-1"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {"Ultima"}
+          </button>
+          <span className="table-page-label">
+            <div>Página</div>
+            <strong>
+              {table.getState().pagination.pageIndex + 1} de{" "}
+              {table.getPageCount().toLocaleString()}
+            </strong>
+          </span>
+        </div>
+        <div id="page-size">
+          <label htmlFor="page-size-select">Registros por página:</label>
+          <select
+            name="pets"
+            id="page-size-select"
+            onChange={handlePageSizeChange}
+          >
+            <option value={pagination.pageSize}>{pagination.pageSize}</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
       </div>
     </>
   );
