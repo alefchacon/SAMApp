@@ -10,6 +10,10 @@
   --hover: rgba(26, 26, 26, 0.068);
   --selected: rgba(40, 173, 86, 0.1);
   --bg-main: white;
+  --error: red;
+  --bg-unfocused: rgba(240, 240, 240, 0.5);
+  --bg-hovered: rgba(255, 255, 255, 0.5);
+  --disabled: rgba(129, 129, 129, 0.63);
 }
   
 
@@ -76,18 +80,6 @@
 }
 
 
-input{
-  outline: none;
-  border: 1px solid red;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px;
-  width: 80%;
-  font-size: 1.1;
-  color: black;
-  background-color: white;
-}
-
 main{
   /*
   background-color: white;
@@ -95,12 +87,11 @@ main{
   
   flex: 1;
   width: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   border: 4px solid red;
   
-  height: 100vh;
-  width: 100%;
 }
 
 .ellipsis{
@@ -133,8 +124,8 @@ main{
 
 .sam-button{
   text-transform: uppercase;
-  padding: 5px 20px;
-  font-size: 0.7em;
+  padding: 10px 20px;
+  font-size: 1rem;
   font-weight: 400;
   font-family: inherit;
   display: flex;
@@ -158,6 +149,14 @@ main{
 }
 .sam-button.secondary:hover{
   background-color: rgb(181, 191, 201);
+}
+.sam-button.disabled{
+  background-color: var(--disabled);
+  cursor: not-allowed;
+}
+.sam-button.disabled:hover{
+  background-color: var(--disabled);
+  cursor: not-allowed;
 }
 
 .action-bar{
@@ -262,35 +261,85 @@ td,
   display: flex;
   gap: 10px
 }
-
-
-
-@media (hover: hover) {
-  .resizer {
-    opacity: 0;
-  }
-
-  *:hover > .resizer {
-    opacity: 1;
-  }
+form{
+  width: 47rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem;
+}
+.text-field
+{
+  
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
 }
 
-
-
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-field > input
+{
+  width: 100%;
+}
+.text-field.hasError{
+  box-shadow: inset 10px 0 0 var(--error);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.sam-text-field-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.sam-text-field-label{
+  font-weight: 600;
+  font-size: 1.3rem
+}
+.sam-text-field-helper-text{
+  overflow-wrap: break-word;
+}
+.sam-text-field-error-text{
+  color: var(--error);
+  font-weight: 500;
+  padding: 0.5rem 0 0.5rem 0;
+}
+
+label.hasError{
+  color: var(--error)
+}
+
+input{
+  max-width: 92%;
+  outline: none;
+  border: 2px solid var(--bg-unfocused);
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: black;
+  background-color: var(--bg-unfocused);
+  transition: border 0.3s;
+  transition: background-color 0.3s;
+}
+input:hover{
+  background-color: var(--bg-hovered);
+  transition: border 0.3s;
+}
+input:focus{
+  border: 2px solid var(--uv-green);
+  background-color: var(--bg-hovered);
+}
+input.hasError{
+  border: 2px solid var(--error);
+}
+
+.sam-message{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--error);
+  color: white;
 }
 
 .card {
