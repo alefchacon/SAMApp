@@ -5,6 +5,9 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
+
+  border: 2px solid blue;;
+
   --uv-green: rgba(40, 173, 86);
   --uv-green-hover: rgb(32, 143, 71);
   --hover: rgba(26, 26, 26, 0.068);
@@ -14,6 +17,8 @@
   --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(255, 255, 255, 0.5);
   --disabled: rgba(129, 129, 129, 0.63);
+
+  --dark: rgba(51, 51, 51, 0.87);
 }
   
 
@@ -127,7 +132,7 @@ main{
 
 .sam-button{
   text-transform: uppercase;
-  padding: 3px 20px;
+  padding: 10px 20px;
   font-size: 0.6rem;
   letter-spacing: 0.1rem;
   font-weight: 500;
@@ -268,6 +273,7 @@ td,
 
 .form-title{
   padding-left: 2rem;
+
 }
 
 .form-label{
@@ -289,6 +295,7 @@ td,
   background-color: white;
   border-radius: 20px;
   margin: 2rem;
+  padding: 20px 0;
 }
 
 form{
@@ -379,6 +386,40 @@ input.hasError{
   padding: 20px;
   background-color: var(--error);
   color: white;
+}
+
+.snackbar{
+  background-color: var(--dark);
+  color: white;
+  width: fit-content;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 5px 5px 5px 10px;
+  margin: 15px 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 80px;
+  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.562);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
+
+}
+
+.snackbar > div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.visible{
+  opacity: 1;
+  visibility: visible;
 }
 
 .card {

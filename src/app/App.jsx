@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
+import CheckIcon from "../components/icons/CheckIcon";
+import CloseIcon from "../components/icons/CloseIcon";
+
 import SpecieDashboard from "../features/specie/SpecieDashboard";
 import NewSpecie from "../features/specie/NewSpecie";
+import Button from "../components/ui/Button";
 
 import "./App.css";
 

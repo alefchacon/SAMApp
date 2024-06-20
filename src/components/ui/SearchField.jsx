@@ -49,14 +49,14 @@ export default function SearchField({
         )}
       </div>
       <Field
-        list="europe-countries"
+        list={`${id}-options`}
         type="text"
         id={id}
         name={name}
         className={`${errorClassName}`}
         maxLength={50}
       />
-      <datalist id="europe-countries">
+      <datalist id={`${id}-options`}>
         {options.map((option, index) => (
           <option key={index}>{option}</option>
         ))}
