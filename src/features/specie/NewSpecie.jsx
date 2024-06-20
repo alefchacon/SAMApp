@@ -13,6 +13,8 @@ import { specieSchema } from "./formikSchemas/specieSchema";
 
 import Snackbar from "../../components/ui/Snackbar";
 
+import { useSnackbar } from "../../components/contexts/SnackbarContext";
+
 import {
   mockGetSpecies,
   getOrdens,
@@ -23,7 +25,10 @@ import {
 } from "./api/getSpecies";
 
 export default function NewSpecie() {
-  const [showSnackbar, setShowSnackbar] = useState(false);
+  /*
+  const [showSnackbar, setShowSnackbar] = useState(false);*/
+
+  const { showSnackbar } = useSnackbar();
   /*
   
   the following should be temporal only:
@@ -53,7 +58,6 @@ export default function NewSpecie() {
 
   return (
     <div>
-      <Snackbar visible={showSnackbar}></Snackbar>
       <h2 className="form-title">Nueva especie</h2>
       <div className="sam-form">
         {isReady && (
@@ -122,7 +126,7 @@ export default function NewSpecie() {
                     variant={"secondary"}
                     label="Cancelar"
                     isDisabled={false}
-                    onClick={() => setShowSnackbar(!showSnackbar)}
+                    onClick={showSnackbar}
                     icon={<CloseIcon />}
                   ></Button>
                   <Button

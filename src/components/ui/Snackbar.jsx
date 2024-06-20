@@ -4,24 +4,25 @@ import Button from "./Button";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 
-export default function Snackbar({ visible = false }) {
-  const [isVisible, setIsVisible] = useState(visible);
+export default function Snackbar({ open = false, onClose, duration = 5000 }) {
+  const [isOpen, setIsOpen] = useState(open);
 
   useEffect(() => {
-    if (visible) {
-      setIsVisible(true);
+    if (open) {
+      setIsOpen(true);
       const timer = setTimeout(() => {
-        setIsVisible(false);
+        setIsOpen(false);
+        onClose();
       }, 5000);
 
       return () => clearTimeout(timer);
     } else {
-      setIsVisible(false);
+      setIsOpen(false);
     }
-  }, [visible]);
+  }, [open]);
 
   return (
-    <div className={`snackbar ${isVisible ? "visible" : ""}`}>
+    <div className={`snackbar ${isOpen ? "visible" : ""}`}>
       <div>
         <CheckIcon></CheckIcon>
         Especie agregada
