@@ -27,6 +27,7 @@ export default function Button({
         disabled={isDisabled}
         type={type}
         className={`sam-button ${variant} ${disabledClass}`}
+        onClick={onClick}
       >
         {icon}
         {label}
