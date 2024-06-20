@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
 import TextField from "../../components/ui/TextField";
+import SearchField from "../../components/ui/SearchField";
 import Button from "../../components/ui/Button";
 import Message from "../../components/ui/Message";
 
@@ -9,7 +10,8 @@ import { specieSchema } from "./formikSchemas/specieSchema";
 
 export default function NewSpecie() {
   return (
-    <>
+    <div className="sam-form">
+      <h2 className="form-title">Nueva especie</h2>
       <Formik
         validationSchema={specieSchema}
         initialValues={{
@@ -22,15 +24,14 @@ export default function NewSpecie() {
       >
         {({ errors, touched, isValid, dirty }) => (
           <Form action="">
-            <h2>Nueva especie</h2>
-            <TextField
+            <SearchField
               id="orden"
               name="orden"
               errorMessage={errors.orden}
               hasError={errors.orden && touched.orden}
+              required={false}
               label="Orden"
-              helperText="Debe escribirse sólo con letras del alfabeto. Ejemplo: Chiroptera"
-            ></TextField>
+            ></SearchField>
 
             <TextField
               id="family"
@@ -64,19 +65,24 @@ export default function NewSpecie() {
               label="Subespecie"
               helperText="Sólo se permiten letras y números"
             ></TextField>
-            <Message isVisible={!isValid}>
-              Hay Y campos con información errónea. Por favor corrígalos antes
-              de enviar la información.
-            </Message>
-            <Button
-              type="submit"
-              variant={"primary"}
-              label="Agregar especie"
-              isDisabled={!isValid || !dirty}
-            ></Button>
+
+            <div className="form-actions">
+              <Button
+                type="button"
+                variant={"secondary"}
+                label="Cancelar"
+                isDisabled={false}
+              ></Button>
+              <Button
+                type="submit"
+                variant={"primary"}
+                label="Agregar especie"
+                isDisabled={!isValid || !dirty}
+              ></Button>
+            </div>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }

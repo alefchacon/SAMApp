@@ -6,7 +6,7 @@ import EditIcon from "../icons/EditIcon";
 export default function Button({
   label = "label",
   type = "button",
-  isDisabled = true,
+  isDisabled = false,
   variant = "primary",
   icon = <EditIcon></EditIcon>,
   onClick,

@@ -11,12 +11,15 @@
   --selected: rgba(40, 173, 86, 0.1);
   --bg-main: white;
   --error: red;
-  --bg-unfocused: rgba(240, 240, 240, 0.5);
+  --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(255, 255, 255, 0.5);
   --disabled: rgba(129, 129, 129, 0.63);
 }
   
 
+#root{
+  
+}
 
 .specie-view{
   flex: 2;
@@ -124,13 +127,14 @@ main{
 
 .sam-button{
   text-transform: uppercase;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: 400;
+  padding: 3px 20px;
+  font-size: 0.6rem;
+  letter-spacing: 0.1rem;
+  font-weight: 500;
   font-family: inherit;
   display: flex;
   cursor: pointer;
-  border-radius: 100px;
+  border-radius: 5px;
   border: none;
   justify-content: center;
   align-items: center;
@@ -261,26 +265,58 @@ td,
   display: flex;
   gap: 10px
 }
+
+.form-title{
+  padding-left: 2rem;
+}
+
+.form-label{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form-label > p{
+
+  font-weight: 100;
+}
+.form-label > p.required{
+
+  font-weight: 400;
+}
+
+
+.sam-form{
+  background-color: white;
+  border-radius: 20px;
+  margin: 2rem;
+}
+
 form{
-  width: 47rem;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin: 2rem;
+  margin: 0 2rem 2rem 0;
 }
+
+.form-actions{
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
 .text-field
 {
-  
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-left: 50px;
+  padding-left: 2rem;
 }
+
 
 .text-field > input
 {
-  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 1;
 }
 .text-field.hasError{
   box-shadow: inset 10px 0 0 var(--error);
@@ -289,19 +325,22 @@ form{
 .sam-text-field-info{
   display: flex;
   flex-direction: column;
+  
 }
-
 .sam-text-field-label{
   font-weight: 600;
-  font-size: 1.3rem
+  font-size: 1.1rem;
+  overflow-wrap: break-word;
 }
 .sam-text-field-helper-text{
   overflow-wrap: break-word;
+  color:gray;
+  padding: 0 0 0.5rem 0;
 }
 .sam-text-field-error-text{
   color: var(--error);
   font-weight: 500;
-  padding: 0.5rem 0 0.5rem 0;
+  padding: 0 0 0.5rem 0;
 }
 
 label.hasError{
@@ -309,31 +348,31 @@ label.hasError{
 }
 
 input{
-  max-width: 92%;
+  width: 100%;
   outline: none;
   border: 2px solid var(--bg-unfocused);
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px;
   font-size: 0.9rem;
   color: black;
-  background-color: var(--bg-unfocused);
-  transition: border 0.3s;
-  transition: background-color 0.3s;
+  background-color: transparent;
 }
 input:hover{
-  background-color: var(--bg-hovered);
-  transition: border 0.3s;
+  border-color: var(--uv-green);
 }
 input:focus{
-  border: 2px solid var(--uv-green);
-  background-color: var(--bg-hovered);
+  outline-style: solid;
+  outline-color: var(--uv-green);
+  outline-width: 0.25rem;
+  outline-offset: -2px;
 }
 input.hasError{
   border: 2px solid var(--error);
 }
 
+
+
 .sam-message{
-  width: 100%;
   display: flex;
   gap: 20px;
   border-radius: 10px;
