@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { Field } from "formik";
 
-export default function TextField({
+export default function SearchField({
   label = "label",
-  helperText = "helperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperTexthelperText",
+  helperText = " ",
   required = true,
   errorMessage = "",
   name = ``,
   id = `${name}`,
   hasError = false,
   value = ``,
+  options = ["option 1", "option 2", "option 3"],
 }) {
   const [errorClassName, setErrorClassName] = useState();
 
@@ -47,14 +48,19 @@ export default function TextField({
           </div>
         )}
       </div>
-
       <Field
+        list="europe-countries"
+        type="text"
         id={id}
         name={name}
-        type="text"
         className={`${errorClassName}`}
         maxLength={50}
-      ></Field>
+      />
+      <datalist id="europe-countries">
+        {options.map((option, index) => (
+          <option key={index}>{option}</option>
+        ))}
+      </datalist>
     </div>
   );
 }
