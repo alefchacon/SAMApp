@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
-import TextField from "../../components/ui/TextField";
 import SearchField from "../../components/ui/SearchField";
 import Button from "../../components/ui/Button";
-import Message from "../../components/ui/Message";
 import AddIcon from "../../components/icons/AddIcon";
-import CheckIcon from "../../components/icons/CheckIcon";
 import CloseIcon from "../../components/icons/CloseIcon";
+
+import Specie from "./components/Specie";
 
 import { specieSchema } from "./formikSchemas/specieSchema";
 
-import Snackbar from "../../components/ui/Snackbar";
+import Modal from "../../components/ui/Modal";
 
 import { useSnackbar } from "../../components/contexts/SnackbarContext";
 
@@ -25,8 +24,7 @@ import {
 } from "./api/getSpecies";
 
 export default function NewSpecie() {
-  /*
-  const [showSnackbar, setShowSnackbar] = useState(false);*/
+  const [showModal, setShowModal] = useState(false);
 
   const { showSnackbar } = useSnackbar();
   /*
@@ -58,6 +56,7 @@ export default function NewSpecie() {
 
   return (
     <div>
+      <Modal></Modal>
       <h2 className="form-title">Nueva especie</h2>
       <div className="sam-form">
         {isReady && (

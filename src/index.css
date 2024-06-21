@@ -45,9 +45,9 @@ ul {
 
 nav{
   padding: 5px 40px;
-  /*
-  background-color: white;
-  */
+  
+  background-color: var(--uv-green);
+  
   color: black;
   display: flex;
   flex-direction: row;

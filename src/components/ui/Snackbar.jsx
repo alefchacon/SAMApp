@@ -13,7 +13,7 @@ export default function Snackbar({ open = false, onClose, duration = 5000 }) {
       const timer = setTimeout(() => {
         setIsOpen(false);
         onClose();
-      }, 5000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     } else {
@@ -22,7 +22,7 @@ export default function Snackbar({ open = false, onClose, duration = 5000 }) {
   }, [open]);
 
   return (
-    <div className={`snackbar ${isOpen ? "visible" : ""}`}>
+    <div className={`snackbar ${isOpen ? "visible" : "invisible"}`}>
       <div>
         <CheckIcon></CheckIcon>
         Especie agregada
