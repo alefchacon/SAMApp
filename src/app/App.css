@@ -404,22 +404,62 @@ input.hasError{
   gap: 80px;
   box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.562);
 
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
-
 }
 
 .snackbar > div{
   display: flex;
   align-items: center;
   gap: 10px;
+}
 
+.invisible{
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
 }
 
 .visible{
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
+}
+
+.modal-content{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: fit-content;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px 40px 20px 40px;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  right: 0;
+  bottom: 0;
+}
+
+.modal-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-body{
+  overflow: auto;
+  height: fit-content;
+}
+
+.modal-background{
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
 }
 
 .card {
