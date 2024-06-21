@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Button from "./Button";
 import Specie from "../../features/specie/components/Specie";
 
-export default function Modal({ open = true }) {
+export default function Modal({ open = true, onClose }) {
   const [isOpen, setIsOpen] = useState(open);
+
+  useEffect(() => {
+    if (open) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+      onClose();
+    }
+  });
+
   return (
     <div
       className={`modal-background  ${isOpen ? "visible" : "invisible"}`}
