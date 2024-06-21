@@ -1,19 +1,21 @@
+// LIBRARIES
 import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
+// CUSTOM COMPONENTS
 import SearchField from "../../components/ui/SearchField";
 import Button from "../../components/ui/Button";
 import AddIcon from "../../components/icons/AddIcon";
 import CloseIcon from "../../components/icons/CloseIcon";
 
-import Specie from "./components/Specie";
-
+// VALIDATION SCHEMAS
 import { specieSchema } from "./formikSchemas/specieSchema";
 
-import Modal from "../../components/ui/Modal";
-
+// CONTEXTS
 import { useSnackbar } from "../../components/contexts/SnackbarContext";
+import { specieSnackbarTypes } from "./contexts/specieSnackbarTypes";
 
+// API CALLS
 import {
   mockGetSpecies,
   getOrdens,
@@ -27,6 +29,15 @@ export default function NewSpecie() {
   const [showModal, setShowModal] = useState(false);
 
   const { showSnackbar } = useSnackbar();
+
+  const submitSpecie = () => {
+    if (!true) {
+      showSnackbar(specieSnackbarTypes.addSpecieSuccess);
+    } else {
+      showSnackbar(specieSnackbarTypes.addSpecieError);
+    }
+  };
+
   /*
   
   the following should be temporal only:
@@ -56,7 +67,6 @@ export default function NewSpecie() {
 
   return (
     <div>
-      <Modal></Modal>
       <h2 className="form-title">Nueva especie</h2>
       <div className="sam-form">
         {isReady && (
@@ -125,7 +135,7 @@ export default function NewSpecie() {
                     variant={"secondary"}
                     label="Cancelar"
                     isDisabled={false}
-                    onClick={showSnackbar}
+                    onClick={() => submitSpecie()}
                     icon={<CloseIcon />}
                   ></Button>
                   <Button

@@ -1,11 +1,26 @@
+//LIBRARIES
 import { useState, useEffect } from "react";
-
+import PropTypes from "prop-types";
+//CUSTOM COMPONENTS
 import Button from "./Button";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 
-export default function Snackbar({ open = false, onClose, duration = 5000 }) {
+//PROVIDERS
+import { useModal } from "../contexts/ModalContext";
+
+//JS
+import { snackbarTypes } from "../contexts/snackbarTypes";
+
+export default function Snackbar({
+  open = false,
+  onClose,
+  duration = 5000,
+  type,
+}) {
   const [isOpen, setIsOpen] = useState(open);
+
+  const { showModal } = useModal();
 
   useEffect(() => {
     if (open) {
@@ -25,9 +40,14 @@ export default function Snackbar({ open = false, onClose, duration = 5000 }) {
     <div className={`snackbar ${isOpen ? "visible" : "invisible"}`}>
       <div>
         <CheckIcon></CheckIcon>
-        Especie agregada
+        {type.message}
       </div>
-      <Button label="Deshacer" variant="text" icon={<CloseIcon />}></Button>
+      <Button
+        onClick={type.action}
+        label={type.labelAction}
+        variant="text"
+        icon={type.icon}
+      ></Button>
     </div>
   );
 }
