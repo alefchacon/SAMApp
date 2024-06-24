@@ -44,6 +44,8 @@ ul {
 }
 
 nav{
+  z-index: 10;
+  box-shadow:  2px 0 5px black;
   padding: 5px 40px;
   
   background-color: var(--uv-green);
@@ -56,15 +58,15 @@ nav{
 }
 
 input[type="search"]{
-  padding: 15px;
+  padding: 10px 30px;
   width: 40%;
   margin: 0;
-  border-radius: 100px;
-
+  border-radius: 10px;
+  
   border: none;
   color: inherit;
   transition: background-color 0.1s;
-  border: 1px solid rgba(0, 0, 0, 0.158)
+  border: 1px solid var(--uv-gray-dark);
 }
 input[type="search"]:hover{
   background-color: rgba(255, 255, 255, 0.3);

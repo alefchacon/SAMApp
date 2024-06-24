@@ -183,9 +183,10 @@ export default function Table() {
         >
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr className="selectable" key={headerGroup.id}>
+              <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
+                    className="selectable"
                     key={header.id}
                     {...{
                       colSpan: header.colSpan,

@@ -1,6 +1,12 @@
+// LIBRARIES
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+// CUSTOM COMPONENTS
 import Button from "../../../components/ui/Button";
+import LinkButton from "../../../components/ui/LinkButton";
+
+// ICONS
 import EditIcon from "../../../components/icons/EditIcon";
 import DeleteIcon from "../../../components/icons/DeleteIcon";
 
@@ -39,14 +45,16 @@ export default function Specie({
         </div>
         {!isListItem && (
           <div className="specie-actions">
-            <Button
+            <LinkButton
               label="Editar especie"
               variant={"secondary"}
               icon={<EditIcon></EditIcon>}
-            ></Button>
+              href={`/editarEspecie?id=${specie.id}`}
+            ></LinkButton>
+
             <Button
               label="Eliminar especie"
-              variant={"secondary"}
+              variant={"secondary danger"}
               icon={<DeleteIcon />}
             ></Button>
           </div>

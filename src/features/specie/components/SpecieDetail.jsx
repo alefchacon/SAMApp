@@ -1,10 +1,16 @@
+// LIBRARIES
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+// COMPONENTS
 import Button from "../../../components/ui/Button";
+import LinkButton from "../../../components/ui/LinkButton";
 import Specie from "./Specie";
 import Table from "../../../components/ui/Table";
 import AddIcon from "../../../components/icons/AddIcon";
 import DownloadIcon from "../../../components/icons/DownloadIcon";
 
+// API CALLS
 import { getSpecimens } from "../../specimens/api/GetSpecimens";
 
 export default function SpecieDetail({
@@ -33,11 +39,11 @@ export default function SpecieDetail({
     <div className="specie-view">
       <Specie isListItem={false} specie={specie}></Specie>
       <div className="test action-bar flex-row align-items-center">
-        <Button
+        <LinkButton
           variant={"primary"}
           label="Agregar espécimen"
           icon={<AddIcon />}
-        ></Button>
+        ></LinkButton>
         <Button
           variant={"secondary"}
           label="Descargar .CSV"

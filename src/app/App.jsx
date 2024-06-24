@@ -11,6 +11,12 @@ import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [selectedSpecie, setSelectedSpecie] = useState({});
+
+  const handleSelectedSpecieChange = async (newSelectedSpecie) => {
+    setSelectedSpecie(newSelectedSpecie);
+    console.log(newSelectedSpecie);
+  };
 
   return (
     <>
@@ -22,8 +28,17 @@ function App() {
         {/*SPECIE AND SPECIMEN*/}
 
         <Routes>
-          <Route path={"/coleccion"} element={<SpecieDashboard />}></Route>
+          <Route
+            path={"/coleccion"}
+            element={
+              <SpecieDashboard onSelectionChange={handleSelectedSpecieChange} />
+            }
+          ></Route>
           <Route path={"/nuevaEspecie"} element={<NewSpecie />}></Route>
+          <Route
+            path={"/editarEspecie"}
+            element={<NewSpecie specie={selectedSpecie} />}
+          ></Route>
         </Routes>
       </main>
     </>
