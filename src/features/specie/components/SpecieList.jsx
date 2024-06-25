@@ -37,6 +37,7 @@ export default function SpecieList({ onSelectionChange }) {
         <ul role="list" className="specie-list">
           <div className="action-bar">
             <LinkButton
+              variant="primary"
               label="Agregar especie"
               icon={<AddIcon />}
               href="/nuevaEspecie"

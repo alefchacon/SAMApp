@@ -19,7 +19,7 @@
   --hover: rgba(26, 26, 26, 0.068);
   --selected: rgba(40, 173, 86, 0.1);
   --bg-main: white;
-  --error: red;
+  --error: rgb(243, 16, 53);
   --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(255, 255, 255, 0.5);
   --disabled: rgba(129, 129, 129, 0.63);
@@ -62,8 +62,9 @@
   padding: 1em 1em 0.7em 60px;
   font-size: 1.4rem;
   margin: 0 0px;;
-  box-shadow: var(--box-shadow-lower-solid)
+
 }
+
 
 
 .specie-actions{
@@ -86,6 +87,10 @@
   /*
   border: 1px solid white;
   */
+}
+
+.rounded{
+  border-radius: 20px;
 }
 
 .selectable:hover {
@@ -128,14 +133,14 @@ main{
 
 .specie-list{
   padding-top: 20px;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   width: 30%;
   height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow:  1px 0 5px black;
+  box-shadow:  0.05px 0 3px black;
 }
 
 .test1{
@@ -173,13 +178,14 @@ main{
   transition: background-color 0.3s;
 }
 .sam-button.primary{
+  color: var(--bg-main);
   background-color: var(--uv-green);
 }
 .sam-button.primary:hover{
   background-color: var(--uv-green-hover);
 }
 .sam-button.secondary{
-  color: black;
+  color: rgb(57, 65, 73);
   background-color: var(--uv-gray-dark);
 }
 .sam-button.secondary:hover{
@@ -226,7 +232,7 @@ a.sam-button{
 table{
   width: 100%;
   overflow: scroll;
-  box-shadow: var(--box-shadow-lower-solid2)
+  box-shadow: var(--box-shadow-lower-solid2);
 }
 
 .tr {
@@ -254,7 +260,6 @@ thead{
 
 th,
 .th {
-  background-color: white;
   position: relative;
   font-weight: 500;
   text-align: start;
@@ -293,7 +298,6 @@ tr{
 }
 
 .table-actions-bottom{
-  background-color: green;
   display: flex;
   flex-direction: row;
   gap: 50px;
@@ -509,6 +513,22 @@ input.hasError{
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.tabs{
+  display: flex;
+  justify-content: start;
+}
+.tabs > li{
+  padding: 10px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+.tabs > li.selected-tab{
+  border-bottom: 3px solid var(--uv-green);
+  font-weight: 500;
+}
+
+
 .card {
   padding: 2em;
 }
@@ -526,4 +546,15 @@ input.hasError{
 }
 .align-items-center{
   align-items: center;
+}
+
+
+/*UTILITY*/
+
+.divider{
+  box-shadow: var(--box-shadow-lower-solid)
+}
+
+.bg-main{
+  background-color: var(--bg-main);
 }

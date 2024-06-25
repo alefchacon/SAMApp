@@ -255,32 +255,32 @@ export default function Table() {
       <div className="table-actions-bottom">
         <div className="table-page-buttons">
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.firstPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            {"<<"}
+            {"⇤"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
             {"<"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             {">"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.lastPage()}
             disabled={!table.getCanNextPage()}
           >
-            {"Ultima"}
+            {">>"}
           </button>
           <span className="table-page-label">
             <div>Página</div>

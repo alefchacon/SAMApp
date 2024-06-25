@@ -6,6 +6,9 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import SpecieDashboard from "../features/specie/SpecieDashboard";
 import NewSpecie from "../features/specie/NewSpecie";
 
+// COMPONENTS
+import Tabs from "../components/ui/Tabs";
+
 // CSS
 import "./App.css";
 
@@ -28,6 +31,19 @@ function App() {
         {/*SPECIE AND SPECIMEN*/}
 
         <Routes>
+          <Route
+            path="/Test"
+            element={
+              <Tabs>
+                <div label={"Especímenes"}>
+                  <p>This is the first tab</p>
+                </div>
+                <div label={"Métricas"}>
+                  <p>This is the oither one duh</p>
+                </div>
+              </Tabs>
+            }
+          ></Route>
           <Route
             path={"/coleccion"}
             element={
