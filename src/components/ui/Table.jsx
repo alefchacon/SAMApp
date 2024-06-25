@@ -183,9 +183,10 @@ export default function Table() {
         >
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr className="selectable" key={headerGroup.id}>
+              <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
+                    className="selectable"
                     key={header.id}
                     {...{
                       colSpan: header.colSpan,
@@ -232,20 +233,29 @@ export default function Table() {
 
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="selectable">
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    {...{
-                      style: {
-                        width: cell.column.getSize(),
-                      },
-                    }}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
+              <>
+                <div className="flex-row row-actions">
+                  <Button variant="secondary" label="editar"></Button>
+                  <Button variant="secondary danger" label="eliminar"></Button>
+                </div>
+                <tr key={row.id} className="selectable">
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      {...{
+                        style: {
+                          width: cell.column.getSize(),
+                        },
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              </>
             ))}
           </tbody>
         </table>
@@ -254,32 +264,32 @@ export default function Table() {
       <div className="table-actions-bottom">
         <div className="table-page-buttons">
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.firstPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            {"<<"}
+            {"⇤"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
             {"<"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             {">"}
           </button>
           <button
-            className="border rounded p-1"
+            className="sam-button secondary"
             onClick={() => table.lastPage()}
             disabled={!table.getCanNextPage()}
           >
-            {"Ultima"}
+            {">>"}
           </button>
           <span className="table-page-label">
             <div>Página</div>

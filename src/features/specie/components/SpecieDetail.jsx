@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+// LIBRARIES
+import { useState, useEffect, useRef } from "react";
+
+// COMPONENTS
 import Button from "../../../components/ui/Button";
+import LinkButton from "../../../components/ui/LinkButton";
 import Specie from "./Specie";
 import Table from "../../../components/ui/Table";
 import AddIcon from "../../../components/icons/AddIcon";
 import DownloadIcon from "../../../components/icons/DownloadIcon";
+import Tabs from "../../../components/ui/Tabs";
 
+// API CALLS
 import { getSpecimens } from "../../specimens/api/GetSpecimens";
 
 export default function SpecieDetail({
@@ -29,28 +35,57 @@ export default function SpecieDetail({
     //fetchData();
   }, [specie]);
 
+  const handleTabSelection = (e) => {
+    const selectedTab = e.target.closest("a");
+
+    if (!selectedTab) {
+      return;
+    }
+
+    console.log(selectedTab);
+    e.preventDefault();
+
+    const activePanelId = selectedTab.getAttribute("href");
+  };
+
+  const especimenesRef = useRef(null);
+  const metricasRef = useRef(null);
+
   return (
-    <div className="specie-view">
+    <div className="specie-view" ref={especimenesRef}>
       <Specie isListItem={false} specie={specie}></Specie>
-      <div className="test action-bar flex-row align-items-center">
-        <Button
-          variant={"primary"}
-          label="Agregar espécimen"
-          icon={<AddIcon />}
-        ></Button>
-        <Button
-          variant={"secondary"}
-          label="Descargar .CSV"
-          icon={<DownloadIcon />}
-        ></Button>
-        <div></div>
-        <Button variant={"secondary"} label="Administrar columnas"></Button>
-        <input
-          type="search"
-          placeholder="Buscar especies por ID, Estado, Colaborador, etc"
-        />
-      </div>
-      <Table></Table>
+
+      <Tabs className={"divider bg-main"}>
+        <div label={"Especímenes"}>
+          <div id="especimenes">
+            <div className="test action-bar flex-row align-items-center">
+              <LinkButton
+                variant={"primary"}
+                label="Agregar espécimen"
+                icon={<AddIcon />}
+              ></LinkButton>
+              <Button
+                variant={"secondary"}
+                label="Descargar .CSV"
+                icon={<DownloadIcon />}
+              ></Button>
+              <div></div>
+              <Button
+                variant={"secondary"}
+                label="Administrar columnas"
+              ></Button>
+              <input
+                type="search"
+                placeholder="Buscar especies por ID, Estado, Colaborador, etc"
+              />
+            </div>
+            <Table></Table>
+          </div>
+        </div>
+        <div label={"Métricas"}>
+          <p>Métricas</p>
+        </div>
+      </Tabs>
     </div>
   );
 }

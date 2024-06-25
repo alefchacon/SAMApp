@@ -1,25 +1,27 @@
-import { useState } from "react";
+// LIBRARIES
+import { useState, useEffect } from "react";
 import Specie from "./Specie";
 
-export default function SpecieList({ onSelectionChange }) {
-  const generateSpecies = () => {
-    let species = [];
-    for (let i = 0; i < 100; i++) {
-      species.push({
-        id: i,
-        scientific_name: `Nombre de la especie ${i}`,
-        orden: `Orden ${i}`,
-        family: `Familia ${i}`,
-        gender: `Género ${i}`,
-        epithet: `építeto ${i}`,
-        subspecie: `subespecie ${i}`,
-      });
-    }
-    return species;
-  };
+import LinkButton from "../../../components/ui/LinkButton";
 
-  const species = generateSpecies();
+import AddIcon from "../../../components/icons/AddIcon";
+
+// API CALLS
+import { mockGetSpecies } from "../api/getSpecies";
+
+export default function SpecieList({ onSelectionChange }) {
+  const [species, setSpecies] = useState([]);
+  const [isReady, setIsReady] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    const getData = async () => {
+      const species = await mockGetSpecies();
+      setSpecies(species);
+    };
+    getData();
+    setIsReady(true);
+  }, []);
 
   const handleSelection = (newSelectedIndex) => {
     setSelectedIndex(newSelectedIndex);
@@ -31,17 +33,28 @@ export default function SpecieList({ onSelectionChange }) {
 
   return (
     <>
-      <ul role="list" className="specie-list">
-        {species.map((specie, index) => (
-          <Specie
-            key={specie.id}
-            specie={specie}
-            index={index}
-            selectedIndex={selectedIndex}
-            onClick={handleSelection}
-          />
-        ))}
-      </ul>
+      {
+        <ul role="list" className="specie-list">
+          <div className="action-bar">
+            <LinkButton
+              variant="primary"
+              label="Agregar especie"
+              icon={<AddIcon />}
+              href="/nuevaEspecie"
+            ></LinkButton>
+            <input type="text" placeholder="Buscar especie" />
+          </div>
+          {species.map((specie, index) => (
+            <Specie
+              key={specie.id}
+              specie={specie}
+              index={specie.id}
+              selectedIndex={selectedIndex}
+              onClick={handleSelection}
+            />
+          ))}
+        </ul>
+      }
     </>
   );
 }

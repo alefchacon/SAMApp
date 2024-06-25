@@ -25,9 +25,18 @@ import {
   getSubspecies,
 } from "./api/getSpecies";
 
-export default function NewSpecie() {
-  const [showModal, setShowModal] = useState(false);
+import { mockGetSpecie } from "./api/getSpecie";
 
+export default function NewSpecie({
+  specie = {
+    orden: "",
+    family: "",
+    gender: "",
+    epithet: "",
+    subspecie: "",
+  },
+}) {
+  const [showModal, setShowModal] = useState(false);
   const { showSnackbar } = useSnackbar();
 
   const submitSpecie = () => {
@@ -59,7 +68,14 @@ export default function NewSpecie() {
       setGenders(await getGenders());
       setEpithets(await getEpithets());
       setSubspecies(await getSubspecies());
+
+      const currentUrl = window.location.href;
+      const url = new URL(currentUrl);
+      const path = url.pathname;
+
+      console.log(specie);
     }
+
     fetchData();
 
     setIsReady(true);
@@ -73,11 +89,11 @@ export default function NewSpecie() {
           <Formik
             validationSchema={specieSchema}
             initialValues={{
-              orden: "",
-              family: "",
-              gender: "",
-              epithet: "",
-              subspecie: "",
+              orden: specie.orden,
+              family: specie.family,
+              gender: specie.gender,
+              epithet: specie.epithet,
+              subspecie: specie.subspecie,
             }}
           >
             {({ errors, touched, isValid, dirty }) => (
