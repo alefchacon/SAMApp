@@ -538,11 +538,23 @@ input.hasError{
 }
 
 
+.row-actions{
+  
+  position: absolute;
+  right: 0;
+  padding-right: 20px;
+  background-color: black;
+}
+
+tr:hover ~ .row-actions {
+  visibility: visible;
+}
 
 
 .flex-row{
   display: flex;
   flex-direction: row;
+  gap: 1rem;
 }
 .align-items-center{
   align-items: center;
@@ -558,3 +570,5 @@ input.hasError{
 .bg-main{
   background-color: var(--bg-main);
 }
+
+

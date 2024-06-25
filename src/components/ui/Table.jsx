@@ -233,20 +233,29 @@ export default function Table() {
 
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="selectable">
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    {...{
-                      style: {
-                        width: cell.column.getSize(),
-                      },
-                    }}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
+              <>
+                <div className="flex-row row-actions">
+                  <Button variant="secondary" label="editar"></Button>
+                  <Button variant="secondary danger" label="eliminar"></Button>
+                </div>
+                <tr key={row.id} className="selectable">
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      {...{
+                        style: {
+                          width: cell.column.getSize(),
+                        },
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              </>
             ))}
           </tbody>
         </table>
