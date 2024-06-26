@@ -80,20 +80,14 @@
 }
 
 .selectable{
-  /*
-  background-color: var(--bg-main);
-  */
   transition: background-color 0.05s;
   transition: border 0.5s;
   
 
-  /*
-  border: 1px solid white;
-  */
 }
 
 .rounded{
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .selectable:hover {
@@ -136,7 +130,6 @@ main{
 .specie-list{
   display: flex;
   align-self: stretch;
-  max-height: 90vh;
   z-index: 10;
   flex-direction: column;
 
@@ -247,9 +240,52 @@ a.sam-button{
 #especimenes{
   display: flex;
   flex-direction: column;
-  background-color: rgb(243, 175, 175);
+
   height: 100%;
   
+}
+
+.stepper-circle{
+  width: 2vw;
+  height: 2vw;
+  background-color: none;
+  border: 1px solid var(--uv-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--uv-green);
+}
+
+.stepper-circle.selected{
+  background-color: var(--uv-green);
+  color: var(--bg-main);
+  font-weight: 500;
+}
+
+.step > p.selected {
+  font-weight: 500;
+}
+
+.stepper-line{
+  border: 1px solid lightgray;
+  padding: 0 30px;
+}
+
+.stepper{
+  display: flex;
+  gap: 10px;
+}
+
+.step {
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.step-selected{
+
 }
 
 .table-wrapper{
@@ -556,7 +592,7 @@ input.hasError{
   justify-content: start;
 }
 .tabs > li{
-  padding: 10px 100px;
+  padding: 0.8vw 5vw;
   display: flex;
   flex-direction: row;
   justify-content: start;

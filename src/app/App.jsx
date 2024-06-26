@@ -7,7 +7,7 @@ import SpecieDashboard from "../features/specie/SpecieDashboard";
 import NewSpecie from "../features/specie/NewSpecie";
 
 // COMPONENTS
-import Tabs from "../components/ui/Tabs";
+import Stepper from "../components/ui/Stepper";
 
 // CSS
 import "./App.css";
@@ -34,23 +34,30 @@ function App() {
           <Route
             path="/Test"
             element={
-              <Tabs>
-                <div label={"Especímenes"}>
-                  <p>This is the first tab</p>
-                </div>
-                <div label={"Métricas"}>
-                  <p>This is the oither one duh</p>
-                </div>
-              </Tabs>
+              <div className="stepper-step">
+                <button>asdf</button>
+                <Stepper>
+                  <div label={"Especímenes"}>
+                    <p>This is the first tab</p>
+                  </div>
+                  <div label={"Métricas"}>
+                    <p>This is the oither one duh</p>
+                  </div>
+                  <div label={"Métricas"}>
+                    <p>This is the oither one duh</p>
+                  </div>
+                </Stepper>
+              </div>
             }
           ></Route>
+
           <Route
             path={"/coleccion"}
             element={
               <SpecieDashboard onSelectionChange={handleSelectedSpecieChange} />
             }
           ></Route>
-          <Route path={"/nuevaEspecie"} element={<NewSpecie />}></Route>
+          <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>
           <Route
             path={"/editarEspecie"}
             element={<NewSpecie specie={selectedSpecie} />}

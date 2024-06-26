@@ -13,6 +13,7 @@ export default function SpecieDashboard({ onSelectionChange }) {
 
   return (
     <>
+      <SpecieList onSelectionChange={handleSelectedSpecieChange}></SpecieList>
       <SpecieDetail specie={selectedSpecie}></SpecieDetail>
     </>
   );

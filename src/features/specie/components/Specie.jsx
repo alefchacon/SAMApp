@@ -30,8 +30,6 @@ export default function Specie({
   return (
     <>
       <li
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         className={`specie ${isListItem ? "selectable" : "specie-header"} ${
           selectedIndex === index ? "selected" : ""
         }`}

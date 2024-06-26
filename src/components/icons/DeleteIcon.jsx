@@ -1,3 +1,3 @@
 export default function DeleteIcon() {
-  return <span className="material-symbols-sharp">delete</span>;
+  return <span class="material-symbols-outlined">delete</span>;
 }
