@@ -1,3 +1,4 @@
+// LIBRARIES
 import { useEffect, useState } from "react";
 import {
   useReactTable,
@@ -6,8 +7,16 @@ import {
   createColumnHelper,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { getSpecimens } from "../../features/specimens/api/GetSpecimens";
+
+// COMPONENTS
 import Button from "./Button";
+
+// ICONS
+import DeleteIcon from "../icons/DeleteIcon";
+
+// API CALLS
+import { getSpecimens } from "../../features/specimens/api/GetSpecimens";
+
 import "../../app/App.css";
 
 const columnHelper = createColumnHelper();
@@ -149,7 +158,7 @@ function TableRow({ rowData }) {
           variant="secondary"
           onClick={() => console.log(rowData.original)}
         ></Button>
-        <Button variant="secondary danger"></Button>
+        <Button variant="secondary danger" icon={<DeleteIcon />}></Button>
       </div>
       <tr
         key={rowData.id}

@@ -34,12 +34,12 @@ export default function SpecieList({ onSelectionChange }) {
   return (
     <>
       <div className="specie-list">
-        <div className="action-bar">
+        <div className="action-bar divider">
           <LinkButton
             variant="primary"
             label="Agregar especie"
             icon={<AddIcon />}
-            href="/nuevaEspecie"
+            href="/agregarEspecie"
           ></LinkButton>
           <input type="text" placeholder="Buscar especie" />
         </div>
