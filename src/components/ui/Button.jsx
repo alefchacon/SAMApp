@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import EditIcon from "../icons/EditIcon";
 
 export default function Button({
-  label = "label",
+  label = "",
   type = "button",
   isDisabled = false,
   variant = "primary",
@@ -26,7 +26,7 @@ export default function Button({
       <button
         disabled={isDisabled}
         type={type}
-        className={`sam-button ${variant} ${disabledClass}`}
+        className={`sam-button focusable ${variant} ${disabledClass}`}
         onClick={onClick}
       >
         {icon}

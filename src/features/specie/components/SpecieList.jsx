@@ -33,17 +33,17 @@ export default function SpecieList({ onSelectionChange }) {
 
   return (
     <>
-      {
-        <ul role="list" className="specie-list">
-          <div className="action-bar">
-            <LinkButton
-              variant="primary"
-              label="Agregar especie"
-              icon={<AddIcon />}
-              href="/nuevaEspecie"
-            ></LinkButton>
-            <input type="text" placeholder="Buscar especie" />
-          </div>
+      <div className="specie-list">
+        <div className="action-bar">
+          <LinkButton
+            variant="primary"
+            label="Agregar especie"
+            icon={<AddIcon />}
+            href="/nuevaEspecie"
+          ></LinkButton>
+          <input type="text" placeholder="Buscar especie" />
+        </div>
+        <ul role="list" className="specie-list-items">
           {species.map((specie, index) => (
             <Specie
               key={specie.id}
@@ -54,7 +54,7 @@ export default function SpecieList({ onSelectionChange }) {
             />
           ))}
         </ul>
-      }
+      </div>
     </>
   );
 }

@@ -8,7 +8,7 @@ export default function Tabs({ children, className }) {
   };
 
   return (
-    <div>
+    <div className="tabs-wrapper">
       <ul className={`tabs ${className}`}>
         {children.map((tab, index) => (
           <li
@@ -26,7 +26,9 @@ export default function Tabs({ children, className }) {
       {children.map((tab, index) => (
         <div
           key={index}
-          className={`${selectedIndex === index ? "visible" : "invisible"}`}
+          className={`${
+            selectedIndex === index ? "visible tab-panel " : "invisible"
+          }`}
         >
           {selectedIndex === index && tab.props.children}
         </div>
