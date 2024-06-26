@@ -133,6 +133,47 @@ const defaultColumns = [
   },*/
 ];
 
+function TableRow({ rowData }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <>
+      <div
+        className={`list-actions invisible ${
+          isHovered ? "visible" : "invisible"
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => isHovered && setIsHovered(false)}
+      >
+        <Button
+          variant="secondary"
+          onClick={() => console.log(rowData.original)}
+        ></Button>
+        <Button variant="secondary danger"></Button>
+      </div>
+      <tr
+        key={rowData.id}
+        className="selectable"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {rowData.getVisibleCells().map((cell) => (
+          <td
+            key={cell.id}
+            {...{
+              style: {
+                width: cell.column.getSize(),
+              },
+            }}
+          >
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </td>
+        ))}
+      </tr>
+    </>
+  );
+}
+
 export default function Table() {
   const [data, setData] = useState({});
   const [columns] = useState(() => [...defaultColumns]);
@@ -232,30 +273,8 @@ export default function Table() {
           </thead>
 
           <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <>
-                <div className="flex-row row-actions">
-                  <Button variant="secondary" label="editar"></Button>
-                  <Button variant="secondary danger" label="eliminar"></Button>
-                </div>
-                <tr key={row.id} className="selectable">
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      {...{
-                        style: {
-                          width: cell.column.getSize(),
-                        },
-                      }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              </>
+            {table.getRowModel().rows.map((row, index) => (
+              <TableRow key={index} rowData={row} />
             ))}
           </tbody>
         </table>

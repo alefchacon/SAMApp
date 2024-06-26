@@ -56,29 +56,26 @@ export default function SpecieDetail({
       <Specie isListItem={false} specie={specie}></Specie>
 
       <Tabs className={"divider bg-main"}>
-        <div label={"Especímenes"}>
+        <div label={"Especímenes"} className="flex-col">
+          <div className="test action-bar flex-row align-items-center">
+            <LinkButton
+              variant={"primary"}
+              label="Agregar espécimen"
+              icon={<AddIcon />}
+            ></LinkButton>
+            <Button
+              variant={"secondary"}
+              label="Descargar .CSV"
+              icon={<DownloadIcon />}
+            ></Button>
+            <div></div>
+            <Button variant={"secondary"} label="Administrar columnas"></Button>
+            <input
+              type="search"
+              placeholder="Buscar especies por ID, Estado, Colaborador, etc"
+            />
+          </div>
           <div id="especimenes">
-            <div className="test action-bar flex-row align-items-center">
-              <LinkButton
-                variant={"primary"}
-                label="Agregar espécimen"
-                icon={<AddIcon />}
-              ></LinkButton>
-              <Button
-                variant={"secondary"}
-                label="Descargar .CSV"
-                icon={<DownloadIcon />}
-              ></Button>
-              <div></div>
-              <Button
-                variant={"secondary"}
-                label="Administrar columnas"
-              ></Button>
-              <input
-                type="search"
-                placeholder="Buscar especies por ID, Estado, Colaborador, etc"
-              />
-            </div>
             <Table></Table>
           </div>
         </div>
