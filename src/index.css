@@ -57,24 +57,28 @@ nav{
   align-items: center;
 }
 
-input[type="search"]{
-  padding: 10px 30px;
-  width: 40%;
+input{
+  padding: 10px 10px;
+  width: 100%;
   margin: 0;
-  border-radius: 10px;
+  border-radius: 5px;
   
   border: none;
   color: inherit;
   transition: background-color 0.1s;
   border: 1px solid var(--uv-gray-dark);
 }
-input[type="search"]:hover{
+input:hover{
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(40, 173, 86, 0.5);
 }
-input[type="search"]:focus{
+input:focus{
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(40, 173, 86, 0.8);;
+}
+input:disabled{
+  cursor: not-allowed;
+  background-color: var(--uv-gray-dark);
 }
 
 th{

@@ -5,6 +5,9 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 // FEATURES
 import SpecieDashboard from "../features/specie/SpecieDashboard";
 import NewSpecie from "../features/specie/NewSpecie";
+import TextField from "../components/ui/TextField";
+import NewSpecimen from "../features/specimens/NewSpecimen/NewSpecimen";
+import FormTemplate from "../components/ui/FormTemplate";
 
 // COMPONENTS
 import Stepper from "../components/ui/Stepper";
@@ -25,7 +28,7 @@ function App() {
     <>
       <nav>
         NAVBAR
-        <input type="search" placeholder="Buscar especies" />
+        <TextField></TextField>
       </nav>
       <main>
         {/*SPECIE AND SPECIMEN*/}
@@ -34,20 +37,9 @@ function App() {
           <Route
             path="/Test"
             element={
-              <div className="stepper-step">
-                <button>asdf</button>
-                <Stepper>
-                  <div label={"Especímenes"}>
-                    <p>This is the first tab</p>
-                  </div>
-                  <div label={"Métricas"}>
-                    <p>This is the oither one duh</p>
-                  </div>
-                  <div label={"Métricas"}>
-                    <p>This is the oither one duh</p>
-                  </div>
-                </Stepper>
-              </div>
+              <FormTemplate title="Agregar espécimen">
+                <NewSpecimen></NewSpecimen>
+              </FormTemplate>
             }
           ></Route>
 
