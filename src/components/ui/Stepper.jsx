@@ -26,7 +26,6 @@ export default function Stepper({ children, className }) {
             <p className={`${selectedIndex === index ? "selected" : ""}`}>
               {tab.props.label}
             </p>
-            <p>asdf</p>
 
             {index < children.length - 1 && (
               <div className="stepper-line"></div>
