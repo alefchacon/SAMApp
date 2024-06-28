@@ -5,7 +5,15 @@ import { Field } from "formik";
 // COMPONENTS
 import Button from "./Button";
 
-export default function TextField({
+/*
+Este componente existe por que no se me ocurrió
+una implementación menos compleja, y por que
+no quería inyectar dicha complejidad al 
+TextField normal, que generalmente no la
+necesita.
+*/
+
+export default function LoadingTextField({
   label = null,
   helperText = null,
   placeholder = null,
@@ -14,13 +22,19 @@ export default function TextField({
   name = ``,
   id = `${name}`,
   hasError = false,
-  value = ``,
-  isFormik = false,
   disabled = false,
   type = "text",
+  onFieldValueChange,
 }) {
+  const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
+  };
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
 
   return (
@@ -57,25 +71,15 @@ export default function TextField({
       </div>
 
       <div className="flex-row">
-        {isFormik ? (
-          <Field
-            id={id}
-            name={name}
-            type={type}
-            className={`${getErrorClassName()}`}
-            maxLength={50}
-            disabled={disabled}
-          ></Field>
-        ) : (
-          <input
-            id={id}
-            name={name}
-            type={type}
-            className={`${getErrorClassName()}`}
-            maxLength={50}
-            disabled={disabled}
-          ></input>
-        )}
+        <input
+          id={id}
+          name={name}
+          type={type}
+          className={`${getErrorClassName()}`}
+          maxLength={50}
+          disabled={disabled}
+        ></input>
+        {isLoading && <Button></Button>}
       </div>
     </div>
   );

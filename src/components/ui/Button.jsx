@@ -15,18 +15,14 @@ export default function Button({
     variant: PropTypes.oneOf(["primary", "secondary", "text"]).isRequired,
   };
 
-  const [disabledClass, setDisabledClass] = useState();
-
-  useEffect(() => {
-    setDisabledClass(`${isDisabled ? "disabled" : ""}`);
-  }, [isDisabled]);
-
   return (
     <>
       <button
         disabled={isDisabled}
         type={type}
-        className={`sam-button focusable ${variant} ${disabledClass}`}
+        className={`sam-button focusable ${variant} ${
+          isDisabled ? "disabled" : ""
+        }`}
         onClick={onClick}
       >
         {icon}
