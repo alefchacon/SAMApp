@@ -428,7 +428,7 @@ tr{
 }
 
 form{
-  width: 50vw;
+  width: 30vw;
   display: flex;
   flex-direction: column;
   gap: 2rem;
