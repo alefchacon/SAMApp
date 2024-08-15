@@ -17,7 +17,7 @@ export const mockGetSpecies = async () => {
       family: "Phyllostomidae",
       gender: "Artibeus",
       epithet: "toltecus",
-      subspecie: " ",
+      subspecie: "",
       scientific_name: `Artibeus toltecus`,
     },
     {
@@ -134,7 +134,7 @@ export const mockGetSpecies = async () => {
       family: "Vespertilionidae",
       gender: "Myotis",
       epithet: "albescens",
-      subspecie: " ",
+      subspecie: "",
       scientific_name: `Myotis albescens`,
     },
   ];
@@ -142,22 +142,30 @@ export const mockGetSpecies = async () => {
   
   
   export const getOrdens = async () => {
-    const allOrdens =  mockGetSpecies.map(specie => specie["orden"]);
+    const species = await mockGetSpecies();
+    const allOrdens =  species.map(specie => specie["orden"]);
     return [...new Set(allOrdens)];
-}
+  }
 export const getFamilies = async () => {
-  const allFamilies =  mockGetSpecies.map(specie => specie["family"]);
+  const species = await mockGetSpecies();
+  const allFamilies =  species.map(specie => specie["family"]);
   return [...new Set(allFamilies)];
+
 }
 export const getGenders = async () => {
-  const allGenders =  mockGetSpecies.map(specie => specie["gender"]);
+  const species = await mockGetSpecies();
+  const allGenders =  species.map(specie => specie["gender"]);
   return [...new Set(allGenders)];
 }
 export const getEpithets = async () => {
-  const allEpithets =  mockGetSpecies.map(specie => specie["epithet"]);
+  const species = await mockGetSpecies();
+  const allEpithets =  species.map(specie => specie["epithet"]);
   return [...new Set(allEpithets)];
 }
 export const getSubspecies = async () => {
-  const allSubspecies =  mockGetSpecies.map(specie => specie["subspecie"]);
+  const species = await mockGetSpecies();
+  const allSubspecies =  
+    species.map(specie => specie["subspecie"])
+           .filter(subspecie => subspecie);
   return [...new Set(allSubspecies)];
 }

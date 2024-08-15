@@ -1,21 +1,23 @@
 
 
 #root {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 400;
   display: flex;
   flex-direction: column;
-
+  width: 100%;
   overflow: hidden;
+  /*border: 1px solid black;*/
+
   margin: 0px;
   padding: 0;
-  width: 100%;
   background-color: aqua;
 
   --uv-gray-dark: rgb(183, 192, 216);
-  --uv-gray: rgb(246, 248, 253);
+  --uv-gray: #f8f8f8;
   --uv-green: rgba(40, 173, 86);
   --uv-green-hover: rgb(32, 143, 71);
-  --box-shadow-lower-solid: inset 0px -1px 1px 0px rgba(215, 223, 245, 4);
+  --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
   --box-shadow-lower-solid2: inset 1px 1px 1px 0px rgba(215, 223, 245, 4);
 
   --hover: rgba(26, 26, 26, 0.068);
@@ -31,6 +33,9 @@
   background-color: var(--uv-gray);
 }
   
+h3{
+  margin: 0;
+}
 
 #root{
   
@@ -155,6 +160,8 @@ main{
 
 .caption{
   font-size: 0.7em;
+  font-weight: 100;
+  color: gray;
 }
 
 .icon{
@@ -162,8 +169,7 @@ main{
 }
 
 .sam-button{
-  text-transform: uppercase;
-  padding: 10px 20px;
+  padding: 5px 20px;
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
   font-weight: 500;
@@ -186,7 +192,9 @@ main{
 }
 .sam-button.secondary{
   color: rgb(57, 65, 73);
-  background-color: var(--uv-gray-dark);
+  background-color: var(--uv-gray);
+  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.75);
+
 }
 .sam-button.secondary:hover{
   background-color: rgb(181, 191, 201);
@@ -246,8 +254,8 @@ a.sam-button{
 }
 
 .stepper-circle{
-  width: 2vw;
-  height: 2vw;
+  width: 2rem;
+  height: 2rem;
   background-color: none;
   border: 1px solid var(--uv-green);
   border-radius: 50%;
@@ -270,6 +278,7 @@ a.sam-button{
 .stepper-line{
   border: 1px solid lightgray;
   padding: 0 30px;
+  width: 0px;
 }
 
 .stepper{
@@ -418,28 +427,24 @@ tr{
   background-color: white;
   border-radius: 20px;
   margin: 2rem;
-  padding: 40px 50px;
+  padding: 40px 50px 50px 40px;
+  max-width: fit-content;
 }
 
 .input-group{
   display: flex;
   flex-direction: column;
-  gap: 2vh
+  gap: 2rem;
+  padding: 30px;
 }
 
-form{
-  width: 30vw;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 0 2rem 2rem 0;
-}
+
 
 .form-actions{
   display: flex;
   justify-content: end;
   gap: 2rem;
-  padding-top: 2rem;
+  padding: 2rem 0;
 }
 
 .text-field
@@ -481,6 +486,13 @@ form{
 
 label.hasError{
   color: var(--error)
+}
+
+.searchbar{
+  border-radius: 50px 0 0 50px;
+}
+.searchbar-button{
+  border-radius: 0 50px 50px 0;
 }
 
 input{
@@ -555,6 +567,17 @@ input.hasError{
   visibility: visible;
   transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
 }
+.select-list{
+  max-height: 300px;
+  overflow: auto;
+}
+#stepper-vertical{
+  position: absolute;
+  display: inline-flex;
+  background-color: red;
+  flex-direction: column;
+  gap: 2rem;
+}
 
 .modal-content{
   position: fixed;
@@ -564,7 +587,7 @@ input.hasError{
   height: fit-content;
   background-color: white;
   border-radius: 5px;
-  padding: 5px 40px 20px 40px;
+  padding: 20px 40px;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -20%);
@@ -608,6 +631,12 @@ input.hasError{
   font-weight: 500;
 }
 
+.selectlist-item{
+  background-color: red;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .card {
   padding: 2em;
@@ -631,6 +660,35 @@ input.hasError{
   max-height: 40px;
 }
 
+input[type='checkbox']{
+  cursor: pointer;
+  
+  width: 40px;
+  padding: 10px;
+}
+
+.hoverable{
+  position: relative; /* This makes the child div position relative to this parent */
+
+  text-align: center;
+  display: flex;
+  justify-content: start;
+
+}
+
+.hoverable-actions{
+  display: none; /* Initially hide the top div */
+  position: absolute;
+  color: white;
+  text-align: center;
+  right: 0;
+  height: fit-content;
+  gap: 10px
+}
+
+.hoverable:hover .hoverable-actions{
+  display: flex; /* Show the top div when the lower div is hovered */
+}
 
 .row-actions{
   
@@ -650,6 +708,21 @@ input.hasError{
   flex-direction: row;
 }
 
+.gap-1rem{
+  gap: 1rem;
+}
+
+.p-1rem{
+  padding: 1rem;
+}
+.p-2px{
+  padding: 2px;
+}
+
+#stepper{
+  position: inherit;
+}
+
 .test4{
   
 }
@@ -657,18 +730,28 @@ input.hasError{
 .flex-col{
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 .align-items-center{
   align-items: center;
+  cursor: pointer;
 }
 
+.fullwidth{
+  width: 100%;
+}
+
+.align-items-center{
+  justify-content: center;
+}
+
+.pointer{
+  cursor: pointer;
+}
 
 /*UTILITY*/
 
 .divider{
   box-shadow: var(--box-shadow-lower-solid);
-  padding-bottom: 3vh;
 }
 
 .bg-main{
@@ -676,3 +759,44 @@ input.hasError{
 }
 
 
+
+.dropdown {
+  position: relative;
+  display: flex;
+}
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 40vh;
+  overflow: auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.landing-search{
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+  
+  padding: 5rem 20rem 10rem 20rem;
+}
+
+.landing-search> div:first-child{
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .sam-form {
+    
+    max-width: 100%;
+  }
+}

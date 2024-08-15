@@ -4,16 +4,16 @@ import { Formik, Form, useFormikContext } from "formik";
 import proj4 from "proj4";
 
 // CUSTOM COMPONENTS
-import TextField from "../../../components/ui/TextField";
-import LoadingTextField from "../../../components/ui/LoadingTextField";
-import Button from "../../../components/ui/Button";
+import TextField from "../../../../components/ui/TextField";
+import LoadingTextField from "../../../../components/ui/LoadingTextField";
+import Button from "../../../../components/ui/Button";
 
 // API CALLS
-import { getElevation } from "../api/external/getElevation";
-import { getLocation } from "../api/external/getLocation";
+import { getElevation } from "../../../../features/specimens/api/external/getElevation";
+import { getLocation } from "../../../../features/specimens/api/external/getLocation";
 
 //VALIDATION SCHEMAS
-import { specimenSchema } from "../../specie/formikSchemas/specimenSchema";
+import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 
 const CoordinateChangeListener = ({ coordinateX, coordinateY, onChange }) => {
   const { values, setFieldValue } = useFormikContext();

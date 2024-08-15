@@ -3,17 +3,18 @@ import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 
 // CUSTOM COMPONENTS
-import SearchField from "../../components/ui/SearchField";
-import Button from "../../components/ui/Button";
-import AddIcon from "../../components/icons/AddIcon";
-import CloseIcon from "../../components/icons/CloseIcon";
+import SearchField from "../../../components/ui/SearchField";
+import Button from "../../../components/ui/Button";
+import AddIcon from "../../../components/icons/AddIcon";
+import CloseIcon from "../../../components/icons/CloseIcon";
+import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS
-import { specieSchema } from "./formikSchemas/specieSchema";
+import { specieSchema } from "../../../features/specie/formikSchemas/specieSchema";
 
 // CONTEXTS
-import { useSnackbar } from "../../components/contexts/SnackbarContext";
-import { specieSnackbarTypes } from "./contexts/specieSnackbarTypes";
+import { useSnackbar } from "../../../components/contexts/SnackbarContext";
+import { specieSnackbarTypes } from "../../../features/specie/contexts/specieSnackbarTypes";
 
 // API CALLS
 import {
@@ -23,9 +24,9 @@ import {
   getGenders,
   getEpithets,
   getSubspecies,
-} from "./api/getSpecies";
+} from "../../../features/specie/api/getSpecies";
 
-import { mockGetSpecie } from "./api/getSpecie";
+import { mockGetSpecie } from "../../../features/specie/api/getSpecie";
 
 export default function NewSpecie({
   specie = {
@@ -36,10 +37,11 @@ export default function NewSpecie({
     subspecie: "",
   },
 }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const { showSnackbar } = useSnackbar();
 
   const submitSpecie = () => {
+    //console.log(values);
     if (!true) {
       showSnackbar(specieSnackbarTypes.addSpecieSuccess);
     } else {
@@ -64,6 +66,7 @@ export default function NewSpecie({
   useEffect(() => {
     async function fetchData() {
       setOrdens(await getOrdens());
+
       setFamilies(await getFamilies());
       setGenders(await getGenders());
       setEpithets(await getEpithets());
@@ -82,7 +85,7 @@ export default function NewSpecie({
   }, []);
 
   return (
-    <div>
+    <div className="fullwidth">
       <h2 className="form-title">Nueva especie</h2>
       <div className="sam-form">
         {isReady && (
@@ -95,55 +98,82 @@ export default function NewSpecie({
               epithet: specie.epithet,
               subspecie: specie.subspecie,
             }}
+            onSubmit={(v, a) => console.log(v)}
           >
-            {({ errors, touched, isValid, dirty }) => (
-              <Form action="">
-                <SearchField
+            {({
+              values,
+              errors,
+              touched,
+              isValid,
+              dirty,
+              setFieldValue,
+              handleChange,
+              handleBlur,
+            }) => (
+              <Form action="" autoComplete="false">
+                <Autocomplete
+                  required
                   id="orden"
                   name="orden"
+                  items={ordens}
+                  label="Orden"
                   errorMessage={errors.orden}
                   hasError={errors.orden && touched.orden}
-                  required={false}
-                  label="Orden"
-                  options={ordens}
-                ></SearchField>
-
-                <SearchField
+                  value={values.orden}
+                  setFieldValue={setFieldValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Autocomplete>
+                <Autocomplete
+                  required
                   id="family"
                   name="family"
+                  items={families}
+                  label="Familia"
                   errorMessage={errors.family}
                   hasError={errors.family && touched.family}
-                  label="Familia"
-                  helperText="Sólo se permiten letras y números"
-                  options={families}
-                ></SearchField>
-                <SearchField
+                  value={values.family}
+                  setFieldValue={setFieldValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Autocomplete>
+
+                <Autocomplete
                   id="gender"
                   name="gender"
-                  errorMessage={errors.gender}
-                  hasError={errors.gender && touched.gender}
                   label="Género"
-                  helperText="Sólo se permiten letras y números"
-                  options={genders}
-                ></SearchField>
-                <SearchField
+                  items={genders}
+                  value={values.gender}
+                  hasError={errors.gender && touched.gender}
+                  errorMessage={errors.gender}
+                  setFieldValue={setFieldValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Autocomplete>
+                <Autocomplete
                   id="epithet"
                   name="epithet"
-                  errorMessage={errors.epithet}
-                  hasError={errors.epithet && touched.epithet}
                   label="Epíteto"
-                  helperText="Sólo se permiten letras y números"
-                  options={epithets}
-                ></SearchField>
-                <SearchField
+                  items={epithets}
+                  value={values.epithet}
+                  hasError={errors.epithet && touched.epithet}
+                  errorMessage={errors.epithet}
+                  setFieldValue={setFieldValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Autocomplete>
+                <Autocomplete
                   id="subspecie"
                   name="subspecie"
-                  errorMessage={errors.subspecie}
+                  label="Epíteto"
+                  items={subspecies}
+                  value={values.subspecie}
                   hasError={errors.subspecie && touched.subspecie}
-                  label="Subespecie"
-                  helperText="Sólo se permiten letras y números"
-                  options={subspecies}
-                ></SearchField>
+                  errorMessage={errors.subspecie}
+                  setFieldValue={setFieldValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                ></Autocomplete>
 
                 <div className="form-actions">
                   <Button
@@ -158,7 +188,7 @@ export default function NewSpecie({
                     type="submit"
                     variant={"primary"}
                     label="Agregar especie"
-                    isDisabled={!isValid || !dirty}
+                    isDisabled={false}
                     icon={<AddIcon />}
                   ></Button>
                 </div>

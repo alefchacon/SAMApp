@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 // CUSTOM COMPONENTS
 import Button from "../../../components/ui/Button";
 import LinkButton from "../../../components/ui/LinkButton";
+import Modal from "../../../components/ui/modal/Modal";
+import ModalActions from "../../../components/ui/modal/ModalActions";
 
 // ICONS
 import EditIcon from "../../../components/icons/EditIcon";
@@ -24,15 +26,19 @@ export default function Specie({
   index = -1,
   isListItem = true,
   onClick,
+  onDelete,
+  onEdit,
 }) {
   const delimiter = ">";
 
   return (
-    <>
+    <div
+      className={`specie ${isListItem ? "selectable" : "specie-header"} ${
+        selectedIndex === index ? "selected" : ""
+      }`}
+    >
       <li
-        className={`specie ${isListItem ? "selectable" : "specie-header"} ${
-          selectedIndex === index ? "selected" : ""
-        }`}
+        className={""}
         onClick={isListItem ? () => onClick(index) : console.log}
       >
         <p className="bold ellipsis">{specie.scientific_name}</p>
@@ -43,23 +49,25 @@ export default function Specie({
             {specie.subspecie}
           </p>
         </div>
-        {!isListItem && (
-          <div className="specie-actions">
-            <LinkButton
-              label="Editar especie"
-              variant={"secondary"}
-              icon={<EditIcon></EditIcon>}
-              href={`/editarEspecie?id=${specie.id}`}
-            ></LinkButton>
-
-            <Button
-              label="Eliminar especie"
-              variant={"secondary danger"}
-              icon={<DeleteIcon />}
-            ></Button>
-          </div>
-        )}
       </li>
-    </>
+      {!isListItem && (
+        <div className="specie-actions">
+          <LinkButton
+            label="Editar especie"
+            variant={"secondary"}
+            icon={<EditIcon></EditIcon>}
+            href={`/editarEspecie?id=${specie.id}`}
+          ></LinkButton>
+
+          <Button
+            className={"secondary danger"}
+            iconType={"delete"}
+            onClick={() => console.log("sadf")}
+          >
+            Eliminar especie
+          </Button>
+        </div>
+      )}
+    </div>
   );
 }

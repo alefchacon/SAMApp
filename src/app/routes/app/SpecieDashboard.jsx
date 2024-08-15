@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import SpecieList from "../specie/components/SpecieList";
-import SpecieDetail from "../specie/components/SpecieDetail";
+import SpecieList from "../../../features/specie/components/SpecieList";
+import SpecieDetail from "../../../features/specie/components/SpecieDetail";
 
 export default function SpecieDashboard({ onSelectionChange }) {
   const [selectedSpecie, setSelectedSpecie] = useState();

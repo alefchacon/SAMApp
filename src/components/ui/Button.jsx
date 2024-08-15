@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 
 import EditIcon from "../icons/EditIcon";
+import { Icons } from "../icons/Icons";
+
+import PropTypes from "prop-types";
 
 export default function Button({
-  label = "",
+  children,
   type = "button",
   isDisabled = false,
-  variant = "primary",
-  icon = <EditIcon></EditIcon>,
+  className = "primary",
+  iconType = "add",
   onClick,
 }) {
   Button.propTypes = {
-    variant: PropTypes.oneOf(["primary", "secondary", "text"]).isRequired,
+    icon: PropTypes.oneOf(Object.entries(Icons)).isRequired,
   };
-
   return (
     <>
       <button
         disabled={isDisabled}
         type={type}
-        className={`sam-button focusable ${variant} ${
+        className={`sam-button focusable ${className} ${
           isDisabled ? "disabled" : ""
         }`}
         onClick={onClick}
       >
-        {icon}
-        {label}
+        {children}
+        <span className="material-symbols-outlined">{iconType}</span>
       </button>
     </>
   );

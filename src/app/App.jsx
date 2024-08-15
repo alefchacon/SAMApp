@@ -1,13 +1,26 @@
 //LIBRARIES
-import { useState } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 // FEATURES
-import SpecieDashboard from "../features/specie/SpecieDashboard";
-import NewSpecie from "../features/specie/NewSpecie";
+import SpecieDashboard from "./routes/app/SpecieDashboard";
+import NewSpecie from "./routes/app/NewSpecie";
 import TextField from "../components/ui/TextField";
-import NewSpecimen from "../features/specimens/NewSpecimen/NewSpecimen";
+import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
+import Landing from "./routes/app/Landing";
 import FormTemplate from "../components/ui/FormTemplate";
+
+import Searchbar from "../components/ui/Searchbar";
+
+import { mockGetSpecies } from "../features/specie/api/getSpecies";
+
+import Account from "../features/user/Account";
 
 // COMPONENTS
 import Stepper from "../components/ui/Stepper";
@@ -16,8 +29,26 @@ import Stepper from "../components/ui/Stepper";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const location = useLocation();
   const [selectedSpecie, setSelectedSpecie] = useState({});
+  const [species, setSpecies] = useState([]);
+
+  useEffect(() => {
+    async function fetchSpecies() {
+      const species = await mockGetSpecies();
+      console.log(species);
+      setSpecies(species);
+    }
+
+    fetchSpecies();
+  }, []);
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    if (pathname === "/agregarEspecie") {
+      console.log("YEAAA");
+    }
+  }, [location]);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     setSelectedSpecie(newSelectedSpecie);
@@ -28,12 +59,24 @@ function App() {
     <>
       <nav>
         NAVBAR
-        <TextField></TextField>
+        <div>Fichas fotográficas</div>
+        <div>Acerca de</div>
+        <Searchbar items={species}></Searchbar>
+        <Account></Account>
       </nav>
       <main>
         {/*SPECIE AND SPECIMEN*/}
 
         <Routes>
+          <Route
+            path={"/"}
+            element={
+              <Landing species={species}>
+                <Searchbar items={species}></Searchbar>
+              </Landing>
+            }
+          ></Route>
+
           <Route
             path="/Test"
             element={
@@ -44,7 +87,7 @@ function App() {
           ></Route>
 
           <Route
-            path={"/coleccion"}
+            path={"/coleccion?:name?/:catalog_id?"}
             element={
               <SpecieDashboard onSelectionChange={handleSelectedSpecieChange} />
             }

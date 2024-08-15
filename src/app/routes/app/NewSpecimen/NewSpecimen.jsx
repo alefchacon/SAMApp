@@ -3,10 +3,13 @@ import { useState } from "react";
 
 // FORMS
 import LocationForm from "./LocationForm";
+import ContributorsForm from "./ContributorsForm";
 
 // COMPONENTS
-import Stepper from "../../../components/ui/Stepper";
-import TextField from "../../../components/ui/TextField";
+import Stepper from "../../../../components/ui/Stepper";
+//import Stepper from "../../../../components/ui/Stepper";
+
+import TextField from "../../../../components/ui/TextField";
 
 export default function NewSpecimen({ specie_id }) {
   return (
@@ -22,7 +25,7 @@ export default function NewSpecimen({ specie_id }) {
           <LocationForm></LocationForm>
         </div>
         <div label={"Contribuidores"}>
-          <p>This is the oither one duh</p>
+          <ContributorsForm></ContributorsForm>
         </div>
       </Stepper>
     </div>

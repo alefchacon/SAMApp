@@ -1,5 +1,5 @@
 // LIBRARIES
-import { useState, useEffect } from "react";
+import { Children, useState, useEffect, cloneElement } from "react";
 import { Field } from "formik";
 
 // COMPONENTS
@@ -56,7 +56,7 @@ export default function TextField({
         )}
       </div>
 
-      <div className="flex-row">
+      <div className="flex-row p-2px">
         {isFormik ? (
           <Field
             id={id}
@@ -65,10 +65,12 @@ export default function TextField({
             className={`${getErrorClassName()}`}
             maxLength={50}
             disabled={disabled}
+            value={value}
           ></Field>
         ) : (
           <input
             id={id}
+            value={value}
             name={name}
             type={type}
             className={`${getErrorClassName()}`}

@@ -1,7 +1,6 @@
 import { Fragment, createContext, useContext, useState } from "react";
 
-import Modal from "../ui/Modal";
-
+import Modal from "../ui/modal/Modal";
 const ModalContext = createContext(null);
 
 export function useModal() {
@@ -14,7 +13,7 @@ export function ModalProvider({ children }) {
   const [handleUndo, setHandleUndo] = useState(null);
   const [content, setContent] = useState(null);
 
-  const showSnackbar = () => {
+  const showModal = () => {
     /*
     setMessage(message);
     setContent(content);
@@ -35,7 +34,7 @@ export function ModalProvider({ children }) {
   };
 
   return (
-    <ModalContext.Provider value={{ showSnackbar }}>
+    <ModalContext.Provider value={{ showModal }}>
       {children}
       <Modal open={open} onClose={handleClose} />
     </ModalContext.Provider>
