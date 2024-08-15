@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Stepper({ children, className }) {
+export default function StepperVertical({ children, className }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
@@ -8,12 +8,12 @@ export default function Stepper({ children, className }) {
   };
 
   return (
-    <div className="stepper-wrapper">
-      <ul className={`stepper`}>
+    <div className="stepper-vertical">
+      <ul id="stepper-vertical">
         {children.map((tab, index) => (
           <div
-            key={index}
-            className={` step selectable rounded `}
+            id="stepper"
+            className="flex-row gap-1rem selectable rounded p-1rem"
             onClick={() => handleSelectedTabChange(index)}
           >
             <div
@@ -26,10 +26,6 @@ export default function Stepper({ children, className }) {
             <p className={`${selectedIndex === index ? "selected" : ""}`}>
               {tab.props.label}
             </p>
-
-            {index < children.length - 1 && (
-              <div className="stepper-line"></div>
-            )}
           </div>
         ))}
       </ul>
