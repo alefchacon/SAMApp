@@ -58,18 +58,15 @@ export default function SpecieDetail({
       <Tabs className={"divider bg-main"}>
         <div label={"Especímenes"} className="flex-col">
           <div className="test action-bar flex-row align-items-center">
-            <LinkButton
-              variant={"primary"}
-              label="Agregar espécimen"
-              icon={<AddIcon />}
-            ></LinkButton>
+            <Button variant={"primary"}>Agregar espécimen</Button>
             <Button
-              variant={"secondary"}
+              className={"secondary"}
               label="Descargar .CSV"
-              icon={<DownloadIcon />}
-            ></Button>
+              iconType="download"
+            >
+              Descargar .CSV
+            </Button>
             <div></div>
-            <Button variant={"secondary"} label="Administrar columnas"></Button>
             <input
               type="search"
               placeholder="Buscar especies por ID, Estado, Colaborador, etc"

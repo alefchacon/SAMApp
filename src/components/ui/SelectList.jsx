@@ -6,6 +6,7 @@ import TextField from "./TextField";
 import ContributorModal from "../../app/routes/app/NewSpecimen/ContributorModal";
 import Modal from "./modal/Modal";
 import AddContributor from "../../features/contributors/AddContributor";
+import HoverableActions from "./HoverableActions";
 
 export default function SelectList({
   items = [
@@ -124,18 +125,9 @@ export default function SelectList({
                   checked={selectedItems.has(item.id)}
                 />
                 {item.name}
-
-                <div className="hoverable-actions ">
-                  <Button
-                    className="secondary"
-                    iconType="edit"
-                    onClick={() => handleEditSelection(item)}
-                  ></Button>
-                  <Button
-                    className="secondary danger"
-                    iconType="delete"
-                  ></Button>
-                </div>
+                <HoverableActions
+                  secondaryAction={() => handleEditSelection(item)}
+                />
               </li>
             </>
           ))}

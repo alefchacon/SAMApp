@@ -26,6 +26,7 @@ export default function Specie({
   index = -1,
   isListItem = true,
   onClick,
+  className,
   onDelete,
   onEdit,
 }) {
@@ -33,9 +34,9 @@ export default function Specie({
 
   return (
     <div
-      className={`specie ${isListItem ? "selectable" : "specie-header"} ${
-        selectedIndex === index ? "selected" : ""
-      }`}
+      className={`specie ${className} ${
+        isListItem ? "selectable" : "specie-header"
+      } ${selectedIndex === index ? "selected" : ""}`}
     >
       <li
         className={""}

@@ -65,6 +65,7 @@ h3{
   padding:  10px 20px;
   margin: 0 10px;;
   background-color: var(--bg-main);
+  width: 100%;
 }
 .specie-header{
   padding: 1em 1em 0.7em 60px;
@@ -186,6 +187,7 @@ main{
 .sam-button.primary{
   color: var(--bg-main);
   background-color: var(--uv-green);
+  box-shadow:  inset 0px 0px 0px 1px var(--uv-green-hover);
 }
 .sam-button.primary:hover{
   background-color: var(--uv-green-hover);
@@ -489,6 +491,7 @@ label.hasError{
 }
 
 .searchbar{
+  width: 100;
   border-radius: 50px 0 0 50px;
 }
 .searchbar-button{
@@ -668,26 +671,24 @@ input[type='checkbox']{
 }
 
 .hoverable{
-  position: relative; /* This makes the child div position relative to this parent */
-
+  position: relative; 
   text-align: center;
   display: flex;
   justify-content: start;
-
 }
 
 .hoverable-actions{
-  display: none; /* Initially hide the top div */
+  display: none;
   position: absolute;
   color: white;
   text-align: center;
   right: 0;
   height: fit-content;
-  gap: 10px
+  gap: 10px;
 }
 
-.hoverable:hover .hoverable-actions{
-  display: flex; /* Show the top div when the lower div is hovered */
+.hoverable:hover .hoverable-actions, .hoverable2:hover .hoverable-actions{
+  display: flex; 
 }
 
 .row-actions{
@@ -762,41 +763,115 @@ input[type='checkbox']{
 
 .dropdown {
   position: relative;
-  display: flex;
 }
 
+
+a{
+  text-decoration: none;
+}
 
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
   background-color: white;
   border: 1px solid #ccc;
   width: 100%;
+  min-width: 250px;
   max-height: 40vh;
   overflow: auto;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
+.w-100{
+  width: 100%;
+}
+
 .landing-search{
   display: flex;
   flex-direction: column;
   background-color: blue;
+  padding: 15% 20% 10rem 20%;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.33);
+}
+
+.color-white{
+  color: white;
+}
+
+nav{
+  z-index: 20;
+  box-shadow:  1px 0 1px black;
+  padding: 0px 30px;
   
-  padding: 5rem 20rem 10rem 20rem;
+  background-color: transparent;
+  
+  color: black;
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+}
+
+.landing{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .landing-search> div:first-child{
-  background-color: red;
-  display: flex;
-  flex-direction: row;
   align-items: center;
+  margin: 0;
 }
+.landing-search> div:first-child> span{
+  background-color: red;
+  width: 10%;
+  height: 100%;
+  display:flex;
+}
+.landing-system-name{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200;
+  margin: 0;
+  font-size: clamp(0.8rem, 1vw + 0.8rem, 3rem);
+  line-height: clamp(0.5rem, 1vw + 0.8rem, 1.8rem);
+}
+
+.landing-tag{
+  font-size: clamp(1.8rem, 2vw + 1rem, 5rem);
+  line-height: clamp(1.5rem, 2vw + 1rem, 3rem);
+  margin: 0;
+}
+
+
+.hide-if-desktop{
+  display: none;
+}
+
 
 @media only screen and (max-width: 900px) {
   .sam-form {
     
     max-width: 100%;
+  }
+
+  .hide-if-mobile{
+    display: none;
+  }
+  .flex-if-mobile{
+    display: flex;
+  }
+
+  .landing-search{
+    padding: 5%;
+    min-height: 80%;
+    justify-content: center;
   }
 }

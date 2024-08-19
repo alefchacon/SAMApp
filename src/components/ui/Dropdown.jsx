@@ -30,6 +30,7 @@ export default function Dropdown({ header, children }) {
       ref={dropdownRef}
     >
       {header}
+      <span class="material-symbols-outlined">arrow_drop_down</span>
 
       {isOpen && <div className="dropdown-menu rounded">{children}</div>}
     </div>

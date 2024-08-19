@@ -8,6 +8,7 @@ import LinkButton from "../../../components/ui/LinkButton";
 import Modal from "../../../components/ui/modal/Modal";
 import ModalActions from "../../../components/ui/modal/ModalActions";
 import AddIcon from "../../../components/icons/AddIcon";
+import HoverableActions from "../../../components/ui/HoverableActions";
 
 // API CALLS
 import { mockGetSpecies } from "../api/getSpecies";
@@ -72,13 +73,22 @@ export default function SpecieList({ onSelectionChange }) {
         </div>
         <ul role="list" className="specie-list-items">
           {species.map((specie, index) => (
-            <Specie
-              key={specie.id}
-              specie={specie}
-              index={specie.id}
-              selectedIndex={selectedIndex}
-              onClick={handleSelection}
-            />
+            <div
+              className={"hoverable"}
+              style={{
+                alignItems: "center",
+                textAlign: "left",
+              }}
+            >
+              <Specie
+                key={specie.id}
+                specie={specie}
+                index={specie.id}
+                selectedIndex={selectedIndex}
+                onClick={handleSelection}
+              />
+              <HoverableActions></HoverableActions>
+            </div>
           ))}
         </ul>
       </div>

@@ -3,23 +3,67 @@ import { useState, useEffect } from "react";
 import Searchbar from "../../../components/ui/Searchbar";
 import { mockGetSpecies } from "../../../features/specie/api/getSpecies";
 
+function SearchBanner({ children }) {
+  const imageUrl = `src/assets/images/${Math.floor(Math.random() * 6)}.webp`;
+
+  return (
+    <div
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+      className="landing-search"
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function Landing({ species, children }) {
   console.log(species);
   return (
-    <div className="flex-col">
-      <div className="landing-search">
-        <div className="flex-row">
-          asdf
-          <h2>
-            Sistema de Administración Mastozoológico de la Universidad
-            Veracruzana
+    <div className="landing flex-col w-100 color-white">
+      <SearchBanner>
+        <div className="flex-row gap-1rem p-1rem">
+          <span className="material-symbols-outlined">add</span>
+          <h2 className="landing-system-name">
+            Sistema de Administración Mastozoológico (SAM)
+            <br />
+            de la Universidad Veracruzana
           </h2>
         </div>
-        <h1>Acceso abierto a los datos de los mamíferos veracruzanos</h1>
+        <h1 className="p-1rem landing-tag">
+          Acceso abierto a los mamíferos veracruzanos
+        </h1>
 
         {children}
+      </SearchBanner>
+      <div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
+        <div>asdf</div>
       </div>
-      <div>asdf</div>
     </div>
   );
 }

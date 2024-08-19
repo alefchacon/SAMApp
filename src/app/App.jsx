@@ -14,8 +14,6 @@ import NewSpecie from "./routes/app/NewSpecie";
 import TextField from "../components/ui/TextField";
 import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
 import Landing from "./routes/app/Landing";
-import FormTemplate from "../components/ui/FormTemplate";
-
 import Searchbar from "../components/ui/Searchbar";
 
 import { mockGetSpecies } from "../features/specie/api/getSpecies";
@@ -23,7 +21,10 @@ import { mockGetSpecies } from "../features/specie/api/getSpecies";
 import Account from "../features/user/Account";
 
 // COMPONENTS
+import FormTemplate from "../components/ui/FormTemplate";
 import Stepper from "../components/ui/Stepper";
+import Dropdown from "../components/ui/Dropdown";
+import DropdownItem from "../components/ui/DropdownItem";
 
 // CSS
 import "./App.css";
@@ -58,11 +59,24 @@ function App() {
   return (
     <>
       <nav>
-        NAVBAR
-        <div>Fichas fotográficas</div>
-        <div>Acerca de</div>
+        <div className="flex-row gap-1rem align-items-center hide-if-mobile">
+          NAVBAR
+          <Link to={"/fichas"} className="selectable p-1rem rounded">
+            Fichas fotográficas
+          </Link>
+          <Dropdown header={"Acerca de"}>
+            <DropdownItem primary={"Instituto de Investigaciones Biológicas"} />
+            <DropdownItem primary={"Otra opción idk"} />
+          </Dropdown>
+        </div>
+        <span></span>
         <Searchbar items={species}></Searchbar>
-        <Account></Account>
+        <div className="hide-if-mobile">
+          <Account></Account>
+        </div>
+        <span className="material-symbols-outlined flex-if-mobile hide-if-desktop">
+          menu
+        </span>
       </nav>
       <main>
         {/*SPECIE AND SPECIMEN*/}

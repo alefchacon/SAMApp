@@ -10,6 +10,7 @@ import {
 
 // COMPONENTS
 import Button from "./Button";
+import HoverableActions from "./HoverableActions";
 
 // ICONS
 import DeleteIcon from "../icons/DeleteIcon";
@@ -143,29 +144,9 @@ const defaultColumns = [
 ];
 
 function TableRow({ rowData }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <>
-      <div
-        className={`list-actions invisible ${
-          isHovered ? "visible" : "invisible"
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => isHovered && setIsHovered(false)}
-      >
-        <Button
-          variant="secondary"
-          onClick={() => console.log(rowData.original)}
-        ></Button>
-        <Button variant="secondary danger" icon={<DeleteIcon />}></Button>
-      </div>
-      <tr
-        key={rowData.id}
-        className="selectable"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <tr key={rowData.id} className="selectable hoverable2">
         {rowData.getVisibleCells().map((cell) => (
           <td
             key={cell.id}
@@ -178,6 +159,7 @@ function TableRow({ rowData }) {
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
           </td>
         ))}
+        <HoverableActions></HoverableActions>
       </tr>
     </>
   );

@@ -7,14 +7,10 @@ import Specie from "../../features/specie/components/Specie";
 
 export default function Searchbar({
   items = ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
-  label = null,
-  required = false,
   name = ``,
   id = `${name}`,
-  hasError = false,
   disabled = false,
   type = "text",
-  onBlur,
 }) {
   const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -43,8 +39,12 @@ export default function Searchbar({
     }
   };
 
-  const filteredItems = items.filter((item) =>
-    item.scientific_name.toLowerCase().includes(filterText.toLowerCase())
+  const filteredItems = items.filter(
+    (item) =>
+      item.scientific_name.toLowerCase().includes(filterText.toLowerCase()) ||
+      item.orden.toLowerCase().includes(filterText.toLowerCase()) ||
+      item.subspecie.toLowerCase().includes(filterText.toLowerCase()) ||
+      item.family.toLowerCase().includes(filterText.toLowerCase())
   );
 
   useEffect(() => {
@@ -54,8 +54,28 @@ export default function Searchbar({
     };
   }, []);
 
+  const clearQuery = () => {
+    textFieldRef.current.value = "";
+    setFilterText("");
+  };
+
+  const handleKeyPress = (e) => {
+    switch (e.key) {
+      case "Enter":
+        alert("Enter");
+        break;
+      case "Escape":
+        clearQuery();
+        break;
+    }
+  };
+
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div
+      style={{ width: "100%" }}
+      className="dropdown p-1rem"
+      ref={dropdownRef}
+    >
       <div className="flex-row">
         <input
           id={id}
@@ -65,10 +85,12 @@ export default function Searchbar({
           maxLength={50}
           disabled={disabled}
           onChange={handleFilterChange}
+          onKeyDown={handleKeyPress}
           onFocus={toggleDropdown}
           ref={textFieldRef}
-          placeholder="Buscar mamíferos"
-        ></input>
+          style={{ backgroundColor: "rgba(255,255,255,0.8)", color: "black" }}
+          placeholder="Buscar mamíferos por su orden, familia, género o epíteto"
+        />
         <Button
           className="secondary searchbar-button"
           iconType="search"
