@@ -44,22 +44,13 @@ ul {
   margin: 0;
 }
 
-nav{
-  z-index: 20;
-  box-shadow:  1px 0 1px black;
-  padding: 0px 30px;
-  
-  background-color: white;
-  
-  color: black;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 5rem;
+
+
+nav > div:nth-child(2){
+  width: 40%
 }
 
-input{
+input, .input{
   padding: 1rem;
   width: 100%;
   margin: 0;
