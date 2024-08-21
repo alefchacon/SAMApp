@@ -25,6 +25,7 @@ import FormTemplate from "../components/ui/FormTemplate";
 import Stepper from "../components/ui/Stepper";
 import Dropdown from "../components/ui/Dropdown";
 import DropdownItem from "../components/ui/DropdownItem";
+import Grapher from "../features/graphing/Grapher";
 
 // CSS
 import "./App.css";
@@ -37,7 +38,6 @@ function App() {
   useEffect(() => {
     async function fetchSpecies() {
       const species = await mockGetSpecies();
-      console.log(species);
       setSpecies(species);
     }
 
@@ -94,9 +94,12 @@ function App() {
           <Route
             path="/Test"
             element={
+              /*
               <FormTemplate title="Agregar espécimen">
                 <NewSpecimen></NewSpecimen>
               </FormTemplate>
+              */
+              <Grapher />
             }
           ></Route>
 
