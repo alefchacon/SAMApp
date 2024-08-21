@@ -27,7 +27,7 @@ export default function SelectList({
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [newContributor, setNewContributor] = useState("");
-  const [itemToEdit, setItemToEdit] = useState({ id: 0, id: "" });
+  const [itemToEdit, setItemToEdit] = useState({ id: 0, name: "" });
 
   useEffect(() => {
     if (itemToEdit !== null) {

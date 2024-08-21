@@ -10,8 +10,6 @@ function SearchBanner({ children }) {
     <div
       style={{
         backgroundImage: `url(${imageUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         backgroundAttachment: "fixed",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

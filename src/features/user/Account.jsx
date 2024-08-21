@@ -6,12 +6,7 @@ import DropdownItem from "../../components/ui/DropdownItem";
 
 export default function Account(authenticated = false) {
   function AccountHeader() {
-    return (
-      <div className="flex-col">
-        <p className="caption">Bienvenido,</p>
-        Nombre del usuario
-      </div>
-    );
+    return <div className="flex-col">Nombre del usuario</div>;
   }
 
   return (

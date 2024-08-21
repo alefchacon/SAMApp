@@ -13,9 +13,6 @@ export default function Button({
   iconType = "add",
   onClick,
 }) {
-  Button.propTypes = {
-    icon: PropTypes.oneOf(Object.entries(Icons)).isRequired,
-  };
   return (
     <>
       <button
