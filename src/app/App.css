@@ -48,7 +48,7 @@ h3{
   width: 10%;
   max-height: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   /*overflow: scroll;*/
 }
 
@@ -63,12 +63,10 @@ h3{
   justify-content: start;
   align-items: start;
   padding:  10px 20px;
-  margin: 0 10px;;
-  background-color: var(--bg-main);
   width: 100%;
+  box-sizing: border-box;
 }
 .specie-header{
-  padding: 1em 1em 0.7em 60px;
   font-size: 1.4rem;
   margin: 0 0px;;
 
@@ -93,7 +91,7 @@ h3{
 }
 
 .rounded{
-  border-radius: 10px;
+  border-radius: 100px;
 }
 
 .selectable:hover {
@@ -105,6 +103,9 @@ h3{
 
 .selected {
   background-color: var(--selected);
+}
+.selected:hover {
+  background-color: rgba(28, 175, 79, 0.249);
 }
 
 
@@ -177,7 +178,7 @@ main{
   font-family: inherit;
   display: flex;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
   border: none;
   justify-content: center;
   align-items: center;
@@ -188,6 +189,10 @@ main{
   color: var(--bg-main);
   background-color: var(--uv-green);
   box-shadow:  inset 0px 0px 0px 1px var(--uv-green-hover);
+}
+.only-icon{
+  background-color: transparent;
+  padding: 5px;
 }
 .sam-button.primary:hover{
   background-color: var(--uv-green-hover);
@@ -332,14 +337,16 @@ tbody{
 tr,
 .tr {
   width: fit-content;
-  height: 30px;
+  height: 40px !important;
+  max-height: 40px !important;
 }
 
 th,
 .th,
 td,
 .td {
-
+  
+  max-height: 30px !important;
   padding: 0.3rem 1rem;
 }
 
@@ -501,7 +508,6 @@ label.hasError{
 input{
   width: 100%;
   outline: none;
-  border: 2px solid var(--bg-unfocused);
   border-radius: 5px;
   padding: 10px;
   font-size: 0.9rem;
@@ -681,10 +687,15 @@ input[type='checkbox']{
   display: none;
   position: absolute;
   color: white;
+  border-radius: 50px;
+  background-color: white;
   text-align: center;
   right: 0;
   height: fit-content;
-  gap: 10px;
+  gap: 5px;
+  margin-right: 30px;
+  padding: 0 1px;
+  box-shadow: 12px 11px 38px -14px rgba(0,0,0,0.5);
 }
 
 .hoverable:hover .hoverable-actions, .hoverable2:hover .hoverable-actions{
@@ -715,6 +726,9 @@ input[type='checkbox']{
 
 .p-1rem{
   padding: 1rem;
+}
+.p-2rem{
+  padding: 2rem;
 }
 .p-2px{
   padding: 2px;
@@ -776,6 +790,7 @@ a{
   left: 0;
   background-color: white;
   border: 1px solid #ccc;
+  border-radius: 10px;
   width: 100%;
   min-width: 250px;
   max-height: 40vh;
@@ -786,6 +801,15 @@ a{
 
 .w-100{
   width: 100%;
+}
+.w-0{
+  width: 0 !important;
+}
+.h-100{
+  height: 100%;
+}
+.h-fit-content{
+  height: fit-content;
 }
 
 .landing-search{
@@ -859,7 +883,26 @@ nav{
   display: none;
 }
 
+.recharts-wrapper{
+  max-height: 300px !important;
+}
 
+.multigraph{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media only screen and (max-width: 1400px) {
+
+  .multigraph{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .recharts-wrapper{
+    padding: 0.5rem 0rem 1.8rem 0;
+  }
+}
 @media only screen and (max-width: 900px) {
   .sam-form {
     
@@ -878,4 +921,5 @@ nav{
     min-height: 80%;
     justify-content: center;
   }
+
 }

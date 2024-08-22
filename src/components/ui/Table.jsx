@@ -165,8 +165,7 @@ function TableRow({ rowData }) {
   );
 }
 
-export default function Table() {
-  const [data, setData] = useState({});
+export default function Table({ data }) {
   const [columns] = useState(() => [...defaultColumns]);
   const [columnResizeMode, setColumnResizeMode] = useState("onChange");
   const [columnResizeDirection, setColumnResizeDirection] = useState("ltr");
@@ -174,14 +173,6 @@ export default function Table() {
     pageIndex: 0,
     pageSize: 10,
   });
-  useEffect(() => {
-    async function getData() {
-      const newData = await getSpecimens(100);
-      setData(newData);
-      console.log(newData);
-    }
-    getData();
-  }, []);
 
   const handlePageSizeChange = (e) => {
     setPagination({
@@ -302,7 +293,7 @@ export default function Table() {
             {">>"}
           </button>
           <span className="table-page-label">
-            <div>Página</div>
+            <div>Página &nbsp; </div>
             <strong>
               {table.getState().pagination.pageIndex + 1} de{" "}
               {table.getPageCount().toLocaleString()}

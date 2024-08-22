@@ -1,18 +1,13 @@
 // LIBRARIES
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // CUSTOM COMPONENTS
 import Button from "../../../components/ui/Button";
 import LinkButton from "../../../components/ui/LinkButton";
-import Modal from "../../../components/ui/modal/Modal";
-import ModalActions from "../../../components/ui/modal/ModalActions";
 
 // ICONS
 import EditIcon from "../../../components/icons/EditIcon";
-import DeleteIcon from "../../../components/icons/DeleteIcon";
 
-export default function Specie({
+export default function SpecieHeader({
   specie = {
     id: 0,
     scientific_name: "Nombre de la especie",
@@ -33,13 +28,9 @@ export default function Specie({
   const delimiter = ">";
 
   return (
-    <div
-      className={`specie selectable rounded ${className}  ${
-        selectedIndex === index ? "selected" : ""
-      }`}
-    >
-      <li
-        className={""}
+    <div className={`specie-header p-1rem`}>
+      <div
+        className={"p-1rem"}
         onClick={isListItem ? () => onClick(index) : console.log}
       >
         <p className="bold ellipsis">{specie.scientific_name}</p>
@@ -50,9 +41,9 @@ export default function Specie({
             {specie.subspecie}
           </p>
         </div>
-      </li>
+      </div>
       {!isListItem && (
-        <div className="specie-actions">
+        <div className="flex-row p-1rem gap-1rem">
           <LinkButton
             label="Editar especie"
             variant={"secondary"}
