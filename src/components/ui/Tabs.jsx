@@ -3,8 +3,8 @@ import { useState } from "react";
 export default function Tabs({ children, className }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleSelectedTabChange = (newSelectedIndex) => {
-    setSelectedIndex(newSelectedIndex);
+  const handleSelectedTabChange = (tabIndex, tabKey, tabLabel) => {
+    setSelectedIndex(tabIndex);
   };
 
   return (
@@ -16,7 +16,9 @@ export default function Tabs({ children, className }) {
             className={`selectable ${
               selectedIndex === index ? "selected-tab" : ""
             }`}
-            onClick={() => handleSelectedTabChange(index)}
+            onClick={() =>
+              handleSelectedTabChange(index, tab.props.tabKey, tab.props.label)
+            }
           >
             {tab.props.label}
           </li>

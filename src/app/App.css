@@ -16,6 +16,7 @@
   --uv-gray-dark: rgb(183, 192, 216);
   --uv-gray: #f8f8f8;
   --uv-green: rgba(40, 173, 86);
+  --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
   --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
   --box-shadow-lower-solid2: inset 1px 1px 1px 0px rgba(215, 223, 245, 4);
@@ -85,7 +86,6 @@ h3{
 
 .selectable{
   transition: background-color 0.05s;
-  transition: border 0.5s;
   
 
 }
@@ -94,11 +94,15 @@ h3{
   border-radius: 100px;
 }
 
+.rounded-20{
+  
+  border-radius: 20px;
+}
+
 .selectable:hover {
   background-color: rgba(40, 173, 86, 0.1);
   cursor: pointer;
   transition: background-color 0.05s;
-  transition: border 0.5s;
 }
 
 .selected {
@@ -568,13 +572,11 @@ input.hasError{
 .invisible{
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
 }
 
 .visible{
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.1s ease-in, visibility 0.1s ease-in;
 }
 .select-list{
   max-height: 300px;
@@ -773,7 +775,9 @@ input[type='checkbox']{
   background-color: var(--bg-main);
 }
 
-
+.box-shadow{
+  box-shadow: 12px 11px 38px -14px rgba(0,0,0,0.5);
+}
 
 .dropdown {
   position: relative;
@@ -822,6 +826,9 @@ a{
 
 .color-white{
   color: white;
+}
+.color-gray{
+  color: gray;
 }
 
 nav{
@@ -884,24 +891,45 @@ nav{
 }
 
 .recharts-wrapper{
-  max-height: 300px !important;
+  min-height: fit-content;
+  display: flex;
+  max-height: 100%
 }
 
-.multigraph{
+.recharts-responsive-container{
+  
+  min-height: fit-content !important;
+}
+
+.recharts-surface{
+  display: flex;
+  max-width: 100%;
+}
+
+.multigraph-wrapper{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
+.bg-white{
+  background-color: white;
+}
+.bg-white-transparent{
+  background-color: rgba(255, 255, 255, 0.92);
+}
+
+
+.bg-black-transparent{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 @media only screen and (max-width: 1400px) {
 
-  .multigraph{
-    display: flex;
-    flex-direction: column;
+  .multigraph-wrapper{
+    grid-template-columns: repeat(1, 1fr);
   }
 
-  .recharts-wrapper{
-    padding: 0.5rem 0rem 1.8rem 0;
-  }
+
 }
 @media only screen and (max-width: 900px) {
   .sam-form {
