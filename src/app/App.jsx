@@ -25,7 +25,7 @@ import FormTemplate from "../components/ui/FormTemplate";
 import Stepper from "../components/ui/Stepper";
 import Dropdown from "../components/ui/Dropdown";
 import DropdownItem from "../components/ui/DropdownItem";
-import Grapher from "../features/graphing/Grapher";
+import Multigraph from "../features/graphing/Multigraph";
 
 // CSS
 import "./App.css";
@@ -99,7 +99,13 @@ function App() {
                 <NewSpecimen></NewSpecimen>
               </FormTemplate>
               */
-              <Grapher />
+              <div
+                className="flex-row p-1rem gap-1rem w-100"
+                style={{ backgroundColor: "red" }}
+              >
+                <Multigraph></Multigraph>
+                <Multigraph></Multigraph>
+              </div>
             }
           ></Route>
 

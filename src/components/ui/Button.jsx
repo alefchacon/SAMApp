@@ -23,8 +23,8 @@ export default function Button({
         }`}
         onClick={onClick}
       >
-        {children}
         <span className="material-symbols-outlined">{iconType}</span>
+        {children}
       </button>
     </>
   );

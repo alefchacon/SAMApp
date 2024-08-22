@@ -19,7 +19,7 @@ export default function BarGraph({
   data = null,
 }) {
   return (
-    <ResponsiveContainer width="80%" height="80%">
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart
         width={500}
         height={300}
@@ -27,18 +27,26 @@ export default function BarGraph({
         cx="50%"
         cy="50%"
         margin={{
-          top: 5,
-          right: 30,
+          top: 50,
+          right: 40,
           left: 20,
-          bottom: 5,
+          bottom: 30,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
-          label={{ value: xLabel, position: "insideBottom", offset: 0 }}
+          padding={20}
+          label={{ value: xLabel, position: "insideBottom", offset: -30 }}
         />
-        <YAxis label={{ value: yLabel, angle: -90, position: "insideLeft" }} />
+        <YAxis
+          label={{
+            value: yLabel,
+            angle: -90,
+            position: "insideLeft",
+            offset: -10,
+          }}
+        />
         <Tooltip />
 
         <Bar

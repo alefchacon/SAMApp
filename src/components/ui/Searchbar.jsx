@@ -97,7 +97,7 @@ export default function Searchbar({
         ></Button>
       </div>
       {isOpen && (
-        <ul className="dropdown-menu rounded">
+        <ul className="dropdown-menu">
           {filteredItems.map((item, index) => (
             <Specie
               key={index}

@@ -9,6 +9,7 @@ export default function PieGraph({ data }) {
   const [hoveredSlice, setHoveredSlice] = useState(null);
 
   useEffect(() => {
+    console.log(_data);
     _data.map((item) => {
       item.fill = colors[Math.floor(Math.random() * colors.length)];
     });
@@ -16,7 +17,7 @@ export default function PieGraph({ data }) {
 
   useEffect(() => {
     if (!hoveredSlice) {
-      setData(testData);
+      setData(data);
       return;
     }
 
@@ -37,14 +38,14 @@ export default function PieGraph({ data }) {
   }
 
   const handleMouseEnter = (slice) => {
-    setData(testData);
+    setData(data);
     setHoveredSlice(slice);
   };
   const handleMouseLeave = () => {
     setHoveredSlice(null);
   };
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" className={"p-1rem"}>
       <PieChart width={400} height={400}>
         <Pie
           dataKey="value"
@@ -52,7 +53,7 @@ export default function PieGraph({ data }) {
           data={_data}
           cx="50%"
           cy="50%"
-          outerRadius={150}
+          outerRadius={100}
           fill="#8884d8"
           label
           onMouseEnter={handleMouseEnter}
