@@ -188,6 +188,7 @@ main{
   align-items: center;
   gap: 6px;
   transition: background-color 0.3s;
+  width: fit-content;
 }
 .sam-button.primary{
   color: var(--bg-main);
@@ -809,6 +810,9 @@ a{
 .w-0{
   width: 0 !important;
 }
+.w-fit-content{
+  width: 0 !important;
+}
 .h-100{
   height: 100%;
 }
@@ -883,6 +887,9 @@ nav{
 
 .justify-content-space-between{
   justify-content: space-between;
+}
+.justify-content-right{
+  justify-content: right;
 }
 
 

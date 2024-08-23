@@ -39,7 +39,7 @@ export const getSpecimens = async (amount) => {
 }
 
 function getRandomDate(
-  start = moment('2020-01-01'), 
+  start = moment('1980-01-01'), 
   end = moment('2025-12-31')
 ) {
   const startTimestamp = start.valueOf();

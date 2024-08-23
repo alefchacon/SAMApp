@@ -42,7 +42,7 @@ export default function PieGraph({ data }) {
     setHoveredSlice(null);
   };
   return (
-    <ResponsiveContainer width="100%" height="95%">
+    <ResponsiveContainer width="100%" height={350}>
       <PieChart>
         <Pie
           dataKey="value"
