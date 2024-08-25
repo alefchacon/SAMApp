@@ -4,7 +4,7 @@ export default function HoverableActions({ primaryAction, secondaryAction }) {
   return (
     <div className="hoverable-actions ">
       <Button
-        className="selectable only-icon"
+        className="secondary only-icon"
         iconType="edit"
         onClick={secondaryAction}
       ></Button>

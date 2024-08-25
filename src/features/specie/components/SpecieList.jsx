@@ -4,35 +4,35 @@ import Specie from "./Specie";
 
 import { useSearchParams } from "react-router-dom";
 
-import LinkButton from "../../../components/ui/LinkButton";
+import Button from "../../../components/ui/Button";
 import Modal from "../../../components/ui/modal/Modal";
 import ModalActions from "../../../components/ui/modal/ModalActions";
 import AddIcon from "../../../components/icons/AddIcon";
 import HoverableActions from "../../../components/ui/HoverableActions";
 
+import NewSpecie from "../../../app/routes/app/NewSpecie";
+
+import { useModal } from "../../../components/contexts/ModalContext";
+
 // API CALLS
 import { mockGetSpecies } from "../api/getSpecies";
 
-export default function SpecieList({ onSelectionChange }) {
-  const [species, setSpecies] = useState([]);
-  const [isReady, setIsReady] = useState(false);
+export default function SpecieList({
+  species,
+  onSelectionChange,
+  onAdd,
+  onEdit,
+}) {
+  //const [species, setSpecies] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [showModal, setShowModal] = useState(false);
+  //const [showModal, setShowModal] = useState(false);
+  //const [showEditModal, setShowEditModal] = useState(false);
+  const [specieToEdit, setSpecieToEdit] = useState(null);
 
-  const toggleModal = () => {
-    console.log("asdf");
-  };
+  const { showModal } = useModal();
 
-  useEffect(() => {
-    const getData = async () => {
-      const species = await mockGetSpecies();
-      setSpecies(species);
-    };
-    getData();
-    setIsReady(true);
-  }, []);
-
+  /*
   useEffect(() => {
     if (searchParams.has("name") && species.length > 0) {
       const name = searchParams.get("name").replace("-", " ").toLowerCase();
@@ -42,33 +42,20 @@ export default function SpecieList({ onSelectionChange }) {
       setSelectedIndex(matchingIndex);
       selectSpecie(matchingIndex);
     }
-  }, [species]);
-
-  const selectSpecie = (newSelectedIndex) => {
-    const selectedSpecie = species.filter(
-      (specie) => specie.id === newSelectedIndex
-    )[0];
-    onSelectionChange(selectedSpecie);
-  };
+  }, [species])*/
 
   const handleSelection = (newSelectedIndex) => {
     setSelectedIndex(newSelectedIndex);
-    selectSpecie(newSelectedIndex);
+    onSelectionChange(newSelectedIndex);
   };
 
   return (
     <>
-      <Modal open={showModal}>
-        <ModalActions onSecondaryClick={toggleModal}></ModalActions>
-      </Modal>
       <div className="specie-list">
         <div className="action-bar divider">
-          <LinkButton
-            variant="primary"
-            label="Agregar especie"
-            icon={<AddIcon />}
-            href="/agregarEspecie"
-          ></LinkButton>
+          <Button iconType="add" onClick={onAdd}>
+            Agregar especie
+          </Button>
           <input type="text" placeholder="Buscar especie" />
         </div>
         <ul role="list" className="specie-list-items">
@@ -87,7 +74,10 @@ export default function SpecieList({ onSelectionChange }) {
                 selectedIndex={selectedIndex}
                 onClick={handleSelection}
               />
-              <HoverableActions></HoverableActions>
+              <HoverableActions
+                secondaryAction={() => onEdit(specie)}
+                primaryAction={() => showModal("asdf")}
+              ></HoverableActions>
             </div>
           ))}
         </ul>

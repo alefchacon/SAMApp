@@ -16,6 +16,9 @@ import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 
+import SpecieList from "../features/specie/components/SpecieList";
+import SpecieDetail from "../features/specie/components/SpecieDetail";
+
 import { mockGetSpecies } from "../features/specie/api/getSpecies";
 
 import Account from "../features/user/Account";
@@ -32,7 +35,7 @@ import "./App.css";
 
 function App() {
   const location = useLocation();
-  const [selectedSpecie, setSelectedSpecie] = useState({});
+  //const [selectedSpecie, setSelectedSpecie] = useState({});
   const [species, setSpecies] = useState([]);
 
   useEffect(() => {
@@ -52,7 +55,7 @@ function App() {
   }, [location]);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
-    setSelectedSpecie(newSelectedSpecie);
+    //setSelectedSpecie(newSelectedSpecie);
     console.log(newSelectedSpecie);
   };
 
@@ -70,7 +73,9 @@ function App() {
           </Dropdown>
         </div>
         <span></span>
+        {/*
         <Searchbar items={species}></Searchbar>
+        */}
         <div className="hide-if-mobile">
           <Account></Account>
         </div>
@@ -116,10 +121,13 @@ function App() {
             }
           ></Route>
           <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>
+          {/*
+          
           <Route
             path={"/editarEspecie"}
             element={<NewSpecie specie={selectedSpecie} />}
           ></Route>
+          */}
         </Routes>
       </main>
     </>

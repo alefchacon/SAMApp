@@ -14,7 +14,7 @@
   background-color: aqua;
 
   --uv-gray-dark: rgb(183, 192, 216);
-  --uv-gray: #f8f8f8;
+  --uv-gray: #f3f5f1;
   --uv-green: rgba(40, 173, 86);
   --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
@@ -26,7 +26,8 @@
   --bg-main: white;
   --error: rgb(243, 16, 53);
   --bg-unfocused: rgba(0, 0, 0, 0.5);
-  --bg-hovered: rgba(255, 255, 255, 0.5);
+  --bg-hovered: rgba(40, 173, 86, 0.1);
+  --bg-hovered2: rgba(28, 175, 79, 0.249);
   --disabled: rgba(129, 129, 129, 0.63);
 
   --dark: rgba(51, 51, 51, 0.87);
@@ -86,8 +87,9 @@ h3{
 
 .selectable{
   transition: background-color 0.05s;
-  
-
+}
+.selectable2{
+  transition: background-color 0.05s;
 }
 
 .rounded{
@@ -100,7 +102,13 @@ h3{
 }
 
 .selectable:hover {
-  background-color: rgba(40, 173, 86, 0.1);
+  
+  background-color: var(--bg-hovered);
+  cursor: pointer;
+  transition: background-color 0.05s;
+}
+.selectable2:hover {
+  background-color: var(--bg-hovered2);
   cursor: pointer;
   transition: background-color 0.05s;
 }
@@ -165,7 +173,7 @@ main{
 
 
 .caption{
-  font-size: 0.7em;
+  font-size: 0.9em;
   font-weight: 100;
   color: gray;
 }
@@ -205,9 +213,13 @@ main{
 .sam-button.secondary{
   color: rgb(57, 65, 73);
   background-color: var(--uv-gray);
-  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.75);
 
 }
+
+.border{
+  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.75);
+}
+
 .sam-button.secondary:hover{
   background-color: rgb(181, 191, 201);
 }
@@ -422,26 +434,11 @@ tr{
 
 }
 
-.form-label{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.form-label > p{
 
-  font-weight: 100;
-}
-.form-label > p.required{
-
-  font-weight: 400;
-}
 
 
 .sam-form{
-  background-color: white;
-  border-radius: 20px;
-  margin: 2rem;
-  padding: 40px 50px 50px 40px;
+
   max-width: fit-content;
 }
 
@@ -454,37 +451,15 @@ tr{
 
 
 
-.form-actions{
-  display: flex;
-  justify-content: end;
-  gap: 2rem;
-  padding: 2rem 0;
-}
-
-.text-field
-{
-  padding-left: 2rem;
-}
 
 
-.text-field > input
-{
-  max-width: 100%;
-  box-sizing: border-box;
-  flex-shrink: 1;
-}
-.text-field.hasError{
-  box-shadow: inset 10px 0 0 var(--error);
-}
 
-.sam-text-field-info{
-  display: flex;
-  flex-direction: column;
-  
-}
+
+
+
 .sam-text-field-label{
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   overflow-wrap: break-word;
 }
 .sam-text-field-helper-text{
@@ -510,11 +485,16 @@ label.hasError{
   border-radius: 0 50px 50px 0;
 }
 
-input{
+input {
+  border: none;
+}
+
+.input{
   width: 100%;
   outline: none;
+  border: 1px solid var(--bg-unfocused);
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   font-size: 0.9rem;
   color: black;
   background-color: transparent;
@@ -522,6 +502,23 @@ input{
   max-width: 100%;
   box-sizing: border-box;
 }
+
+input, .input{
+
+}
+input:hover{
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(40, 173, 86, 0.5);
+}
+input:focus{
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(40, 173, 86, 0.8);;
+}
+input:disabled{
+  cursor: not-allowed;
+  background-color: var(--uv-gray-dark);
+}
+
 input:hover{
   border-color: var(--uv-green);
 }
@@ -531,10 +528,13 @@ input:focus{
   outline-width: 0.25rem;
   outline-offset: -2px;
 }
-input.hasError{
+.input.hasError{
   border: 2px solid var(--error);
 }
 
+h2{
+  margin: 0;
+}
 
 
 .sam-message{
@@ -573,11 +573,13 @@ input.hasError{
 .invisible{
   opacity: 0;
   visibility: hidden;
+
 }
 
 .visible{
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.2s ease;
 }
 .select-list{
   max-height: 300px;
@@ -599,7 +601,6 @@ input.hasError{
   height: fit-content;
   background-color: white;
   border-radius: 5px;
-  padding: 20px 40px;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -20%);
@@ -607,17 +608,13 @@ input.hasError{
   bottom: 0;
 }
 
-.modal-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 .modal-body{
   overflow: auto;
   height: fit-content;
 }
 
 .modal-background{
+  transition: opacity 0.3s ease;
   position: fixed; 
   z-index: 1000; 
   left: 0;
@@ -626,6 +623,7 @@ input.hasError{
   height: 100vh; 
   overflow: auto; 
   background-color: rgba(0, 0, 0, 0.5);
+
 }
 
 .tabs{
@@ -633,7 +631,7 @@ input.hasError{
   justify-content: start;
 }
 .tabs > li{
-  padding: 0.8vw 5vw;
+  padding: 0.3rem 5vw;
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -726,9 +724,24 @@ input[type='checkbox']{
 .gap-1rem{
   gap: 1rem;
 }
+.gap-05rem{
+  gap: 0.5rem;
+}
+
+.font-size-1rem{
+  font-size: 1rem;
+}
 
 .p-1rem{
   padding: 1rem;
+}
+
+.ptop-2rem{
+  padding-top: 2rem;
+}
+
+.p-05rem{
+  padding: 0.5rem;
 }
 .p-2rem{
   padding: 2rem;
@@ -749,18 +762,12 @@ input[type='checkbox']{
   display: flex;
   flex-direction: column;
 }
-.align-items-center{
-  align-items: center;
-  cursor: pointer;
-}
+
 
 .fullwidth{
   width: 100%;
 }
 
-.align-items-center{
-  justify-content: center;
-}
 
 .pointer{
   cursor: pointer;
@@ -788,6 +795,7 @@ input[type='checkbox']{
 a{
   text-decoration: none;
 }
+
 
 .dropdown-menu {
   position: absolute;
@@ -885,13 +893,25 @@ nav{
   margin: 0;
 }
 
+.taxonomy{
+  font-size: clamp(0.8rem, 0.5vw + 1rem, 1.1rem);
+}
+.rank{
+  font-size: ;
+}
+
 .justify-content-space-between{
   justify-content: space-between;
 }
 .justify-content-right{
   justify-content: right;
 }
-
+.justify-content-center{
+  justify-content: center;
+}
+.align-items-center{
+  align-items: center;
+}
 
 .hide-if-desktop{
   display: none;

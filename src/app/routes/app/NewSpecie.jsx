@@ -1,5 +1,5 @@
 // LIBRARIES
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 
 // CUSTOM COMPONENTS
@@ -11,10 +11,6 @@ import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS
 import { specieSchema } from "../../../features/specie/formikSchemas/specieSchema";
-
-// CONTEXTS
-import { useSnackbar } from "../../../components/contexts/SnackbarContext";
-import { specieSnackbarTypes } from "../../../features/specie/contexts/specieSnackbarTypes";
 
 // API CALLS
 import {
@@ -29,6 +25,7 @@ import {
 import { mockGetSpecie } from "../../../features/specie/api/getSpecie";
 
 export default function NewSpecie({
+  onSubmit,
   specie = {
     orden: "",
     family: "",
@@ -36,17 +33,22 @@ export default function NewSpecie({
     epithet: "",
     subspecie: "",
   },
+  open,
 }) {
-  const [showModal, setShowModal] = useState(true);
-  const { showSnackbar } = useSnackbar();
-
-  const submitSpecie = () => {
-    //console.log(values);
+  const formikRef = useRef();
+  const submitSpecie = (values, actions) => {
+    values.scientific_name = `${values.gender} ${values.epithet}`;
+    values.id = specie?.id;
+    console.log(values);
+    onSubmit(values);
+    //actions.resetForm();
+    showSnackbar(specieSnackbarTypes.addSpecieSuccess);
+    /*
     if (!true) {
-      showSnackbar(specieSnackbarTypes.addSpecieSuccess);
     } else {
       showSnackbar(specieSnackbarTypes.addSpecieError);
     }
+      */
   };
 
   /*
@@ -56,6 +58,17 @@ export default function NewSpecie({
   
   */
 
+  /*
+  useEffect(() => {
+    if (!open) {
+      console.log("cleaning up!!");
+      console.log(specie);
+      console.log(formikRef.current?.values);
+      console.log(formikRef.current?.initialValues);
+      formikRef.current?.resetForm();
+    }
+  }, [open]);
+  */
   const [ordens, setOrdens] = useState([]);
   const [families, setFamilies] = useState([]);
   const [genders, setGenders] = useState([]);
@@ -71,12 +84,6 @@ export default function NewSpecie({
       setGenders(await getGenders());
       setEpithets(await getEpithets());
       setSubspecies(await getSubspecies());
-
-      const currentUrl = window.location.href;
-      const url = new URL(currentUrl);
-      const path = url.pathname;
-
-      console.log(specie);
     }
 
     fetchData();
@@ -86,19 +93,14 @@ export default function NewSpecie({
 
   return (
     <div className="fullwidth">
-      <h2 className="form-title">Nueva especie</h2>
-      <div className="sam-form">
+      <div className="p-2rem">
         {isReady && (
           <Formik
             validationSchema={specieSchema}
-            initialValues={{
-              orden: specie.orden,
-              family: specie.family,
-              gender: specie.gender,
-              epithet: specie.epithet,
-              subspecie: specie.subspecie,
-            }}
-            onSubmit={(v, a) => console.log(v)}
+            initialValues={specie}
+            onSubmit={submitSpecie}
+            innerRef={formikRef}
+            enableReinitialize
           >
             {({
               values,
@@ -110,7 +112,7 @@ export default function NewSpecie({
               handleChange,
               handleBlur,
             }) => (
-              <Form action="" autoComplete="false">
+              <Form action="" autoComplete="off">
                 <Autocomplete
                   required
                   id="orden"
@@ -142,6 +144,7 @@ export default function NewSpecie({
                   id="gender"
                   name="gender"
                   label="Género"
+                  required
                   items={genders}
                   value={values.gender}
                   hasError={errors.gender && touched.gender}
@@ -154,6 +157,7 @@ export default function NewSpecie({
                   id="epithet"
                   name="epithet"
                   label="Epíteto"
+                  required
                   items={epithets}
                   value={values.epithet}
                   hasError={errors.epithet && touched.epithet}
@@ -164,8 +168,9 @@ export default function NewSpecie({
                 ></Autocomplete>
                 <Autocomplete
                   id="subspecie"
+                  required
                   name="subspecie"
-                  label="Epíteto"
+                  label="Sub especie"
                   items={subspecies}
                   value={values.subspecie}
                   hasError={errors.subspecie && touched.subspecie}
@@ -175,22 +180,14 @@ export default function NewSpecie({
                   onBlur={handleBlur}
                 ></Autocomplete>
 
-                <div className="form-actions">
-                  <Button
-                    type="button"
-                    variant={"secondary"}
-                    label="Cancelar"
-                    isDisabled={false}
-                    onClick={() => submitSpecie()}
-                    icon={<CloseIcon />}
-                  ></Button>
+                <div className="flex-row justify-content-right ptop-2rem">
                   <Button
                     type="submit"
-                    variant={"primary"}
                     label="Agregar especie"
                     isDisabled={false}
-                    icon={<AddIcon />}
-                  ></Button>
+                  >
+                    Agregar especie
+                  </Button>
                 </div>
               </Form>
             )}

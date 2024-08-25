@@ -17,6 +17,7 @@ export default function Autocomplete({
   setFieldValue,
   onChange,
   onBlur,
+  maxLength = 50,
 }) {
   const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,7 @@ export default function Autocomplete({
   );
 
   useEffect(() => {
+    console.log("asdf");
     document.addEventListener("click", handleOutsideClick);
     return () => {
       document.removeEventListener("click", handleOutsideClick);
@@ -59,18 +61,14 @@ export default function Autocomplete({
 
   return (
     <div className="dropdown" ref={dropdownRef}>
-      <div className={`text-field ${getErrorClassName()}`}>
-        <div className="sam-text-field-info">
+      <div className={`${getErrorClassName()}`}>
+        <div className="flex-col">
           {label && (
-            <div className="form-label">
+            <div className="flex-row gap-05rem">
               <label htmlFor={`${id}`} className="sam-text-field-label">
                 {label}
               </label>
-              {required ? (
-                <p className="required">(requerido)</p>
-              ) : (
-                <p>(opcional)</p>
-              )}
+              {required && <p className="required">(requerido)</p>}
             </div>
           )}
           <div
@@ -80,24 +78,15 @@ export default function Autocomplete({
           >
             {helperText}
           </div>
-          {hasError && (
-            <div
-              className={`sam-text-field-error-text`}
-              htmlFor={`${id}`}
-              id={`${id}-error-message`}
-            >
-              {errorMessage}
-            </div>
-          )}
         </div>
-
         <div className="flex-row">
           <input
             id={id}
             name={name}
             type={type}
-            className={`${getErrorClassName()}`}
-            maxLength={50}
+            value={value}
+            className={`${getErrorClassName()} input`}
+            maxLength={maxLength}
             disabled={disabled}
             onChange={handleFilterChange}
             onFocus={toggleDropdown}
@@ -106,11 +95,20 @@ export default function Autocomplete({
           ></input>
         </div>
       </div>
+
+      <div
+        className={`sam-text-field-error-text`}
+        htmlFor={`${id}`}
+        id={`${id}-error-message`}
+      >
+        {hasError && errorMessage}
+      </div>
+
       {isOpen && (
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu pop-up">
           {filteredItems.map((item, index) => (
             <li
-              className="selectable p-1rem"
+              className="selectable p-05rem"
               key={index}
               onClick={() => handleOptionClick(item)}
             >

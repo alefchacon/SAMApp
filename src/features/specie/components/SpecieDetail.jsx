@@ -20,6 +20,7 @@ const METRICAS_TAB_KEY = "METRICAS";
 import { getSpecimens } from "../../specimens/api/GetSpecimens";
 
 export default function SpecieDetail({
+  children,
   specie = {
     id: 0,
     scientific_name: `Nombre de la especie ${1}`,
@@ -43,24 +44,19 @@ export default function SpecieDetail({
       setSpecimens(newSpecimens);
     }
     fetchData();
+    console.log("hi");
   }, [specie]);
 
   const especimenesRef = useRef(null);
 
   return (
     <div className="specie-view" ref={especimenesRef}>
-      <SpecieHeader isListItem={false} specie={specie}></SpecieHeader>
-      <Tabs className={"divider bg-main"}>
+      {children}
+      <Tabs className={"divider"}>
         <div label={"Especímenes"} className="flex-col">
           <div className="p-1rem gap-1rem flex-row align-items-center">
             <Button variant={"primary"}>Agregar espécimen</Button>
-            <Button
-              className={"secondary"}
-              label="Descargar .CSV"
-              iconType="download"
-            >
-              Descargar .CSV
-            </Button>
+
             <div></div>
             <input
               type="search"
@@ -89,46 +85,6 @@ export default function SpecieDetail({
               attributeToGraph={{
                 name: "colection_date",
                 type: DATE_TYPES.YEAR,
-              }}
-              yLabel="Especímenes"
-              xLabel="Meses"
-            />
-            <Multigraph
-              graphTitle="Especímenes recolectados por mes"
-              specimens={specimens}
-              attributeToGraph={{
-                name: "colection_date",
-                type: DATE_TYPES.MONTH,
-              }}
-              yLabel="Especímenes"
-              xLabel="Meses"
-            />
-            <Multigraph
-              graphTitle="Especímenes recolectados por mes"
-              specimens={specimens}
-              attributeToGraph={{
-                name: "colection_date",
-                type: DATE_TYPES.MONTH,
-              }}
-              yLabel="Especímenes"
-              xLabel="Meses"
-            />
-            <Multigraph
-              graphTitle="Especímenes recolectados por mes"
-              specimens={specimens}
-              attributeToGraph={{
-                name: "colection_date",
-                type: DATE_TYPES.MONTH,
-              }}
-              yLabel="Especímenes"
-              xLabel="Meses"
-            />
-            <Multigraph
-              graphTitle="Especímenes recolectados por mes"
-              specimens={specimens}
-              attributeToGraph={{
-                name: "colection_date",
-                type: DATE_TYPES.MONTH,
               }}
               yLabel="Especímenes"
               xLabel="Meses"
