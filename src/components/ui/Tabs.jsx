@@ -9,7 +9,14 @@ export default function Tabs({ children, className }) {
 
   return (
     <div className="flex-col">
-      <ul className={`tabs ${className} bg-white justify-content-center`}>
+      <ul
+        className={`tabs ${className} bg-white justify-content-center`}
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+        }}
+      >
         {children.map((tab, index) => (
           <li
             key={index}
@@ -28,9 +35,8 @@ export default function Tabs({ children, className }) {
       {children.map((tab, index) => (
         <div
           key={index}
-          className={`${
-            selectedIndex === index ? "visible tab-panel " : "invisible"
-          }`}
+          className={`
+            ${selectedIndex === index ? "visible tab-panel " : "invisible"}`}
         >
           {selectedIndex === index && tab.props.children}
         </div>

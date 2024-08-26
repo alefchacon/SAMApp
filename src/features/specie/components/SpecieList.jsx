@@ -24,62 +24,74 @@ export default function SpecieList({
   onEdit,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [folded, setFolded] = useState("unfolded");
+  const [fold, setFold] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [specieToEdit, setSpecieToEdit] = useState(null);
 
   const { showModal } = useModal();
-
-  /*
-  useEffect(() => {
-    if (searchParams.has("name") && species.length > 0) {
-      const name = searchParams.get("name").replace("-", " ").toLowerCase();
-      const matchingIndex = species.filter(
-        (specie) => specie.scientific_name.toLowerCase() === name
-      )[0].id;
-      setSelectedIndex(matchingIndex);
-      selectSpecie(matchingIndex);
-    }
-  }, [species])*/
 
   const handleSelection = (newSelectedIndex) => {
     setSelectedIndex(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
 
-  return (
-    <>
-      <div className={`specie-list ${folded}`}>
-        <div className="action-bar divider">
-          <Button iconType="add" onClick={onAdd}>
-            Agregar especie
-          </Button>
-          <input type="text" placeholder="Buscar especie" />
+  const toggleFold = () => {
+    setFold(!fold);
+  };
+
+  function Sidebar() {
+    return (
+      <>
+        <div className={` ${fold && "fold"}`}>
+          <div className="action-bar divider">
+            <Button iconType="add" onClick={onAdd}>
+              Agregar especie
+            </Button>
+            <Button
+              iconType="dock_to_right"
+              className="icon-only secondary"
+              onClick={toggleFold}
+            ></Button>
+          </div>
+          <ul role="list" className="specie-list-items">
+            {species.map((specie, index) => (
+              <div
+                className={"hoverable"}
+                style={{
+                  alignItems: "center",
+                  textAlign: "left",
+                }}
+              >
+                <Specie
+                  key={specie.id}
+                  specie={specie}
+                  index={specie.id}
+                  selectedIndex={selectedIndex}
+                  onClick={handleSelection}
+                />
+                <HoverableActions
+                  secondaryAction={() => onEdit(specie)}
+                  primaryAction={() => showModal("asdf")}
+                ></HoverableActions>
+              </div>
+            ))}
+          </ul>
         </div>
-        <ul role="list" className="specie-list-items">
-          {species.map((specie, index) => (
-            <div
-              className={"hoverable"}
-              style={{
-                alignItems: "center",
-                textAlign: "left",
-              }}
-            >
-              <Specie
-                key={specie.id}
-                specie={specie}
-                index={specie.id}
-                selectedIndex={selectedIndex}
-                onClick={handleSelection}
-              />
-              <HoverableActions
-                secondaryAction={() => onEdit(specie)}
-                primaryAction={() => showModal("asdf")}
-              ></HoverableActions>
-            </div>
-          ))}
-        </ul>
-      </div>
-    </>
+      </>
+    );
+  }
+
+  return (
+    <div className="specie-list" style={{ position: fold && "absolute" }}>
+      {fold ? (
+        <Button
+          iconType="dock_to_right"
+          className="icon-only secondary m-1rem"
+          onClick={toggleFold}
+        ></Button>
+      ) : (
+        <Sidebar />
+      )}
+    </div>
   );
 }

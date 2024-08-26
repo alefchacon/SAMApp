@@ -160,7 +160,6 @@ main{
 
   overflow-y: hidden;
   overflow-x: hidden;
-  box-shadow:  0.05px 0 3px black;
 }
 
 .specie-list-items{
@@ -637,10 +636,11 @@ h2{
   justify-content: start;
 }
 .tabs > li{
-  padding: 0.3rem 5vw;
+  padding: 1rem;
+  min-width: 120px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: center;
 }
 .tabs > li.selected-tab{
   border-bottom: 3px solid var(--uv-green);
@@ -753,6 +753,16 @@ h1{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.position-relative{
+  position: relative;
+}
+.position-absolute{
+  position: relative;
+}
+
+.m-1rem{
+  margin: 1rem;
+}
 .p-1rem{
   padding: 1rem;
 }
@@ -1027,6 +1037,12 @@ nav{
 
   .grid{
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .specie-list{
+    position: absolute;
+    background-color: var(--bg-main);
+    box-shadow: 12px 11px 38px -14px rgba(0,0,0,0.5);
   }
 
 }
