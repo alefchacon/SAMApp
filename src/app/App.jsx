@@ -33,14 +33,17 @@ import Multigraph from "../features/graphing/Multigraph";
 // CSS
 import "./App.css";
 
+import { getAccessRequestsCount } from "../features/access/api/getAccessRequests";
 function App() {
   const location = useLocation();
-  //const [selectedSpecie, setSelectedSpecie] = useState({});
   const [species, setSpecies] = useState([]);
+  const [accessRequestCount, setAccessRequestCount] = useState("");
 
   useEffect(() => {
     async function fetchSpecies() {
       const species = await mockGetSpecies();
+      const accessRequestResponse = await getAccessRequestsCount();
+      setAccessRequestCount(accessRequestResponse.data);
       setSpecies(species);
     }
 
@@ -61,7 +64,7 @@ function App() {
 
   return (
     <>
-      <nav>
+      <nav className="flex-row justify-content-space-between">
         <div className="flex-row gap-1rem align-items-center hide-if-mobile">
           NAVBAR
           <Link to={"/fichas"} className="selectable p-1rem rounded">
@@ -77,7 +80,7 @@ function App() {
         <Searchbar items={species}></Searchbar>
         */}
         <div className="hide-if-mobile">
-          <Account></Account>
+          <Account accessRequestCount={accessRequestCount}></Account>
         </div>
         <span className="material-symbols-outlined flex-if-mobile hide-if-desktop">
           menu

@@ -1,7 +1,8 @@
 
 
 #root {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Open sans', Calibri, 'Trebuchet MS', sans-serif;
+  letter-spacing: 0.07cap;
   font-weight: 400;
   display: flex;
   flex-direction: column;
@@ -24,7 +25,7 @@
   --hover: rgba(26, 26, 26, 0.068);
   --selected: rgba(40, 173, 86, 0.1);
   --bg-main: white;
-  --error: rgb(243, 16, 53);
+  --error: rgb(232, 16, 63);
   --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(40, 173, 86, 0.1);
   --bg-hovered2: rgba(28, 175, 79, 0.249);
@@ -54,7 +55,9 @@ h3{
   /*overflow: scroll;*/
 }
 
-
+.font-family-gill-sans{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
 .specie {
   /*
@@ -143,7 +146,11 @@ main{
 
 .bold{
   font-weight: 500;
-  font-family: inherit;
+}
+
+.fold{
+  position: relative;
+  flex: 0;
 }
 
 .specie-list{
@@ -172,6 +179,10 @@ main{
 }
 
 
+.letter-spacing-0{
+  letter-spacing: 0;
+}
+
 .caption{
   font-size: 0.9em;
   font-weight: 100;
@@ -184,9 +195,6 @@ main{
 
 .sam-button{
   padding: 5px 20px;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
-  font-weight: 500;
   font-family: inherit;
   display: flex;
   cursor: pointer;
@@ -255,12 +263,6 @@ a.sam-button{
 }
 
 
-.tabs-wrapper{
-
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
 .tab-panel{
   display: flex;
@@ -490,27 +492,33 @@ input {
 }
 
 .input{
+  font-family: inherit;
+  letter-spacing: inherit;
   width: 100%;
   outline: none;
   border: 1px solid var(--bg-unfocused);
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   font-size: 0.9rem;
   color: black;
   background-color: transparent;
-  width: 100%;
+  height: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
-
-input, .input{
+.input.has-icon{
+  padding-left: 50px;
 
 }
-input:hover{
+
+input{
+  
+}
+input:hover, .input:hover{
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(40, 173, 86, 0.5);
 }
-input:focus{
+input:focus, .input:focus{
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(40, 173, 86, 0.8);;
 }
@@ -522,7 +530,7 @@ input:disabled{
 input:hover{
   border-color: var(--uv-green);
 }
-input:focus{
+input:focus, .input:focus{
   outline-style: solid;
   outline-color: var(--uv-green);
   outline-width: 0.25rem;
@@ -573,10 +581,11 @@ h2{
 .invisible{
   opacity: 0;
   visibility: hidden;
-
+  z-index: -1000;
 }
 
 .visible{
+  
   opacity: 1;
   visibility: visible;
   transition: opacity 0.2s ease;
@@ -732,6 +741,15 @@ input[type='checkbox']{
   font-size: 1rem;
 }
 
+.font-weight-500{
+  font-weight: 500;
+}
+
+.specie-header-name{
+  font-size: clamp(1rem, 1vw + 0.7rem, 3rem);
+  font-weight: 600;
+}
+
 .p-1rem{
   padding: 1rem;
 }
@@ -841,6 +859,9 @@ a{
 }
 .color-gray{
   color: gray;
+}
+.color-uv-green{
+  color: var(--uv-green)
 }
 
 nav{

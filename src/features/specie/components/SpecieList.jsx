@@ -23,11 +23,9 @@ export default function SpecieList({
   onAdd,
   onEdit,
 }) {
-  //const [species, setSpecies] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [folded, setFolded] = useState("unfolded");
   const [searchParams, setSearchParams] = useSearchParams();
-  //const [showModal, setShowModal] = useState(false);
-  //const [showEditModal, setShowEditModal] = useState(false);
   const [specieToEdit, setSpecieToEdit] = useState(null);
 
   const { showModal } = useModal();
@@ -51,7 +49,7 @@ export default function SpecieList({
 
   return (
     <>
-      <div className="specie-list">
+      <div className={`specie-list ${folded}`}>
         <div className="action-bar divider">
           <Button iconType="add" onClick={onAdd}>
             Agregar especie

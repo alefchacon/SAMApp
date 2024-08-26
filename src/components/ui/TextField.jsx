@@ -18,24 +18,24 @@ export default function TextField({
   isFormik = false,
   disabled = false,
   type = "text",
+  fullwidth = false,
+  iconType = null,
+  maxLength = 50,
+  customIcon = null,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
   };
 
   return (
-    <div className={`text-field ${getErrorClassName()}`}>
+    <div className={`text-field ${getErrorClassName()} w-100`}>
       <div className="sam-text-field-info">
         {label && (
-          <div className="form-label">
+          <div className="form-label flex-row gap-05rem">
             <label htmlFor={`${id}`} className="sam-text-field-label">
               {label}
             </label>
-            {required ? (
-              <p className="required">(requerido)</p>
-            ) : (
-              <p>(opcional)</p>
-            )}
+            {required && <p className="required">(requerido)</p>}
           </div>
         )}
         <div
@@ -56,26 +56,52 @@ export default function TextField({
         )}
       </div>
 
-      <div className="flex-row p-2px">
+      <div
+        style={{
+          height: "50px",
+          display: "flex",
+        }}
+        className="flex-row  align-items-center"
+      >
+        {iconType && (
+          <span
+            className="material-symbols-outlined p-1rem"
+            style={{ position: "absolute" }}
+          >
+            {iconType}
+          </span>
+        )}
+        {customIcon && (
+          <span
+            className="material-symbols-outlined p-1rem"
+            style={{ position: "absolute" }}
+          >
+            {customIcon}
+          </span>
+        )}
         {isFormik ? (
           <Field
             id={id}
             name={name}
             type={type}
-            className={`${getErrorClassName()}`}
-            maxLength={50}
+            className={`${getErrorClassName()} input`}
+            maxLength={maxLength}
             disabled={disabled}
             value={value}
           ></Field>
         ) : (
           <input
             id={id}
-            value={value}
+            //value={value}
             name={name}
             type={type}
-            className={`${getErrorClassName()}`}
-            maxLength={50}
+            style={{ flex: 2, minHeight: "100%" }}
+            className={`input ${getErrorClassName()} ${fullwidth && "w-100"} ${
+              fullwidth && "h-100"
+            } ${iconType || customIcon ? "has-icon" : ""}`}
+            maxLength={maxLength}
             disabled={disabled}
+            placeholder={placeholder}
           ></input>
         )}
       </div>

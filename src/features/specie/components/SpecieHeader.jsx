@@ -26,7 +26,7 @@ export default function SpecieHeader({
   onEdit,
 }) {
   const delimiter = (
-    <span class="material-symbols-outlined flex-row align-items-center font-size-1rem">
+    <span class="material-symbols-outlined flex-row align-items-center font-size-1rem color-uv-green">
       chevron_right
     </span>
   );
@@ -41,11 +41,11 @@ export default function SpecieHeader({
         <div className="flex-col">
           <p
             className="caption rank"
-            style={{ fontSize: "0.8rem", marginBottom: "-8px" }}
+            style={{ fontSize: "0.9rem", marginBottom: "-8px" }}
           >
             {rankName}
           </p>
-          <p>{rank}</p>
+          <p className="font-weight-500">{rank}</p>
         </div>
         {showDelimiter && delimiter}
       </div>
@@ -81,9 +81,12 @@ export default function SpecieHeader({
         className={"p-1rem flex-col gap-1rem"}
         onClick={isListItem ? () => onClick(index) : console.log}
       >
-        <p style={{ textAlign: "center" }} className="bold ellipsis">
+        <h1
+          style={{ textAlign: "center" }}
+          className="bold ellipsis font-family-gill-sans specie-header-name letter-spacing-0"
+        >
           {specie.scientific_name}
-        </p>
+        </h1>
         <div className="ellipsis flex-row justify-content-center">
           <p className="caption ellipsis flex-row taxonomy gap-05rem">
             <Rank rankName="Orden" rank={specie.orden}></Rank>
