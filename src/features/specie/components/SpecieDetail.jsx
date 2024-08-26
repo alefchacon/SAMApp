@@ -53,6 +53,18 @@ export default function SpecieDetail({
   return (
     <div className="specie-view" ref={especimenesRef}>
       {children}
+      {/*
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
+          backgroundColor: "red",
+        }}
+      >
+        asdf
+      </div>
+          */}
       <Tabs className={"divider"}>
         <div label={"Especímenes"} className="flex-col">
           <div className="p-1rem gap-1rem flex-row align-items-center">
