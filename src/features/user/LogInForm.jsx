@@ -1,6 +1,7 @@
 import Button from "../../components/ui/Button";
 import TextField from "../../components/ui/TextField";
 import Tabs from "../../components/ui/Tabs";
+import { ORCIDIcon } from "../../components/ui/ORCIDIcon";
 
 function Credentials() {
   return (
@@ -52,13 +53,7 @@ export default function LogInForm() {
               placeholder={"0009-0006-6970-4606"}
               required
               fullwidth
-              customIcon={
-                <img
-                  width="25"
-                  alt="ORCID iD"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/ORCID_iD.svg/512px-ORCID_iD.svg.png?20190308043226"
-                />
-              }
+              customIcon={<ORCIDIcon />}
             ></TextField>
           </div>
         </div>

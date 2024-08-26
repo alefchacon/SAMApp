@@ -30,14 +30,13 @@ export default function TextField({
   return (
     <div className={`text-field ${getErrorClassName()} w-100`}>
       <div className="sam-text-field-info">
-        {label && (
-          <div className="form-label flex-row gap-05rem">
-            <label htmlFor={`${id}`} className="sam-text-field-label">
-              {label}
-            </label>
-            {required && <p className="required">(requerido)</p>}
-          </div>
-        )}
+        <div className="form-label flex-row gap-05rem">
+          <label htmlFor={`${id}`} className="sam-text-field-label">
+            {label}
+          </label>
+          {required && <p className="required">(requerido)</p>}
+        </div>
+
         <div
           htmlFor={`${id}`}
           className={`sam-text-field-helper-text`}

@@ -11,6 +11,7 @@ import {
 // COMPONENTS
 import Button from "./Button";
 import HoverableActions from "./HoverableActions";
+import TextField from "./TextField";
 
 // ICONS
 import DeleteIcon from "../icons/DeleteIcon";
