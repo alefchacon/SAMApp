@@ -3,11 +3,12 @@ import { useState, useEffect, useRef } from "react";
 
 // COMPONENTS
 import Button from "../../../components/ui/Button";
-import SpecieHeader from "./SpecieHeader";
+import Header from "../../../components/ui/Header";
 import Table from "../../../components/ui/Table";
 import Tabs from "../../../components/ui/Tabs";
 import MetricsSpecimens from "../../specimens/MetricsSpecimens";
 import DATE_TYPES from "../../graphing/dateTypes";
+import TextField from "../../../components/ui/TextField";
 
 import moment from "moment";
 import "moment/dist/locale/es-mx";
@@ -56,12 +57,12 @@ export default function SpecieDetail({
         <div label={"Especímenes"} className="flex-col">
           <div className="p-1rem gap-1rem flex-row align-items-center">
             <Button variant={"primary"}>Agregar espécimen</Button>
-
-            <div></div>
-            <input
-              type="search"
-              placeholder="Buscar especies por ID, Estado, Colaborador, etc"
-            />
+            <TextField
+              iconType={"search"}
+              placeholder={
+                "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
+              }
+            ></TextField>
           </div>
           <div id="especimenes">
             <Table data={specimens}></Table>

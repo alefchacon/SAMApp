@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import SpecieList from "../../../features/specie/components/SpecieList";
 import SpecieDetail from "../../../features/specie/components/SpecieDetail";
 import { mockGetSpecies } from "../../../features/specie/api/getSpecies";
+import Taxonomy from "../../../features/specie/components/Taxonomy";
+import Button from "../../../components/ui/Button";
 
-import SpecieHeader from "../../../features/specie/components/SpecieHeader";
+import Header from "../../../components/ui/Header";
 
 import NewSpecie from "./NewSpecie";
 
@@ -59,11 +61,31 @@ export default function SpecieDashboard({ onSelectionChange }) {
         onEdit={showSpecieEditModal}
       ></SpecieList>
       <SpecieDetail specie={selectedSpecie}>
-        <SpecieHeader
+        <Header
+          header={selectedSpecie?.scientific_name ?? "asdf"}
           isListItem={false}
           specie={selectedSpecie}
           onEdit={showSpecieEditModal}
-        ></SpecieHeader>
+        >
+          <Taxonomy specie={selectedSpecie}></Taxonomy>
+          <div className="flex-row gap-1rem justify-content-center">
+            <Button
+              className={"secondary"}
+              iconType="edit"
+              onClick={() => showSpecieEditModal(selectedSpecie)}
+            >
+              Editar especie
+            </Button>
+
+            <Button
+              className={"secondary danger"}
+              iconType={"delete"}
+              onClick={() => console.log("sadf")}
+            >
+              Eliminar especie
+            </Button>
+          </div>
+        </Header>
       </SpecieDetail>
     </>
   );
