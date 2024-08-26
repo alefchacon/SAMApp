@@ -8,8 +8,8 @@ export default function Tabs({ children, className }) {
   };
 
   return (
-    <div className="tabs-wrapper">
-      <ul className={`tabs ${className}`}>
+    <div className="flex-col">
+      <ul className={`tabs ${className} bg-white justify-content-center`}>
         {children.map((tab, index) => (
           <li
             key={index}

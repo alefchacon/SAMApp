@@ -16,6 +16,9 @@ import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 
+import SpecieList from "../features/specie/components/SpecieList";
+import SpecieDetail from "../features/specie/components/SpecieDetail";
+
 import { mockGetSpecies } from "../features/specie/api/getSpecies";
 
 import Account from "../features/user/Account";
@@ -30,14 +33,17 @@ import Multigraph from "../features/graphing/Multigraph";
 // CSS
 import "./App.css";
 
+import { getAccessRequestsCount } from "../features/access/api/getAccessRequests";
 function App() {
   const location = useLocation();
-  const [selectedSpecie, setSelectedSpecie] = useState({});
   const [species, setSpecies] = useState([]);
+  const [accessRequestCount, setAccessRequestCount] = useState("");
 
   useEffect(() => {
     async function fetchSpecies() {
       const species = await mockGetSpecies();
+      const accessRequestResponse = await getAccessRequestsCount();
+      setAccessRequestCount(accessRequestResponse.data);
       setSpecies(species);
     }
 
@@ -52,13 +58,13 @@ function App() {
   }, [location]);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
-    setSelectedSpecie(newSelectedSpecie);
+    //setSelectedSpecie(newSelectedSpecie);
     console.log(newSelectedSpecie);
   };
 
   return (
     <>
-      <nav>
+      <nav className="flex-row justify-content-space-between">
         <div className="flex-row gap-1rem align-items-center hide-if-mobile">
           NAVBAR
           <Link to={"/fichas"} className="selectable p-1rem rounded">
@@ -70,9 +76,11 @@ function App() {
           </Dropdown>
         </div>
         <span></span>
+        {/*
         <Searchbar items={species}></Searchbar>
+        */}
         <div className="hide-if-mobile">
-          <Account></Account>
+          <Account accessRequestCount={accessRequestCount}></Account>
         </div>
         <span className="material-symbols-outlined flex-if-mobile hide-if-desktop">
           menu
@@ -116,10 +124,13 @@ function App() {
             }
           ></Route>
           <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>
+          {/*
+          
           <Route
             path={"/editarEspecie"}
             element={<NewSpecie specie={selectedSpecie} />}
           ></Route>
+          */}
         </Routes>
       </main>
     </>

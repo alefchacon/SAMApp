@@ -9,16 +9,18 @@ export function useModal() {
 
 export function ModalProvider({ children }) {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const [handleUndo, setHandleUndo] = useState(null);
-  const [content, setContent] = useState(null);
+  const [modalContent, setModalContent] = useState(null);
 
-  const showModal = () => {
+  const showModal = (title, content) => {
     /*
     setMessage(message);
     setContent(content);
     setHandleUndo(() => onUndo);
     */
+    setModalContent(content);
+    setModalTitle(title);
     setOpen(true);
   };
 
@@ -34,9 +36,16 @@ export function ModalProvider({ children }) {
   };
 
   return (
-    <ModalContext.Provider value={{ showModal }}>
+    <ModalContext.Provider
+      value={{ showModal, setModalContent, setModalTitle }}
+    >
       {children}
-      <Modal open={open} onClose={handleClose} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        title={modalTitle}
+        children={modalContent}
+      />
     </ModalContext.Provider>
   );
 }
