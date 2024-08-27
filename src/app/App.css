@@ -15,8 +15,8 @@
   background-color: aqua;
 
   --uv-gray-dark: rgb(183, 192, 216);
-  --uv-gray: #f3f5f1;
-  --uv-green: rgba(40, 173, 86);
+  --uv-gray: #bad6db1f;
+  --uv-green: rgb(81, 214, 128);
   --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
   --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
@@ -206,7 +206,6 @@ main{
 .sam-button.primary{
   color: var(--bg-main);
   background-color: var(--uv-green);
-  box-shadow:  inset 0px 0px 0px 1px var(--uv-green-hover);
 }
 .only-icon{
   background-color: transparent;
@@ -316,23 +315,19 @@ a.sam-button{
   gap: 20px;
 }
 
-.step-selected{
 
-}
-
-.table-wrapper{
-  flex: 8;
+.overflow-auto{
   overflow: auto;
 }
 
 .table-actions-bottom{
-  flex: 1;
+  
   
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 50px;
-  padding: 10px 50px;
+  padding: 20px 50px;
 }
 
 table{
@@ -353,7 +348,7 @@ tbody{
 tr,
 .tr {
   width: fit-content;
-  height: 40px !important;
+  height: 10px !important;
   max-height: 40px !important;
 }
 
@@ -362,21 +357,32 @@ th,
 td,
 .td {
   
-  max-height: 30px !important;
-  padding: 0.3rem 1rem;
+  max-height: 10px !important;
+  padding: 0.65rem 0rem;
 }
 
 thead{
-  box-shadow: inset 0px -2px 1px 0px gray;
+  background-color: var(--bg-main);
   
 }
 
 th,
 .th {
   position: relative;
-  font-weight: 500;
+  font-weight: 600;
   text-align: start;
-  height: 0px;
+  overflow: hidden;
+}
+
+select {
+  min-width: 100px;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--uv-gray);
+  color: #333;
+  font-size: inherit;
+  cursor: pointer;
 }
 
 
@@ -391,7 +397,6 @@ tr{
   top: 0;
   height: 100%;
   width: 2px;
-  background: rgba(82, 82, 82, 0.5);
   cursor: col-resize;
   user-select: none;
   touch-action: none;
@@ -644,7 +649,7 @@ h2{
 }
 .tabs > li.selected-tab{
   border-bottom: 3px solid var(--uv-green);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .selectlist-item{
@@ -652,6 +657,17 @@ h2{
   max-width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.position-sticky{
+  position: sticky;
+}
+
+.bottom-0{
+  bottom: 0;
+}
+.top-0{
+  top: 0;
 }
 
 .card {
@@ -887,6 +903,8 @@ a{
   text-shadow: 2px 2px 5px rgba(0,0,0,0.33);
 }
 
+
+
 .color-white{
   color: white;
 }
@@ -896,6 +914,7 @@ a{
 .color-uv-green{
   color: var(--uv-green)
 }
+
 
 nav{
   z-index: 20;
