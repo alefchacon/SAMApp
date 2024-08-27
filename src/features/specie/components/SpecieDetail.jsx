@@ -76,9 +76,7 @@ export default function SpecieDetail({
               }
             ></TextField>
           </div>
-          <div id="especimenes">
-            <Table data={specimens}></Table>
-          </div>
+          <Table data={specimens}></Table>
         </div>
         <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>
           <div className="p-1rem gap-1rem h-100 multigraph-wrapper">

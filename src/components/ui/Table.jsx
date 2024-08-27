@@ -197,7 +197,7 @@ export default function Table({ data }) {
 
   return (
     <>
-      <div className="table-wrapper">
+      <div className="table-wrapper overflow-auto">
         <table
           {...{
             style: {
@@ -263,7 +263,7 @@ export default function Table({ data }) {
         </table>
       </div>
 
-      <div className="table-actions-bottom">
+      <div className="table-actions-bottom bg-white position-sticky bottom-0">
         <div className="table-page-buttons">
           <button
             className="sam-button secondary"
@@ -301,14 +301,15 @@ export default function Table({ data }) {
             </strong>
           </span>
         </div>
-        <div id="page-size">
+        <div className="flex-row justify-content-center align-items-center">
           <label htmlFor="page-size-select">Registros por página:</label>
           <select
+            className=""
             name="pets"
             id="page-size-select"
             onChange={handlePageSizeChange}
           >
-            <option value={pagination.pageSize}>{pagination.pageSize}</option>
+            <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
             <option value={100}>100</option>

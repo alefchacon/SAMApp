@@ -27,7 +27,7 @@ import FormTemplate from "../components/ui/FormTemplate";
 import Stepper from "../components/ui/Stepper";
 import Dropdown from "../components/ui/Dropdown";
 import DropdownItem from "../components/ui/DropdownItem";
-import Multigraph from "../features/graphing/Multigraph";
+import Uploader from "../components/ui/Uploader";
 import Button from "../components/ui/Button";
 import InfoItem from "../components/InfoItem";
 import ProgressBar from "../components/ui/ProgressBar";
@@ -132,10 +132,9 @@ function App() {
                 <NewSpecimen></NewSpecimen>
               </FormTemplate>
               */
-              <div
-                className="p-1rem gap-1rem w-100"
-                style={{ backgroundColor: "red", display: "block" }}
-              ></div>
+              <div className="p-1rem gap-1rem w-100 ">
+                <Uploader></Uploader>
+              </div>
             }
           ></Route>
 

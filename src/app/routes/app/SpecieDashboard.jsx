@@ -5,8 +5,11 @@ import SpecieDetail from "../../../features/specie/components/SpecieDetail";
 import { mockGetSpecies } from "../../../features/specie/api/getSpecies";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
-
+import Tabs from "../../../components/ui/Tabs";
+import Uploader from "../../../components/ui/Uploader";
 import Header from "../../../components/ui/Header";
+
+import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 
 import NewSpecie from "./NewSpecie";
 
@@ -20,6 +23,7 @@ export default function SpecieDashboard({ onSelectionChange }) {
   const { showModal } = useModal();
 
   const handleAddSpecie = (newSpecie) => {
+    // fkin api call goes here!! :D
     setSpecies((prev) => [newSpecie, ...prev]);
     newSpecie.id = species.length + 1;
   };
@@ -31,8 +35,38 @@ export default function SpecieDashboard({ onSelectionChange }) {
     setSpecies(updatedItems);
   };
 
+  const handleMultiAddSpecie = (species = []) => {
+    for (let i = 0; i < species.length; i++) {
+      species[i].scientific_name = `${species[i].gender} ${species[i].epithet}`;
+      handleAddSpecie(species[i]);
+    }
+  };
+
+  function MultiAddSpecie() {
+    return (
+      <Tabs>
+        <div label="Una especie">
+          <NewSpecie onSubmit={handleAddSpecie} />
+        </div>
+        <div
+          label="Múltiples"
+          className="flex-row justify-content-center align-items-center"
+        >
+          <br />
+          <Uploader
+            accept={FILE_TYPES_STRING.CSV}
+            onParse={(species) => handleMultiAddSpecie(species)}
+          ></Uploader>
+          <div className="button-row">
+            <Button>Agregar especies</Button>
+          </div>
+        </div>
+      </Tabs>
+    );
+  }
+
   const showSpecieAddModal = () =>
-    showModal("Agregar especie", <NewSpecie onSubmit={handleAddSpecie} />);
+    showModal("Agregar especie", <MultiAddSpecie />);
 
   const showSpecieEditModal = (specie) =>
     showModal(
