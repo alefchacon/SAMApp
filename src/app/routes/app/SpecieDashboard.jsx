@@ -55,11 +55,11 @@ export default function SpecieDashboard({ onSelectionChange }) {
           <br />
           <Uploader
             accept={FILE_TYPES_STRING.CSV}
-            onParse={(species) => handleMultiAddSpecie(species)}
+            buttonLabel="Agregar especies"
+            displayExtension=".CSV"
+            multiple
+            onUpload={(species) => handleMultiAddSpecie(species)}
           ></Uploader>
-          <div className="button-row">
-            <Button>Agregar especies</Button>
-          </div>
         </div>
       </Tabs>
     );

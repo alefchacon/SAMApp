@@ -16,7 +16,7 @@
 
   --uv-gray-dark: rgb(183, 192, 216);
   --uv-gray: #bad6db1f;
-  --uv-green: rgb(81, 214, 128);
+  --uv-green: #28AD56;
   --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
   --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
@@ -221,7 +221,7 @@ main{
 }
 
 .border{
-  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.75);
+  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.30);
 }
 
 .sam-button.secondary:hover{
@@ -511,6 +511,14 @@ input {
 .input.has-icon{
   padding-left: 50px;
 
+}
+
+.icon-only{
+  background-color: transparent;
+}
+
+.icon-only:hover{
+  background-color: var(--uv-gray);
 }
 
 input{
@@ -1015,6 +1023,9 @@ nav{
 
 .bg-white{
   background-color: white;
+}
+.bg-darkgray{
+  background-color: var(--uv-gray);
 }
 .bg-white-transparent{
   background-color: rgba(255, 255, 255, 0.92);

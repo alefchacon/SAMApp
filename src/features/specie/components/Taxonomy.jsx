@@ -2,7 +2,7 @@ import defaultSpecie from "../store/defaultSpecie";
 
 export default function Taxonomy({ specie = defaultSpecie }) {
   const delimiter = (
-    <span class="material-symbols-outlined flex-row align-items-center font-size-1rem color-uv-green">
+    <span className="material-symbols-outlined flex-row align-items-center font-size-1rem color-uv-green">
       chevron_right
     </span>
   );

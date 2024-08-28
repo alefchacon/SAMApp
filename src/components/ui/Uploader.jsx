@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Papa from "papaparse";
+import Button from "./Button";
+import ChipFile from "./ChipFile";
 
 import { FILE_TYPES_STRING } from "../../stores/fileTypes";
 import { useSnackbar } from "../contexts/SnackbarContext";
@@ -7,38 +9,18 @@ import ProgressBar from "./ProgressBar";
 
 export default function Uploader({
   id = "upload",
+  multiple = false,
+  buttonLabel = "Label",
+  displayExtension = ".CSV",
   accept = FILE_TYPES_STRING.CSV,
-  onParse,
+  onUpload,
 }) {
-  //const [jsonData, setJsonData] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [parsedFiles, setParsedFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
 
   //const { showSnackbar } = useSnackbar();
-
-  const getParseMethod = (file) => {
-    switch (accept) {
-      case FILE_TYPES_STRING.CSV:
-        parseCSV(file);
-        break;
-    }
-  };
-
-  function parseCSV(file) {
-    setIsParsing(true);
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (result) => {
-        //setJsonData(result.data);
-        setIsParsing(false);
-        onParse(result.data);
-      },
-      error: (error) => {
-        console.error("Error while parsing:", error);
-      },
-    });
-  }
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -49,23 +31,73 @@ export default function Uploader({
     setIsDragging(false);
   };
 
-  const handleDropUpload = (event) => {
+  const handleDropFile = (event) => {
     event.preventDefault();
     setIsDragging(false);
-    const file = event.dataTransfer.files[0];
+    const newFiles = event.dataTransfer.files;
 
-    const fileTypeIsValid = accept.split(",").includes(file.type);
-    if (!fileTypeIsValid) {
-      console.log("NOPE!!!");
-      return;
-    }
-
-    getParseMethod(file);
+    parseFiles(newFiles);
   };
 
-  const handleClickUpload = (event) => {
-    const file = event.target.files[0];
-    getParseMethod(file);
+  const handleClickFile = async (event) => {
+    const newFiles = Array.from(event.target.files);
+
+    parseFiles(newFiles);
+  };
+
+  const parseFiles = async (newFiles = []) => {
+    setIsParsing(true);
+
+    for (let i = 0; i < newFiles.length; i++) {
+      const fileTypeIsValid = accept.split(",").includes(newFiles[0].type);
+      if (!fileTypeIsValid) {
+        setIsParsing(false);
+        console.log("NOPE!!!");
+        return;
+      }
+    }
+
+    setFiles((prev) => [...prev, ...newFiles]);
+    await parseByType(newFiles);
+    setIsParsing(false);
+  };
+
+  const parseByType = async (fileArray = []) => {
+    try {
+      switch (accept) {
+        case FILE_TYPES_STRING.CSV:
+          for (let file of fileArray) {
+            parseCSV(file);
+          }
+          break;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  function parseCSV(file) {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => {
+        setParsedFiles((prev) => [...prev, result.data]);
+      },
+      error: (error) => {
+        console.error("Error while parsing:", error);
+      },
+    });
+  }
+
+  const handleRemoveFile = (indexToDelete = 0) => {
+    setFiles((prev) => prev.filter((_, index) => index !== indexToDelete));
+    setParsedFiles((prev) =>
+      prev.filter((_, index) => index !== indexToDelete)
+    );
+  };
+
+  const handleUpload = () => {
+    //onUpload(parsedData);
   };
 
   return (
@@ -78,7 +110,7 @@ export default function Uploader({
         style={{ overflow: "hidden", paddingBottom: "1rem" }}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onDrop={handleDropUpload}
+        onDrop={handleDropFile}
       >
         <ProgressBar visible={isParsing}></ProgressBar>
         <span
@@ -87,15 +119,32 @@ export default function Uploader({
         >
           upload
         </span>
-        Clic para seleccionar su archivo .CSV, o arrastrelo aquí.
+        Clic para seleccionar su archivo {displayExtension}, o arrastrelo aquí.
       </label>
+
+      <div className="file-list gap-05rem p-05rem grid">
+        {files.map((file, index) => (
+          <ChipFile
+            index={index}
+            fileName={file.name}
+            extension={file.name.split(".").pop()}
+            onRemove={handleRemoveFile}
+          />
+        ))}
+      </div>
+
+      <div className="button-row">
+        <button onClick={() => console.log(parsedFiles)}>asdf</button>
+        <Button onClick={handleUpload}>{buttonLabel}</Button>
+      </div>
 
       <input
         style={{ opacity: 0, position: "absolute", zIndex: -1 }}
         type="file"
         id={id}
         accept={accept}
-        onChange={handleClickUpload}
+        onChange={handleClickFile}
+        multiple={multiple}
       />
     </>
   );

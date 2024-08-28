@@ -7,7 +7,7 @@ import { useModal } from "../../components/contexts/ModalContext";
 import { Link } from "react-router-dom";
 import LogInForm from "./LogInForm";
 export default function Account({
-  authenticated = true,
+  authenticated = false,
   accessRequestCount = "",
 }) {
   const { showModal } = useModal();
