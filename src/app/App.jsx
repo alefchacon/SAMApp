@@ -14,14 +14,14 @@ import NewSpecie from "./routes/app/NewSpecie";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 import AccessRequests from "./routes/app/AccessRequests";
+import Photosheets from "./routes/app/Photosheets";
 
 import SpecieList from "../features/specie/components/SpecieList";
 import SpecieDetail from "../features/specie/components/SpecieDetail";
 
 import { mockGetSpecies } from "../features/specie/api/getSpecies";
 
-import Account from "../features/user/Account";
-
+import Account from "../features/auth/components/Account";
 // COMPONENTS
 import FormTemplate from "../components/ui/FormTemplate";
 import Stepper from "../components/ui/Stepper";
@@ -31,12 +31,16 @@ import Uploader from "../components/ui/Uploader";
 import Button from "../components/ui/Button";
 import InfoItem from "../components/InfoItem";
 import ProgressBar from "../components/ui/ProgressBar";
+import RouteGuard from "../components/logic/RouteGuard";
+
+import { useAxiosInterceptors } from "../lib/apiClient";
 
 // CSS
 import "./App.css";
 
 import { getAccessRequestsCount } from "../features/access/api/getAccessRequests";
 function App() {
+  useAxiosInterceptors();
   const location = useLocation();
   const [species, setSpecies] = useState([]);
   const [accessRequestCount, setAccessRequestCount] = useState("");
@@ -120,6 +124,15 @@ function App() {
               <Landing species={species}>
                 <Searchbar items={species}></Searchbar>
               </Landing>
+            }
+          ></Route>
+          <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
+          <Route
+            path={"/fichas"}
+            element={
+              <RouteGuard>
+                <Photosheets />
+              </RouteGuard>
             }
           ></Route>
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>

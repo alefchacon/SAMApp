@@ -44,28 +44,24 @@ export default function TextField({
         >
           {helperText}
         </div>
-        {hasError && (
-          <div
-            className={`sam-text-field-error-text`}
-            htmlFor={`${id}`}
-            id={`${id}-error-message`}
-          >
-            {errorMessage}
-          </div>
-        )}
       </div>
 
       <div
         style={{
           height: "50px",
           display: "flex",
+          position: "relative",
         }}
-        className="flex-row  align-items-center"
+        className="flex-row align-items-center"
       >
         {iconType && (
           <span
             className="material-symbols-outlined p-1rem"
-            style={{ position: "absolute" }}
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+            }}
           >
             {iconType}
           </span>
@@ -73,7 +69,7 @@ export default function TextField({
         {customIcon && (
           <span
             className="material-symbols-outlined p-1rem"
-            style={{ position: "absolute" }}
+            style={{ position: "fixed" }}
           >
             {customIcon}
           </span>
@@ -83,7 +79,9 @@ export default function TextField({
             id={id}
             name={name}
             type={type}
-            className={`${getErrorClassName()} input`}
+            className={`input ${getErrorClassName()} ${fullwidth && "w-100"} ${
+              fullwidth && "h-100"
+            } ${iconType || customIcon ? "has-icon" : ""}`}
             maxLength={maxLength}
             disabled={disabled}
             value={value}
@@ -104,6 +102,16 @@ export default function TextField({
           ></input>
         )}
       </div>
+
+      {hasError && (
+        <div
+          className={`sam-text-field-error-text`}
+          htmlFor={`${id}`}
+          id={`${id}-error-message`}
+        >
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 }

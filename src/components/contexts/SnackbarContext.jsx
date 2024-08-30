@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // CUSTOM COMPONENTS
 import Snackbar from "../ui/Snackbar";
 
-const SnackbarContext = createContext(null);
+export const SnackbarContext = createContext(null);
 
 export function useSnackbar() {
   return useContext(SnackbarContext);
@@ -15,20 +15,18 @@ export function SnackbarProvider({ children }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [handleUndo, setHandleUndo] = useState(null);
-  const [content, setContent] = useState(null);
-  const [snackbarType, setSnackbarType] = useState({});
+  const [isError, setIsError] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState();
 
-  const showSnackbar = (type = null) => {
-    if (type === null) {
-      throw new Error("Please provide a snackbar type.");
-    }
+  const showSnackbar = (content = "This is a snackbar.", isError = false) => {
     /*
     setMessage(message);
     setContent(content);
     setHandleUndo(() => onUndo);
     */
-    console.log(type);
-    setSnackbarType(type);
+
+    setSnackbarContent(content);
+    setIsError(isError);
     setOpen(true);
   };
 
@@ -47,11 +45,13 @@ export function SnackbarProvider({ children }) {
     <SnackbarContext.Provider value={{ showSnackbar }}>
       {children}
       <Snackbar
+        isError={isError}
         open={open}
         onClose={handleClose}
         autoHideDuration={6000}
-        type={snackbarType}
-      />
+      >
+        {snackbarContent}
+      </Snackbar>
     </SnackbarContext.Provider>
   );
 }

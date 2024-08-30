@@ -46,6 +46,8 @@ export default function Uploader({
   };
 
   const parseFiles = async (newFiles = []) => {
+    console.log(newFiles);
+
     setIsParsing(true);
 
     for (let i = 0; i < newFiles.length; i++) {
@@ -134,7 +136,6 @@ export default function Uploader({
       </div>
 
       <div className="button-row">
-        <button onClick={() => console.log(parsedFiles)}>asdf</button>
         <Button onClick={handleUpload}>{buttonLabel}</Button>
       </div>
 

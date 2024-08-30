@@ -10,7 +10,7 @@ export default function Tabs({ children, className }) {
   return (
     <div className="flex-col">
       <ul
-        className={`tabs ${className} bg-white justify-content-center`}
+        className={`tabs divider ${className} bg-white justify-content-center`}
         style={{
           position: "sticky",
           top: 0,

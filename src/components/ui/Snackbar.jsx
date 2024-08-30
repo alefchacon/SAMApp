@@ -15,8 +15,10 @@ import { snackbarTypes } from "../contexts/snackbarTypes";
 export default function Snackbar({
   open = false,
   onClose,
-  duration = 5000,
-  type,
+  duration = 10000,
+  children,
+  isError = false,
+  iconType = "add",
 }) {
   const [isOpen, setIsOpen] = useState(open);
 
@@ -28,7 +30,7 @@ export default function Snackbar({
       const timer = setTimeout(() => {
         setIsOpen(false);
         onClose();
-      }, 1000);
+      }, duration);
 
       return () => clearTimeout(timer);
     } else {
@@ -37,16 +39,21 @@ export default function Snackbar({
   }, [open]);
 
   return (
-    <div className={`snackbar ${isOpen ? "visible" : "invisible"}`}>
-      <div>
-        <CheckIcon></CheckIcon>
-        {type.message}
+    <div
+      className={`snackbar ${isError && "error"} ${
+        isOpen ? "visible" : "invisible"
+      }`}
+    >
+      <div className="flex-row">
+        <span className="material-symbols-outlined">
+          {isError ? "error" : iconType}
+        </span>
+        {children}
       </div>
       <Button
-        onClick={type.action}
-        label={type.labelAction}
-        variant="text"
-        icon={type.icon}
+        className="icon-only color-white"
+        iconType="close"
+        onClick={() => setIsOpen(false)}
       ></Button>
     </div>
   );

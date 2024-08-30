@@ -31,7 +31,7 @@
   --bg-hovered2: rgba(28, 175, 79, 0.249);
   --disabled: rgba(129, 129, 129, 0.63);
 
-  --dark: rgba(51, 51, 51, 0.87);
+  --dark: rgba(0, 0, 0, 0.7);
 
   background-color: var(--uv-gray);
 }
@@ -514,11 +514,12 @@ input {
 }
 
 .icon-only{
+  padding: 5px 10px;
   background-color: transparent;
 }
 
 .icon-only:hover{
-  background-color: var(--uv-gray);
+  background-color: var(--dark);
 }
 
 input{
@@ -571,15 +572,19 @@ h2{
   position: fixed;
   right: 0;
   bottom: 0;
-  padding: 5px 5px 5px 10px;
-  margin: 15px 15px;
-  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  margin: 30px 30px;
+  border-radius: 100px;
   display: flex;
   justify-content: start;
   align-items: center;
-  gap: 80px;
+  gap: 50px;
   box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.562);
+  z-index: 10000;
+}
 
+.error{
+  background-color: var(--error) !important;
 }
 
 .snackbar > div{
@@ -671,6 +676,13 @@ h2{
   position: sticky;
 }
 
+.position-relative{
+  position: relative !important;
+}
+.position-absolute{
+  position: absolute !important;
+}
+
 .bottom-0{
   bottom: 0;
 }
@@ -731,6 +743,10 @@ input[type='checkbox']{
 
 .hoverable:hover .hoverable-actions, .hoverable2:hover .hoverable-actions{
   display: flex; 
+}
+
+.hoverable2:hover .show-on-hover{
+  display: flex !important; 
 }
 
 .row-actions{
@@ -949,6 +965,36 @@ nav{
   overflow: auto;
 }
 
+.text-wrap{
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.photosheet-gallery{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.photosheet-description{
+  height: 45px;
+  transition: height 0.2s ease-in-out;
+}
+
+.photosheet {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center; 
+}
+
+.photosheet-wrapper:hover .photosheet-description{
+  height: 160px !important;
+  
+}
+
+
 .landing-search> div:first-child{
   align-items: center;
   margin: 0;
@@ -995,6 +1041,9 @@ nav{
 .align-items-center{
   align-items: center;
 }
+.align-items-end{
+  align-items: end;
+}
 
 .hide-if-desktop{
   display: none;
@@ -1033,8 +1082,13 @@ nav{
 
 
 .bg-black-transparent{
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--dark);
 }
+
+.page{
+  padding: 0 300px;
+}
+
 
 @media only screen and (max-width: 1400px) {
 
@@ -1042,11 +1096,22 @@ nav{
     grid-template-columns: repeat(1, 1fr);
   }
 
+  .photosheet-gallery{
+    
+    grid-template-columns: repeat(2, 1fr);
+  }  
+
   .grid{
     grid-template-columns: repeat(2, 1fr);
   }
+  .page{
+    padding: 0 100px;
+  }
 }
 @media only screen and (max-width: 900px) {
+  .page{
+    padding: 0;
+  }
   .sam-form {
     
     max-width: 100%;
