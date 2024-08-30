@@ -56,6 +56,7 @@ export default function SpecieList({
           <ul role="list" className="specie-list-items">
             {species.map((specie, index) => (
               <div
+                key={index}
                 className={"hoverable"}
                 style={{
                   alignItems: "center",

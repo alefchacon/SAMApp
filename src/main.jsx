@@ -10,11 +10,11 @@ import { ModalProvider } from "./components/contexts/ModalContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ModalProvider>
-      <BrowserRouter>
-        <SnackbarProvider>
+      <SnackbarProvider>
+        <BrowserRouter>
           <App />
-        </SnackbarProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </SnackbarProvider>
     </ModalProvider>
   </React.StrictMode>
 );

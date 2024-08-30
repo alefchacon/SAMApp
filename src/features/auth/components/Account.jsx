@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
-import Button from "../../components/ui/Button";
-import Dropdown from "../../components/ui/Dropdown";
-import DropdownItem from "../../components/ui/DropdownItem";
-import { useModal } from "../../components/contexts/ModalContext";
+import Button from "../../../components/ui/Button";
+
+import Dropdown from "../../../components/ui/Dropdown";
+import DropdownItem from "../../../components/ui/DropdownItem";
+import { useModal } from "../../../components/contexts/ModalContext";
 import { Link } from "react-router-dom";
-import LogInForm from "./LogInForm";
+import LogInForm from "../components/LogInForm";
 export default function Account({
-  authenticated = true,
+  authenticated = false,
   accessRequestCount = "",
 }) {
   const { showModal } = useModal();

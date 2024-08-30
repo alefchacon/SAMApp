@@ -197,7 +197,7 @@ export default function Table({ data }) {
 
   return (
     <>
-      <div className="table-wrapper overflow-auto">
+      <div className="table-wrapper overflow-auto rounded-20">
         <table
           {...{
             style: {
