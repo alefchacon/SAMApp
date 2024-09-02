@@ -36,7 +36,7 @@ export default function Photosheets() {
     showModal("Agregar ficha fotográfica", <PhotosheetForm />);
   };
   return (
-    <div className="flex-col">
+    <div className="flex-col h-100">
       <Header></Header>
       <div className="page h-100">
         <div className="button-row">

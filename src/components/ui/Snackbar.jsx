@@ -40,7 +40,7 @@ export default function Snackbar({
 
   return (
     <div
-      className={`snackbar ${isError && "error"} ${
+      className={`snackbar box-shadow ${isError && "error"} ${
         isOpen ? "visible" : "invisible"
       }`}
     >

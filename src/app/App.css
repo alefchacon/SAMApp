@@ -579,7 +579,6 @@ h2{
   justify-content: start;
   align-items: center;
   gap: 50px;
-  box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.562);
   z-index: 10000;
 }
 

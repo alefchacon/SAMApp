@@ -6,10 +6,15 @@ import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
 import logIn from "../api/logIn.js";
+import { useStatus } from "../../../components/contexts/StatusContext.jsx";
 
-export default function LogInForm() {
-  const handleSubmit = (values, actions) => {
-    logIn(values.username, values.password);
+export default function LogInForm({ onSubmit }) {
+  const { setCredentials } = useStatus();
+
+  const handleSubmit = async (values, actions) => {
+    const credentials = await logIn(values.username, values.password);
+    setCredentials(credentials);
+    onSubmit();
   };
 
   return (
@@ -20,16 +25,7 @@ export default function LogInForm() {
           onSubmit={handleSubmit}
           validationSchema={loginSchema}
         >
-          {({
-            values,
-            errors,
-            touched,
-            isValid,
-            dirty,
-            setFieldValue,
-            handleChange,
-            handleBlur,
-          }) => (
+          {({ values, errors, touched, handleChange, handleBlur }) => (
             <Form autoComplete="off">
               <TextField
                 name="username"
