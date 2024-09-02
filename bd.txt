@@ -1,0 +1,82 @@
+SHADE, no
+SUITE, no
+SI??E
+S??IE l 
+
+
+No es cuestion de si necesita difusion, es QUE tipo de difusion
+Edicion al Evento debe notificar a todos los responsables.
+Formulario de notificacion deberia tener un disclaimer de que 
+todo evento debe contar con el visto bueno de la jefatura.
+Notificacion> necesita maestro de ceremonia?
+
+EU R
+
+PRUDE, no
+PRIDE, no
+PRICK, no
+PRANK, no
+PRISM, no
+PRUNE, no
+?RU??
+
+ERU
+
+
+npx tailwindcss -i ./css/input.css -o ./css/output.css --watch
+
+
+<div class="specimens">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Hanndle</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+INSERT INTO public.species_specie (scientific_name, class_specie, orden, family, gender, epithet, subspecie) VALUES ('Marmosa mexicana','Mammalia','Dildelphimorphia','Didelphidae','Marmosa','mexicana','mexicana');
+INSERT INTO public.species_specie (scientific_name, class_specie, orden, family, gender, epithet, subspecie) VALUES ('Desmodus rotundus mirinus','Mammalia','Chiroptera','Phyllostomeidae','Desmodus','rotundus','mirinus');
+
+INSERT INTO species_specimen (catalog_id, status, length_total, length_ear, length_paw, length_tail, sex, weight, number_embryos, colection_code, colection_date, hour, comment, specie_id, class_age, preparation_date) 
+	VALUES ('Desmodus rotundus mirinus','Mammalia','Chiroptera','Phyllostomeidae','Desmodus','rotundus','mirinus');
+
+INSERT INTO user_academic (names, father_last_name,mother_last_name, state, major, city, college, position, degree, user_id) VALUES ('Karla', 'Carrión', 'Hernández', 'Veracruz', 'Biología', 'Xalapa', 'Universidad Veracruzana', 'Jefa de Carrera', 'Maestría de etc etc', 4);
+
+psql -U postgres
+
+DELETE FROM species_specie WHERE scientific_name = 'asdf'
+
+"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMDYyOTg4NywiaWF0IjoxNzEwNTQzNDg3LCJqdGkiOiIyNzc1ZWY4ZmQ3NWQ0NjIwYjFiYTAyN2QzODBkN2Y1MCIsInVzZXJfaWQiOjJ9.jeiLTtM4ihKq0rP5ORVpa220BU4_-ljt-9aEzZ8tSRQ",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwNTQ1ODg3LCJpYXQiOjE3MTA1NDM0ODcsImp0aSI6IjdmNGIxNTc1OGUwZDQzMjNiYzY1OWJjNGNhYjJlZDhkIiwidXNlcl9pZCI6Mn0.EbzWJG8gydGFFr5xstt9JCD6YO0B36qvE4Y1weP9Zuw"
+
+psql -h localhost -d mammalogy_colection -U admin_mammalogy_colection -p 5432
+
+SELECT mammalogy_colection
+FROM information_schema.schemata;
+

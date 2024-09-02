@@ -6,15 +6,18 @@ import "./index.css";
 
 import { SnackbarProvider } from "./components/contexts/SnackbarContext.jsx";
 import { ModalProvider } from "./components/contexts/ModalContext.jsx";
+import { StatusProvider } from "./components/contexts/StatusContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ModalProvider>
-      <SnackbarProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </SnackbarProvider>
-    </ModalProvider>
+    <StatusProvider>
+      <ModalProvider>
+        <SnackbarProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SnackbarProvider>
+      </ModalProvider>
+    </StatusProvider>
   </React.StrictMode>
 );

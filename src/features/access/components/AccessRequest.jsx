@@ -1,4 +1,4 @@
-import InfoItem from "../../../components/InfoItem";
+import InfoItem from "../../../components/ui/InfoItem";
 import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import Button from "../../../components/ui/Button";
 import LOREM_IPSUM from "../../../stores/loremIpsum";

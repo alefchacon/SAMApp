@@ -1,21 +1,27 @@
 import { useState, useRef, useEffect } from "react";
 
 import Button from "../../../components/ui/Button";
-
-import Dropdown from "../../../components/ui/Dropdown";
-import DropdownItem from "../../../components/ui/DropdownItem";
 import { useModal } from "../../../components/contexts/ModalContext";
 import { Link } from "react-router-dom";
 import LogInForm from "../components/LogInForm";
+import { useStatus } from "../../../components/contexts/StatusContext";
+import Dropdown from "../../../components/ui/Dropdown";
+import DropdownItem from "../../../components/ui/DropdownItem";
+
 export default function Account({
   authenticated = false,
   accessRequestCount = "",
 }) {
-  const { showModal } = useModal();
+  const { showModal, closeModal } = useModal();
+  const { profile, logOutFront } = useStatus();
+
+  const handleLogOut = async () => {
+    logOutFront();
+  };
 
   return (
     <>
-      {authenticated ? (
+      {Boolean(profile) ? (
         <div className="flex-row align-items-center gap-1rem">
           <Link to={"/solicitudes"}>
             <div style={{ position: "relative" }}>
@@ -45,15 +51,27 @@ export default function Account({
               ></Button>
             </div>
           </Link>
-          <Button iconType="person" className="secondary">
-            Usuario
-          </Button>
+          <Dropdown
+            header={
+              <div>
+                <p>{profile.names}</p>
+                <p className="caption">{profile.role}</p>
+              </div>
+            }
+          >
+            <DropdownItem
+              primary={"Cerrar sesión"}
+              onClick={handleLogOut}
+            ></DropdownItem>
+          </Dropdown>
         </div>
       ) : (
         <div className="flex-row">
           <Button
             iconType="login"
-            onClick={() => showModal("Entrar", <LogInForm />)}
+            onClick={() =>
+              showModal("Entrar", <LogInForm onSubmit={closeModal} />)
+            }
           >
             Entrar
           </Button>

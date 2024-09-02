@@ -29,12 +29,13 @@ import Dropdown from "../components/ui/Dropdown";
 import DropdownItem from "../components/ui/DropdownItem";
 import Uploader from "../components/ui/Uploader";
 import Button from "../components/ui/Button";
-import InfoItem from "../components/InfoItem";
+import InfoItem from "../components/ui/InfoItem";
 import ProgressBar from "../components/ui/ProgressBar";
 import RouteGuard from "../components/logic/RouteGuard";
 
-import { useAxiosInterceptors } from "../lib/apiClient";
+import Navbar from "../components/ui/Navbar";
 
+import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 // CSS
 import "./App.css";
 
@@ -70,50 +71,7 @@ function App() {
 
   return (
     <>
-      <nav
-        className="flex-row justify-content-space-between"
-        style={{ minHeight: "70px", position: "relative" }}
-      >
-        <div className="flex-row align-items-center gap-2rem">
-          NAVBAR
-          <div className="flex-row gap-1rem align-items-center hide-if-mobile">
-            <Link to={"/coleccion"} className="selectable p-1rem rounded">
-              <InfoItem label={"Colección"} iconType={"pets"}></InfoItem>
-            </Link>
-            <Link to={"/fichas"} className="selectable p-1rem rounded">
-              <InfoItem
-                label={"Fichas fotográficas"}
-                iconType={"photo"}
-              ></InfoItem>
-            </Link>
-            <Dropdown
-              header={
-                <InfoItem label={"Acerca de..."} iconType={"help"}></InfoItem>
-              }
-            >
-              <DropdownItem
-                primary={"Instituto de Investigaciones Biológicas"}
-              />
-              <DropdownItem primary={"Otra opción idk"} />
-            </Dropdown>
-          </div>
-        </div>
-        <span></span>
-        {/*
-        <Searchbar items={species}></Searchbar>
-        */}
-        <div className="flex-row">
-          <Button iconType="search" className="secondary"></Button>
-          <div className="hide-if-mobile">
-            <Account accessRequestCount={accessRequestCount}></Account>
-          </div>
-          <Button
-            className="secondary flex-if-mobile hide-if-desktop"
-            iconType="menu"
-          ></Button>
-        </div>
-        <ProgressBar main></ProgressBar>
-      </nav>
+      <Navbar accessRequestCount={accessRequestCount}></Navbar>
       <main>
         {/*SPECIE AND SPECIMEN*/}
 

@@ -15,6 +15,8 @@ import "moment/dist/locale/es-mx";
 
 import Multigraph from "../../graphing/Multigraph";
 
+import { getSpecimenListAcademic } from "../../specimens/api/GetSpecimenListAcademic";
+
 const METRICAS_TAB_KEY = "METRICAS";
 
 // API CALLS
@@ -68,7 +70,9 @@ export default function SpecieDetail({
       <Tabs className={"divider"}>
         <div label={"Especímenes"} className="flex-col">
           <div className="p-1rem gap-1rem flex-row align-items-center">
-            <Button variant={"primary"}>Agregar espécimen</Button>
+            <Button variant={"primary"} onClick={getSpecimenListAcademic}>
+              Agregar espécimen
+            </Button>
             <TextField
               iconType={"search"}
               placeholder={
