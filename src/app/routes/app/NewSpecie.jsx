@@ -20,9 +20,9 @@ import {
   getGenders,
   getEpithets,
   getSubspecies,
-} from "../../../features/specie/api/getSpecies";
+} from "../../../features/specie/dataAccess/getSpecies";
 
-import { mockGetSpecie } from "../../../features/specie/api/getSpecie";
+import { mockGetSpecie } from "../../../features/specie/dataAccess/getSpecie";
 
 export default function NewSpecie({
   onSubmit,

@@ -2,8 +2,8 @@ import { api } from "../../../lib/apiClient"
 import { LOGIN_URL } from "./authUrls"
 import CREDENTIALS_KEYS from "../../../stores/credentialsKeys"
 import { ROLE_TYPES } from "../../../stores/roleTypes"
-import getAcademics from "../../user/api/getAcademics"
-import getTechnicalPersons from "../../user/api/getTechnicalPersons"
+import getAcademics from "../../user/dataAccess/getAcademics"
+import getTechnicalPersons from "../../user/dataAccess/getTechnicalPersons"
 
 import { jwtDecode } from "jwt-decode"
 
@@ -40,6 +40,7 @@ const logIn = async (username = "", password = "") => {
   const userId = jwtDecode(accessToken)["user_id"];
   const academics = (await getAcademics()).data;
   const technicalPersons = (await getTechnicalPersons()).data;
+
   let matchingAcademic = 
     academics.filter(academic => academic.user === userId)[0];
   if (matchingAcademic){
@@ -49,14 +50,7 @@ const logIn = async (username = "", password = "") => {
   let matchingTechnicalPerson = 
     technicalPersons.filter(technicalPerson => technicalPerson.user === userId)[0];
 
-  if (matchingTechnicalPerson){
-    matchingTechnicalPerson.role = ROLE_TYPES.TECHNICAL_PERSON;
-  }
-
-  let allNames = matchingTechnicalPerson.fullname.split(" ");
-  matchingTechnicalPerson["mother_last_name"] = allNames.pop();
-  matchingTechnicalPerson["father_last_name"] = allNames.pop();
-  matchingTechnicalPerson["names"] = allNames.join(" ");
+  processTechnicalPerson(matchingTechnicalPerson);
   
   const credentials = {
     userId: userId,
@@ -68,8 +62,20 @@ const logIn = async (username = "", password = "") => {
     CREDENTIALS_KEYS.CREDENTIALS, 
     JSON.stringify(credentials));
 
-  return credentials;  
+  window.location.reload();
+    
 }
 
+const processTechnicalPerson = (technicalPerson) => {
+  if (!Boolean(technicalPerson)){
+    return;
+  }
+  
+  technicalPerson.role = ROLE_TYPES.TECHNICAL_PERSON;
+  let allNames = technicalPerson.fullname.split(" ");
+  technicalPerson["mother_last_name"] = allNames.pop();
+  technicalPerson["father_last_name"] = allNames.pop();
+  technicalPerson["names"] = allNames.join(" ");
+}
 
 export default logIn

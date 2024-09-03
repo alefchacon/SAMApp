@@ -12,7 +12,7 @@ function getRandomString(length) {
   return result;
 }
 
-export const getSpecimens = async (amount) => {
+export const mockGetSpecimens = async (amount) => {
   let specimens = [];
   for (let i = 0; i < amount; i++){
     specimens.push({

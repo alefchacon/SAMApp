@@ -19,38 +19,38 @@ import Photosheets from "./routes/app/Photosheets";
 import SpecieList from "../features/specie/components/SpecieList";
 import SpecieDetail from "../features/specie/components/SpecieDetail";
 
-import { mockGetSpecies } from "../features/specie/api/getSpecies";
+import {
+  mockGetSpecies,
+  getSpecieList,
+} from "../features/specie/dataAccess/getSpecies";
 
-import Account from "../features/auth/components/Account";
 // COMPONENTS
-import FormTemplate from "../components/ui/FormTemplate";
-import Stepper from "../components/ui/Stepper";
-import Dropdown from "../components/ui/Dropdown";
-import DropdownItem from "../components/ui/DropdownItem";
 import Uploader from "../components/ui/Uploader";
-import Button from "../components/ui/Button";
-import InfoItem from "../components/ui/InfoItem";
-import ProgressBar from "../components/ui/ProgressBar";
 import RouteGuard from "../components/logic/RouteGuard";
 
-import Navbar from "../components/ui/Navbar";
+import { ROLE_TYPES } from "../stores/roleTypes";
 
+import Navbar from "../components/ui/Navbar";
+import { useStatus } from "../components/contexts/StatusContext";
 import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 // CSS
 import "./App.css";
 
-import { getAccessRequestsCount } from "../features/access/api/getAccessRequests";
+import { getAccessRequestsCount } from "../features/access/dataAccess/getAccessRequests";
 function App() {
   useAxiosInterceptors();
   const location = useLocation();
   const [species, setSpecies] = useState([]);
   const [accessRequestCount, setAccessRequestCount] = useState("");
+  const { profile } = useStatus();
+  const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
   useEffect(() => {
     async function fetchSpecies() {
-      const species = await mockGetSpecies();
-      const accessRequestResponse = await getAccessRequestsCount();
-      setAccessRequestCount(accessRequestResponse.data);
+      //const species = await mockGetSpecies();
+      //const accessRequestResponse = await getAccessRequestsCount();
+      //setAccessRequestCount(accessRequestResponse.data);
+      const species = (await getSpecieList()).data;
       setSpecies(species);
     }
 
@@ -89,7 +89,7 @@ function App() {
             path={"/fichas"}
             element={
               <RouteGuard>
-                <Photosheets />
+                <Photosheets role={ROLE} />
               </RouteGuard>
             }
           ></Route>
@@ -112,7 +112,10 @@ function App() {
           <Route
             path={"/coleccion?:name?/:catalog_id?"}
             element={
-              <SpecieDashboard onSelectionChange={handleSelectedSpecieChange} />
+              <SpecieDashboard
+                onSelectionChange={handleSelectedSpecieChange}
+                role={ROLE}
+              />
             }
           ></Route>
           <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>

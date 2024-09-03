@@ -1,3 +1,5 @@
+import { api } from "../../../lib/apiClient";
+import { SPECIE_URL } from "./specieURL";
 
 
 export const mockGetSpecies = async () => {
@@ -140,7 +142,11 @@ export const mockGetSpecies = async () => {
   ];
 } 
   
-  
+export const getSpecieList = async () => {
+  const response = await api.get(SPECIE_URL);
+  return response;
+}   
+
   export const getOrdens = async () => {
     const species = await mockGetSpecies();
     const allOrdens =  species.map(specie => specie["orden"]);

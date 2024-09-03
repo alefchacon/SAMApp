@@ -5,7 +5,7 @@ import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
-import logIn from "../api/logIn.js";
+import logIn from "../dataAccess/logIn.js";
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
 
 export default function LogInForm({ onSubmit }) {
