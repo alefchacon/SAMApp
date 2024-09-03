@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, isValidElement } from "react";
 
 export default function Tabs({ children, className }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -7,6 +7,29 @@ export default function Tabs({ children, className }) {
     setSelectedIndex(tabIndex);
   };
 
+  function preventSingleTabCrash() {
+    const theresOnlyOneTab = !Array.isArray(children);
+    if (theresOnlyOneTab) {
+      children = [children];
+    }
+  }
+  preventSingleTabCrash();
+
+  function preventConditionalTabCrash() {
+    /*
+      Suppose you conditionally render a tab, like:
+      <Tabs>
+        {foo && <div label="Conditional tab"></div>}
+      </Tabs>
+
+      If foo = true, Tabs will receive a React element and render as expected. 
+      But if !foo, then Tabs receives a "false" boolean value and crashes, 
+      so we need to remove any such values:
+    */
+    children = children.filter((child) => isValidElement(child));
+  }
+  preventConditionalTabCrash();
+
   return (
     <div className="flex-col">
       <ul
@@ -14,7 +37,7 @@ export default function Tabs({ children, className }) {
         style={{
           position: "sticky",
           top: 0,
-          zIndex: 1000,
+          zIndex: 5,
         }}
       >
         {children.map((tab, index) => (

@@ -6,16 +6,22 @@ import Uploader from "../../../components/ui/Uploader";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
 
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
+import { useStatus } from "../../../components/contexts/StatusContext";
 
 import messages from "../../../validation/messages";
 
 import LOREM_IPSUM from "../../../stores/loremIpsum";
 
 import { useModal } from "../../../components/contexts/ModalContext";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
 
-export default function Photosheets() {
+export default function Photosheets({
+  role = ROLE_TYPES.VISITOR,
+  isTechnicalPerson = false,
+}) {
   const { showModal } = useModal();
   const { showSnackbar } = useSnackbar();
+  const { profile } = useStatus();
 
   function PhotosheetForm() {
     return (
@@ -36,41 +42,29 @@ export default function Photosheets() {
     showModal("Agregar ficha fotográfica", <PhotosheetForm />);
   };
   return (
-    <div className="flex-col h-100">
+    <div className="flex-col w-100">
       <Header></Header>
       <div className="page h-100">
         <div className="button-row">
           {" "}
-          <Button onClick={showAddPhotosheetModal}>
-            Agregar ficha fotográfica
-          </Button>
-          <Button
-            onClick={() =>
-              showSnackbar(
-                <div>
-                  asdf <Button>:D</Button>
-                </div>
-              )
-            }
-          >
-            snack!
-          </Button>
+          {role === ROLE_TYPES.TECHNICAL_PERSON && (
+            <Button onClick={showAddPhotosheetModal}>
+              Agregar ficha fotográfica
+            </Button>
+          )}
           <TextField
             iconType={"search"}
             placeholder={"Filtrar fichas por descripción"}
           ></TextField>
         </div>
         <br />
-        <div
-          className="photosheet-gallery h-100 "
-          style={{
-            gap: 3,
-            maxWidth: "100%",
-            overflow: "hidden",
-          }}
-        >
+        <div className="photosheet-gallery h-100 gap-05rem">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((num, index) => (
-            <Photosheet key={index} description={LOREM_IPSUM.FIRST_100} />
+            <Photosheet
+              key={index}
+              description={LOREM_IPSUM.FIRST_100}
+              role={role}
+            />
           ))}
         </div>
       </div>

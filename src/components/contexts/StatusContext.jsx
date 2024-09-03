@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import CREDENTIALS_KEYS from "../../stores/credentialsKeys";
 import { ROLE_TYPES } from "../../stores/roleTypes";
 
-import logOut from "../../features/auth/api/logOut";
+import logOut from "../../features/auth/dataAccess/logOut";
 
 export const StatusContext = createContext(null);
 

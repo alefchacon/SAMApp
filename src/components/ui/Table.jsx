@@ -17,7 +17,6 @@ import TextField from "./TextField";
 import DeleteIcon from "../icons/DeleteIcon";
 
 // API CALLS
-import { getSpecimens } from "../../features/specimens/api/GetSpecimens";
 
 import "../../app/App.css";
 

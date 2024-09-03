@@ -15,15 +15,19 @@ import "moment/dist/locale/es-mx";
 
 import Multigraph from "../../graphing/Multigraph";
 
-import { getSpecimenListAcademic } from "../../specimens/api/GetSpecimenListAcademic";
-
 const METRICAS_TAB_KEY = "METRICAS";
 
+//import getSpecimens from "../../specimens/api/GetSpecimenList";
+
 // API CALLS
-import { getSpecimens } from "../../specimens/api/GetSpecimens";
+//import { mockGetSpecimens } from "../../specimens/api/GetSpecimens";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
+
+import { useSpecimens } from "../../specimens/dataAccess/useSpecimens";
 
 export default function SpecieDetail({
   children,
+  role = ROLE_TYPES.VISITOR,
   specie = {
     id: 0,
     scientific_name: `Nombre de la especie ${1}`,
@@ -34,20 +38,22 @@ export default function SpecieDetail({
     subspecie: `subespecie ${1}`,
   },
 }) {
-  const [specimens, setSpecimens] = useState([]);
+  const [specimens, setSpecimens] = useSpecimens(specie.id);
   const [graphData, setGraphData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const max = 100;
       const min = 50;
-      const newSpecimens = await getSpecimens(
+
+      const newSpecimens = await mockGetSpecimens(
         Math.floor(Math.random() * (max - min + 1) + min)
       );
+
+      //const newSpecimens = (await getSpecimens(role, specie.id)).data;
       setSpecimens(newSpecimens);
     }
-    fetchData();
-    console.log("hi");
+    //fetchData();
   }, [specie]);
 
   const especimenesRef = useRef(null);
@@ -68,20 +74,29 @@ export default function SpecieDetail({
       </div>
           */}
       <Tabs className={"divider"}>
-        <div label={"Especímenes"} className="flex-col">
-          <div className="p-1rem gap-1rem flex-row align-items-center">
-            <Button variant={"primary"} onClick={getSpecimenListAcademic}>
-              Agregar espécimen
-            </Button>
-            <TextField
-              iconType={"search"}
-              placeholder={
-                "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
-              }
-            ></TextField>
+        {ROLE_TYPES.validate(role) && (
+          <div label={"Especímenes"} className="flex-col">
+            <div className="p-1rem gap-1rem flex-row align-items-center">
+              {role === ROLE_TYPES.TECHNICAL_PERSON && (
+                <Button
+                  variant={"primary"}
+                  onClick={async () => {
+                    console.log(await getSpecimens(role, specie.id));
+                  }}
+                >
+                  Agregar espécimen
+                </Button>
+              )}
+              <TextField
+                iconType={"search"}
+                placeholder={
+                  "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
+                }
+              ></TextField>
+            </div>
+            <Table data={specimens}></Table>
           </div>
-          <Table data={specimens}></Table>
-        </div>
+        )}
         <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>
           <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
             <Multigraph

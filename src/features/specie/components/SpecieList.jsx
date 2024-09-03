@@ -15,16 +15,18 @@ import NewSpecie from "../../../app/routes/app/NewSpecie";
 import { useModal } from "../../../components/contexts/ModalContext";
 
 // API CALLS
-import { mockGetSpecies } from "../api/getSpecies";
+import { mockGetSpecies } from "../dataAccess/getSpecies";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export default function SpecieList({
+  role = ROLE_TYPES.VISITOR,
   species,
   onSelectionChange,
   onAdd,
   onEdit,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [fold, setFold] = useState(true);
+  const [fold, setFold] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [specieToEdit, setSpecieToEdit] = useState(null);
 
@@ -44,9 +46,11 @@ export default function SpecieList({
       <>
         <div className={` ${fold && "fold"}`}>
           <div className="action-bar divider">
-            <Button iconType="add" onClick={onAdd}>
-              Agregar especie
-            </Button>
+            {role === ROLE_TYPES.TECHNICAL_PERSON && (
+              <Button iconType="add" onClick={onAdd}>
+                Agregar especie
+              </Button>
+            )}
             <Button
               iconType="dock_to_right"
               className="icon-only secondary"
@@ -70,10 +74,12 @@ export default function SpecieList({
                   selectedIndex={selectedIndex}
                   onClick={handleSelection}
                 />
-                <HoverableActions
-                  secondaryAction={() => onEdit(specie)}
-                  primaryAction={() => showModal("asdf")}
-                ></HoverableActions>
+                {role === ROLE_TYPES.TECHNICAL_PERSON && (
+                  <HoverableActions
+                    secondaryAction={() => onEdit(specie)}
+                    primaryAction={() => showModal("asdf")}
+                  ></HoverableActions>
+                )}
               </div>
             ))}
           </ul>
