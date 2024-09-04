@@ -18,7 +18,8 @@ import NewSpecie from "./NewSpecie";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-
+import { useStatus } from "../../../components/contexts/StatusContext";
+import addSpecie from "../../../features/specie/dataAccess/addSpecie";
 export default function SpecieDashboard({
   onSelectionChange,
   role = ROLE_TYPES.VISITOR,
@@ -29,10 +30,12 @@ export default function SpecieDashboard({
 
   const { showModal } = useModal();
 
-  const handleAddSpecie = (newSpecie) => {
+  const handleAddSpecie = async (newSpecie) => {
     // fkin api call goes here!! :D
+    const response = await addSpecie(newSpecie);
+    console.log(response.data.specie_id);
+    newSpecie.id = response.data.specie_id;
     setSpecies((prev) => [newSpecie, ...prev]);
-    newSpecie.id = species.length + 1;
   };
 
   const handleUpdateSpecie = (updatedSpecie) => {
@@ -43,6 +46,7 @@ export default function SpecieDashboard({
   };
 
   const handleMultiAddSpecie = (species = []) => {
+    console.log("ASDF");
     for (let i = 0; i < species.length; i++) {
       species[i].scientific_name = `${species[i].gender} ${species[i].epithet}`;
       handleAddSpecie(species[i]);
@@ -94,6 +98,8 @@ export default function SpecieDashboard({
     setSelectedIndex(newSelectedIndex);
   };
 
+  console.log("dashboard");
+
   return (
     <>
       <SpecieList
@@ -122,11 +128,7 @@ export default function SpecieDashboard({
                 Editar especie
               </Button>
 
-              <Button
-                className={"secondary danger"}
-                iconType={"delete"}
-                onClick={() => console.log("sadf")}
-              >
+              <Button className={"secondary danger"} iconType={"delete"}>
                 Eliminar especie
               </Button>
             </div>

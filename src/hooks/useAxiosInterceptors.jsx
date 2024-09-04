@@ -5,8 +5,10 @@ import {
 } from "../components/contexts/SnackbarContext";
 
 import { ModalContext, useModal } from "../components/contexts/ModalContext";
+import { StatusContext, useStatus } from "../components/contexts/StatusContext";
 
 import { api } from "../lib/apiClient";
+import { API_URL } from "../config/env";
 
 import CREDENTIALS_KEYS from "../stores/credentialsKeys";
 
@@ -15,6 +17,7 @@ import RefreshForm from "../features/auth/components/RefreshForm";
 export const useAxiosInterceptors = () => {
   const { showSnackbar } = useContext(SnackbarContext);
   const { showModal } = useContext(ModalContext);
+  const { setLoading, logOutFront } = useContext(StatusContext);
 
   api.interceptors.request.use(
     function (config) {
@@ -22,34 +25,48 @@ export const useAxiosInterceptors = () => {
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
-      //setIsLoading(true);
+      setLoading(true);
       return config;
     },
     function (error) {
-      //setIsLoading(true);
+      setLoading(false);
       return Promise.reject(error);
     }
   );
 
   api.interceptors.response.use(
     (response) => {
-      //setIsLoading(false);
+      setLoading(false);
+      const message = response?.data?.message;
+      if (message !== undefined) {
+        showSnackbar(message);
+      }
+
       return response;
     },
     (error) => {
-      const status = error.response?.status;
-      const canRefresh = Boolean(
-        localStorage.getItem(CREDENTIALS_KEYS.TOKEN_REFRESH)
-      );
+      handleError(error);
       showSnackbar(error.response?.data?.detail, true);
+      console.log(error);
 
-      if (status === 401 && canRefresh) {
-        console.log("aquí refrescaría");
-        showModal("La sesión ha expirado", <RefreshForm />, false);
-      }
-      //setIsLoading(false);
+      setLoading(false);
 
       return Promise.reject(error);
     }
   );
+
+  function handleError(error) {
+    const status = error.response?.status;
+    const canRefresh = Boolean(
+      localStorage.getItem(CREDENTIALS_KEYS.TOKEN_REFRESH)
+    );
+    if (status === 401 && canRefresh) {
+      console.log("aquí refrescaría");
+      showModal("La sesión ha expirado", <RefreshForm />, false);
+    } else {
+      logOutFront();
+    }
+    if (error.code === "ERR_NETWORK") {
+    }
+  }
 };

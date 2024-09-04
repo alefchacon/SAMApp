@@ -38,11 +38,9 @@ export default function NewSpecie({
   const formikRef = useRef();
   const submitSpecie = (values, actions) => {
     values.scientific_name = `${values.gender} ${values.epithet}`;
-    values.id = specie?.id;
-    console.log(values);
     onSubmit(values);
-    //actions.resetForm();
-    showSnackbar(specieSnackbarTypes.addSpecieSuccess);
+    actions.resetForm();
+    //showSnackbar(specieSnackbarTypes.addSpecieSuccess);
     /*
     if (!true) {
     } else {

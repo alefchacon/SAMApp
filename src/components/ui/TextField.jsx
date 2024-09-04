@@ -37,13 +37,15 @@ export default function TextField({
           {required && <p className="required">(requerido)</p>}
         </div>
 
-        <div
-          htmlFor={`${id}`}
-          className={`sam-text-field-helper-text`}
-          id={`${id}-helper-text`}
-        >
-          {helperText}
-        </div>
+        {helperText && (
+          <div
+            htmlFor={`${id}`}
+            className={`sam-text-field-helper-text`}
+            id={`${id}-helper-text`}
+          >
+            {helperText}
+          </div>
+        )}
       </div>
 
       <div

@@ -5,11 +5,8 @@ import Specie from "./Specie";
 import { useSearchParams } from "react-router-dom";
 
 import Button from "../../../components/ui/Button";
-import Modal from "../../../components/ui/modal/Modal";
-import ModalActions from "../../../components/ui/modal/ModalActions";
-import AddIcon from "../../../components/icons/AddIcon";
 import HoverableActions from "../../../components/ui/HoverableActions";
-
+import NoResults from "../../../components/ui/NoResults";
 import NewSpecie from "../../../app/routes/app/NewSpecie";
 
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -33,6 +30,7 @@ export default function SpecieList({
   const { showModal } = useModal();
 
   const handleSelection = (newSelectedIndex) => {
+    console.log(newSelectedIndex);
     setSelectedIndex(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
@@ -41,48 +39,59 @@ export default function SpecieList({
     setFold(!fold);
   };
 
+  const addSpecieButton = (
+    <Button iconType="add" onClick={onAdd}>
+      Agregar especie
+    </Button>
+  );
+
   function Sidebar() {
     return (
       <>
-        <div className={` ${fold && "fold"}`}>
+        <div className={` ${fold && "fold"} h-100`}>
           <div className="action-bar divider">
-            {role === ROLE_TYPES.TECHNICAL_PERSON && (
-              <Button iconType="add" onClick={onAdd}>
-                Agregar especie
-              </Button>
-            )}
+            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
             <Button
               iconType="dock_to_right"
               className="icon-only secondary"
               onClick={toggleFold}
             ></Button>
           </div>
-          <ul role="list" className="specie-list-items">
-            {species.map((specie, index) => (
-              <div
-                key={index}
-                className={"hoverable"}
-                style={{
-                  alignItems: "center",
-                  textAlign: "left",
-                }}
-              >
-                <Specie
-                  key={specie.id}
-                  specie={specie}
-                  index={specie.id}
-                  selectedIndex={selectedIndex}
-                  onClick={handleSelection}
-                />
-                {role === ROLE_TYPES.TECHNICAL_PERSON && (
-                  <HoverableActions
-                    secondaryAction={() => onEdit(specie)}
-                    primaryAction={() => showModal("asdf")}
-                  ></HoverableActions>
-                )}
-              </div>
-            ))}
-          </ul>
+
+          {species.length > 0 ? (
+            <ul role="list" className="specie-list-items">
+              {species.map((specie, index) => (
+                <div
+                  key={index}
+                  className={"hoverable"}
+                  style={{
+                    alignItems: "center",
+                    textAlign: "left",
+                  }}
+                >
+                  <Specie
+                    key={specie.id}
+                    specie={specie}
+                    index={specie.id}
+                    selectedIndex={selectedIndex}
+                    onClick={handleSelection}
+                  />
+                  {role === ROLE_TYPES.TECHNICAL_PERSON && (
+                    <HoverableActions
+                      secondaryAction={() => onEdit(specie)}
+                      primaryAction={() => showModal("asdf")}
+                    ></HoverableActions>
+                  )}
+                </div>
+              ))}
+            </ul>
+          ) : (
+            <NoResults
+              itemName="especies"
+              role={role}
+              button={addSpecieButton}
+            />
+          )}
         </div>
       </>
     );

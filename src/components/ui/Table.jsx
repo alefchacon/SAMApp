@@ -196,11 +196,75 @@ export default function Table({ data }) {
 
   return (
     <>
-      <div className="table-wrapper overflow-auto rounded-20">
+      <div
+        className="table-wrapper rounded-20"
+        style={{
+          overflowX: "auto",
+          overflowY: "clip",
+          flexGrow: 3,
+          height: "100%",
+          maxHeight: "100%",
+        }}
+      >
+        <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
+          <div className="table-page-buttons">
+            <button
+              className="sam-button secondary"
+              onClick={() => table.firstPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {"⇤"}
+            </button>
+            <button
+              className="sam-button secondary"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {"<"}
+            </button>
+            <button
+              className="sam-button secondary"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {">"}
+            </button>
+            <button
+              className="sam-button secondary"
+              onClick={() => table.lastPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {">>"}
+            </button>
+            <span className="table-page-label">
+              <div>Página &nbsp; </div>
+              <strong>
+                {table.getState().pagination.pageIndex + 1} de{" "}
+                {table.getPageCount().toLocaleString()}
+              </strong>
+            </span>
+          </div>
+          <div className="flex-row justify-content-center align-items-center">
+            <label htmlFor="page-size-select">Registros por página:</label>
+            <select
+              className=""
+              name="pets"
+              id="page-size-select"
+              onChange={handlePageSizeChange}
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+        </div>
         <table
+          className="h-100"
           {...{
             style: {
-              width: table.getCenterTotalSize(),
+              //width: table.getCenterTotalSize(),
+              height: "100%",
             },
           }}
         >
@@ -260,60 +324,6 @@ export default function Table({ data }) {
             ))}
           </tbody>
         </table>
-      </div>
-
-      <div className="table-actions-bottom bg-white position-sticky bottom-0">
-        <div className="table-page-buttons">
-          <button
-            className="sam-button secondary"
-            onClick={() => table.firstPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"⇤"}
-          </button>
-          <button
-            className="sam-button secondary"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"<"}
-          </button>
-          <button
-            className="sam-button secondary"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {">"}
-          </button>
-          <button
-            className="sam-button secondary"
-            onClick={() => table.lastPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {">>"}
-          </button>
-          <span className="table-page-label">
-            <div>Página &nbsp; </div>
-            <strong>
-              {table.getState().pagination.pageIndex + 1} de{" "}
-              {table.getPageCount().toLocaleString()}
-            </strong>
-          </span>
-        </div>
-        <div className="flex-row justify-content-center align-items-center">
-          <label htmlFor="page-size-select">Registros por página:</label>
-          <select
-            className=""
-            name="pets"
-            id="page-size-select"
-            onChange={handlePageSizeChange}
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-          </select>
-        </div>
       </div>
     </>
   );

@@ -12,7 +12,15 @@ export default function Button({
   className = "primary",
   iconType = "add",
   onClick,
+  value = null,
 }) {
+  const handleClick = () => {
+    if (value) {
+      return onClick(value);
+    } else {
+      onClick();
+    }
+  };
   return (
     <>
       <button
@@ -21,7 +29,7 @@ export default function Button({
         className={`sam-button focusable ${className} ${
           isDisabled ? "disabled" : ""
         }`}
-        onClick={onClick}
+        onClick={handleClick}
       >
         <span className="material-symbols-outlined">{iconType}</span>
         {children}

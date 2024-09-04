@@ -13,8 +13,8 @@ export const useSpecimens = (specieId = 0) => {
   const { profile } = useStatus();
 
   useEffect(() => {
-    getSpecimensByRole(specieId, profile.role).then((response) => {
-      console.log(response.data);
+    setSpecimens([]);
+    getSpecimensByRole(specieId, profile?.role).then((response) => {
       setSpecimens(response.data);
     });
   }, [specieId]);
@@ -26,27 +26,16 @@ async function getSpecimensByRole(specieId = 0, role = ROLE_TYPES.VISITOR) {
   if (!Boolean(role)) {
     throw new Error("Debe iniciar sesión");
   }
-  switch (role) {
-    case ROLE_TYPES.VISITOR:
-      return await getSpecimenListVisitor(specieId);
-    case ROLE_TYPES.ACADEMIC:
-      return await getSpecimenListAcademic(specieId);
-    case ROLE_TYPES.TECHNICAL_PERSON:
-      return await getSpecimenList(specieId);
-    default:
-      throw new Error(`El rol ${role} es desconocido`);
-  }
-}
 
-const getSpecimenListVisitor = async (specieId) => {
-  const response = await api.get(SPECIMEN_LIST_VISITOR_URL(specieId));
+  let url = SPECIMEN_LIST_VISITOR_URL(specieId);
+
+  if (role === ROLE_TYPES.ACADEMIC) {
+    url = SPECIMEN_LIST_ACADEMIC_URL(specieId);
+  }
+  if (role === ROLE_TYPES.TECHNICAL_PERSON) {
+    url = SPECIMEN_LIST_URL(specieId);
+  }
+
+  const response = await api.get(url);
   return response;
-};
-const getSpecimenListAcademic = async (specieId) => {
-  const response = await api.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
-  return response;
-};
-const getSpecimenList = async (specieId) => {
-  const response = await api.get(SPECIMEN_LIST_URL(specieId));
-  return response;
-};
+}

@@ -45,6 +45,7 @@ function App() {
   const { profile } = useStatus();
   const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
+  /*
   useEffect(() => {
     async function fetchSpecies() {
       //const species = await mockGetSpecies();
@@ -56,18 +57,13 @@ function App() {
 
     fetchSpecies();
   }, []);
-
-  useEffect(() => {
-    const pathname = location.pathname;
-    if (pathname === "/agregarEspecie") {
-      console.log("YEAAA");
-    }
-  }, [location]);
-
+*/
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     //setSelectedSpecie(newSelectedSpecie);
     console.log(newSelectedSpecie);
   };
+
+  //console.log("app");
 
   return (
     <>

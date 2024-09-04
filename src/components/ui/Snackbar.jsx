@@ -46,7 +46,7 @@ export default function Snackbar({
     >
       <div className="flex-row">
         <span className="material-symbols-outlined">
-          {isError ? "error" : iconType}
+          {isError ? "warning" : iconType}
         </span>
         {children}
       </div>
