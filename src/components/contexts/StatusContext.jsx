@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import CREDENTIALS_KEYS from "../../stores/credentialsKeys";
 import { ROLE_TYPES } from "../../stores/roleTypes";
 
-import logOut from "../../features/auth/dataAccess/logOut";
+import { logOut, clearStorage } from "../../features/auth/dataAccess/logOut";
 
 export const StatusContext = createContext(null);
 
@@ -16,7 +16,9 @@ export function StatusProvider({ children }) {
   const storedCredentials =
     JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.CREDENTIALS)) || null;
 
-  const [credentials, setCredentials] = useState(storedCredentials);
+  const [credentials, setCredentials] = useState(
+    JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.CREDENTIALS)) || null
+  );
 
   /*
   Profile is a wrapper used to make all role-based validations.
@@ -26,13 +28,11 @@ export function StatusProvider({ children }) {
   );
 
   const logOutFront = async () => {
+    //await logOut();
+    clearStorage();
+    console.log(storedCredentials);
     setCredentials(null);
     setProfile(null);
-    await logOut();
-
-    localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_ACCESS);
-    localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_REFRESH);
-    localStorage.removeItem(CREDENTIALS_KEYS.CREDENTIALS);
   };
 
   return (

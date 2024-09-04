@@ -16,12 +16,16 @@ const refreshToken = async () => {
 
   const response = await api.post(TOKEN_REFRESH_URL, body);
 
-  if (!response.status !== 200) {
+  console.log(response.request.status)
+
+  if (response.request.status !== 200) {
     throw new Error("No podemos darle más tiempo por el momento.")
   }
 
   localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_REFRESH);
-  localStorage.setItem(CREDENTIALS_KEYS.TOKEN_ACCESS, response[CREDENTIALS_KEYS.TOKEN_ACCESS]);
+  localStorage.setItem(CREDENTIALS_KEYS.TOKEN_ACCESS, response.data[CREDENTIALS_KEYS.TOKEN_ACCESS]);
+
+  window.location.reload();
 }
 
 export default refreshToken;

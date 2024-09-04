@@ -31,7 +31,7 @@ export default function Tabs({ children, className }) {
   preventConditionalTabCrash();
 
   return (
-    <div className="flex-col">
+    <div className="tab-wrapper" style={{ flexGrow: 1, maxHeight: "100%" }}>
       <ul
         className={`tabs divider ${className} bg-white justify-content-center`}
         style={{
@@ -59,7 +59,7 @@ export default function Tabs({ children, className }) {
         <div
           key={index}
           className={`
-            ${selectedIndex === index ? "visible tab-panel " : "invisible"}`}
+            ${selectedIndex === index ? "visible tab-panel" : "invisible"}`}
         >
           {selectedIndex === index && tab.props.children}
         </div>

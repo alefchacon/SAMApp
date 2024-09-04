@@ -45,7 +45,7 @@ h3{
 }
 
 .specie-view{
-  flex: 2;
+  flex-grow: 100;
   display: flex;
   flex-direction: column;
   width: 10%;
@@ -146,6 +146,10 @@ main{
   font-weight: 500;
 }
 
+.tab-panel{
+  max-height: 100%;
+}
+
 .fold{
   position: relative;
   flex: 0;
@@ -156,7 +160,8 @@ main{
   align-self: stretch;
   z-index: 10;
   flex-direction: column;
-
+  flex-grow: 1;
+  max-height: 100%;
 
   overflow-y: hidden;
   overflow-x: hidden;
@@ -164,6 +169,7 @@ main{
 
 .specie-list-items{
   overflow: auto;
+  height: 100%;
 }
 
 .test1{
@@ -227,6 +233,10 @@ main{
 .sam-button.secondary:hover{
   background-color: rgb(181, 191, 201);
 }
+.sam-button.danger{
+  box-shadow:  inset 0px 0px 0px 1px var(--error);
+  
+}
 .sam-button.danger:hover{
   background-color: var(--error);
   color: var(--bg-main);
@@ -260,12 +270,6 @@ a.sam-button{
 
 
 
-.tab-panel{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
 
 #especimenes{
   display: flex;
@@ -584,6 +588,10 @@ h2{
 
 .error{
   background-color: var(--error) !important;
+}
+.notice{
+  background-color: rgb(200, 220, 239) !important;
+
 }
 
 .snackbar > div{
@@ -988,9 +996,11 @@ nav{
   object-position: center; 
 }
 
-.photosheet-wrapper:hover .photosheet-description{
+.photosheet-description:hover{
   height: 160px !important;
-  
+}
+.photosheet-wrapper{
+  min-height: 300px;
 }
 
 
@@ -1108,6 +1118,10 @@ nav{
   }
 }
 @media only screen and (max-width: 900px) {
+  .photosheet-gallery{
+    
+    grid-template-columns: repeat(1, 1fr);
+  } 
   .page{
     padding: 0;
   }

@@ -3,14 +3,12 @@ import { useState, useEffect, useRef } from "react";
 
 // COMPONENTS
 import Button from "../../../components/ui/Button";
-import Header from "../../../components/ui/Header";
 import Table from "../../../components/ui/Table";
 import Tabs from "../../../components/ui/Tabs";
-import MetricsSpecimens from "../../specimens/MetricsSpecimens";
 import DATE_TYPES from "../../graphing/dateTypes";
 import TextField from "../../../components/ui/TextField";
+import NoResults from "../../../components/ui/NoResults";
 
-import moment from "moment";
 import "moment/dist/locale/es-mx";
 
 import Multigraph from "../../graphing/Multigraph";
@@ -38,9 +36,12 @@ export default function SpecieDetail({
     subspecie: `subespecie ${1}`,
   },
 }) {
-  const [specimens, setSpecimens] = useSpecimens(specie.id);
-  const [graphData, setGraphData] = useState([]);
+  //const [specimens, setSpecimens] = useSpecimens(specie.id);
+  const [specimens, setSpecimens] = useState([]);
 
+  //console.log(specie);
+
+  /*
   useEffect(() => {
     async function fetchData() {
       const max = 100;
@@ -55,38 +56,35 @@ export default function SpecieDetail({
     }
     //fetchData();
   }, [specie]);
+  */
+  console.log("detail");
 
   const especimenesRef = useRef(null);
 
-  return (
-    <div className="specie-view" ref={especimenesRef}>
-      {children}
-      {/*
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-          backgroundColor: "red",
+  function AddSpecimenButton() {
+    return (
+      <Button
+        variant={"primary"}
+        onClick={async () => {
+          console.log(await getSpecimens(role, specie.id));
         }}
       >
-        asdf
-      </div>
-          */}
+        Agregar espécimen
+      </Button>
+    );
+  }
+
+  function SpecimenTabs() {
+    return (
       <Tabs className={"divider"}>
         {ROLE_TYPES.validate(role) && (
-          <div label={"Especímenes"} className="flex-col">
-            <div className="p-1rem gap-1rem flex-row align-items-center">
-              {role === ROLE_TYPES.TECHNICAL_PERSON && (
-                <Button
-                  variant={"primary"}
-                  onClick={async () => {
-                    console.log(await getSpecimens(role, specie.id));
-                  }}
-                >
-                  Agregar espécimen
-                </Button>
-              )}
+          <div
+            label={"Especímenes"}
+            className="specimens flex-col h-100"
+            style={{ overflow: "auto" }}
+          >
+            <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
+              {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
               <TextField
                 iconType={"search"}
                 placeholder={
@@ -132,6 +130,21 @@ export default function SpecieDetail({
           </div>
         </div>
       </Tabs>
+    );
+  }
+
+  return (
+    <div className="specie-view" ref={especimenesRef}>
+      {children}
+      {specimens.length > 0 ? (
+        <SpecimenTabs></SpecimenTabs>
+      ) : (
+        <NoResults
+          itemName="especímenes"
+          role={role}
+          button={<AddSpecimenButton />}
+        />
+      )}
     </div>
   );
 }

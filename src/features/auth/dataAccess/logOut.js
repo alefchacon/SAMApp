@@ -5,8 +5,20 @@ import { LOGOUT_URL } from "./authUrls";
 const logOut = async () => {
 
   /*
+  About the log out procedure:
+
+  Currently, this app does not call the log out API endpoint 
+  (http://localhost:8000/api/logout/) because it does not expire either of the 
+  session tokens on log out. Meaning that,  after the user "logs out", that access
+  token can still make requests, and that refresh token can still generate new 
+  access tokens, so there is no point in calling the endpoint.
+  */
+
+  /*
+  About the attributes in the request:
+
   The API typically refers to the refresh token as simply "refresh", however, the log out 
-  endpoint (http://localhost:8000/api/logout/) expects this value to be called 
+  endpoint expects this value to be called 
   "refresh_token" hence the separation between REFRESH and REFRESH_LOGOUT. REFRESH_LOGOUT
   is only used here: for every other purpose, use REFRESH.
   */
@@ -22,4 +34,10 @@ const logOut = async () => {
   window.location.reload();
 }
 
-export default logOut;
+const clearStorage = () => {
+  localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_ACCESS);
+  localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_REFRESH);
+  localStorage.removeItem(CREDENTIALS_KEYS.CREDENTIALS);
+}
+
+export {logOut, clearStorage};

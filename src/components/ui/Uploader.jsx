@@ -6,6 +6,7 @@ import ChipFile from "./ChipFile";
 import { FILE_TYPES_STRING } from "../../stores/fileTypes";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import ProgressBar from "./ProgressBar";
+import { specieSchema } from "../../features/specie/formikSchemas/specieSchema";
 
 export default function Uploader({
   id = "upload",
@@ -72,6 +73,8 @@ export default function Uploader({
             parseCSV(file);
           }
           break;
+        default:
+          setParsedFiles(fileArray);
       }
     } catch (e) {
       console.log(e);
@@ -98,8 +101,8 @@ export default function Uploader({
     );
   };
 
-  const handleUpload = () => {
-    //onUpload(parsedData);
+  const handleUpload = async () => {
+    onUpload(parsedFiles);
   };
 
   return (
