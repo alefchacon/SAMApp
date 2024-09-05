@@ -10,14 +10,14 @@ import { StatusProvider } from "./components/contexts/StatusContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <StatusProvider>
-      <ModalProvider>
-        <SnackbarProvider>
-          <BrowserRouter>
+    <BrowserRouter>
+      <StatusProvider>
+        <ModalProvider>
+          <SnackbarProvider>
             <App />
-          </BrowserRouter>
-        </SnackbarProvider>
-      </ModalProvider>
-    </StatusProvider>
+          </SnackbarProvider>
+        </ModalProvider>
+      </StatusProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

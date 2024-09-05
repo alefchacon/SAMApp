@@ -14,8 +14,9 @@ export function ModalProvider({ children }) {
   const [handleUndo, setHandleUndo] = useState(null);
   const [modalContent, setModalContent] = useState(null);
   const [dismissable, setDismissable] = useState(true);
+  const [width, setWidth] = useState(null);
 
-  const showModal = (title, content, dismissable) => {
+  const showModal = (title, content, dismissable, width) => {
     /*
     setMessage(message);
     setContent(content);
@@ -25,6 +26,7 @@ export function ModalProvider({ children }) {
     setModalContent(content);
     setModalTitle(title);
     setOpen(true);
+    setWidth(width);
   };
 
   const closeModal = (event, reason) => {
@@ -49,6 +51,7 @@ export function ModalProvider({ children }) {
         title={modalTitle}
         children={modalContent}
         dismissable={dismissable}
+        width={width}
       />
     </ModalContext.Provider>
   );

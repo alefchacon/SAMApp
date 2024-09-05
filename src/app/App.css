@@ -15,7 +15,7 @@
   background-color: aqua;
 
   --uv-gray-dark: rgb(183, 192, 216);
-  --uv-gray: #bad6db1f;
+  --uv-gray: #f7f9fa;
   --uv-green: #28AD56;
   --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
@@ -491,6 +491,8 @@ label.hasError{
   border-radius: 0 50px 50px 0;
 }
 
+
+
 input {
   border: none;
 }
@@ -797,6 +799,7 @@ h1{
   text-align: center;
   letter-spacing: 0;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 0;
 }
 
 .position-relative{
@@ -948,9 +951,8 @@ a{
 
 nav{
   z-index: 20;
-  box-shadow:  1px 0 1px black;
   
-  background-color: transparent;
+  background-color: var(--bg-main);
   
   color: black;
   display: flex;
@@ -958,6 +960,12 @@ nav{
 
   align-items: center;
 
+}
+
+.page-padding {
+  padding-left: clamp(10px, 30vw, 700px);
+  padding-right: clamp(10px, 30vw, 700px);
+  
 }
 
 .landing{
@@ -1123,6 +1131,12 @@ nav{
   }
 }
 @media only screen and (max-width: 900px) {
+
+  .page-padding {
+    padding-left: clamp(10px, 10vw, 700px);
+    padding-right: clamp(10px, 10vw, 700px);
+  }
+
   .photosheet-gallery{
     
     grid-template-columns: repeat(1, 1fr);

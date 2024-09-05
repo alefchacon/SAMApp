@@ -18,7 +18,8 @@ import Photosheets from "./routes/app/Photosheets";
 import UploaderImage from "../components/ui/UploaderImage";
 import SpecieList from "../features/specie/components/SpecieList";
 import SpecieDetail from "../features/specie/components/SpecieDetail";
-
+import ROUTES from "../stores/routes";
+import AccessRequestForm from "./routes/app/AccessRequestForm";
 import {
   mockGetSpecies,
   getSpecieList,
@@ -36,7 +37,8 @@ import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 // CSS
 import "./App.css";
 
-import { getAccessRequestsCount } from "../features/access/dataAccess/getAccessRequests";
+import useAccessRequests from "../features/access/dataAccess/useAccessRequests,jsx";
+
 function App() {
   useAxiosInterceptors();
   const location = useLocation();
@@ -45,19 +47,14 @@ function App() {
   const { profile } = useStatus();
   const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
-  /*
-  useEffect(() => {
-    async function fetchSpecies() {
-      //const species = await mockGetSpecies();
-      //const accessRequestResponse = await getAccessRequestsCount();
-      //setAccessRequestCount(accessRequestResponse.data);
-      const species = (await getSpecieList()).data;
-      setSpecies(species);
-    }
+  const [addAccessRequest, getAccessRequestCount] = useAccessRequests();
 
-    fetchSpecies();
+  useEffect(() => {
+    getAccessRequestCount().then((response) => {
+      setAccessRequestCount(response.data);
+    });
   }, []);
-*/
+
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     //setSelectedSpecie(newSelectedSpecie);
     console.log(newSelectedSpecie);
@@ -115,6 +112,10 @@ function App() {
             }
           ></Route>
           <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>
+          <Route
+            path={ROUTES.SOLICITAR_ACCESO}
+            element={<AccessRequestForm />}
+          ></Route>
           {/*
           
           <Route

@@ -5,8 +5,11 @@ import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
+import { Link } from "react-router-dom";
+
 import logIn from "../dataAccess/logIn.js";
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
+import ROUTES from "../../../stores/routes.js";
 
 export default function LogInForm({ onSubmit }) {
   const { setCredentials } = useStatus();
@@ -61,9 +64,11 @@ export default function LogInForm({ onSubmit }) {
                 <Button iconType="login" type="submit">
                   Entrar
                 </Button>
-                <Button iconType="passkey" className="secondary">
-                  Solicitar acceso
-                </Button>
+                <Link to={ROUTES.SOLICITAR_ACCESO}>
+                  <Button iconType="passkey" className="secondary">
+                    Solicitar acceso
+                  </Button>
+                </Link>
               </div>
             </Form>
           )}

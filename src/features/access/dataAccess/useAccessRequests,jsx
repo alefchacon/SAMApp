@@ -1,0 +1,32 @@
+import { useState, useEffect } from "react";
+
+import { api } from "../../../lib/apiClient";
+import ACCESS_REQUESTS_URL from "../../../config/accessUrls";
+
+export async function getAccessRequests(){
+  return await api.get(ACCESS_REQUESTS_URL);
+}
+
+export default function useAccessRequests(){
+  const [accessRequests, setAccessRequests] = useState([]);
+  const [accessRequestCount, setAccessRequestCount] = useState([]);
+
+
+  async function getAccessRequests(){
+    return await api.get(ACCESS_REQUESTS_URL);
+  }
+  async function getAccessRequestsCount(){
+    return await api.get(ACCESS_REQUESTS_URL.concat("?count=1"));
+  }
+  const addAccessRequest = async (newAccessRequest) => {
+    const data = newAccessRequest;
+    return await api.post(ACCESS_REQUESTS_URL, data);
+  }
+
+  const getAccessRequestCount = async () => {
+    return await api.get(ACCESS_REQUESTS_URL.concat("?count=1"));
+  }
+  
+  
+  return [addAccessRequest, getAccessRequestCount]
+}
