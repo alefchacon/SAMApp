@@ -98,8 +98,6 @@ export default function SpecieDashboard({
     setSelectedIndex(newSelectedIndex);
   };
 
-  console.log("dashboard");
-
   return (
     <>
       <SpecieList

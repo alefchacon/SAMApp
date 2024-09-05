@@ -8,8 +8,10 @@ import Button from "../../../components/ui/Button";
 import HoverableActions from "../../../components/ui/HoverableActions";
 import NoResults from "../../../components/ui/NoResults";
 import NewSpecie from "../../../app/routes/app/NewSpecie";
+import TextField from "../../../components/ui/TextField";
 
 import { useModal } from "../../../components/contexts/ModalContext";
+import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
 import { mockGetSpecies } from "../dataAccess/getSpecies";
@@ -26,11 +28,11 @@ export default function SpecieList({
   const [fold, setFold] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [specieToEdit, setSpecieToEdit] = useState(null);
+  const [filteredItems, handleFilterChange] = useTextFilter(species);
 
   const { showModal } = useModal();
 
   const handleSelection = (newSelectedIndex) => {
-    console.log(newSelectedIndex);
     setSelectedIndex(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
@@ -45,22 +47,35 @@ export default function SpecieList({
     </Button>
   );
 
-  function Sidebar() {
-    return (
-      <>
+  return (
+    <div className="specie-list" style={{ position: fold && "absolute" }}>
+      {fold ? (
+        <Button
+          iconType="dock_to_right"
+          className="icon-only secondary m-1rem"
+          onClick={toggleFold}
+        ></Button>
+      ) : (
         <div className={` ${fold && "fold"} h-100`}>
-          <div className="action-bar divider">
-            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
-            <Button
-              iconType="dock_to_right"
-              className="icon-only secondary"
-              onClick={toggleFold}
-            ></Button>
+          <div className="flex-col divider p-1rem gap-1rem">
+            <div className="flex-row justify-content-space-between">
+              {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+              <Button
+                iconType="dock_to_right"
+                className="icon-only secondary"
+                onClick={toggleFold}
+              ></Button>
+            </div>
+            <TextField
+              placeholder={"Buscar especies"}
+              onChange={handleFilterChange}
+              iconType={"search"}
+            ></TextField>
           </div>
 
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">
-              {species.map((specie, index) => (
+              {filteredItems.map((specie, index) => (
                 <div
                   key={index}
                   className={"hoverable"}
@@ -93,20 +108,6 @@ export default function SpecieList({
             />
           )}
         </div>
-      </>
-    );
-  }
-
-  return (
-    <div className="specie-list" style={{ position: fold && "absolute" }}>
-      {fold ? (
-        <Button
-          iconType="dock_to_right"
-          className="icon-only secondary m-1rem"
-          onClick={toggleFold}
-        ></Button>
-      ) : (
-        <Sidebar />
       )}
     </div>
   );

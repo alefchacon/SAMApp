@@ -15,7 +15,7 @@ import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 import AccessRequests from "./routes/app/AccessRequests";
 import Photosheets from "./routes/app/Photosheets";
-
+import UploaderImage from "../components/ui/UploaderImage";
 import SpecieList from "../features/specie/components/SpecieList";
 import SpecieDetail from "../features/specie/components/SpecieDetail";
 
@@ -100,7 +100,7 @@ function App() {
               </FormTemplate>
               */
               <div className="p-1rem gap-1rem w-100 ">
-                <Uploader></Uploader>
+                <UploaderImage></UploaderImage>
               </div>
             }
           ></Route>

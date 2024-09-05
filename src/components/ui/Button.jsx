@@ -17,7 +17,7 @@ export default function Button({
   const handleClick = () => {
     if (value) {
       return onClick(value);
-    } else {
+    } else if (onClick) {
       onClick();
     }
   };

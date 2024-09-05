@@ -7,17 +7,35 @@ import {
   SPECIMEN_LIST_VISITOR_URL,
 } from "./specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
+import { mockGetSpecimens } from "./GetSpecimens";
 
 export const useSpecimens = (specieId = 0) => {
   const [specimens, setSpecimens] = useState([]);
   const { profile } = useStatus();
 
   useEffect(() => {
-    setSpecimens([]);
+    //setSpecimens([]);
+
+    /*
     getSpecimensByRole(specieId, profile?.role).then((response) => {
       setSpecimens(response.data);
     });
+    */
+    mockSpecimens().then((response) => {
+      setSpecimens(response);
+    });
   }, [specieId]);
+
+  const mockSpecimens = async () => {
+    const max = 100;
+    const min = 50;
+
+    const fakeSpecimens = await mockGetSpecimens(
+      Math.floor(Math.random() * (max - min + 1) + min)
+    );
+    console.log(fakeSpecimens);
+    return fakeSpecimens;
+  };
 
   return [specimens, setSpecimens];
 };
