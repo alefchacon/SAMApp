@@ -31,8 +31,8 @@ export default function Account({
                   style={{
                     backgroundColor: "var(--error)",
                     position: "absolute",
-                    top: -5,
-                    right: 3,
+                    top: -10,
+                    right: -10,
                     borderRadius: "50%",
                     padding: 2,
                     color: "white",
@@ -70,7 +70,12 @@ export default function Account({
           <Button
             iconType="login"
             onClick={() =>
-              showModal("Entrar", <LogInForm onSubmit={closeModal} />)
+              showModal(
+                "Entrar",
+                <LogInForm onSubmit={closeModal} />,
+                true,
+                "30%"
+              )
             }
           >
             Entrar

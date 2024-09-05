@@ -6,6 +6,7 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import AccessRequest from "../../../features/access/components/AccessRequest";
 import Card from "../../../components/ui/Card";
 import Header from "../../../components/ui/Header";
+import HeaderPage from "../../../components/ui/HeaderPage";
 
 import RequestAccessResponseForm from "../../../features/access/RequestAccessResponseForm";
 
@@ -38,8 +39,12 @@ export default function AccessRequests() {
         overflow: "scroll",
       }}
     >
-      <Header header="Solicitudes de acceso"></Header>
-      <div className="p-2rem h-fit-content gap-1rem  grid">
+      <HeaderPage
+        title="Solicitudes de acceso"
+        subtitle="Las siguientes personas solicitan ver la colección"
+      ></HeaderPage>
+      <div className="flex-col h-fit-content gap-1rem page-padding">
+        <br />
         {accessRequests.map((accessRequest, index) => (
           <Card>
             <AccessRequest

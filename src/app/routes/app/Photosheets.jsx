@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
-import Header from "../../../components/ui/Header";
+import HeaderPage from "../../../components/ui/HeaderPage";
 import Uploader from "../../../components/ui/Uploader";
 import UploaderImage from "../../../components/ui/UploaderImage";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
@@ -127,7 +127,7 @@ export default function Photosheets({
 
   return (
     <div className="flex-col w-100">
-      <Header></Header>
+      <HeaderPage title="Fichas fotográficas"></HeaderPage>
       <div className="p-2rem">
         <div className="flex-row gap-1rem align-items-center justify-content-center">
           {" "}

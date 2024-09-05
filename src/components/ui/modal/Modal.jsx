@@ -9,10 +9,14 @@ export default function Modal({
   dismissable = true,
   onClose,
   title,
+  width = null,
 }) {
   return (
     <div className={`modal-background  ${open ? "visible" : "invisible"}`}>
-      <div className="modal-content rounded-20 box-shadow">
+      <div
+        className="modal-content rounded-20 box-shadow"
+        style={{ width: width ?? "50" }}
+      >
         <div className="modal-header divider p-1rem flex-row justify-content-space-between">
           <h2>{title}</h2>
           {dismissable && (

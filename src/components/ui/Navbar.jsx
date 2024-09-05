@@ -14,10 +14,10 @@ export default function Navbar({ accessRequestCount = 0 }) {
   return (
     <nav
       className="flex-row justify-content-space-between"
-      style={{ minHeight: "70px", position: "relative" }}
+      style={{ minHeight: "70px", position: "relative", padding: "0 3rem" }}
     >
       <div className="flex-row align-items-center gap-2rem">
-        NAVBAR
+        [Nombre o logo]
         <div className="flex-row gap-1rem align-items-center hide-if-mobile">
           <Link to={"/coleccion"} className="selectable p-1rem rounded">
             <InfoItem label={"Colección"} iconType={"pets"}></InfoItem>
@@ -42,8 +42,10 @@ export default function Navbar({ accessRequestCount = 0 }) {
       {/*
   <Searchbar items={species}></Searchbar>
   */}
-      <div className="flex-row">
+      <div className="flex-row gap-1rem">
+        {/*
         <Button iconType="search" className="secondary"></Button>
+        */}
         <div className="hide-if-mobile">
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>

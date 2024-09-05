@@ -57,22 +57,27 @@ export default function SpecieList({
         ></Button>
       ) : (
         <div className={` ${fold && "fold"} h-100`}>
-          <div className="flex-col divider p-1rem gap-1rem">
-            <div className="flex-row justify-content-space-between">
-              {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
-              <Button
-                iconType="dock_to_right"
-                className="icon-only secondary"
-                onClick={toggleFold}
-              ></Button>
-            </div>
+          <div
+            className="p-1rem flex-row justify-content-space-between align-items-center"
+            style={{ fontWeight: 600 }}
+          >
+            <div></div>
+            <p>Especies</p>
+            <Button
+              iconType="dock_to_right"
+              className="icon-only secondary"
+              onClick={toggleFold}
+            ></Button>
+          </div>
+          <div className="flex-row divider p-1rem gap-1rem">
+            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+
             <TextField
               placeholder={"Buscar especies"}
               onChange={handleFilterChange}
               iconType={"search"}
             ></TextField>
           </div>
-
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">
               {filteredItems.map((specie, index) => (

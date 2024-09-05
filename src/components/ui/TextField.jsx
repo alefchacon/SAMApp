@@ -23,6 +23,8 @@ export default function TextField({
   maxLength = 50,
   customIcon = null,
   onChange = null,
+  maxWidth = null,
+  onKeydown = null,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -54,6 +56,7 @@ export default function TextField({
           height: "50px",
           display: "flex",
           position: "relative",
+          maxWidth: maxWidth ?? undefined,
         }}
         className="flex-row align-items-center"
       >
@@ -90,6 +93,7 @@ export default function TextField({
             maxLength={maxLength}
             disabled={disabled}
             value={value}
+            onKeyDown={onKeydown}
           ></Field>
         ) : (
           <input
@@ -105,6 +109,7 @@ export default function TextField({
             disabled={disabled}
             placeholder={placeholder}
             onChange={onChange}
+            onKeyDown={onKeydown}
           ></input>
         )}
       </div>
