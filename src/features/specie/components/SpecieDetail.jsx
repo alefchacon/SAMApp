@@ -36,8 +36,8 @@ export default function SpecieDetail({
     subspecie: `subespecie ${1}`,
   },
 }) {
-  //const [specimens, setSpecimens] = useSpecimens(specie.id);
-  const [specimens, setSpecimens] = useState([]);
+  const [specimens, setSpecimens] = useSpecimens(specie.id);
+  //const [specimens, setSpecimens] = useState([]);
 
   //console.log(specie);
 
@@ -57,7 +57,6 @@ export default function SpecieDetail({
     //fetchData();
   }, [specie]);
   */
-  console.log("detail");
 
   const especimenesRef = useRef(null);
 

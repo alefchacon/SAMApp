@@ -206,6 +206,7 @@ main{
   justify-content: center;
   align-items: center;
   gap: 6px;
+  background-color: rgb(181, 191, 201, 0.3);
   transition: background-color 0.3s;
   width: fit-content;
 }
@@ -222,21 +223,18 @@ main{
 }
 .sam-button.secondary{
   color: rgb(57, 65, 73);
-  background-color: var(--uv-gray);
-
+  background-color: rgb(181, 191, 201, 0.3);
+  
+}
+.sam-button.secondary:hover{
+  background-color: var(--uv-gray-dark);
+  
 }
 
 .border{
   box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.30);
 }
 
-.sam-button.secondary:hover{
-  background-color: rgb(181, 191, 201);
-}
-.sam-button.danger{
-  box-shadow:  inset 0px 0px 0px 1px var(--error);
-  
-}
 .sam-button.danger:hover{
   background-color: var(--error);
   color: var(--bg-main);
@@ -753,6 +751,7 @@ input[type='checkbox']{
 }
 
 .hoverable2:hover .show-on-hover{
+
   display: flex !important; 
 }
 
@@ -979,6 +978,13 @@ nav{
   hyphens: auto;
 }
 
+.img-container{
+  width: 100%; /* or specify a fixed width */
+  height: 500px; /* or specify a fixed height */
+  position: relative; /* if needed */
+  overflow: hidden; /* hides any overflow */
+}
+
 .photosheet-gallery{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -992,8 +998,7 @@ nav{
 .photosheet {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
-  object-position: center; 
+  object-fit: contain; 
 }
 
 .photosheet-description:hover{

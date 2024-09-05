@@ -3,6 +3,7 @@ import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
 import Header from "../../../components/ui/Header";
 import Uploader from "../../../components/ui/Uploader";
+import UploaderImage from "../../../components/ui/UploaderImage";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
 
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -10,7 +11,7 @@ import { ROLE_TYPES } from "../../../stores/roleTypes";
 import usePhotosheets from "../../../features/photosheets/dataAccess/usePhotosheets";
 import { SERVER_URL } from "../../../config/env";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
-
+import useTextFilter from "../../../hooks/useTextFilter";
 import { Formik, Form } from "formik";
 
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
@@ -21,61 +22,90 @@ export default function Photosheets({
 }) {
   const { showModal } = useModal();
 
-  const [photosheets, addPhotosheet, deletePhotosheets] = usePhotosheets();
+  const [
+    photosheets,
+    addPhotosheet,
+    updatePhotosheet,
+    confirmDeletePhotosheet,
+  ] = usePhotosheets();
 
-  function PhotosheetForm() {
+  const [filteredItems, handleFilterChange] = useTextFilter(photosheets);
+
+  function PhotosheetForm({
+    photosheet = {
+      id: "",
+      description: "",
+      sheet: "",
+    },
+    add = true,
+  }) {
     const [description, setDescription] = useState("");
     const [sheet, setSheet] = useState("");
     const formikRef = useRef(null);
 
+    console.log(photosheet);
+
     const handleSubmit = async (values, actions) => {
-      //console.log(values);
+      console.log(values);
       //console.log(actions);
-      await addPhotosheet(values);
+      if (add) {
+        await addPhotosheet(values);
+      } else {
+        await updatePhotosheet(values);
+      }
       actions.resetForm();
       //console.log(formikRef.current.submitForm());
     };
 
+    const handleUploadClic = () => {};
+
     return (
-      <Formik
-        initialValues={{ description: "", sheet: "" }}
-        innerRef={formikRef}
-        onSubmit={handleSubmit}
-        validationSchema={photosheetSchema}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          isValid,
-          dirty,
-          setFieldValue,
-          submitForm,
-          handleChange,
-          handleBlur,
-        }) => (
-          <Form className="flex-col gap-1rem" autoComplete="off">
-            <TextField
-              name="description"
-              errorMessage={errors.description}
-              label={"Descripción de la ficha"}
-              value={values.description}
-              hasError={errors.description && touched.description}
-              maxLength={100}
-              isFormik
-            ></TextField>
-            <Uploader
-              buttonLabel="Agregar ficha fotográfica"
-              displayExtension=".PNG, .JPG, .JPEG o .WEBP"
-              accept={FILE_TYPES_STRING.IMG}
-              onUpload={(file) => {
-                setFieldValue("sheet", file);
-                submitForm();
-              }}
-            ></Uploader>
-          </Form>
-        )}
-      </Formik>
+      <>
+        <Formik
+          initialValues={photosheet}
+          innerRef={formikRef}
+          onSubmit={handleSubmit}
+          validationSchema={photosheetSchema}
+          enableReinitialize
+        >
+          {({
+            values,
+            errors,
+            touched,
+            isValid,
+            dirty,
+            setFieldValue,
+            submitForm,
+            handleChange,
+            handleBlur,
+          }) => (
+            <Form className="flex-col" autoComplete="off">
+              <UploaderImage
+                imageURL={photosheet.sheet}
+                onUpload={(sheet) => setFieldValue("sheet", sheet)}
+              ></UploaderImage>
+              <TextField
+                name="description"
+                errorMessage={errors.description}
+                label={"Descripción de la ficha"}
+                value={values.description}
+                hasError={errors.description && touched.description}
+                maxLength={100}
+                isFormik
+              ></TextField>
+              <div className="button-row">
+                <Button
+                  onClick={(sheet) => {
+                    submitForm();
+                  }}
+                >
+                  Agregar ficha fotográfica
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </>
     );
   }
 
@@ -84,8 +114,17 @@ export default function Photosheets({
   };
 
   const handleDelete = (id = 0) => {
-    deletePhotosheets(id);
+    confirmDeletePhotosheet(id);
   };
+
+  const handleUpdate = (photosheet) => {
+    showModal(
+      "Editar ficha fotográfica",
+      <PhotosheetForm photosheet={photosheet} add={false} />
+    );
+    console.log(photosheet);
+  };
+
   return (
     <div className="flex-col w-100">
       <Header></Header>
@@ -100,22 +139,18 @@ export default function Photosheets({
           <TextField
             iconType={"search"}
             placeholder={"Filtrar fichas por descripción"}
+            onChange={handleFilterChange}
           ></TextField>
         </div>
         <br />
         <div className="photosheet-gallery h-100 gap-05rem">
-          {photosheets.map((photosheet, index) => (
+          {filteredItems.map((photosheet, index) => (
             <Photosheet
+              photosheet={photosheet}
               key={index}
               onDelete={handleDelete}
-              id={photosheet.id}
-              description={photosheet.description}
+              onUpdate={handleUpdate}
               role={role}
-              sheetURL={
-                photosheet.id
-                  ? SERVER_URL.concat(photosheet.sheet)
-                  : photosheet.sheet
-              }
             />
           ))}
         </div>

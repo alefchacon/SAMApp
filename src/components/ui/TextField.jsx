@@ -22,6 +22,7 @@ export default function TextField({
   iconType = null,
   maxLength = 50,
   customIcon = null,
+  onChange = null,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -63,6 +64,8 @@ export default function TextField({
               position: "absolute",
               top: 0,
               bottom: 0,
+              display: "flex",
+              alignItems: "center",
             }}
           >
             {iconType}
@@ -101,6 +104,7 @@ export default function TextField({
             maxLength={maxLength}
             disabled={disabled}
             placeholder={placeholder}
+            onChange={onChange}
           ></input>
         )}
       </div>
