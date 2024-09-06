@@ -5,6 +5,7 @@ import InfoItem from "./InfoItem";
 import Account from "../../features/auth/components/Account";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
+import TextField from "./TextField";
 
 import { useStatus } from "../contexts/StatusContext";
 
@@ -13,20 +14,20 @@ export default function Navbar({ accessRequestCount = 0 }) {
 
   return (
     <nav
-      className="flex-row justify-content-space-between"
-      style={{ minHeight: "70px", position: "relative", padding: "0 3rem" }}
+      className="flex-row justify-content-space-between shadow-down"
+      style={{ minHeight: "60px", position: "relative", padding: "0 3rem" }}
     >
       <div className="flex-row align-items-center gap-2rem">
         [Nombre o logo]
-        <div className="flex-row gap-1rem align-items-center hide-if-mobile">
-          <Link to={"/coleccion"} className="selectable p-1rem rounded">
+        <div
+          className="left-side flex-row align-items-center hide-if-mobile"
+          style={{ flex: 1 }}
+        >
+          <Link to={"/coleccion"} className="selectable p-05rem rounded">
             <InfoItem label={"Colección"} iconType={"pets"}></InfoItem>
           </Link>
-          <Link to={"/fichas"} className="selectable p-1rem rounded">
-            <InfoItem
-              label={"Fichas fotográficas"}
-              iconType={"photo"}
-            ></InfoItem>
+          <Link to={"/fichas"} className="selectable p-05rem rounded">
+            <InfoItem label={"Fichas"} iconType={"photo"}></InfoItem>
           </Link>
           <Dropdown
             header={
@@ -39,13 +40,16 @@ export default function Navbar({ accessRequestCount = 0 }) {
         </div>
       </div>
       <span></span>
-      {/*
-  <Searchbar items={species}></Searchbar>
-  */}
-      <div className="flex-row gap-1rem">
-        {/*
-        <Button iconType="search" className="secondary"></Button>
-        */}
+      <div style={{ flex: 1 }}></div>
+      <div
+        className="right-side align-items-center flex-row gap-1rem"
+        style={{ flex: 2 }}
+      >
+        <TextField
+          placeholder={"Buscar especies"}
+          iconType={"search"}
+        ></TextField>
+
         <div className="hide-if-mobile">
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>

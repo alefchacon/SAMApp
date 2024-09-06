@@ -48,7 +48,10 @@ export default function SpecieList({
   );
 
   return (
-    <div className="specie-list" style={{ position: fold && "absolute" }}>
+    <div
+      className="specie-list rounded-20 border shadow-right"
+      style={{ position: fold && "absolute" }}
+    >
       {fold ? (
         <Button
           iconType="dock_to_right"
@@ -70,13 +73,12 @@ export default function SpecieList({
             ></Button>
           </div>
           <div className="flex-row divider p-1rem gap-1rem">
-            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
-
             <TextField
               placeholder={"Buscar especies"}
               onChange={handleFilterChange}
               iconType={"search"}
             ></TextField>
+            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
           </div>
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">

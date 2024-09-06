@@ -83,13 +83,14 @@ export default function SpecieDetail({
             style={{ overflow: "auto" }}
           >
             <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
-              {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
               <TextField
+                maxWidth={"60%"}
                 iconType={"search"}
                 placeholder={
                   "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
                 }
               ></TextField>
+              {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
             </div>
             <Table data={specimens}></Table>
           </div>
@@ -144,6 +145,7 @@ export default function SpecieDetail({
           button={<AddSpecimenButton />}
         />
       )}
+      <div style={{ padding: "5rem", marginTop: "2rem" }}>asdf</div>
     </div>
   );
 }

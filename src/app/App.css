@@ -14,11 +14,13 @@
   padding: 0;
   background-color: aqua;
 
-  --uv-gray-dark: rgb(183, 192, 216);
+  --uv-gray-dark: rgb(181, 191, 201, 0.3);;
+  --uv-gray-darker: rgb(181, 191, 201, 0.5);;
   --uv-gray: #f7f9fa;
   --uv-green: #28AD56;
   --uv-blue: rgba(24,82,157);
   --uv-green-hover: rgb(32, 143, 71);
+  --border: rgba(215, 223, 245, 4);
   --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
   --box-shadow-lower-solid2: inset 1px 1px 1px 0px rgba(215, 223, 245, 4);
 
@@ -30,6 +32,7 @@
   --bg-hovered: rgba(40, 173, 86, 0.1);
   --bg-hovered2: rgba(28, 175, 79, 0.249);
   --disabled: rgba(129, 129, 129, 0.63);
+  
 
   --dark: rgba(0, 0, 0, 0.7);
 
@@ -209,6 +212,7 @@ main{
   background-color: rgb(181, 191, 201, 0.3);
   transition: background-color 0.3s;
   width: fit-content;
+  height: fit-content;
 }
 .sam-button.primary{
   color: var(--bg-main);
@@ -223,16 +227,16 @@ main{
 }
 .sam-button.secondary{
   color: rgb(57, 65, 73);
-  background-color: rgb(181, 191, 201, 0.3);
+  background-color: var(--uv-gray-dark);
   
 }
 .sam-button.secondary:hover{
-  background-color: var(--uv-gray-dark);
+  background-color: var(--uv-gray-darker);
   
 }
 
 .border{
-  box-shadow:  inset 0px 0px 0px 1px rgba(175, 175, 175, 0.30);
+  box-shadow:  inset 0px 0px 0px 1px var(--border);
 }
 
 .sam-button.danger:hover{
@@ -493,16 +497,13 @@ label.hasError{
 
 
 
-input {
-  border: none;
-}
 
 .input{
   font-family: inherit;
   letter-spacing: inherit;
   width: 100%;
   outline: none;
-  border: 1px solid var(--bg-unfocused);
+  border: none;
   border-radius: 5px;
   padding: 10px;
   font-size: 0.9rem;
@@ -511,6 +512,7 @@ input {
   height: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  background-color: var(--uv-gray-dark);
 }
 .input.has-icon{
   padding-left: 50px;
@@ -523,18 +525,18 @@ input {
 }
 
 .icon-only:hover{
-  background-color: var(--dark);
+  background-color: var(--uv-gray-darker);
 }
 
 input{
   
 }
 input:hover, .input:hover{
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(40, 173, 86, 0.5);
+  background-color: var(--uv-gray-darker);
+
 }
 input:focus, .input:focus{
-  background-color: rgba(255, 255, 255, 0.3);
+  
   border: 1px solid rgba(40, 173, 86, 0.8);;
 }
 input:disabled{
@@ -542,9 +544,6 @@ input:disabled{
   background-color: var(--uv-gray-dark);
 }
 
-input:hover{
-  border-color: var(--uv-green);
-}
 input:focus, .input:focus{
   outline-style: solid;
   outline-color: var(--uv-green);
@@ -656,20 +655,23 @@ h2{
 
 }
 
-.tabs{
-  display: flex;
-  justify-content: start;
-}
-.tabs > li{
+.tab{
   padding: 1rem;
   min-width: 120px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-.tabs > li.selected-tab{
+.selected-tab{
   border-bottom: 3px solid var(--uv-green);
   font-weight: 600;
+}
+
+.shadow-down{
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+}
+.shadow-right{
+  box-shadow: 2px 0px 2px 0px rgba(0,0,0,0.2);
 }
 
 .selectlist-item{
