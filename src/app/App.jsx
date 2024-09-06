@@ -18,6 +18,7 @@ import Photosheets from "./routes/app/Photosheets";
 import UploaderImage from "../components/ui/UploaderImage";
 import SpecieList from "../features/specie/components/SpecieList";
 import SpecieDetail from "../features/specie/components/SpecieDetail";
+import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
 import {
@@ -77,6 +78,7 @@ function App() {
               </Landing>
             }
           ></Route>
+          <Route path={ROUTES.BUSCAR} element={<Search />}></Route>
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
           <Route
             path={"/fichas"}

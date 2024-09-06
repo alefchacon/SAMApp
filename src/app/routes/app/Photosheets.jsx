@@ -14,6 +14,8 @@ import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import useTextFilter from "../../../hooks/useTextFilter";
 import { Formik, Form } from "formik";
 
+import Footer from "../../../components/ui/Footer";
+
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
 
 export default function Photosheets({
@@ -127,35 +129,32 @@ export default function Photosheets({
 
   return (
     <div className="flex-col w-100">
-      <HeaderPage title="Fichas fotográficas" centerText></HeaderPage>
-      <div className="p-2rem">
-        <div className="flex-row gap-1rem align-items-center justify-content-center">
-          {" "}
-          <TextField
-            iconType={"search"}
-            placeholder={"Filtrar fichas por descripción"}
-            onChange={handleFilterChange}
-            maxWidth={"40%"}
-          ></TextField>
-          {role === ROLE_TYPES.TECHNICAL_PERSON && (
-            <Button onClick={showAddPhotosheetModal}>
-              Agregar ficha fotográfica
-            </Button>
-          )}
-        </div>
-        <br />
-        <div className="photosheet-gallery h-100 gap-05rem">
-          {filteredItems.map((photosheet, index) => (
-            <Photosheet
-              photosheet={photosheet}
-              key={index}
-              onDelete={handleDelete}
-              onUpdate={handleUpdate}
-              role={role}
-            />
-          ))}
-        </div>
+      <div className="flex-row gap-1rem align-items-center justify-content-center p-2rem">
+        {" "}
+        <TextField
+          iconType={"search"}
+          placeholder={"Filtrar fichas por descripción"}
+          onChange={handleFilterChange}
+          maxWidth={"50%"}
+        ></TextField>
+        {role === ROLE_TYPES.TECHNICAL_PERSON && (
+          <Button onClick={showAddPhotosheetModal}>
+            Agregar ficha fotográfica
+          </Button>
+        )}
       </div>
+      <div className="photosheet-gallery h-100 gap-05rem p-2rem">
+        {filteredItems.map((photosheet, index) => (
+          <Photosheet
+            photosheet={photosheet}
+            key={index}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+            role={role}
+          />
+        ))}
+      </div>
+      <Footer></Footer>
     </div>
   );
 }

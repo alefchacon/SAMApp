@@ -31,13 +31,13 @@ export default function Tabs({ children, className, buttons = null }) {
   preventConditionalTabCrash();
 
   return (
-    <div className="tab-content" style={{ flexGrow: 1, maxHeight: "100%" }}>
+    <div className="tab-content" style={{ flexGrow: 1, minHeight: "100%" }}>
       <div
         className="tab-bar flex-row bg-white align-content-center justify-content-center divider"
         style={{}}
       >
         <ul
-          className={`tab-group flex-row ${className} bg-white justify-content-start align-items-center`}
+          className={`tab-group divider flex-row ${className} bg-white justify-content-start align-items-center`}
           style={{
             position: "sticky",
             top: 0,
