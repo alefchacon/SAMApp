@@ -25,7 +25,7 @@ export default function Dropdown({ header, children }) {
   };
   return (
     <div
-      className="dropdown flex-row selectable rounded align-items-center p-1rem gap-1rem"
+      className="dropdown flex-row selectable rounded align-items-center p-05rem gap-1rem"
       onClick={toggleDropdown}
       ref={dropdownRef}
     >

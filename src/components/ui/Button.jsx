@@ -22,18 +22,16 @@ export default function Button({
     }
   };
   return (
-    <>
-      <button
-        disabled={isDisabled}
-        type={type}
-        className={`sam-button focusable ${className} ${
-          isDisabled ? "disabled" : ""
-        }`}
-        onClick={handleClick}
-      >
-        <span className="material-symbols-outlined">{iconType}</span>
-        {children}
-      </button>
-    </>
+    <button
+      disabled={isDisabled}
+      type={type}
+      className={`sam-button focusable ${className} ${
+        isDisabled ? "disabled" : ""
+      }`}
+      onClick={handleClick}
+    >
+      <span className="material-symbols-outlined">{iconType}</span>
+      {children}
+    </button>
   );
 }

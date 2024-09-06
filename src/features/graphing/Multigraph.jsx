@@ -70,7 +70,7 @@ export default function Multigraph({
         </div>
       </div>
       <div
-        className="flex-row rounded-20 bg-white w-100 h-100 "
+        className="flex-row rounded-20 bg-white w-100 h-100 border"
         style={{
           minHeight: "400px",
           justifyContent: "center",

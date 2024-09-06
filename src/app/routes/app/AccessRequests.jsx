@@ -39,10 +39,7 @@ export default function AccessRequests() {
         overflow: "scroll",
       }}
     >
-      <HeaderPage
-        title="Solicitudes de acceso"
-        subtitle="Las siguientes personas solicitan ver la colección"
-      ></HeaderPage>
+      <HeaderPage centerText title="Solicitudes de acceso"></HeaderPage>
       <div className="flex-col h-fit-content gap-1rem page-padding">
         <br />
         {accessRequests.map((accessRequest, index) => (

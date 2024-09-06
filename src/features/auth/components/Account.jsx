@@ -55,7 +55,6 @@ export default function Account({
             header={
               <div>
                 <p>{profile.names}</p>
-                <p className="caption">{profile.role}</p>
               </div>
             }
           >

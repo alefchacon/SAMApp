@@ -127,20 +127,21 @@ export default function Photosheets({
 
   return (
     <div className="flex-col w-100">
-      <HeaderPage title="Fichas fotográficas"></HeaderPage>
+      <HeaderPage title="Fichas fotográficas" centerText></HeaderPage>
       <div className="p-2rem">
         <div className="flex-row gap-1rem align-items-center justify-content-center">
           {" "}
+          <TextField
+            iconType={"search"}
+            placeholder={"Filtrar fichas por descripción"}
+            onChange={handleFilterChange}
+            maxWidth={"40%"}
+          ></TextField>
           {role === ROLE_TYPES.TECHNICAL_PERSON && (
             <Button onClick={showAddPhotosheetModal}>
               Agregar ficha fotográfica
             </Button>
           )}
-          <TextField
-            iconType={"search"}
-            placeholder={"Filtrar fichas por descripción"}
-            onChange={handleFilterChange}
-          ></TextField>
         </div>
         <br />
         <div className="photosheet-gallery h-100 gap-05rem">

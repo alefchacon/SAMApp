@@ -1,7 +1,8 @@
 export default function Header({ children, header = "header" }) {
   return (
     <div className={`specie-header p-1rem bg-white`}>
-      <div className={"p-1rem flex-col gap-1rem"}>
+      <br />
+      <div className={"flex-col gap-1rem"}>
         <h1>{header}</h1>
         {children}
       </div>

@@ -1,6 +1,6 @@
 import { useState, isValidElement } from "react";
 
-export default function Tabs({ children, className }) {
+export default function Tabs({ children, className, buttons = null }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleSelectedTabChange = (tabIndex, tabKey, tabLabel) => {
@@ -31,29 +31,41 @@ export default function Tabs({ children, className }) {
   preventConditionalTabCrash();
 
   return (
-    <div className="tab-wrapper" style={{ flexGrow: 1, maxHeight: "100%" }}>
-      <ul
-        className={`tabs divider ${className} bg-white justify-content-center`}
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 5,
-        }}
+    <div className="tab-content" style={{ flexGrow: 1, maxHeight: "100%" }}>
+      <div
+        className="tab-bar flex-row bg-white align-content-center justify-content-center divider"
+        style={{}}
       >
-        {children.map((tab, index) => (
-          <li
-            key={index}
-            className={`selectable ${
-              selectedIndex === index ? "selected-tab" : ""
-            }`}
-            onClick={() =>
-              handleSelectedTabChange(index, tab.props.tabKey, tab.props.label)
-            }
-          >
-            {tab.props.label}
-          </li>
-        ))}
-      </ul>
+        <ul
+          className={`tab-group flex-row ${className} bg-white justify-content-start align-items-center`}
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 5,
+          }}
+        >
+          {children.map((tab, index) => (
+            <li
+              key={index}
+              className={`tab selectable ${
+                selectedIndex === index ? "selected-tab" : ""
+              }`}
+              onClick={() =>
+                handleSelectedTabChange(
+                  index,
+                  tab.props.tabKey,
+                  tab.props.label
+                )
+              }
+            >
+              {tab.props.label}
+            </li>
+          ))}
+        </ul>
+        <div className="tab-actions flex-row align-items-center">
+          {buttons && buttons}
+        </div>
+      </div>
 
       {children.map((tab, index) => (
         <div
