@@ -172,7 +172,10 @@ main{
 
 .specie-list-items{
   overflow: auto;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  flex-grow: 1;
 }
 
 .test1{
@@ -188,6 +191,8 @@ main{
 .letter-spacing-0{
   letter-spacing: 0;
 }
+
+
 
 .caption{
   font-size: 0.9em;
@@ -398,6 +403,22 @@ tr{
 
 }
 
+.resize-bar{
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+
+  background-color: var(--uv-green);
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.resize-bar:hover{
+  opacity: 1;
+}
+
 .resizer {
   position: absolute;
   top: 0;
@@ -465,7 +486,12 @@ tr{
 
 
 
-
+.card{
+  background-color: white;
+  border-radius: 20px;
+  padding: 1rem;
+  overflow: hidden;
+}
 
 .sam-text-field-label{
   font-weight: 600;
@@ -504,7 +530,7 @@ label.hasError{
   width: 100%;
   outline: none;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px;
   font-size: 0.9rem;
   color: black;
@@ -997,7 +1023,7 @@ nav{
 
 .photosheet-gallery{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .photosheet-description{

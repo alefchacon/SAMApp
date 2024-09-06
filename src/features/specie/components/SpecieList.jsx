@@ -9,6 +9,7 @@ import HoverableActions from "../../../components/ui/HoverableActions";
 import NoResults from "../../../components/ui/NoResults";
 import NewSpecie from "../../../app/routes/app/NewSpecie";
 import TextField from "../../../components/ui/TextField";
+import ResizableDiv from "../../../components/ui/ResizableDiv";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
@@ -48,18 +49,22 @@ export default function SpecieList({
   );
 
   return (
-    <div
-      className="specie-list rounded-20 border shadow-right"
-      style={{ position: fold && "absolute" }}
+    <ResizableDiv
+      className={`specie-list rounded-20 ${
+        fold ? "position-absolute" : "position-relative shadow-right"
+      }`}
+      hide={fold}
     >
       {fold ? (
         <Button
           iconType="dock_to_right"
           className="icon-only secondary m-1rem"
           onClick={toggleFold}
-        ></Button>
+        >
+          Ver especies
+        </Button>
       ) : (
-        <div className={` ${fold && "fold"} h-100`}>
+        <div className={` ${fold && "fold"} flex-col h-100`}>
           <div
             className="p-1rem flex-row justify-content-space-between align-items-center"
             style={{ fontWeight: 600 }}
@@ -67,7 +72,7 @@ export default function SpecieList({
             <div></div>
             <p>Especies</p>
             <Button
-              iconType="dock_to_right"
+              iconType="close"
               className="icon-only secondary"
               onClick={toggleFold}
             ></Button>
@@ -116,6 +121,6 @@ export default function SpecieList({
           )}
         </div>
       )}
-    </div>
+    </ResizableDiv>
   );
 }

@@ -7,10 +7,29 @@ import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import TextField from "./TextField";
 
+import ROUTES from "../../stores/routes";
+
 import { useStatus } from "../contexts/StatusContext";
 
+import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 export default function Navbar({ accessRequestCount = 0 }) {
   const { loading } = useStatus();
+  const navigate = useNavigate();
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    params.set("q", searchQuery);
+
+    // Navigate to the same page but with new search params
+    navigate(ROUTES.BUSCAR.concat(`?${params.toString()}`));
+  };
 
   return (
     <nav
@@ -48,6 +67,10 @@ export default function Navbar({ accessRequestCount = 0 }) {
         <TextField
           placeholder={"Buscar especies"}
           iconType={"search"}
+          onEnter={handleSearch}
+          value={searchQuery}
+          onChange={handleSearchQueryChange}
+          onKeydown={handleSearch}
         ></TextField>
 
         <div className="hide-if-mobile">
