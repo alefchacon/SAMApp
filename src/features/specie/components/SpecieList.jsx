@@ -11,6 +11,8 @@ import NewSpecie from "../../../app/routes/app/NewSpecie";
 import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
 
+import Chip from "../../../components/ui/Chip";
+
 import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 
@@ -50,7 +52,7 @@ export default function SpecieList({
 
   return (
     <ResizableDiv
-      className={`specie-list rounded-20 ${
+      className={`specie-list ${
         fold ? "position-absolute" : "position-relative shadow-right"
       }`}
       hide={fold}
@@ -66,7 +68,7 @@ export default function SpecieList({
       ) : (
         <div className={` ${fold && "fold"} flex-col h-100`}>
           <div
-            className="p-1rem flex-row justify-content-space-between align-items-center"
+            className="p-1rem flex-row justify-content-space-between align-items-center bg-gradient"
             style={{ fontWeight: 600 }}
           >
             <div></div>
@@ -77,13 +79,23 @@ export default function SpecieList({
               onClick={toggleFold}
             ></Button>
           </div>
-          <div className="flex-row divider p-1rem gap-1rem">
-            <TextField
-              placeholder={"Buscar especies"}
-              onChange={handleFilterChange}
-              iconType={"search"}
-            ></TextField>
-            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+          <div className="flex-col divider">
+            <div className="flex-row p-1rem gap-1rem">
+              <TextField
+                placeholder={"Buscar especies"}
+                onChange={handleFilterChange}
+                iconType={"search"}
+              ></TextField>
+              {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+            </div>
+            <div
+              className="flex-row gap-05rem"
+              style={{ padding: "0 1rem 1rem 1rem" }}
+            >
+              <Chip>Familias</Chip>
+              <Chip>Géneros</Chip>
+              <Chip>Epítetos</Chip>
+            </div>
           </div>
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">

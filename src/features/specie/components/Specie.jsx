@@ -43,8 +43,8 @@ export default function Specie({
         onClick={isListItem ? () => onClick(index) : console.log}
       >
         <p className="bold ellipsis">{specie.scientific_name}</p>
-        <div className="ellipsis">
-          <p className="caption ellipsis">
+        <div className="">
+          <p className="caption">
             {specie.orden} {delimiter} {specie.family} {delimiter}{" "}
             {specie.gender} {delimiter} {specie.epithet} {delimiter}{" "}
             {specie.subspecie}

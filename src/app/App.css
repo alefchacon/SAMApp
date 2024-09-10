@@ -43,6 +43,28 @@ h3{
   margin: 0;
 }
 
+.bg-gradient{
+  color: white;
+ background-image: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
+}
+
+.nav-link{
+  display: flex;
+  text-decoration: none;
+  color: white;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.nav-link:hover{
+  color: white;
+  box-shadow: inset 0px -5px 0px 0px rgba(255,255,255,1);
+}
+
+footer{
+  background-color: var(--dark);
+}
+
 #root{
   
 }
@@ -168,6 +190,7 @@ main{
 
   overflow-y: hidden;
   overflow-x: hidden;
+  border-radius: 0px 20px 20px 0;
 }
 
 .specie-list-items{
@@ -570,9 +593,13 @@ input:disabled{
   background-color: var(--uv-gray-dark);
 }
 
+.small{
+  font-size: 0.8rem;
+}
+
 input:focus, .input:focus{
   outline-style: solid;
-  outline-color: var(--uv-green);
+  outline-color: var(--uv-blue);
   outline-width: 0.25rem;
   outline-offset: -2px;
 }
@@ -964,7 +991,14 @@ a{
   text-shadow: 2px 2px 5px rgba(0,0,0,0.33);
 }
 
-
+.nav-input::placeholder{
+  color: white;
+}
+.nav-input{
+  background-color: transparent;
+  box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.75);
+  color: white;
+}
 
 .color-white{
   color: white;
@@ -980,9 +1014,7 @@ a{
 nav{
   z-index: 20;
   
-  background-color: var(--bg-main);
   
-  color: black;
   display: flex;
   flex-direction: row;
 
@@ -1015,10 +1047,10 @@ nav{
 }
 
 .img-container{
-  width: 100%; /* or specify a fixed width */
-  height: 500px; /* or specify a fixed height */
-  position: relative; /* if needed */
-  overflow: hidden; /* hides any overflow */
+  width: 100%; 
+  height: 500px;
+  position: relative;
+  overflow: hidden;
 }
 
 .photosheet-gallery{
@@ -1140,7 +1172,7 @@ nav{
 }
 
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 900px) {
 
   .multigraph-wrapper{
     grid-template-columns: repeat(1, 1fr);

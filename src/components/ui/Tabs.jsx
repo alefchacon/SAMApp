@@ -31,10 +31,10 @@ export default function Tabs({ children, className, buttons = null }) {
   preventConditionalTabCrash();
 
   return (
-    <div className="tab-content" style={{ flexGrow: 1, minHeight: "100%" }}>
+    <div className="tab-content" style={{ flexGrow: 1 }}>
       <div
-        className="tab-bar flex-row bg-white align-content-center justify-content-center divider"
-        style={{}}
+        className="tab-bar flex-row bg-white align-content-center justify-content-space-between divider"
+        style={{ padding: "0 1rem" }}
       >
         <ul
           className={`tab-group divider flex-row ${className} bg-white justify-content-start align-items-center`}

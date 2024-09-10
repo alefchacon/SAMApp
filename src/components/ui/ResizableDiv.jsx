@@ -26,7 +26,6 @@ export default function ResizableDiv({
 
   const handleMouseMove = useCallback(
     (e) => {
-      console.log("hey!!");
       if (!isResizing) return;
 
       const { movementX, movementY } = e;

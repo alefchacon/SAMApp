@@ -33,22 +33,24 @@ export default function Navbar({ accessRequestCount = 0 }) {
 
   return (
     <nav
-      className="flex-row justify-content-space-between shadow-down"
-      style={{ minHeight: "60px", position: "relative", padding: "0 3rem" }}
+      className="flex-row justify-content-space-between shadow-down bg-gradient"
+      style={{ minHeight: "60px", position: "relative", padding: "0 1rem" }}
     >
-      <div className="flex-row align-items-center gap-2rem">
-        [Nombre o logo]
+      <div className="flex-row align-items-center gap-2rem h-100">
+        <span className="material-symbols-outlined">nest_eco_leaf</span>
+
         <div
-          className="left-side flex-row align-items-center hide-if-mobile"
+          className="left-side flex-row align-items-center hide-if-mobile h-100 gap-2rem"
           style={{ flex: 1 }}
         >
-          <Link to={"/coleccion"} className="selectable p-05rem rounded">
+          <Link to={"/coleccion"} className="selectable nav-link">
             <InfoItem label={"Colección"} iconType={"pets"}></InfoItem>
           </Link>
-          <Link to={"/fichas"} className="selectable p-05rem rounded">
+          <Link to={"/fichas"} className="selectable nav-link">
             <InfoItem label={"Fichas"} iconType={"photo"}></InfoItem>
           </Link>
           <Dropdown
+            className={"nav-link"}
             header={
               <InfoItem label={"Acerca de..."} iconType={"help"}></InfoItem>
             }
@@ -65,6 +67,7 @@ export default function Navbar({ accessRequestCount = 0 }) {
         style={{ flex: 2 }}
       >
         <TextField
+          className="nav-input"
           placeholder={"Buscar especies"}
           iconType={"search"}
           onEnter={handleSearch}

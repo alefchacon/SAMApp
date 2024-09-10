@@ -1,4 +1,5 @@
 import defaultSpecie from "../store/defaultSpecie";
+import { Link } from "react-router-dom";
 
 export default function Taxonomy({ specie = defaultSpecie, center = true }) {
   const delimiter = (
@@ -11,9 +12,10 @@ export default function Taxonomy({ specie = defaultSpecie, center = true }) {
     rank = "rank",
     rankName = "rankName",
     showDelimiter = true,
+    queryType = "orden",
   }) {
     return (
-      <div className="flex-row gap-05rem">
+      <div className="flex-row gap-05rem ">
         <div className="flex-col">
           <p
             className="caption rank"
@@ -21,9 +23,9 @@ export default function Taxonomy({ specie = defaultSpecie, center = true }) {
           >
             {rankName}
           </p>
-          <p className="font-weight-500" style={{ fontSize: "0.9rem" }}>
+          <Link className="font-weight-500" style={{ fontSize: "0.9rem" }}>
             {rank}
-          </p>
+          </Link>
         </div>
         {showDelimiter && delimiter}
       </div>

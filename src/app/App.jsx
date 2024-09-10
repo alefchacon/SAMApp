@@ -17,7 +17,6 @@ import AccessRequests from "./routes/app/AccessRequests";
 import Photosheets from "./routes/app/Photosheets";
 import UploaderImage from "../components/ui/UploaderImage";
 import SpecieList from "../features/specie/components/SpecieList";
-import SpecieDetail from "../features/specie/components/SpecieDetail";
 import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";

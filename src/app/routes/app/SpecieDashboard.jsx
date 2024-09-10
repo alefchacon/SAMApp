@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
-import SpecieDetail from "../../../features/specie/components/SpecieDetail";
+import SpecimenView from "../../../features/specie/components/SpecimenView";
+import Table from "../../../components/ui/Table";
 import {
   mockGetSpecies,
   getSpecieList,
@@ -11,8 +12,7 @@ import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
 import Uploader from "../../../components/ui/Uploader";
 import Header from "../../../components/ui/Header";
-
-import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
+import TextField from "../../../components/ui/TextField";
 
 import NewSpecie from "./NewSpecie";
 
@@ -20,6 +20,15 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import addSpecie from "../../../features/specie/dataAccess/addSpecie";
+import Multigraph from "../../../features/graphing/Multigraph";
+import Footer from "../../../components/ui/Footer";
+import Specie from "../../../features/specie/components/Specie";
+import { useSpecimens } from "../../../features/specimens/dataAccess/useSpecimens";
+
+import DATE_TYPES from "../../../features/graphing/dateTypes";
+import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
+const METRICAS_TAB_KEY = "METRICAS";
+
 export default function SpecieDashboard({
   onSelectionChange,
   role = ROLE_TYPES.VISITOR,
@@ -27,6 +36,7 @@ export default function SpecieDashboard({
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [species, setSpecies] = useState([]);
   const selectedSpecie = species.find((specie) => specie.id === selectedIndex);
+  const [specimens] = useSpecimens(selectedIndex);
 
   const { showModal } = useModal();
 
@@ -52,6 +62,19 @@ export default function SpecieDashboard({
       handleAddSpecie(species[i]);
     }
   };
+
+  function AddSpecimenButton() {
+    return (
+      <Button
+        variant={"primary"}
+        onClick={async () => {
+          console.log(await getSpecimens(role, specie.id));
+        }}
+      >
+        Agregar espécimen
+      </Button>
+    );
+  }
 
   function MultiAddSpecie() {
     return (
@@ -98,6 +121,24 @@ export default function SpecieDashboard({
     setSelectedIndex(newSelectedIndex);
   };
 
+  function SpecieButtons() {
+    return (
+      <div className="flex-row gap-1rem justify-content-center">
+        <Button
+          className={"secondary"}
+          iconType="edit"
+          onClick={() => showSpecieEditModal(selectedSpecie)}
+        >
+          Editar especie
+        </Button>
+
+        <Button className={"secondary danger"} iconType={"delete"}>
+          Eliminar especie
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <>
       <SpecieList
@@ -107,7 +148,7 @@ export default function SpecieDashboard({
         onAdd={showSpecieAddModal}
         onEdit={showSpecieEditModal}
       ></SpecieList>
-      <SpecieDetail specie={selectedSpecie} role={role}>
+      <div className="specie-view">
         <Header
           header={selectedSpecie?.scientific_name ?? "asdf"}
           isListItem={false}
@@ -115,24 +156,70 @@ export default function SpecieDashboard({
           onEdit={showSpecieEditModal}
         >
           <Taxonomy specie={selectedSpecie}></Taxonomy>
+        </Header>
 
-          {role === ROLE_TYPES.TECHNICAL_PERSON && (
-            <div className="flex-row gap-1rem justify-content-center">
-              <Button
-                className={"secondary"}
-                iconType="edit"
-                onClick={() => showSpecieEditModal(selectedSpecie)}
-              >
-                Editar especie
-              </Button>
+        <Tabs
+          className={"divider"}
+          buttons={role === ROLE_TYPES.TECHNICAL_PERSON && <SpecieButtons />}
+        >
+          {ROLE_TYPES.validate(role) && (
+            <div
+              label={"Especímenes"}
+              className="specimens flex-col h-100"
+              style={{ overflow: "auto" }}
+            >
+              <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
+                <TextField
+                  maxWidth={"60%"}
+                  iconType={"search"}
+                  placeholder={
+                    "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
+                  }
+                ></TextField>
+                {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
+              </div>
 
-              <Button className={"secondary danger"} iconType={"delete"}>
-                Eliminar especie
-              </Button>
+              <Table data={specimens}></Table>
             </div>
           )}
-        </Header>
-      </SpecieDetail>
+          <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>
+            <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
+              <Multigraph
+                graphTitle="Especímenes recolectados por mes"
+                specimens={specimens}
+                attributeToGraph={{
+                  name: "colection_date",
+                  type: DATE_TYPES.MONTH,
+                }}
+                yLabel="Especímenes"
+                xLabel="Meses"
+              />
+              <Multigraph
+                graphTitle="Especímenes recolectados por año"
+                specimens={specimens}
+                attributeToGraph={{
+                  name: "colection_date",
+                  type: DATE_TYPES.YEAR,
+                }}
+                yLabel="Especímenes"
+                xLabel="Meses"
+              />
+              <Multigraph
+                graphTitle="Especímenes recolectados por mes"
+                specimens={specimens}
+                attributeToGraph={{
+                  name: "colection_date",
+                  type: DATE_TYPES.MONTH,
+                }}
+                yLabel="Especímenes"
+                xLabel="Meses"
+              />
+            </div>
+          </div>
+        </Tabs>
+
+        <Footer></Footer>
+      </div>
     </>
   );
 }
