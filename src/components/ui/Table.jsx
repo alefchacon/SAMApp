@@ -146,9 +146,10 @@ const defaultColumns = [
 function TableRow({ rowData }) {
   return (
     <>
-      <tr key={rowData.id} className="selectable hoverable2">
+      <tr key={rowData.id} className="tr selectable hoverable2">
         {rowData.getVisibleCells().map((cell) => (
           <td
+            className="td"
             key={cell.id}
             {...{
               style: {
@@ -174,6 +175,11 @@ export default function Table({ data }) {
     pageSize: 10,
   });
 
+  const filteredColumns = columns.filter((col) =>
+    data.some((row) => row[col.accessorKey] !== undefined)
+  );
+
+  console.log(columns);
   const handlePageSizeChange = (e) => {
     setPagination({
       pageIndex: pagination.pageIndex,
@@ -183,7 +189,7 @@ export default function Table({ data }) {
 
   const table = useReactTable({
     data: data,
-    columns,
+    columns: filteredColumns,
     columnResizeMode,
     columnResizeDirection,
     getCoreRowModel: getCoreRowModel(),
@@ -202,40 +208,37 @@ export default function Table({ data }) {
           overflowX: "auto",
           overflowY: "clip",
           flexGrow: 3,
+          width: "100%",
           height: "100%",
           maxHeight: "100%",
         }}
       >
         <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
-          <div className="table-page-buttons">
-            <button
-              className="sam-button secondary"
+          <div className="table-page-buttons flex-row align-items-center">
+            <Button
+              className="secondary"
+              iconType="first_page"
               onClick={() => table.firstPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"⇤"}
-            </button>
-            <button
-              className="sam-button secondary"
+              isDisabled={!table.getCanPreviousPage()}
+            ></Button>
+            <Button
+              className="secondary"
+              iconType="chevron_left"
               onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<"}
-            </button>
-            <button
-              className="sam-button secondary"
+              isDisabled={!table.getCanPreviousPage()}
+            ></Button>
+            <Button
+              className="secondary"
+              iconType="chevron_right"
               onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              {">"}
-            </button>
-            <button
-              className="sam-button secondary"
+              isDisabled={!table.getCanNextPage()}
+            ></Button>
+            <Button
+              className="secondary"
+              iconType="last_page"
               onClick={() => table.lastPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              {">>"}
-            </button>
+              isDisabled={!table.getCanNextPage()}
+            ></Button>
             <span className="table-page-label">
               <div>Página &nbsp; </div>
               <strong>
@@ -260,7 +263,7 @@ export default function Table({ data }) {
           </div>
         </div>
         <table
-          className="h-100"
+          className="h-100 table"
           {...{
             style: {
               //width: table.getCenterTotalSize(),
@@ -270,10 +273,10 @@ export default function Table({ data }) {
         >
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
+              <tr className="tr" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
-                    className="selectable"
+                    className="th selectable"
                     key={header.id}
                     {...{
                       colSpan: header.colSpan,

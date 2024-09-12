@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import ROUTES from "../../stores/routes";
 import { Field } from "formik";
+import TextField from "./TextField";
 
 export default function SearchField({
   label = "label",
@@ -11,56 +19,33 @@ export default function SearchField({
   hasError = false,
   value = ``,
   options = ["option 1", "option 2", "option 3"],
+  className = "",
 }) {
-  const [errorClassName, setErrorClassName] = useState();
+  let [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setErrorClassName(hasError ? "hasError" : "");
-  }, [hasError]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const pathname = location.pathname.toLowerCase();
+
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearch = () => {
+    searchParams.set("q", searchQuery);
+    setSearchParams(searchParams);
+  };
 
   return (
-    <div className={`text-field ${errorClassName}`}>
-      <div className="sam-text-field-info">
-        <div className="form-label">
-          <label htmlFor={`${id}`} className="sam-text-field-label">
-            {label}
-          </label>
-          {required ? (
-            <p className="required">(requerido)</p>
-          ) : (
-            <p>(opcional)</p>
-          )}
-        </div>
-        <div
-          htmlFor={`${id}`}
-          className={`sam-text-field-helper-text`}
-          id={`${id}-helper-text`}
-        >
-          {helperText}
-        </div>
-        {hasError && (
-          <div
-            className={`sam-text-field-error-text`}
-            htmlFor={`${id}`}
-            id={`${id}-error-message`}
-          >
-            {errorMessage}
-          </div>
-        )}
-      </div>
-      <Field
-        list={`${id}-options`}
-        type="text"
-        id={id}
-        name={name}
-        className={`${errorClassName}`}
-        maxLength={50}
-      />
-      <datalist id={`${id}-options`}>
-        {options.map((option, index) => (
-          <option key={index}>{option}</option>
-        ))}
-      </datalist>
-    </div>
+    <TextField
+      className={className}
+      placeholder={"Buscar especies"}
+      iconType={"search"}
+      onEnter={handleSearch}
+      value={searchQuery}
+      onChange={handleSearchQueryChange}
+      onKeydown={handleSearch}
+    ></TextField>
   );
 }

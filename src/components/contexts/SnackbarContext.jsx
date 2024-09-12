@@ -16,17 +16,21 @@ export function SnackbarProvider({ children }) {
   const [message, setMessage] = useState("");
   const [handleUndo, setHandleUndo] = useState(null);
   const [isError, setIsError] = useState(false);
-  const [iconType, setIconType] = useState("check");
+  const [iconType, setIconType] = useState(null);
   const [snackbarContent, setSnackbarContent] = useState();
+  const [duration, setDuration] = useState(3000);
 
   const showSnackbar = (
     content = "This is a snackbar.",
     isError = false,
-    iconType = "check"
+    iconType = "check",
+    duration = 3000
   ) => {
     setSnackbarContent(content);
     setIsError(isError);
     setOpen(true);
+    setIconType(iconType);
+    setDuration(duration);
   };
 
   const handleClose = (event, reason) => {
@@ -40,14 +44,18 @@ export function SnackbarProvider({ children }) {
     setOpen(false);
   };
 
+  const closeSnackbar = () => {
+    setOpen(false);
+  };
+
   return (
-    <SnackbarContext.Provider value={{ showSnackbar }}>
+    <SnackbarContext.Provider value={{ showSnackbar, closeSnackbar }}>
       {children}
       <Snackbar
         isError={isError}
         open={open}
         onClose={handleClose}
-        autoHideDuration={6000}
+        duration={duration}
         iconType={iconType}
       >
         {snackbarContent}

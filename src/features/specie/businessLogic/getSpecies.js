@@ -143,7 +143,8 @@ export const mockGetSpecies = async () => {
 } 
   
 export const getSpecieList = async () => {
-  const response = await api.get(SPECIE_URL);
+  
+  const response = await api.get(SPECIE_URL, {requestName: "getSpecie", cancelable: false});
   return response;
 }   
 

@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 
 import HeaderPage from "../../../components/ui/HeaderPage";
 
-import useAccessRequests from "../../../features/access/dataAccess/useAccessRequests,jsx";
+import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests,jsx";
 
 export default function AccessRequestForm() {
   const [addAccessRequest] = useAccessRequests();

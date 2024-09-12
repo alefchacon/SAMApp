@@ -6,7 +6,7 @@ import Table from "../../../components/ui/Table";
 import {
   mockGetSpecies,
   getSpecieList,
-} from "../../../features/specie/dataAccess/getSpecies";
+} from "../../../features/specie/businessLogic/getSpecies";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
@@ -19,11 +19,11 @@ import NewSpecie from "./NewSpecie";
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { useStatus } from "../../../components/contexts/StatusContext";
-import addSpecie from "../../../features/specie/dataAccess/addSpecie";
+import addSpecie from "../../../features/specie/businessLogic/addSpecie";
 import Multigraph from "../../../features/graphing/Multigraph";
 import Footer from "../../../components/ui/Footer";
 import Specie from "../../../features/specie/components/Specie";
-import { useSpecimens } from "../../../features/specimens/dataAccess/useSpecimens";
+import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 
 import DATE_TYPES from "../../../features/graphing/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";

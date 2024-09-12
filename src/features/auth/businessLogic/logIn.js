@@ -2,8 +2,8 @@ import { api } from "../../../lib/apiClient"
 import { LOGIN_URL } from "./authUrls"
 import CREDENTIALS_KEYS from "../../../stores/credentialsKeys"
 import { ROLE_TYPES } from "../../../stores/roleTypes"
-import getAcademics from "../../user/dataAccess/getAcademics"
-import getTechnicalPersons from "../../user/dataAccess/getTechnicalPersons"
+import getAcademics from "../../user/businessLogic/getAcademics"
+import getTechnicalPersons from "../../user/businessLogic/getTechnicalPersons"
 
 import { jwtDecode } from "jwt-decode"
 

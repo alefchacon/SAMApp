@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import DropdownItem from "./DropdownItem";
 import InfoItem from "./InfoItem";
@@ -18,6 +18,8 @@ export default function Navbar({ accessRequestCount = 0 }) {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const pathname = location.pathname.toLowerCase();
 
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
@@ -26,10 +28,26 @@ export default function Navbar({ accessRequestCount = 0 }) {
   const handleSearch = () => {
     const params = new URLSearchParams();
     params.set("q", searchQuery);
-
-    // Navigate to the same page but with new search params
     navigate(ROUTES.BUSCAR.concat(`?${params.toString()}`));
   };
+
+  const NAV_ITEMS = [
+    {
+      route: ROUTES.LANDING,
+      label: "Inicio",
+      iconType: "home",
+    },
+    {
+      route: ROUTES.COLECCION,
+      label: "Colección",
+      iconType: "pets",
+    },
+    {
+      route: ROUTES.FICHAS,
+      label: "Fichas",
+      iconType: "image",
+    },
+  ];
 
   return (
     <nav
@@ -43,12 +61,20 @@ export default function Navbar({ accessRequestCount = 0 }) {
           className="left-side flex-row align-items-center hide-if-mobile h-100 gap-2rem"
           style={{ flex: 1 }}
         >
-          <Link to={"/coleccion"} className="selectable nav-link">
-            <InfoItem label={"Colección"} iconType={"pets"}></InfoItem>
-          </Link>
-          <Link to={"/fichas"} className="selectable nav-link">
-            <InfoItem label={"Fichas"} iconType={"photo"}></InfoItem>
-          </Link>
+          {NAV_ITEMS.map((navItem, index) => (
+            <Link
+              to={navItem.route}
+              className={`selectable nav-link ${
+                navItem.route === pathname ? "selected" : ""
+              }`}
+            >
+              <InfoItem
+                label={navItem.label}
+                iconType={navItem.iconType}
+              ></InfoItem>
+            </Link>
+          ))}
+
           <Dropdown
             className={"nav-link"}
             header={

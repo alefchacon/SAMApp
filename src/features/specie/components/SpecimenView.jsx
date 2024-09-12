@@ -21,7 +21,7 @@ const METRICAS_TAB_KEY = "METRICAS";
 //import { mockGetSpecimens } from "../../specimens/api/GetSpecimens";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 
-import { useSpecimens } from "../../specimens/dataAccess/useSpecimens";
+import { useSpecimens } from "../../specimens/businessLogic/useSpecimens";
 
 export default function SpecimenView({
   children,

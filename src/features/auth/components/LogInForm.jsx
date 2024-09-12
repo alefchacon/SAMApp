@@ -7,7 +7,7 @@ import { loginSchema } from "../formikSchemas/loginSchema";
 
 import { Link } from "react-router-dom";
 
-import logIn from "../dataAccess/logIn.js";
+import logIn from "../businessLogic/logIn.js";
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
 import ROUTES from "../../../stores/routes.js";
 

@@ -37,6 +37,20 @@ export const mockGetSpecimens = async (amount) => {
 
   return specimens;
 }
+export const mockGetSpecimensAcademic = async (amount) => {
+  let specimens = [];
+  for (let i = 0; i < amount; i++){
+    specimens.push({
+      id: i, //Math.random(1, amount)
+      catalog_id: getRandomString(20),
+      colection_date: getRandomDate().format("YYYY-MM-DD"),
+      sex: "F",
+      number_embryos: Math.random(0, 20),
+    });
+  }
+
+  return specimens;
+}
 
 function getRandomDate(
   start = moment('1980-01-01'), 

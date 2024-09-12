@@ -7,10 +7,12 @@ import Button from "../../../components/ui/Button";
 import LinkButton from "../../../components/ui/LinkButton";
 import Modal from "../../../components/ui/modal/Modal";
 import ModalActions from "../../../components/ui/modal/ModalActions";
+import Taxonomy from "./Taxonomy";
 
 // ICONS
 import EditIcon from "../../../components/icons/EditIcon";
 import DeleteIcon from "../../../components/icons/DeleteIcon";
+import { filter } from "lodash";
 
 export default function Specie({
   specie = {
@@ -29,8 +31,40 @@ export default function Specie({
   className,
   onDelete,
   onEdit,
+  filterText = null,
+  showRankName = true,
+  clickableRank = true,
 }) {
   const delimiter = ">";
+  if (filterText) {
+    console.log(filterText);
+  }
+
+  function Highlight({ text, highlight }) {
+    if (!highlight) return <span>{text}</span>;
+
+    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    return (
+      <span>
+        {parts.map((part, index) =>
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <span
+              key={index}
+              style={{
+                backgroundColor: "yellow",
+                borderRadius: "5px",
+                border: "1px solid orange",
+              }}
+            >
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  }
 
   return (
     <div
@@ -43,32 +77,12 @@ export default function Specie({
         onClick={isListItem ? () => onClick(index) : console.log}
       >
         <p className="bold ellipsis">{specie.scientific_name}</p>
-        <div className="">
-          <p className="caption">
-            {specie.orden} {delimiter} {specie.family} {delimiter}{" "}
-            {specie.gender} {delimiter} {specie.epithet} {delimiter}{" "}
-            {specie.subspecie}
-          </p>
-        </div>
+        <Taxonomy
+          clickableRank={clickableRank}
+          showRankName={showRankName}
+          specie={specie}
+        ></Taxonomy>
       </li>
-      {!isListItem && (
-        <div className="specie-actions">
-          <LinkButton
-            label="Editar especie"
-            variant={"secondary"}
-            icon={<EditIcon></EditIcon>}
-            href={`/editarEspecie?id=${specie.id}`}
-          ></LinkButton>
-
-          <Button
-            className={"secondary danger"}
-            iconType={"delete"}
-            onClick={() => console.log("sadf")}
-          >
-            Eliminar especie
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

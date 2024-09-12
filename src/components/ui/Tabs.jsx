@@ -1,6 +1,13 @@
 import { useState, isValidElement } from "react";
 
-export default function Tabs({ children, className, buttons = null }) {
+export default function Tabs({
+  children,
+  className,
+  buttons = null,
+  center = false,
+}) {
+  console.log(children);
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleSelectedTabChange = (tabIndex, tabKey, tabLabel) => {
@@ -31,9 +38,19 @@ export default function Tabs({ children, className, buttons = null }) {
   preventConditionalTabCrash();
 
   return (
-    <div className="tab-content" style={{ flexGrow: 1 }}>
+    <div
+      className="tab-content"
+      style={{
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: "100%",
+      }}
+    >
       <div
-        className="tab-bar flex-row bg-white align-content-center justify-content-space-between divider"
+        className={`tab-bar flex-row bg-white align-content-center divider ${
+          center ? "justify-content-center" : "justify-content-space-between"
+        }`}
         style={{ padding: "0 1rem" }}
       >
         <ul
@@ -47,6 +64,9 @@ export default function Tabs({ children, className, buttons = null }) {
           {children.map((tab, index) => (
             <li
               key={index}
+              style={{
+                borderRadius: "10px 10px 0 0",
+              }}
               className={`tab selectable ${
                 selectedIndex === index ? "selected-tab" : ""
               }`}
@@ -70,7 +90,7 @@ export default function Tabs({ children, className, buttons = null }) {
       {children.map((tab, index) => (
         <div
           key={index}
-          className={`
+          className={`${tab.props.className}
             ${selectedIndex === index ? "visible tab-panel" : "invisible"}`}
         >
           {selectedIndex === index && tab.props.children}
