@@ -8,7 +8,7 @@ export default function HeaderPage({
 }) {
   return (
     <div
-      className={`page-padding p-1rem bg-white divider ${
+      className={`page-padding p-1rem ${
         centerText && "justify-content-center"
       }`}
     >

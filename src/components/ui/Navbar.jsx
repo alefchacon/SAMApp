@@ -44,7 +44,7 @@ export default function Navbar({ accessRequestCount = 0 }) {
     },
     {
       route: ROUTES.FICHAS,
-      label: "Fichas",
+      label: "Fichas fotográficas",
       iconType: "image",
     },
   ];

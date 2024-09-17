@@ -1,9 +1,9 @@
 import { api } from "../../../lib/apiClient";
-import ACCESS_REQUESTS_URL from "../../../config/accessUrls";
+import { REQUEST_PENDING, REQUEST_PENDING_COUNT } from "../../../config/accessURL";
 
-export async function getAccessRequests(){
-  return await api.get(ACCESS_REQUESTS_URL);
+export async function getPendingAccessRequests(){
+  return await api.get(REQUEST_PENDING);
 }
-export async function getAccessRequestsCount(){
-  return await api.get(ACCESS_REQUESTS_URL.concat("?count=1"));
+export async function getPendingAccessRequestsCount(){
+  return await api.get(REQUEST_PENDING_COUNT);
 }

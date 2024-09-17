@@ -48,13 +48,13 @@ export default function Tabs({
       }}
     >
       <div
-        className={`tab-bar flex-row bg-white align-content-center divider ${
+        className={`tab-bar flex-rowalign-content-center  ${
           center ? "justify-content-center" : "justify-content-space-between"
         }`}
         style={{ padding: "0 1rem" }}
       >
         <ul
-          className={`tab-group divider flex-row ${className} bg-white justify-content-start align-items-center`}
+          className={`tab-group flex-row ${className} justify-content-start align-items-center`}
           style={{
             position: "sticky",
             top: 0,

@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-table";
 
 // COMPONENTS
+import Card from "./Card";
 import Button from "./Button";
 import HoverableActions from "./HoverableActions";
 import TextField from "./TextField";
@@ -201,9 +202,9 @@ export default function Table({ data }) {
   });
 
   return (
-    <>
+    <Card>
       <div
-        className="table-wrapper rounded-20"
+        className="table-wrapper"
         style={{
           overflowX: "auto",
           overflowY: "clip",
@@ -328,6 +329,6 @@ export default function Table({ data }) {
           </tbody>
         </table>
       </div>
-    </>
+    </Card>
   );
 }

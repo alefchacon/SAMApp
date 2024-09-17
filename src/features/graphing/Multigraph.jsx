@@ -5,7 +5,7 @@ import BarGraph from "./BarGraph";
 import LineGraph from "./LineGraph";
 
 import Button from "../../components/ui/Button";
-
+import Card from "../../components/ui/Card";
 import DATE_TYPES from "./dateTypes";
 import { sortByDate } from "./specimenSorter";
 
@@ -69,14 +69,7 @@ export default function Multigraph({
           />
         </div>
       </div>
-      <div
-        className="flex-row rounded-20 bg-white w-100 h-100 border"
-        style={{
-          minHeight: "400px",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Card className={"multigraph align-items-center justify-content-center"}>
         {currentGraphKey === PIE_GRAPH_KEY && !lineOnly && (
           <PieGraph data={data} />
         )}
@@ -86,7 +79,7 @@ export default function Multigraph({
         {currentGraphKey === LINE_GRAPH_KEY && (
           <LineGraph xLabel={xLabel} yLabel={yLabel} initialData={data} />
         )}
-      </div>
+      </Card>
     </div>
   );
 }

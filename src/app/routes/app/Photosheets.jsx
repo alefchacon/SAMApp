@@ -143,7 +143,10 @@ export default function Photosheets({
           </Button>
         )}
       </div>
-      <div className="photosheet-gallery h-100 gap-05rem p-2rem">
+      <div
+        className="photosheet-gallery h-100 p-2rem"
+        style={{ gap: "0.2rem" }}
+      >
         {filteredItems.map((photosheet, index) => (
           <Photosheet
             photosheet={photosheet}

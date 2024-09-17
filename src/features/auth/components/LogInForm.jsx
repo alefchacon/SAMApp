@@ -61,11 +61,15 @@ export default function LogInForm({ onSubmit }) {
               <br />
               <br />
               <div className="flex-col align-items-center w-100 gap-1rem">
-                <Button iconType="login" type="submit">
+                <Button
+                  iconType="login"
+                  type="submit"
+                  className="w-100 primary"
+                >
                   Entrar
                 </Button>
                 <Link to={ROUTES.SOLICITAR_ACCESO}>
-                  <Button iconType="passkey" className="secondary">
+                  <Button iconType="passkey" className="secondary w-100">
                     Solicitar acceso
                   </Button>
                 </Link>
