@@ -81,7 +81,7 @@ export default function SpecieList({
               onClick={toggleFold}
             ></Button>
           </div>
-          <div className="flex-col shadow-down">
+          <div className="flex-col divider">
             <div className="flex-row p-1rem gap-1rem">
               <TextField
                 placeholder={"Buscar especies"}
@@ -90,6 +90,7 @@ export default function SpecieList({
               ></TextField>
               {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
             </div>
+            {/*
             <div
               className="flex-row gap-05rem"
               style={{ padding: "0 1rem 1rem 1rem" }}
@@ -98,6 +99,7 @@ export default function SpecieList({
               <Chip>Géneros</Chip>
               <Chip>Epítetos</Chip>
             </div>
+            */}
           </div>
 
           {species.length > 0 ? (

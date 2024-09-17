@@ -10,6 +10,7 @@ import {
 
 // FEATURES
 import SpecieDashboard from "./routes/app/SpecieDashboard";
+import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
 import NewSpecie from "./routes/app/NewSpecie";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
@@ -24,7 +25,7 @@ import {
   mockGetSpecies,
   getSpecieList,
 } from "../features/specie/businessLogic/getSpecies";
-
+import FormTemplate from "../components/ui/FormTemplate";
 // COMPONENTS
 import Uploader from "../components/ui/Uploader";
 import RouteGuard from "../components/logic/RouteGuard";
@@ -37,22 +38,24 @@ import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 // CSS
 import "./App.css";
 
-import useAccessRequests from "../features/access/businessLogic/useAccessRequests,jsx";
+import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 
 function App() {
   useAxiosInterceptors();
   const location = useLocation();
   const [species, setSpecies] = useState([]);
-  const [accessRequestCount, setAccessRequestCount] = useState("");
   const { profile } = useStatus();
   const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
-  const [addAccessRequest, getAccessRequestCount] = useAccessRequests();
+  const [
+    pendingAccessRequests,
+    getPendingAccessRequests,
+    pendingAccessRequestCount,
+    getPendingAccessRequestCount,
+  ] = useAccessRequests();
 
   useEffect(() => {
-    getAccessRequestCount().then((response) => {
-      setAccessRequestCount(response.data);
-    });
+    getPendingAccessRequestCount();
   }, []);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
@@ -64,7 +67,7 @@ function App() {
 
   return (
     <>
-      <Navbar accessRequestCount={accessRequestCount}></Navbar>
+      <Navbar accessRequestCount={pendingAccessRequestCount}></Navbar>
       <main>
         {/*SPECIE AND SPECIMEN*/}
 
@@ -92,14 +95,14 @@ function App() {
           <Route
             path="/Test"
             element={
-              /*
               <FormTemplate title="Agregar espécimen">
                 <NewSpecimen></NewSpecimen>
               </FormTemplate>
-              */
+              /*
               <div className="p-1rem gap-1rem w-100 ">
-                <UploaderImage></UploaderImage>
+              <UploaderImage></UploaderImage>
               </div>
+              */
             }
           ></Route>
 

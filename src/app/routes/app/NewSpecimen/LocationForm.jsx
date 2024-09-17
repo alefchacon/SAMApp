@@ -9,9 +9,9 @@ import LoadingTextField from "../../../../components/ui/LoadingTextField";
 import Button from "../../../../components/ui/Button";
 
 // API CALLS
-import { getElevation } from "../../../../features/specimens/api/external/getElevation";
-import { getLocation } from "../../../../features/specimens/api/external/getLocation";
+import { getElevation } from "../../../../features/specimens/businessLogic/external/getElevation";
 
+import { getLocation } from "../../../../features/specimens/businessLogic/external/getLocation";
 //VALIDATION SCHEMAS
 import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 

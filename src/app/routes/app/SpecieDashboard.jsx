@@ -14,6 +14,8 @@ import Uploader from "../../../components/ui/Uploader";
 import Header from "../../../components/ui/Header";
 import TextField from "../../../components/ui/TextField";
 
+import { api } from "../../../lib/apiClient";
+
 import NewSpecie from "./NewSpecie";
 
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -24,9 +26,11 @@ import Multigraph from "../../../features/graphing/Multigraph";
 import Footer from "../../../components/ui/Footer";
 import Specie from "../../../features/specie/components/Specie";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
+import Card from "../../../components/ui/Card";
 
 import DATE_TYPES from "../../../features/graphing/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
+import axios from "axios";
 const METRICAS_TAB_KEY = "METRICAS";
 
 export default function SpecieDashboard({
@@ -49,6 +53,12 @@ export default function SpecieDashboard({
   };
 
   const handleUpdateSpecie = (updatedSpecie) => {
+    let body = updatedSpecie;
+    body.class_specie = "Mammalia";
+    api.put(
+      "http://localhost:8000/api/species/".concat(`${updatedSpecie.id}/`),
+      updatedSpecie
+    );
     const updatedItems = species.map((specie) =>
       specie.id === updatedSpecie.id ? updatedSpecie : specie
     );
@@ -56,10 +66,12 @@ export default function SpecieDashboard({
   };
 
   const handleMultiAddSpecie = (species = []) => {
-    console.log("ASDF");
-    for (let i = 0; i < species.length; i++) {
-      species[i].scientific_name = `${species[i].gender} ${species[i].epithet}`;
-      handleAddSpecie(species[i]);
+    console.log(species[0]);
+    for (let i = 0; i < species[0].length; i++) {
+      species[0][
+        i
+      ].scientific_name = `${species[0][i].gender} ${species[0][i].epithet}`;
+      handleAddSpecie(species[0][i]);
     }
   };
 
@@ -99,6 +111,31 @@ export default function SpecieDashboard({
     );
   }
 
+  const deleteSpecie = (specieId) => {
+    api.delete("http://localhost:8000/api/species/".concat(specieId));
+  };
+
+  const showDeleteSpecieModal = (specieId) => {
+    showModal(
+      "Eliminar especie",
+      <div className="flex-col">
+        <p>¿Está seguro de eliminar esta especie?</p>
+        <br />
+        <p>{selectedSpecie.scientific_name}</p>
+        <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
+        <div className="button-row">
+          <Button
+            iconType="delete"
+            className="danger"
+            onClick={() => deleteSpecie(specieId)}
+          >
+            Sí, elimina la especie
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   const showSpecieAddModal = () =>
     showModal("Agregar especie", <MultiAddSpecie />);
 
@@ -132,7 +169,12 @@ export default function SpecieDashboard({
           Editar especie
         </Button>
 
-        <Button className={"secondary danger"} iconType={"delete"}>
+        <Button
+          className={"secondary danger"}
+          iconType={"delete"}
+          onClick={showDeleteSpecieModal}
+          value={selectedIndex}
+        >
           Eliminar especie
         </Button>
       </div>
@@ -158,10 +200,7 @@ export default function SpecieDashboard({
           <Taxonomy specie={selectedSpecie}></Taxonomy>
         </Header>
 
-        <Tabs
-          className={"divider"}
-          buttons={role === ROLE_TYPES.TECHNICAL_PERSON && <SpecieButtons />}
-        >
+        <Tabs className={"divider"}>
           {ROLE_TYPES.validate(role) && (
             <div
               label={"Especímenes"}

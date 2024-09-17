@@ -16,9 +16,9 @@
 
   --uv-gray-dark: rgb(181, 191, 201, 0.3);;
   --uv-gray-darker: rgb(181, 191, 201, 0.5);;
-  --uv-gray: #f7f9fa;
+  --uv-gray: #fdfffe;
   --uv-green: #28AD56;
-  --uv-blue: rgba(24,82,157);
+  --uv-blue: rgb(40, 90, 255);
   --uv-green-hover: rgb(32, 143, 71);
   --border: rgba(215, 223, 245, 4);
   --box-shadow-lower-solid: inset 0px -1px 0px 0px rgba(215, 223, 245, 4);
@@ -445,7 +445,7 @@ tr{
   bottom: 0;
   width: 5px;
 
-  background-color: var(--uv-green);
+  background-color: var(--uv-blue);
   opacity: 0;
   transition: opacity 0.1s ease-in-out;
 }
@@ -519,7 +519,10 @@ tr{
 
 
 
-
+.multigraph{
+  min-height: 400px;
+  max-height: 400px;
+}
 
 .card{
   background-color: white;
@@ -860,8 +863,8 @@ input[type='checkbox']{
 }
 
 h1{
-  font-size: clamp(1.5rem, 1vw + 0.8rem, 3rem);
-  font-weight: 600;
+  font-size: clamp(1.5rem, 1vw + 1rem, 3rem);
+  font-weight: 500;
   text-align: center;
   letter-spacing: 0;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -1034,8 +1037,8 @@ nav{
 }
 
 .page-padding {
-  padding-left: clamp(10px, 30vw, 700px);
-  padding-right: clamp(10px, 30vw, 700px);
+  padding-left: clamp(20px, 10vw, 600px);
+  padding-right: clamp(20px, 30vw, 600px);
   
 }
 

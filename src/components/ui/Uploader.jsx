@@ -47,8 +47,6 @@ export default function Uploader({
   };
 
   const parseFiles = async (newFiles = []) => {
-    console.log(newFiles);
-
     setIsParsing(true);
 
     for (let i = 0; i < newFiles.length; i++) {
@@ -86,6 +84,7 @@ export default function Uploader({
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
+        console.log(result);
         setParsedFiles((prev) => [...prev, result.data]);
       },
       error: (error) => {
@@ -106,7 +105,7 @@ export default function Uploader({
   };
 
   return (
-    <>
+    <div className="flex-col w-100">
       <label
         htmlFor={id}
         className={`${
@@ -150,6 +149,6 @@ export default function Uploader({
         onChange={handleClickFile}
         multiple={multiple}
       />
-    </>
+    </div>
   );
 }
