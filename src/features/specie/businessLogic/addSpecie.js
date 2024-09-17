@@ -1,5 +1,8 @@
 import { SPECIE_URL } from "./specieURL";
 import { api } from "../../../lib/apiClient";
+
+const PREREQUEST_MESSAGE = "Agregando especie..." 
+
 const addSpecie = async (specie) => {
   const data = {
     scientific_name: specie.scientific_name,
@@ -11,7 +14,7 @@ const addSpecie = async (specie) => {
     subspecie: specie.subspecie,
   }
 
-  const response = await api.post(SPECIE_URL, data);
+  const response = await api.post(SPECIE_URL, data, {cancelable: true, message: PREREQUEST_MESSAGE});
   console.log(response);
   return response;
 } 

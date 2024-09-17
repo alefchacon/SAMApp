@@ -6,6 +6,7 @@ import { Field } from "formik";
 import Button from "./Button";
 
 export default function TextField({
+  className = "",
   label = null,
   helperText = null,
   placeholder = null,
@@ -113,9 +114,11 @@ export default function TextField({
             name={name}
             type={type}
             style={{ flex: 2, minHeight: "100%" }}
-            className={`input ${getErrorClassName()} ${fullwidth && "w-100"} ${
-              fullwidth && "h-100"
-            } ${iconType || customIcon ? "has-icon" : ""}`}
+            className={`input ${className} ${getErrorClassName()} ${
+              fullwidth && "w-100"
+            } ${fullwidth && "h-100"} ${
+              iconType || customIcon ? "has-icon" : ""
+            }`}
             maxLength={maxLength}
             disabled={disabled}
             placeholder={placeholder}

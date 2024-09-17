@@ -10,35 +10,42 @@ import Card from "../../../components/ui/Card";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import { colors } from "../../../features/graphing/Colors";
 import Footer from "../../../components/ui/Footer";
+import SearchField from "../../../components/ui/SearchField";
+import NoResults from "../../../components/ui/NoResults";
 
 export default function Search() {
   const [speciesByName, setSpeciesByName] = useState([]);
   const [speciesByFamily, setSpeciesByFamily] = useState([]);
   const [speciesByOrden, setSpeciesByOrden] = useState([]);
   const [searchParams] = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("q"));
+  //const [query, setQuery] = useState(searchParams.get("q"));
 
-  console.log(query);
+  console.log(searchParams.get("q"));
 
   useEffect(() => {
+    const query = searchParams.get("q");
     const byScientificName = api.get(`species/scientific_name/${query}`);
     const byFamily = api.get(`species/family/${query}`);
     const byOrden = api.get(`species/orden/${query}`);
 
-    axios.all([byScientificName, byFamily]).then(
+    axios.all([byScientificName, byFamily, byOrden]).then(
       axios.spread((byScientificName, byFamily, byOrden) => {
+        console.log(byScientificName);
+        console.log(byFamily);
         setSpeciesByName(byScientificName?.data);
         setSpeciesByFamily(byFamily?.data);
         setSpeciesByOrden(byOrden?.data);
       })
     );
-  }, [query]);
+  }, [searchParams]);
 
   function SpecieResults({ label = "label", species }) {
     return (
-      <div label={label}>
-        {speciesByName.map((specie) => (
-          <div>{specie.scientific_name}</div>
+      <div label="Nombres / Géneros" className="page-padding">
+        <br />
+        <br />
+        {species.map((specie) => (
+          <CardSpecie specie={specie} />
         ))}
       </div>
     );
@@ -58,49 +65,54 @@ export default function Search() {
     );
   }
 
-  return (
-    <div className="w-100 h-100">
-      <div className="p-1rem bg-white flex-col justify-content-center align-items-center page-padding">
-        <br />
-        <TextField
-          iconType={"search"}
-          placeholder={"Buscar especies"}
-          value={"asdf"}
-        ></TextField>
-      </div>
-      <Tabs>
-        {speciesByName.length > 0 && (
-          <div label="Nombres">
-            <br />
-            <br />
-            <div className="page-padding">
-              {speciesByName.map((specie) => (
-                <CardSpecie specie={specie} />
-              ))}
-            </div>
-          </div>
+  function ResultList({ species = [] }) {
+    return (
+      <>
+        {species.length ? (
+          species.map((specie) => <CardSpecie specie={specie} />)
+        ) : (
+          <NoResults />
         )}
-        {speciesByFamily.length > 0 && (
+      </>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: "1",
+      }}
+    >
+      <div className="flex-col" style={{ flexGrow: "1" }}>
+        <div className="page-padding bg-white">
+          <br />
+          <SearchField></SearchField>
+          <br />
+        </div>
+        <Tabs center>
+          <div label="Nombres / Géneros" className="page-padding">
+            <br />
+            <br />
+            <ResultList species={speciesByName} />
+          </div>
+
           <div label="Familias">
             <br />
             <br />
             <div className="flex-col page-padding gap-1rem">
-              {speciesByFamily.map((specie) => (
-                <CardSpecie specie={specie} />
-              ))}
+              <ResultList species={speciesByFamily} />
             </div>
           </div>
-        )}
-        {speciesByOrden?.length > 0 && (
+
           <div label="Ordenes">
             <div className="page-padding">
-              {speciesByOrden.map((specie) => (
-                <div>{specie.scientific_name}</div>
-              ))}
+              <ResultList species={speciesByOrden} />
             </div>
           </div>
-        )}
-      </Tabs>
+        </Tabs>
+      </div>
       <Footer></Footer>
     </div>
   );

@@ -17,14 +17,13 @@ import AccessRequests from "./routes/app/AccessRequests";
 import Photosheets from "./routes/app/Photosheets";
 import UploaderImage from "../components/ui/UploaderImage";
 import SpecieList from "../features/specie/components/SpecieList";
-import SpecieDetail from "../features/specie/components/SpecieDetail";
 import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
 import {
   mockGetSpecies,
   getSpecieList,
-} from "../features/specie/dataAccess/getSpecies";
+} from "../features/specie/businessLogic/getSpecies";
 
 // COMPONENTS
 import Uploader from "../components/ui/Uploader";
@@ -38,7 +37,7 @@ import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 // CSS
 import "./App.css";
 
-import useAccessRequests from "../features/access/dataAccess/useAccessRequests,jsx";
+import useAccessRequests from "../features/access/businessLogic/useAccessRequests,jsx";
 
 function App() {
   useAxiosInterceptors();
@@ -105,7 +104,7 @@ function App() {
           ></Route>
 
           <Route
-            path={"/coleccion?:name?/:catalog_id?"}
+            path={`/${ROUTES.COLECCION}?:name?/:catalog_id?`}
             element={
               <SpecieDashboard
                 onSelectionChange={handleSelectedSpecieChange}

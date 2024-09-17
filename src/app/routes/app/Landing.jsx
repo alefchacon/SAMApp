@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Searchbar from "../../../components/ui/Searchbar";
-import { mockGetSpecies } from "../../../features/specie/dataAccess/getSpecies";
+import { mockGetSpecies } from "../../../features/specie/businessLogic/getSpecies";
 
 function SearchBanner({ children }) {
   const imageUrl = `src/assets/images/${Math.floor(Math.random() * 6)}.webp`;

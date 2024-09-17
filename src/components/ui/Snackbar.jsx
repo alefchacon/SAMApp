@@ -44,10 +44,12 @@ export default function Snackbar({
         isOpen ? "visible" : "invisible"
       }`}
     >
-      <div className="flex-row">
-        <span className="material-symbols-outlined">
-          {isError ? "warning" : iconType}
-        </span>
+      <div className="flex-row w-100">
+        {iconType && (
+          <span className="material-symbols-outlined">
+            {isError ? "warning" : iconType}
+          </span>
+        )}
         {children}
       </div>
       <Button

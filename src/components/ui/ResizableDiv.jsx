@@ -22,13 +22,13 @@ export default function ResizableDiv({
   const handleMouseUp = useCallback(() => {
     setIsResizing(false);
     setResizeDirection("");
+    document.body.classList.remove("no-select");
   }, []);
 
   const handleMouseMove = useCallback(
     (e) => {
-      console.log("hey!!");
       if (!isResizing) return;
-
+      document.body.classList.add("no-select");
       const { movementX, movementY } = e;
 
       setSize((prevSize) => {

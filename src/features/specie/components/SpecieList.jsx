@@ -10,12 +10,15 @@ import NoResults from "../../../components/ui/NoResults";
 import NewSpecie from "../../../app/routes/app/NewSpecie";
 import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
+import Taxonomy from "./Taxonomy";
+
+import Chip from "../../../components/ui/Chip";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
-import { mockGetSpecies } from "../dataAccess/getSpecies";
+import { mockGetSpecies } from "../businessLogic/getSpecies";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export default function SpecieList({
@@ -29,7 +32,8 @@ export default function SpecieList({
   const [fold, setFold] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [specieToEdit, setSpecieToEdit] = useState(null);
-  const [filteredItems, handleFilterChange] = useTextFilter(species);
+  const [filteredItems, handleFilterChange, filterText] =
+    useTextFilter(species);
 
   const { showModal } = useModal();
 
@@ -50,7 +54,7 @@ export default function SpecieList({
 
   return (
     <ResizableDiv
-      className={`specie-list rounded-20 ${
+      className={`specie-list ${
         fold ? "position-absolute" : "position-relative shadow-right"
       }`}
       hide={fold}
@@ -66,7 +70,7 @@ export default function SpecieList({
       ) : (
         <div className={` ${fold && "fold"} flex-col h-100`}>
           <div
-            className="p-1rem flex-row justify-content-space-between align-items-center"
+            className="p-1rem flex-row justify-content-space-between align-items-center bg-gradient"
             style={{ fontWeight: 600 }}
           >
             <div></div>
@@ -77,39 +81,56 @@ export default function SpecieList({
               onClick={toggleFold}
             ></Button>
           </div>
-          <div className="flex-row divider p-1rem gap-1rem">
-            <TextField
-              placeholder={"Buscar especies"}
-              onChange={handleFilterChange}
-              iconType={"search"}
-            ></TextField>
-            {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+          <div className="flex-col shadow-down">
+            <div className="flex-row p-1rem gap-1rem">
+              <TextField
+                placeholder={"Buscar especies"}
+                onChange={handleFilterChange}
+                iconType={"search"}
+              ></TextField>
+              {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
+            </div>
+            <div
+              className="flex-row gap-05rem"
+              style={{ padding: "0 1rem 1rem 1rem" }}
+            >
+              <Chip>Familias</Chip>
+              <Chip>Géneros</Chip>
+              <Chip>Epítetos</Chip>
+            </div>
           </div>
+
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">
               {filteredItems.map((specie, index) => (
-                <div
-                  key={index}
-                  className={"hoverable"}
-                  style={{
-                    alignItems: "center",
-                    textAlign: "left",
-                  }}
-                >
-                  <Specie
-                    key={specie.id}
-                    specie={specie}
-                    index={specie.id}
-                    selectedIndex={selectedIndex}
-                    onClick={handleSelection}
-                  />
+                <>
+                  <li
+                    className={`selectable p-05rem ${
+                      selectedIndex === specie.id ? "selected" : ""
+                    }`}
+                    style={{
+                      borderRadius: "0 100px 100px 0",
+                    }}
+                    onClick={() => handleSelection(specie.id)}
+                  >
+                    <p>{specie.scientific_name}</p>
+                    <Taxonomy
+                      key={specie.id}
+                      specie={specie}
+                      center={false}
+                      clickableRank={false}
+                      showRankName={false}
+                      filterText={filterText}
+                    ></Taxonomy>
+                  </li>
+
                   {role === ROLE_TYPES.TECHNICAL_PERSON && (
                     <HoverableActions
                       secondaryAction={() => onEdit(specie)}
                       primaryAction={() => showModal("asdf")}
                     ></HoverableActions>
                   )}
-                </div>
+                </>
               ))}
             </ul>
           ) : (

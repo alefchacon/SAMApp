@@ -7,7 +7,7 @@ import {
   SPECIMEN_LIST_VISITOR_URL,
 } from "./specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import { mockGetSpecimens } from "./GetSpecimens";
+import { mockGetSpecimens, mockGetSpecimensAcademic } from "./GetSpecimens";
 
 export const useSpecimens = (specieId = 0) => {
   const [specimens, setSpecimens] = useState([]);
@@ -21,7 +21,13 @@ export const useSpecimens = (specieId = 0) => {
       setSpecimens(response.data);
     });
     */
+
+    /*
     mockSpecimens().then((response) => {
+      setSpecimens(response);
+    });
+    */
+    mockSpecimensAcademic().then((response) => {
       setSpecimens(response);
     });
   }, [specieId]);
@@ -31,6 +37,16 @@ export const useSpecimens = (specieId = 0) => {
     const min = 50;
 
     const fakeSpecimens = await mockGetSpecimens(
+      Math.floor(Math.random() * (max - min + 1) + min)
+    );
+    console.log(fakeSpecimens);
+    return fakeSpecimens;
+  };
+  const mockSpecimensAcademic = async () => {
+    const max = 100;
+    const min = 50;
+
+    const fakeSpecimens = await mockGetSpecimensAcademic(
       Math.floor(Math.random() * (max - min + 1) + min)
     );
     console.log(fakeSpecimens);

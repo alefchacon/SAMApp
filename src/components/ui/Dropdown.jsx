@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 
 import Button from "../../components/ui/Button";
 
-export default function Dropdown({ header, children }) {
+export default function Dropdown({ header, children, className }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef();
@@ -25,7 +25,7 @@ export default function Dropdown({ header, children }) {
   };
   return (
     <div
-      className="dropdown flex-row selectable rounded align-items-center p-05rem gap-1rem"
+      className={`${className} dropdown flex-row selectable align-items-center gap-1rem`}
       onClick={toggleDropdown}
       ref={dropdownRef}
     >

@@ -8,7 +8,7 @@ import Photosheet from "../../../features/photosheets/components/Photosheet";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import usePhotosheets from "../../../features/photosheets/dataAccess/usePhotosheets";
+import usePhotosheets from "../../../features/photosheets/businessLogic/usePhotosheets";
 import { SERVER_URL } from "../../../config/env";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import useTextFilter from "../../../hooks/useTextFilter";

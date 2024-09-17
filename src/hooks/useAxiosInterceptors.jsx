@@ -46,8 +46,6 @@ export const useAxiosInterceptors = () => {
     },
     (error) => {
       handleError(error);
-      showSnackbar(error.response?.data?.detail, true);
-      console.log(error);
 
       setLoading(false);
 
@@ -56,6 +54,12 @@ export const useAxiosInterceptors = () => {
   );
 
   function handleError(error) {
+    if (error.code === "ERR_NETWORK") {
+      showSnackbar("No hay conexión", true);
+      return;
+    }
+    showSnackbar(error.response?.data?.detail, true);
+
     const status = error.response?.status;
     const canRefresh = Boolean(
       localStorage.getItem(CREDENTIALS_KEYS.TOKEN_REFRESH)
@@ -65,8 +69,6 @@ export const useAxiosInterceptors = () => {
       showModal("La sesión ha expirado", <RefreshForm />, false);
     } else {
       logOutFront();
-    }
-    if (error.code === "ERR_NETWORK") {
     }
   }
 };

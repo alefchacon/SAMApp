@@ -21,9 +21,9 @@ const METRICAS_TAB_KEY = "METRICAS";
 //import { mockGetSpecimens } from "../../specimens/api/GetSpecimens";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 
-import { useSpecimens } from "../../specimens/dataAccess/useSpecimens";
+import { useSpecimens } from "../../specimens/businessLogic/useSpecimens";
 
-export default function SpecieDetail({
+export default function SpecimenView({
   children,
   role = ROLE_TYPES.VISITOR,
   specie = {
@@ -134,7 +134,7 @@ export default function SpecieDetail({
   }
 
   return (
-    <div className="specie-view" ref={especimenesRef}>
+    <div className="specie-view w-100" ref={especimenesRef}>
       {children}
       {specimens.length > 0 ? (
         <SpecimenTabs></SpecimenTabs>
@@ -145,7 +145,6 @@ export default function SpecieDetail({
           button={<AddSpecimenButton />}
         />
       )}
-      <div style={{ padding: "5rem", marginTop: "2rem" }}>asdf</div>
     </div>
   );
 }

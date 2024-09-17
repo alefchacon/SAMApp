@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAccessRequests } from "../../../features/access/dataAccess/getAccessRequests";
+import { getAccessRequests } from "../../../features/access/businessLogic/getAccessRequests";
 import Button from "../../../components/ui/Button";
 import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { useModal } from "../../../components/contexts/ModalContext";

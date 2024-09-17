@@ -1,5 +1,5 @@
 import Button from "../../../components/ui/Button";
-import refreshToken from "../dataAccess/refreshToken";
+import refreshToken from "../businessLogic/refreshToken";
 
 import { useStatus } from "../../../components/contexts/StatusContext";
 
