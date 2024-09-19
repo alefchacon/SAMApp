@@ -1,11 +1,11 @@
 // LIBRARIES
-import { Children, useState, useEffect, cloneElement, useRef } from "react";
+import { Children, useState, useEffect, cloneElement } from "react";
 import { Field } from "formik";
 
 // COMPONENTS
 import Button from "./Button";
 
-export default function TextField({
+export default function TextArea({
   className = "",
   label = null,
   helperText = null,
@@ -27,6 +27,7 @@ export default function TextField({
   maxWidth = null,
   onKeydown = null,
   onEnter = null,
+  onBlur = null,
   ref = null,
 }) {
   const getErrorClassName = () => {
@@ -65,8 +66,6 @@ export default function TextField({
 
       <div
         style={{
-          height: "60px",
-
           display: "flex",
           position: "relative",
           maxWidth: maxWidth ?? undefined,
@@ -95,54 +94,26 @@ export default function TextField({
             {customIcon}
           </span>
         )}
-        {isFormik ? (
-          <>
-            <span
-              className="character-counter caption"
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                margin: "0 10px",
-              }}
-            >
-              {value.length} / {maxLength}
-            </span>
-            <Field
-              id={id}
-              name={name}
-              type={type}
-              className={`input ${getErrorClassName()} ${
-                fullwidth && "w-100"
-              } ${fullwidth && "h-100"} ${
-                iconType || customIcon ? "has-icon" : ""
-              }`}
-              maxLength={maxLength}
-              disabled={disabled}
-              value={value}
-              onKeyDown={onKeydown}
-            ></Field>
-          </>
-        ) : (
-          <input
-            id={id}
-            //value={value}
-            name={name}
-            type={type}
-            style={{ flex: 2, minHeight: "100%" }}
-            className={`input ${className} ${getErrorClassName()} ${
-              fullwidth && "w-100"
-            } ${fullwidth && "h-100"} ${
-              iconType || customIcon ? "has-icon" : ""
-            }`}
-            maxLength={maxLength}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={onChange}
-            onKeyDown={handleKeyDown}
-            ref={ref}
-          ></input>
-        )}
+
+        <textarea
+          id={id}
+          value={value}
+          name={name}
+          type={type}
+          style={{ flex: 2, minHeight: "100%" }}
+          className={`input ${className} ${getErrorClassName()} ${
+            fullwidth && "w-100"
+          } ${fullwidth && "h-100"} ${
+            iconType || customIcon ? "has-icon" : ""
+          }`}
+          maxLength={maxLength}
+          disabled={disabled}
+          placeholder={placeholder}
+          onChange={onChange}
+          onBlur={onBlur}
+          onKeyDown={handleKeyDown}
+          ref={ref}
+        ></textarea>
       </div>
 
       {hasError && (

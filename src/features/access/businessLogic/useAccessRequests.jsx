@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 
 import { api } from "../../../lib/apiClient";
 import {
+  ACCESS_REQUESTS_URL,
   REQUEST_PENDING,
   REQUEST_PENDING_COUNT,
   REQUEST_APPROVE,
   REQUEST_REJECT,
+  REQUEST_VERIFY_TOKEN,
 } from "../../../config/accessURL";
 
 export async function getAccessRequests() {
@@ -42,6 +44,27 @@ export default function useAccessRequests() {
     );
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
+  const addAccessRequest = async (accessRequest = {}) => {
+    const body = {
+      orcid: accessRequest.orcid,
+      about: accessRequest.about,
+      email: accessRequest.email,
+    };
+    await api.post(ACCESS_REQUESTS_URL, body);
+  };
+  const verifyAccessRequestToken = async (token) => {
+    const body = {
+      token: token,
+    };
+
+    try {
+      const response = await api.post(REQUEST_VERIFY_TOKEN, body);
+      console.log(response.status);
+      return response.status === 200;
+    } catch (e) {
+      return false;
+    }
+  };
 
   return [
     pendingAccessRequests,
@@ -50,5 +73,7 @@ export default function useAccessRequests() {
     getPendingAccessRequestCount,
     approveAccessRequest,
     rejectAccessRequest,
+    addAccessRequest,
+    verifyAccessRequestToken,
   ];
 }

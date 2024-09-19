@@ -1,10 +1,14 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 
 //import { useAuth } from "../providers/AuthProvider";
 
-export default function RouteGuard({ children }) {
+import ROUTES from "../../stores/routes";
+import useAccessRequests from "../../features/access/businessLogic/useAccessRequests";
+
+export default function AuthGuard({ children }) {
   let location = useLocation();
+
   //const { user } = useAuth();
 
   //const isAuthenticated = Boolean(user);

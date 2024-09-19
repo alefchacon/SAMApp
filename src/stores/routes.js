@@ -3,7 +3,8 @@ const ROUTES = Object.freeze({
   COLECCION: "/coleccion",
   SOLICITAR_ACCESO: "solicitar-acceso",
   BUSCAR: "buscar",
-  FICHAS: "/fichas"
+  FICHAS: "/fichas",
+  REGISTRARSE: "/registrarse"
 })
 
 export default ROUTES;
