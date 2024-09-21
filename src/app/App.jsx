@@ -28,7 +28,8 @@ import {
 import FormTemplate from "../components/ui/FormTemplate";
 // COMPONENTS
 import Uploader from "../components/ui/Uploader";
-import RouteGuard from "../components/logic/RouteGuard";
+import AuthGuard from "../components/logic/AuthGuard.jsx";
+import SignUpGuard from "../components/logic/SignUpGuard.jsx";
 
 import { ROLE_TYPES } from "../stores/roleTypes";
 
@@ -39,6 +40,7 @@ import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
 import "./App.css";
 
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
+import SignupForm from "./routes/app/SignupForm.jsx";
 
 function App() {
   useAxiosInterceptors();
@@ -55,7 +57,9 @@ function App() {
   ] = useAccessRequests();
 
   useEffect(() => {
-    getPendingAccessRequestCount();
+    if (ROLE === ROLE_TYPES.TECHNICAL_PERSON) {
+      getPendingAccessRequestCount();
+    }
   }, []);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
@@ -85,9 +89,9 @@ function App() {
           <Route
             path={"/fichas"}
             element={
-              <RouteGuard>
+              <AuthGuard>
                 <Photosheets role={ROLE} />
-              </RouteGuard>
+              </AuthGuard>
             }
           ></Route>
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
@@ -103,6 +107,14 @@ function App() {
               <UploaderImage></UploaderImage>
               </div>
               */
+            }
+          ></Route>
+          <Route
+            path={ROUTES.REGISTRARSE.concat("/:token")}
+            element={
+              <SignUpGuard>
+                <SignupForm />
+              </SignUpGuard>
             }
           ></Route>
 

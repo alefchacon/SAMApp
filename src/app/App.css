@@ -839,9 +839,15 @@ input[type='checkbox']{
   max-height: 40px;
 }
 
+
+
 .flex-row{
   display: flex;
   flex-direction: row;
+}
+
+.flex-grow-1{
+  flex-grow: 1;
 }
 
 .gap-1rem{
@@ -1020,10 +1026,15 @@ a{
 .color-gray{
   color: gray;
 }
+.color-lightgray{
+  color: lightgray;
+}
 .color-uv-green{
   color: var(--uv-green)
 }
-
+.color-error{
+  color: var(--error);
+}
 
 nav{
   z-index: 20;

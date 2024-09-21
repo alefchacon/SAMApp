@@ -1,25 +1,48 @@
-import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
 import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { Formik, Form } from "formik";
 import Card from "../../../components/ui/Card.jsx";
-
+import Footer from "../../../components/ui/Footer.jsx";
+import TextField from "../../../components/ui/TextField";
+import TextArea from "../../../components/ui/TextArea.jsx";
 import HeaderPage from "../../../components/ui/HeaderPage";
-
+import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests.jsx";
+import { accessRequestSchema } from "../../../features/access/formikSchemas/accessRequestSchema.js";
+import { Link } from "react-router-dom";
 
 export default function AccessRequestForm() {
-  const [addAccessRequest] = useAccessRequests();
+  const [
+    pendingAccessRequests,
+    getPendingAccessRequests,
+    pendingAccessRequestCount,
+    getPendingAccessRequestCount,
+    approveAccessRequest,
+    rejectAccessRequest,
+    addAccessRequest,
+  ] = useAccessRequests();
+
+  const { showModal, closeModal } = useModal();
 
   const handleSubmit = async (values, actions) => {
-    console.log(values);
-    const response = await addAccessRequest(values);
-    console.log(response);
-    //console.log(actions);
+    await addAccessRequest(values);
+
+    showModal(
+      "Solicitud enviada",
+      <div>
+        <p>
+          Recibirá una respuesta a su correo, <b>{values.email}</b>, confirmando
+          su acceso.
+        </p>
+      </div>
+    );
+
+    actions.resetForm();
   };
 
   return (
     <Formik
+      validationSchema={accessRequestSchema}
       onSubmit={handleSubmit}
       initialValues={{
         orcid: "",
@@ -37,7 +60,7 @@ export default function AccessRequestForm() {
         handleChange,
         handleBlur,
       }) => (
-        <div>
+        <div className="flex-col">
           <HeaderPage
             title="Solicitar acceso a la colección"
             subtitle={
@@ -46,22 +69,20 @@ export default function AccessRequestForm() {
           ></HeaderPage>
 
           <Form
-            className="flex-col page-padding"
+            className="flex-col page-padding flex-grow-1"
             autoComplete="off"
-            style={{
-              justifyContent: "start",
-              alignItems: "start",
-              height: "fit-content",
-            }}
           >
             <br />
             <br />
             <Card>
               <div className="form-section flex-col gap-2rem">
                 <TextField
+                  isFormik
                   name="orcid"
                   value={values.orcid}
                   onChange={handleChange}
+                  hasError={errors.orcid && touched.orcid}
+                  errorMessage={errors.orcid}
                   label={"ORCID"}
                   helperText={
                     "Ingrese los 19 caracteres de su ORCID, incluyendo los guiones siguiendo el formato: 0000-0000-0000-0000"
@@ -71,25 +92,27 @@ export default function AccessRequestForm() {
                   maxLength={19}
                 ></TextField>
 
-                <div>
-                  <p style={{ fontWeight: 600, margin: 0, padding: 0 }}>
-                    ¿Cuál es la naturaleza de su investigación?
-                  </p>
-                  <textarea
-                    value={values.about}
-                    onChange={handleChange}
-                    name="about"
-                    id="about"
-                    className="input"
-                    style={{ minHeight: 100, margin: 0, padding: 0 }}
-                  ></textarea>
-                </div>
+                <TextArea
+                  name="about"
+                  label={"¿Cuál es la naturaleza de su investigación?"}
+                  id="about"
+                  value={values.about}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  hasError={errors.about && touched.about}
+                  errorMessage={errors.about}
+                  className="input"
+                ></TextArea>
 
                 <TextField
+                  isFormik
                   name="email"
                   value={values.email}
                   onChange={handleChange}
+                  hasError={errors.email && touched.email}
+                  errorMessage={errors.email}
                   label={"E-mail"}
+                  maxLength={100}
                 ></TextField>
               </div>
 
@@ -100,6 +123,7 @@ export default function AccessRequestForm() {
               </div>
             </Card>
           </Form>
+          <Footer></Footer>
         </div>
       )}
     </Formik>

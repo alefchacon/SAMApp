@@ -8,9 +8,10 @@ export default function HeaderPage({
 }) {
   return (
     <div
-      className={`page-padding p-1rem ${
+      className={`page-padding bg-gradient p-1rem ${
         centerText && "justify-content-center"
       }`}
+      style={{ backgroundColor: "red" }}
     >
       <div
         className={`flex-row ${centerText && "justify-content-center"}`}
