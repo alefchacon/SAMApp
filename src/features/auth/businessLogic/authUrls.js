@@ -1,3 +1,4 @@
+export const SIGNUP_URL = "signup/"
 export const LOGIN_URL = "login/"
 export const LOGOUT_URL = "logout/"
 export const PASSWORD_RESET_URL = "passwoird-reset/"

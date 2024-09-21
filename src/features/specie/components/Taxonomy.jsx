@@ -9,7 +9,10 @@ export default function Taxonomy({
   filterText = null,
 }) {
   const delimiter = (
-    <span className="material-symbols-outlined flex-row align-items-center font-size-1rem color-uv-green">
+    <span
+      className="material-symbols-outlined flex-row align-items-center font-size-1rem"
+      style={{ color: "inherit" }}
+    >
       chevron_right
     </span>
   );
@@ -27,7 +30,7 @@ export default function Taxonomy({
         <div className="flex-col">
           {showRankName && (
             <p
-              className="caption rank"
+              className="rank"
               style={{ fontSize: "0.8rem", marginBottom: "-6px" }}
             >
               {rankName}
@@ -35,11 +38,13 @@ export default function Taxonomy({
           )}
 
           {clickableRank ? (
-            <Link className="font-weight-500" style={{ fontSize: "0.9rem" }}>
+            <Link style={{ fontSize: "0.9rem" }}>
               <Highlight text={rank} highlight={filterText}></Highlight>
             </Link>
           ) : (
-            <Highlight text={rank} highlight={filterText}></Highlight>
+            <div style={{ fontSize: "0.9rem" }}>
+              <Highlight text={rank} highlight={filterText}></Highlight>
+            </div>
           )}
         </div>
         {showDelimiter && delimiter}
@@ -77,7 +82,7 @@ export default function Taxonomy({
 
   return (
     <div
-      className={`taxonomy caption flex-row gap-05rem ${
+      className={`taxonomy flex-row gap-05rem ${
         center ? "justify-content-center" : "justify-content-start"
       }`}
       style={{ fontSize: "inherit" }}
@@ -103,8 +108,8 @@ export default function Taxonomy({
       <Rank
         clickableRank={clickableRank}
         showRankName={showRankName}
-        rankName="Epíteto"
-        rank={specie.epithet}
+        rankName="Especie"
+        rank={specie.specie_specie}
         showDelimiter={hasSubspecie}
       ></Rank>
       {hasSubspecie && (

@@ -69,6 +69,7 @@ export default function TextArea({
           display: "flex",
           position: "relative",
           maxWidth: maxWidth ?? undefined,
+          height: "200px",
         }}
         className="flex-row align-items-center"
       >
@@ -94,6 +95,18 @@ export default function TextArea({
             {customIcon}
           </span>
         )}
+
+        <span
+          className="character-counter caption"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            margin: "0 10px",
+          }}
+        >
+          {value.length} / {maxLength}
+        </span>
 
         <textarea
           id={id}

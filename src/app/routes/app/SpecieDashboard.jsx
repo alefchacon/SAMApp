@@ -14,56 +14,44 @@ import Uploader from "../../../components/ui/Uploader";
 import Header from "../../../components/ui/Header";
 import TextField from "../../../components/ui/TextField";
 
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 
 import NewSpecie from "./NewSpecie";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { useStatus } from "../../../components/contexts/StatusContext";
-import addSpecie from "../../../features/specie/businessLogic/addSpecie";
+import postSpecie from "../../../features/specie/businessLogic/postSpecie";
 import Multigraph from "../../../features/graphing/Multigraph";
 import Footer from "../../../components/ui/Footer";
 import Specie from "../../../features/specie/components/Specie";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
+import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 import Card from "../../../components/ui/Card";
 
 import DATE_TYPES from "../../../features/graphing/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import axios from "axios";
 const METRICAS_TAB_KEY = "METRICAS";
+import HeaderPage from "../../../components/ui/HeaderPage";
 
 export default function SpecieDashboard({
   onSelectionChange,
   role = ROLE_TYPES.VISITOR,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  const [species, setSpecies] = useState([]);
-  const selectedSpecie = species.find((specie) => specie.id === selectedIndex);
-  const [specimens] = useSpecimens(selectedIndex);
+  const [species, getSpecies, addSpecie, updateSpecie] = useSpecie();
+  const [selectedSpecieId, setSelectedSpecieId] = useState(1);
+  const selectedSpecie = species.find(
+    (specie) => specie.id === selectedSpecieId
+  );
+  const [specimens] = useSpecimens(selectedSpecieId);
+  const [specieListFolded, setSpecieListFolded] = useState(false);
 
   const { showModal } = useModal();
 
-  const handleAddSpecie = async (newSpecie) => {
-    // fkin api call goes here!! :D
-    const response = await addSpecie(newSpecie);
-    console.log(response.data.specie_id);
-    newSpecie.id = response.data.specie_id;
-    setSpecies((prev) => [newSpecie, ...prev]);
-  };
-
-  const handleUpdateSpecie = (updatedSpecie) => {
-    let body = updatedSpecie;
-    body.class_specie = "Mammalia";
-    api.put(
-      "http://localhost:8000/api/species/".concat(`${updatedSpecie.id}/`),
-      updatedSpecie
-    );
-    const updatedItems = species.map((specie) =>
-      specie.id === updatedSpecie.id ? updatedSpecie : specie
-    );
-    setSpecies(updatedItems);
-  };
+  useEffect(() => {
+    getSpecies();
+  }, []);
 
   const handleMultiAddSpecie = (species = []) => {
     console.log(species[0]);
@@ -71,20 +59,25 @@ export default function SpecieDashboard({
       species[0][
         i
       ].scientific_name = `${species[0][i].gender} ${species[0][i].epithet}`;
-      handleAddSpecie(species[0][i]);
+      addSpecie(species[0][i]);
     }
   };
 
   function AddSpecimenButton() {
     return (
-      <Button
-        variant={"primary"}
-        onClick={async () => {
-          console.log(await getSpecimens(role, specie.id));
-        }}
-      >
-        Agregar espécimen
-      </Button>
+      <div className="flex-row gap-1rem">
+        <Button
+          className={"primary-white"}
+          onClick={async () => {
+            console.log(await getSpecimens(role, specie.id));
+          }}
+        >
+          Agregar espécimen
+        </Button>
+        <Button className="secondary-white" iconType="download">
+          Descargar especímenes
+        </Button>
+      </div>
     );
   }
 
@@ -92,7 +85,7 @@ export default function SpecieDashboard({
     return (
       <Tabs>
         <div label="Una especie">
-          <NewSpecie onSubmit={handleAddSpecie} />
+          <NewSpecie onSubmit={addSpecie} />
         </div>
         <div
           label="Múltiples"
@@ -110,10 +103,6 @@ export default function SpecieDashboard({
       </Tabs>
     );
   }
-
-  const deleteSpecie = (specieId) => {
-    api.delete("http://localhost:8000/api/species/".concat(specieId));
-  };
 
   const showDeleteSpecieModal = (specieId) => {
     showModal(
@@ -145,41 +134,9 @@ export default function SpecieDashboard({
       <NewSpecie specie={specie} onSubmit={handleUpdateSpecie} />
     );
 
-  useEffect(() => {
-    async function fetchSpecies() {
-      //const species = await mockGetSpecies();
-      const species = (await getSpecieList()).data;
-      setSpecies(species);
-    }
-    fetchSpecies();
-  }, []);
-
   const handleSelectedSpecieChange = async (newSelectedIndex) => {
-    setSelectedIndex(newSelectedIndex);
+    setSelectedSpecieId(newSelectedIndex);
   };
-
-  function SpecieButtons() {
-    return (
-      <div className="flex-row gap-1rem justify-content-center">
-        <Button
-          className={"secondary"}
-          iconType="edit"
-          onClick={() => showSpecieEditModal(selectedSpecie)}
-        >
-          Editar especie
-        </Button>
-
-        <Button
-          className={"secondary danger"}
-          iconType={"delete"}
-          onClick={showDeleteSpecieModal}
-          value={selectedIndex}
-        >
-          Eliminar especie
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -189,33 +146,38 @@ export default function SpecieDashboard({
         onSelectionChange={handleSelectedSpecieChange}
         onAdd={showSpecieAddModal}
         onEdit={showSpecieEditModal}
+        onFold={setSpecieListFolded}
       ></SpecieList>
-      <div className="specie-view">
-        <Header
-          header={selectedSpecie?.scientific_name ?? "asdf"}
-          isListItem={false}
-          specie={selectedSpecie}
-          onEdit={showSpecieEditModal}
+      <div className={`specie-view`}>
+        <HeaderPage
+          centerText={false}
+          title={<i>{selectedSpecie?.epithet}</i>}
+          padding={false}
         >
-          <Taxonomy specie={selectedSpecie}></Taxonomy>
-        </Header>
+          <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
 
-        <Tabs className={"divider"}>
+          {role === ROLE_TYPES.TECHNICAL_PERSON && (
+            <>
+              <br />
+              <AddSpecimenButton />
+            </>
+          )}
+        </HeaderPage>
+
+        <Tabs className={`divider`}>
           {ROLE_TYPES.validate(role) && (
             <div
               label={"Especímenes"}
-              className="specimens flex-col h-100"
+              className={`specimens flex-col h-100 p-1rem`}
               style={{ overflow: "auto" }}
             >
               <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
                 <TextField
-                  maxWidth={"60%"}
                   iconType={"search"}
                   placeholder={
                     "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
                   }
                 ></TextField>
-                {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
               </div>
 
               <Table data={specimens}></Table>
@@ -256,7 +218,6 @@ export default function SpecieDashboard({
             </div>
           </div>
         </Tabs>
-
         <Footer></Footer>
       </div>
     </>

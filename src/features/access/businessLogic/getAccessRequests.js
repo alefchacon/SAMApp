@@ -1,4 +1,4 @@
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 import { REQUEST_PENDING, REQUEST_PENDING_COUNT } from "../../../config/accessURL";
 
 export async function getPendingAccessRequests(){

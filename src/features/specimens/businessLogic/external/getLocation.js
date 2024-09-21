@@ -1,4 +1,4 @@
-import { api } from "../../../../lib/apiClient";
+import { api } from "../../../../dataAccess/apiClient";
 
 export const getLocation
  = async (coordinateX, coordinateY) => {

@@ -27,6 +27,7 @@ export default function SpecieList({
   onSelectionChange,
   onAdd,
   onEdit,
+  onFold = null,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [fold, setFold] = useState(false);
@@ -44,12 +45,20 @@ export default function SpecieList({
 
   const toggleFold = () => {
     setFold(!fold);
+    if (onFold) {
+      onFold(!fold);
+    }
   };
 
-  const addSpecieButton = (
-    <Button iconType="add" onClick={onAdd}>
-      Agregar especie
-    </Button>
+  const technicalButtons = (
+    <div className="flex-row gap-1rem">
+      <Button iconType="add" className="primary" onClick={onAdd}>
+        Agregar especie
+      </Button>
+      <Button iconType="upload" onClick={onAdd} className="secondary">
+        Importar especies
+      </Button>
+    </div>
   );
 
   return (
@@ -81,14 +90,14 @@ export default function SpecieList({
               onClick={toggleFold}
             ></Button>
           </div>
-          <div className="flex-col divider">
-            <div className="flex-row p-1rem gap-1rem">
+          <div className="flex-col divider p-1rem gap-05rem">
+            {role === ROLE_TYPES.TECHNICAL_PERSON && technicalButtons}
+            <div className="flex-row">
               <TextField
                 placeholder={"Buscar especies"}
                 onChange={handleFilterChange}
                 iconType={"search"}
               ></TextField>
-              {role === ROLE_TYPES.TECHNICAL_PERSON && addSpecieButton}
             </div>
             {/*
             <div
@@ -107,7 +116,7 @@ export default function SpecieList({
               {filteredItems.map((specie, index) => (
                 <>
                   <li
-                    className={`selectable p-05rem ${
+                    className={`selectable p-1rem ${
                       selectedIndex === specie.id ? "selected" : ""
                     }`}
                     style={{
@@ -115,7 +124,9 @@ export default function SpecieList({
                     }}
                     onClick={() => handleSelection(specie.id)}
                   >
-                    <p>{specie.scientific_name}</p>
+                    <p style={{ fontWeight: 500 }}>
+                      <i>{specie.epithet}</i>
+                    </p>
                     <Taxonomy
                       key={specie.id}
                       specie={specie}
@@ -139,7 +150,7 @@ export default function SpecieList({
             <NoResults
               itemName="especies"
               role={role}
-              button={addSpecieButton}
+              button={technicalButtons}
             />
           )}
         </div>

@@ -146,10 +146,33 @@ const defaultColumns = [
 
 function TableRow({ rowData }) {
   return (
-    <>
-      <tr key={rowData.id} className="tr selectable hoverable2">
+    <div className="row-wrapper">
+      <div
+        key={rowData.id}
+        className="tr selectable hoverable2"
+        style={{ position: "relative" }}
+      >
+        <div
+          className={"show-on-hover align-items-center rounded-20 h-100"}
+          style={{
+            backgroundColor: "red",
+            position: "absolute",
+            width: "100%",
+          }}
+        >
+          <div
+            className="flex-row bg-black-transparent rounded shadow-down"
+            style={{ height: "fit-content", position: "absolute", left: 0 }}
+          >
+            <Button className="icon-only color-white" iconType="edit" />
+            <Button
+              className="icon-only color-white danger"
+              iconType="delete"
+            />
+          </div>
+        </div>
         {rowData.getVisibleCells().map((cell) => (
-          <td
+          <div
             className="td"
             key={cell.id}
             {...{
@@ -159,11 +182,14 @@ function TableRow({ rowData }) {
             }}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </td>
+          </div>
         ))}
+        {/*
+        
         <HoverableActions></HoverableActions>
-      </tr>
-    </>
+        */}
+      </div>
+    </div>
   );
 }
 
@@ -202,67 +228,60 @@ export default function Table({ data }) {
   });
 
   return (
-    <Card>
+    <>
+      <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
+        <div className="table-page-buttons flex-row align-items-center">
+          <Button
+            className="secondary"
+            iconType="first_page"
+            onClick={() => table.firstPage()}
+            isDisabled={!table.getCanPreviousPage()}
+          ></Button>
+          <Button
+            className="secondary"
+            iconType="chevron_left"
+            onClick={() => table.previousPage()}
+            isDisabled={!table.getCanPreviousPage()}
+          ></Button>
+          <Button
+            className="secondary"
+            iconType="chevron_right"
+            onClick={() => table.nextPage()}
+            isDisabled={!table.getCanNextPage()}
+          ></Button>
+          <Button
+            className="secondary"
+            iconType="last_page"
+            onClick={() => table.lastPage()}
+            isDisabled={!table.getCanNextPage()}
+          ></Button>
+          <span className="table-page-label">
+            <div>Página &nbsp;</div>
+            <strong>
+              {table.getState().pagination.pageIndex + 1} de{" "}
+              {table.getPageCount().toLocaleString()}
+            </strong>
+          </span>
+        </div>
+        <div className="flex-row justify-content-center align-items-center">
+          <label htmlFor="page-size-select">Registros por página:</label>
+          <select
+            className=""
+            name="pets"
+            id="page-size-select"
+            onChange={handlePageSizeChange}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+      </div>
       <div
         className="table-wrapper"
-        style={{
-          overflowX: "auto",
-          overflowY: "clip",
-          flexGrow: 3,
-          width: "100%",
-          height: "100%",
-          maxHeight: "100%",
-        }}
+        style={{ overflow: "scroll", height: "100%" }}
       >
-        <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
-          <div className="table-page-buttons flex-row align-items-center">
-            <Button
-              className="secondary"
-              iconType="first_page"
-              onClick={() => table.firstPage()}
-              isDisabled={!table.getCanPreviousPage()}
-            ></Button>
-            <Button
-              className="secondary"
-              iconType="chevron_left"
-              onClick={() => table.previousPage()}
-              isDisabled={!table.getCanPreviousPage()}
-            ></Button>
-            <Button
-              className="secondary"
-              iconType="chevron_right"
-              onClick={() => table.nextPage()}
-              isDisabled={!table.getCanNextPage()}
-            ></Button>
-            <Button
-              className="secondary"
-              iconType="last_page"
-              onClick={() => table.lastPage()}
-              isDisabled={!table.getCanNextPage()}
-            ></Button>
-            <span className="table-page-label">
-              <div>Página &nbsp; </div>
-              <strong>
-                {table.getState().pagination.pageIndex + 1} de{" "}
-                {table.getPageCount().toLocaleString()}
-              </strong>
-            </span>
-          </div>
-          <div className="flex-row justify-content-center align-items-center">
-            <label htmlFor="page-size-select">Registros por página:</label>
-            <select
-              className=""
-              name="pets"
-              id="page-size-select"
-              onChange={handlePageSizeChange}
-            >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </div>
-        </div>
         <table
           className="h-100 table"
           {...{
@@ -329,6 +348,6 @@ export default function Table({ data }) {
           </tbody>
         </table>
       </div>
-    </Card>
+    </>
   );
 }

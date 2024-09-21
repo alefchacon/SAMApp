@@ -7,7 +7,7 @@ import {
 import { ModalContext, useModal } from "../components/contexts/ModalContext";
 import { StatusContext, useStatus } from "../components/contexts/StatusContext";
 
-import { api } from "../lib/apiClient";
+import { api } from "./apiClient";
 import { API_URL } from "../config/env";
 
 import CREDENTIALS_KEYS from "../stores/credentialsKeys";
@@ -54,10 +54,16 @@ export const useAxiosInterceptors = () => {
   );
 
   function handleError(error) {
+    if (error.response) {
+      error.response.intercepted = true;
+    }
+    error.intercepted = true;
+
     if (error.code === "ERR_NETWORK") {
       showSnackbar("No hay conexión", true);
       return;
     }
+
     showSnackbar(error.response?.data?.detail, true);
 
     const status = error.response?.status;

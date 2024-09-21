@@ -3,8 +3,15 @@ import onlyWordsSchema from '../../../validation/formikSchemas/APISchemas/onlyWo
 import alnumWithSpacesSchema from '../../../validation/formikSchemas/APISchemas/alnumWithSpacesSchema';
 import messages from '../../../validation/messages';
 import { passwordRegex } from '../../../validation/regexesPassword';
+import { alphanumericSchema } from '../../../validation/formikSchemas/alphanumericSchema';
+import { orcidSchema } from '../../../validation/formikSchemas/orcidSchema';
+import { emailSchema } from '../../../validation/formikSchemas/emailSchema';
 
 export const academicSchema = yup.object().shape({
+  orcid: orcidSchema.clone().required(messages.required),
+  about: alphanumericSchema.clone().required(messages.required),
+  email: emailSchema.clone().required(messages.required),
+
   names: onlyWordsSchema.clone().required(messages.required),
   father_last_name: onlyWordsSchema.clone().required(messages.required),
   mother_last_name: onlyWordsSchema.clone().required(messages.required),
@@ -21,3 +28,4 @@ export const academicSchema = yup.object().shape({
     .oneOf([yup.ref('password'), null], messages.matchPasswords)
     .required(messages.required),
 });
+

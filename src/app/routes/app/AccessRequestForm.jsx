@@ -10,6 +10,8 @@ import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests.jsx";
 import { accessRequestSchema } from "../../../features/access/formikSchemas/accessRequestSchema.js";
 import { Link } from "react-router-dom";
+import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
+import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
 
 export default function AccessRequestForm() {
   const [
@@ -25,29 +27,52 @@ export default function AccessRequestForm() {
   const { showModal, closeModal } = useModal();
 
   const handleSubmit = async (values, actions) => {
-    await addAccessRequest(values);
+    let response = null;
 
-    showModal(
-      "Solicitud enviada",
-      <div>
-        <p>
-          Recibirá una respuesta a su correo, <b>{values.email}</b>, confirmando
-          su acceso.
-        </p>
-      </div>
-    );
+    try {
+      response = await addAccessRequest(values);
+    } catch (e) {
+      console.log(e);
+    }
 
-    actions.resetForm();
+    if (response.status === 201) {
+      showModal(
+        "Solicitud enviada",
+        <div>
+          <p>
+            Recibirá una respuesta a su correo, <b>{values.email}</b>,
+            confirmando su acceso.
+          </p>
+        </div>
+      );
+      actions.resetForm();
+    }
   };
 
   return (
     <Formik
-      validationSchema={accessRequestSchema}
+      validationSchema={academicSchema}
       onSubmit={handleSubmit}
       initialValues={{
         orcid: "",
         about: "",
         email: "",
+
+        names: "",
+        father_last_name: "",
+        mother_last_name: "",
+        state: "",
+        major: "NINGUNO", // ignored at stakeholder's request
+        city: "",
+        college: "",
+        position: "",
+        degree: "",
+
+        username: "",
+        password: "",
+
+        //FRONTEND ONLY:
+        passwordConfirmation: "",
       }}
     >
       {({
@@ -60,7 +85,7 @@ export default function AccessRequestForm() {
         handleChange,
         handleBlur,
       }) => (
-        <div className="flex-col">
+        <div className="form flex-col w-100">
           <HeaderPage
             title="Solicitar acceso a la colección"
             subtitle={
@@ -74,8 +99,9 @@ export default function AccessRequestForm() {
           >
             <br />
             <br />
-            <Card>
+            <Card className={"flex-col gap-2rem"}>
               <div className="form-section flex-col gap-2rem">
+                <h2>Sobre su investigación</h2>
                 <TextField
                   isFormik
                   name="orcid"
@@ -102,6 +128,7 @@ export default function AccessRequestForm() {
                   hasError={errors.about && touched.about}
                   errorMessage={errors.about}
                   className="input"
+                  maxLength={500}
                 ></TextArea>
 
                 <TextField
@@ -114,6 +141,124 @@ export default function AccessRequestForm() {
                   label={"E-mail"}
                   maxLength={100}
                 ></TextField>
+              </div>
+              <hr />
+              <div className="form-section flex-col gap-2rem">
+                <h2>Sobre usted</h2>
+
+                <TextField
+                  isFormik
+                  name="names"
+                  value={values.names}
+                  onChange={handleChange}
+                  hasError={errors.names && touched.names}
+                  errorMessage={errors.names}
+                  label={"Nombre(s)"}
+                  maxLength={100}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="father_last_name"
+                  value={values.father_last_name}
+                  onChange={handleChange}
+                  hasError={errors.father_last_name && touched.father_last_name}
+                  errorMessage={errors.father_last_name}
+                  label={"Apellido paterno"}
+                  maxLength={50}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="mother_last_name"
+                  value={values.mother_last_name}
+                  onChange={handleChange}
+                  hasError={errors.mother_last_name && touched.mother_last_name}
+                  errorMessage={errors.mother_last_name}
+                  label={"Apellido materno"}
+                  maxLength={50}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="state"
+                  value={values.state}
+                  onChange={handleChange}
+                  hasError={errors.state && touched.state}
+                  errorMessage={errors.state}
+                  label={"Estado"}
+                  maxLength={100}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="city"
+                  value={values.city}
+                  onChange={handleChange}
+                  hasError={errors.city && touched.city}
+                  errorMessage={errors.city}
+                  label={"Ciudad"}
+                  maxLength={100}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="college"
+                  value={values.college}
+                  onChange={handleChange}
+                  hasError={errors.college && touched.college}
+                  errorMessage={errors.college}
+                  label={"Universidad"}
+                  maxLength={100}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="position"
+                  value={values.position}
+                  onChange={handleChange}
+                  hasError={errors.position && touched.position}
+                  errorMessage={errors.position}
+                  label={"Posición / puesto"}
+                  maxLength={100}
+                ></TextField>
+                <TextField
+                  isFormik
+                  name="degree"
+                  value={values.degree}
+                  onChange={handleChange}
+                  hasError={errors.degree && touched.degree}
+                  errorMessage={errors.degree}
+                  label={"Licenciatura´, título o grado académico"}
+                  maxLength={100}
+                ></TextField>
+              </div>
+              <hr />
+              <div className="form-section flex-col gap-2rem">
+                <div>
+                  <h2>Credenciales</h2>
+                  <p>
+                    Si su solicitud es aprobada, utilizará esta información para
+                    iniciar sesión.
+                  </p>
+                </div>
+                <TextField
+                  isFormik
+                  name="username"
+                  value={values.username}
+                  onChange={handleChange}
+                  hasError={errors.username && touched.username}
+                  errorMessage={errors.username}
+                  label={"Nombre de usuario"}
+                  maxLength={50}
+                ></TextField>
+
+                <PasswordValidator
+                  name="password"
+                  password={values.password}
+                  passwordConfirmation={values.passwordConfirmation}
+                  onChange={handleChange}
+                  passwordHasError={errors.password && touched.password}
+                  passwordConfirmationHasError={
+                    errors.passwordConfirmation && touched.passwordConfirmation
+                  }
+                  passwordConfirmationErrorMessage={errors.passwordConfirmation}
+                  passwordErrorMessage={errors.password}
+                ></PasswordValidator>
               </div>
 
               <div className="button-row">

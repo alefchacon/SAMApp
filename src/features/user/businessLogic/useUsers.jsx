@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import { api } from "../../../dataAccess/apiClient";
-import {
-  SPECIMEN_LIST_URL,
-  SPECIMEN_LIST_ACADEMIC_URL,
-  SPECIMEN_LIST_VISITOR_URL,
-} from "./specimenURL";
-import { ROLE_TYPES } from "../../../stores/roleTypes";
-import { mockGetSpecimens, mockGetSpecimensAcademic } from "./GetSpecimens";
 
-export const useSpecimens = (specieId = 0) => {
-  const [specimens, setSpecimens] = useState([]);
+import { SIGNUP_URL } from "../../auth/businessLogic/authUrls";
+import { ACADEMIC_URL, TECHNICAL_PERSON_URL } from "./userURL";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
+
+export const useUsers = (specieId = 0) => {
   const { profile } = useStatus();
 
   useEffect(() => {
@@ -27,20 +23,21 @@ export const useSpecimens = (specieId = 0) => {
       setSpecimens(response);
     });
     */
-    mockSpecimens().then((response) => {
+    mockSpecimensAcademic().then((response) => {
       setSpecimens(response);
     });
   }, [specieId]);
 
-  const mockSpecimens = async () => {
-    const max = 100;
-    const min = 50;
-
-    const fakeSpecimens = await mockGetSpecimens(
-      Math.floor(Math.random() * (max - min + 1) + min)
-    );
-    console.log(fakeSpecimens);
-    return fakeSpecimens;
+  const addUser = async (user = {}, token = "") => {
+    const body = {
+      username: user.username,
+      password: user.password,
+      email: user.email,
+      first_name: user.names,
+      last_name: user.father_last_name,
+    };
+    const response = await api.post(SIGNUP_URL.concat(`/${token}`));
+    console.log(response);
   };
   const mockSpecimensAcademic = async () => {
     const max = 100;
@@ -53,7 +50,7 @@ export const useSpecimens = (specieId = 0) => {
     return fakeSpecimens;
   };
 
-  return [specimens, setSpecimens];
+  return [];
 };
 
 async function getSpecimensByRole(specieId = 0, role = ROLE_TYPES.VISITOR) {

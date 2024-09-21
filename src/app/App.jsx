@@ -35,7 +35,7 @@ import { ROLE_TYPES } from "../stores/roleTypes";
 
 import Navbar from "../components/ui/Navbar";
 import { useStatus } from "../components/contexts/StatusContext";
-import { useAxiosInterceptors } from "../hooks/useAxiosInterceptors";
+import { useAxiosInterceptors } from "../dataAccess/useAxiosInterceptors.jsx";
 // CSS
 import "./App.css";
 

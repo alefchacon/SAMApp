@@ -51,12 +51,10 @@ export default function Navbar({ accessRequestCount = 0 }) {
 
   return (
     <nav
-      className="flex-row justify-content-space-between shadow-down bg-gradient"
+      className="flex-row bg-gradient  shadow-down"
       style={{ minHeight: "60px", position: "relative", padding: "0 1rem" }}
     >
       <div className="flex-row align-items-center gap-2rem h-100">
-        <span className="material-symbols-outlined">nest_eco_leaf</span>
-
         <div
           className="left-side flex-row align-items-center hide-if-mobile h-100 gap-2rem"
           style={{ flex: 1 }}
@@ -88,20 +86,7 @@ export default function Navbar({ accessRequestCount = 0 }) {
       </div>
       <span></span>
       <div style={{ flex: 1 }}></div>
-      <div
-        className="right-side align-items-center flex-row gap-1rem"
-        style={{ flex: 2 }}
-      >
-        <TextField
-          className="nav-input"
-          placeholder={"Buscar especies"}
-          iconType={"search"}
-          onEnter={handleSearch}
-          value={searchQuery}
-          onChange={handleSearchQueryChange}
-          onKeydown={handleSearch}
-        ></TextField>
-
+      <div className="right-side flex-row gap-1rem ">
         <div className="hide-if-mobile">
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>

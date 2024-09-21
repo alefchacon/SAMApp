@@ -13,6 +13,7 @@ export default function Button({
   iconType = "add",
   onClick,
   value = null,
+  smallIcon = false,
 }) {
   const handleClick = () => {
     if (value) {
@@ -30,7 +31,12 @@ export default function Button({
       }`}
       onClick={handleClick}
     >
-      <span className="material-symbols-outlined">{iconType}</span>
+      <span
+        className="material-symbols-outlined"
+        style={{ fontSize: "1.4rem" }}
+      >
+        {iconType}
+      </span>
       {children}
     </button>
   );
