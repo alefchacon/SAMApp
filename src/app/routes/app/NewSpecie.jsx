@@ -23,6 +23,7 @@ import {
 } from "../../../features/specie/businessLogic/getSpecies";
 
 import { mockGetSpecie } from "../../../features/specie/businessLogic/getSpecie";
+import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 
 export default function NewSpecie({
   onSubmit,
@@ -30,15 +31,15 @@ export default function NewSpecie({
     orden: "",
     family: "",
     gender: "",
-    epithet: "",
+    specie_specie: "",
     subspecie: "",
   },
   open,
 }) {
   const formikRef = useRef();
-  const submitSpecie = (values, actions) => {
+  const submitSpecie = async (values, actions) => {
     values.scientific_name = `${values.gender} ${values.epithet}`;
-    onSubmit(values);
+    await onSubmit(values);
     actions.resetForm();
     //showSnackbar(specieSnackbarTypes.addSpecieSuccess);
     /*
@@ -49,24 +50,6 @@ export default function NewSpecie({
       */
   };
 
-  /*
-  
-  the following should be temporal only:
-  it mocks the component receiving its props
-  
-  */
-
-  /*
-  useEffect(() => {
-    if (!open) {
-      console.log("cleaning up!!");
-      console.log(specie);
-      console.log(formikRef.current?.values);
-      console.log(formikRef.current?.initialValues);
-      formikRef.current?.resetForm();
-    }
-  }, [open]);
-  */
   const [ordens, setOrdens] = useState([]);
   const [families, setFamilies] = useState([]);
   const [genders, setGenders] = useState([]);
@@ -152,14 +135,14 @@ export default function NewSpecie({
                   onBlur={handleBlur}
                 ></Autocomplete>
                 <Autocomplete
-                  id="epithet"
-                  name="epithet"
-                  label="Epíteto"
+                  id="specie_specie"
+                  name="specie_specie"
+                  label="Especie"
                   required
                   items={epithets}
-                  value={values.epithet}
-                  hasError={errors.epithet && touched.epithet}
-                  errorMessage={errors.epithet}
+                  value={values.specie_specie}
+                  hasError={errors.specie_specie && touched.specie_specie}
+                  errorMessage={errors.specie_specie}
                   setFieldValue={setFieldValue}
                   onChange={handleChange}
                   onBlur={handleBlur}

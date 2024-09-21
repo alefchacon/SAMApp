@@ -1,5 +1,5 @@
-import { api } from "../../../lib/apiClient"
-import { LOGIN_URL } from "./authUrls"
+import { api } from "../../../dataAccess/apiClient.js"
+import { LOGIN_URL } from "./authUrls.js"
 import CREDENTIALS_KEYS from "../../../stores/credentialsKeys"
 import { ROLE_TYPES } from "../../../stores/roleTypes"
 import getAcademics from "../../user/businessLogic/getAcademics"

@@ -1,7 +1,6 @@
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient.js";
 import CREDENTIALS_KEYS from "../../../stores/credentialsKeys";
-import { LOGOUT_URL } from "./authUrls";
-
+import { LOGOUT_URL } from "./authUrls.js";
 const logOut = async () => {
 
   /*

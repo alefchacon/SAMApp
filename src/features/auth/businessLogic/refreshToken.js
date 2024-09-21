@@ -1,5 +1,5 @@
-import { api } from "../../../lib/apiClient";
-import { TOKEN_REFRESH_URL } from "./authUrls";
+import { api } from "../../../dataAccess/apiClient.js";
+import { TOKEN_REFRESH_URL } from "./authUrls.js";
 import CREDENTIALS_KEYS from "../../../stores/credentialsKeys";
 
 

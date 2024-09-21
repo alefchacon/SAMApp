@@ -1,11 +1,11 @@
 import { SPECIE_URL } from "./specieURL";
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 
 const PREREQUEST_MESSAGE = "Agregando especie..." 
 
-const addSpecie = async (specie) => {
+const postSpecie = async (specie) => {
   const data = {
-    scientific_name: specie.scientific_name,
+    specie_specie: specie.specie_specie,
     class_specie: "Mammalia",
     orden: specie.orden,
     family: specie.family,
@@ -15,8 +15,8 @@ const addSpecie = async (specie) => {
   }
 
   const response = await api.post(SPECIE_URL, data, {cancelable: true, message: PREREQUEST_MESSAGE});
-  console.log(response);
+
   return response;
 } 
 
-export default addSpecie;
+export default postSpecie;

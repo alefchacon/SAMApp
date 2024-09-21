@@ -1,4 +1,4 @@
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 import { SPECIE_URL } from "./specieURL";
 
 

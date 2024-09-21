@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 import axios from "axios";
 
 import Tabs from "../../../components/ui/Tabs";

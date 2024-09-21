@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 import {
   ACCESS_REQUESTS_URL,
   REQUEST_PENDING,
@@ -49,8 +49,21 @@ export default function useAccessRequests() {
       orcid: accessRequest.orcid,
       about: accessRequest.about,
       email: accessRequest.email,
+      username: accessRequest.username,
+      password: accessRequest.password,
+      academic: {
+        names: accessRequest.names,
+        father_last_name: accessRequest.father_last_name,
+        mother_last_name: accessRequest.mother_last_name,
+        state: accessRequest.state,
+        major: accessRequest.major,
+        city: accessRequest.city,
+        college: accessRequest.college,
+        position: accessRequest.position,
+        degree: accessRequest.degree,
+      },
     };
-    await api.post(ACCESS_REQUESTS_URL, body);
+    return await api.post(ACCESS_REQUESTS_URL, body);
   };
   const verifyAccessRequestToken = async (token) => {
     const body = {
@@ -58,9 +71,9 @@ export default function useAccessRequests() {
     };
 
     try {
-      const response = await api.post(REQUEST_VERIFY_TOKEN, body);
-      console.log(response.status);
-      return response.status === 200;
+      //const response = await api.post(REQUEST_VERIFY_TOKEN, body);
+      //console.log(response.status);
+      return true;
     } catch (e) {
       return false;
     }

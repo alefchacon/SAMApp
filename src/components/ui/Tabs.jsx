@@ -44,7 +44,6 @@ export default function Tabs({
         flexGrow: 1,
         display: "flex",
         flexDirection: "column",
-        maxHeight: "100%",
       }}
     >
       <div

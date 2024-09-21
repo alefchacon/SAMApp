@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../lib/apiClient";
+import { api } from "../../../dataAccess/apiClient";
 import PHOTOSHEETS_URL from "./photosheetsURL";
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 import { useModal } from "../../../components/contexts/ModalContext";

@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import InfoItem from "../../../components/ui/InfoItem.jsx";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
+import { useUsers } from "../../../features/user/businessLogic/useUsers.jsx";
 
 import { useEffect } from "react";
 import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
@@ -32,13 +33,17 @@ export default function SignupForm() {
   const { showModal, closeModal } = useModal();
   const { token } = useParams();
 
+  const [addUser] = useUsers();
+
   useEffect(() => {}, []);
 
   const handleSubmit = async (values, actions) => {
     console.log(values);
+    const response = await addUser(values, token);
+    if (response.status === 201) {
+    }
 
-    /*
-    await addAccessRequest(values);
+    //await addAccessRequest(values);
 
     showModal(
       "Solicitud enviada",
@@ -50,8 +55,7 @@ export default function SignupForm() {
       </div>
     );
 
-    actions.resetForm();
-    */
+    //actions.resetForm();
   };
 
   return (

@@ -25,7 +25,7 @@ export default function Account({
         <div className="flex-row align-items-center gap-1rem">
           <Link to={"/solicitudes"}>
             <div style={{ position: "relative" }}>
-              {accessRequestCount && (
+              {accessRequestCount > 0 && (
                 <span
                   className="flex-row justify-content-center align-items-center"
                   style={{
