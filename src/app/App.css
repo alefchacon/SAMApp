@@ -406,8 +406,6 @@ th,
 td,
 .td {
   flex-grow: 1;
-  flex-shrink: 1;
-  min-width: 10px;
   
   overflow:  hidden;
   padding: 0.65rem 1rem;
