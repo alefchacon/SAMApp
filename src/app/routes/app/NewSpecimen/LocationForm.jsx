@@ -216,6 +216,18 @@ export default function LocationForm() {
                 required
               ></TextField>
               <TextField
+                label={"Lugar específico"}
+                id="municipality"
+                name="municipality"
+                errorMessage={errors.municipality}
+                hasError={errors.municipality && touched.municipality}
+                helperText={
+                  "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
+                }
+                isFormik
+                required
+              ></TextField>
+              <TextField
                 label={"Metros a nivel del mar"}
                 id="msnm_google"
                 name="msnm_google"

@@ -15,7 +15,7 @@ export default function Modal({
     <div className={`modal-background  ${open ? "visible" : "invisible"}`}>
       <div
         className="modal-content rounded-20 box-shadow"
-        style={{ width: width ?? "50" }}
+        style={{ width: width ?? "50", height: "80%" }}
       >
         <div className="modal-header divider p-1rem flex-row justify-content-space-between">
           <h2>{title}</h2>
@@ -27,7 +27,7 @@ export default function Modal({
             ></Button>
           )}
         </div>
-        <div className="modal-body p-2rem">{children}</div>
+        {open && <div className="modal-body p-2rem">{children}</div>}
       </div>
     </div>
   );

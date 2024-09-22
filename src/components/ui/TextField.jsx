@@ -28,6 +28,7 @@ export default function TextField({
   onKeydown = null,
   onEnter = null,
   ref = null,
+  step = 1,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -46,7 +47,7 @@ export default function TextField({
     >
       <div className="sam-text-field-info">
         <div className="form-label flex-row gap-05rem">
-          <label htmlFor={`${id}`} className="sam-text-field-label">
+          <label htmlFor={`${id}`} className="input-label">
             {label}
           </label>
           {required && <p className="required">(requerido)</p>}
@@ -141,6 +142,7 @@ export default function TextField({
             onChange={onChange}
             onKeyDown={handleKeyDown}
             ref={ref}
+            step={step}
           ></input>
         )}
       </div>
