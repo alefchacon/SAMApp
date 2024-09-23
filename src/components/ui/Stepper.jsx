@@ -1,18 +1,19 @@
 import { useState } from "react";
 
 import Button from "./Button";
+import Badge from "./Badge";
 
 export default function Stepper({
   children,
   className,
   selectedStepId = null,
+  onStepChange = null,
   onResetScroll,
   endButtonLabel = "Agregar especímen",
+  hasError,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedId, setSelectedId] = useState(selectedStepId);
-
-  console.log(selectedId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
     onResetScroll();
@@ -44,7 +45,7 @@ export default function Stepper({
           Continuar
         </Button>
       ) : (
-        <Button>{endButtonLabel}</Button>
+        <Button type="submit">{endButtonLabel}</Button>
       )}
     </div>
   );
@@ -63,7 +64,9 @@ export default function Stepper({
                 className={`stepper-circle ${
                   selectedId === tab.props.id ? "selected" : ""
                 }`}
+                style={{ position: "relative" }}
               >
+                <Badge>!</Badge>
                 {index + 1}
               </div>
               <p className={`${selectedId === tab.props.id ? "selected" : ""}`}>

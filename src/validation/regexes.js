@@ -1,5 +1,9 @@
 export const onlyWordsRegex =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
 export const alnumWithSpacesRegex =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+export const catalogIdSpecimenRegex =  /^[A-Z0-9\s-]+$/;
+export const hourRegex =  /^([01]\d|2[0-3]):([0-5]\d)$/;
+export const sexRegex = /^[HhMm]$/;
+
 
 
 export const floatRegex =  /^[+-]?(\d+(\.\d*)?|\.\d+)$/u;

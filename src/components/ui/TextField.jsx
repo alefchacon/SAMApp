@@ -29,6 +29,8 @@ export default function TextField({
   onEnter = null,
   ref = null,
   step = 1,
+  max = null,
+  min = null,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -122,6 +124,8 @@ export default function TextField({
               disabled={disabled}
               value={value}
               onKeyDown={onKeydown}
+              max={max}
+              min={min}
             ></Field>
           </>
         ) : (
@@ -149,7 +153,7 @@ export default function TextField({
 
       {hasError && (
         <div
-          className={`sam-text-field-error-text`}
+          className={`error-text`}
           htmlFor={`${id}`}
           id={`${id}-error-message`}
         >

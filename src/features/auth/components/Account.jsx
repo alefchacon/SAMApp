@@ -7,6 +7,7 @@ import LogInForm from "../components/LogInForm";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import Dropdown from "../../../components/ui/Dropdown";
 import DropdownItem from "../../../components/ui/DropdownItem";
+import Badge from "../../../components/ui/Badge";
 
 export default function Account({
   authenticated = false,
@@ -25,26 +26,7 @@ export default function Account({
         <div className="flex-row align-items-center gap-1rem">
           <Link to={"/solicitudes"}>
             <div style={{ position: "relative" }}>
-              {accessRequestCount > 0 && (
-                <span
-                  className="flex-row justify-content-center align-items-center"
-                  style={{
-                    backgroundColor: "var(--error)",
-                    position: "absolute",
-                    top: -10,
-                    right: -10,
-                    borderRadius: "50%",
-                    padding: 2,
-                    color: "white",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    width: "20px",
-                    height: "20px",
-                  }}
-                >
-                  {accessRequestCount}
-                </span>
-              )}
+              {accessRequestCount > 0 && <Badge>{accessRequestCount}</Badge>}
               <Button
                 iconType="notifications"
                 className="icon-only secondary"

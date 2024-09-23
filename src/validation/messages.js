@@ -9,6 +9,10 @@ const messages = {
   email: "El email debe tener un formato válido.",
   campoOpcional: "Sin comentarios.",
   orcid: "El ORCID debe contener 19 caracteres, incluyendo 16 números separados por 3 guiones en el siguiente formato: 1234-1234-1234-1234",
+  id: "Este campo sólo puede contener letras mayúsculas, letras y guiones",
+  maxDatetoday: "La fecha máxima es la de hoy",
+  hour: "La hora es inválida",
+  sex: "El sexo es inválido",
   passwordPolicy: "La contraseña debe cumplir con los criterios:",
   matchPasswords: "Las contraseñas deben coincidir"
   //min: (min) => `Must be at least ${min} characters`,
