@@ -61,7 +61,7 @@ export default function ContributorsForm() {
               <h3>Contribuidores</h3>
               <SelectList modalBody={<ContributorModal />}></SelectList>
             </div>
-
+            <Autocomplete label={"Preparador"}></Autocomplete>
             <div className="form-actions">
               <Button
                 variant="secondary"

@@ -28,6 +28,7 @@ import Specie from "../../../features/specie/components/Specie";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 import Card from "../../../components/ui/Card";
+import NewSpecimen from "./NewSpecimen/NewSpecimen";
 
 import DATE_TYPES from "../../../features/graphing/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
@@ -63,15 +64,14 @@ export default function SpecieDashboard({
     }
   };
 
+  const handleShowAddSpecimen = () => {
+    showModal("Agregar espécimen", <NewSpecimen />, true, "fit-content");
+  };
+
   function AddSpecimenButton() {
     return (
       <div className="flex-row gap-1rem">
-        <Button
-          className={"primary-white"}
-          onClick={async () => {
-            console.log(await getSpecimens(role, specie.id));
-          }}
-        >
+        <Button className={"primary-white"} onClick={handleShowAddSpecimen}>
           Agregar espécimen
         </Button>
         <Button className="secondary-white" iconType="download">
@@ -180,7 +180,7 @@ export default function SpecieDashboard({
                 ></TextField>
               </div>
 
-              <Table data={specimens}></Table>
+              <Table data={specimens} onEdit={handleShowAddSpecimen}></Table>
             </div>
           )}
           <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>

@@ -144,7 +144,7 @@ const defaultColumns = [
   },*/
 ];
 
-function TableRow({ rowData }) {
+function TableRow({ rowData, onEdit }) {
   return (
     <div className="row-wrapper">
       <div
@@ -164,7 +164,11 @@ function TableRow({ rowData }) {
             className="flex-row bg-black-transparent rounded shadow-down"
             style={{ height: "fit-content", position: "absolute", left: 0 }}
           >
-            <Button className="icon-only color-white" iconType="edit" />
+            <Button
+              className="icon-only color-white"
+              iconType="edit"
+              onClick={onEdit}
+            />
             <Button
               className="icon-only color-white danger"
               iconType="delete"
@@ -193,7 +197,7 @@ function TableRow({ rowData }) {
   );
 }
 
-export default function Table({ data }) {
+export default function Table({ data, onEdit }) {
   const [columns] = useState(() => [...defaultColumns]);
   const [columnResizeMode, setColumnResizeMode] = useState("onChange");
   const [columnResizeDirection, setColumnResizeDirection] = useState("ltr");
@@ -343,7 +347,7 @@ export default function Table({ data }) {
 
           <tbody>
             {table.getRowModel().rows.map((row, index) => (
-              <TableRow key={index} rowData={row} />
+              <TableRow key={index} rowData={row} onEdit={onEdit} />
             ))}
           </tbody>
         </table>

@@ -65,7 +65,7 @@ export default function Autocomplete({
         <div className="flex-col">
           {label && (
             <div className="flex-row gap-05rem">
-              <label htmlFor={`${id}`} className="sam-text-field-label">
+              <label htmlFor={`${id}`} className="input-label">
                 {label}
               </label>
               {required && <p className="required">(requerido)</p>}

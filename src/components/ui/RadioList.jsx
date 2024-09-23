@@ -1,0 +1,44 @@
+export default function RadioList({
+  options = [
+    { label: "option 1", value: 1 },
+    { label: "option 2", value: 2 },
+  ],
+  label = "Radio list",
+  name = "radio-list",
+  onChange,
+  errorMessage = null,
+  hasError = false,
+  maxWidth = null,
+}) {
+  const errorClass = errorMessage ? "hasError" : "";
+
+  return (
+    <fieldset
+      name={name}
+      className={`rounded-20 flex-col gap-05rem ${errorClass}`}
+      onChange={onChange}
+      style={{ maxWidth: maxWidth ?? "" }}
+    >
+      <legend className="input-label">{label}</legend>
+
+      {options.map((option, index) => (
+        <div className="option">
+          <input
+            type="radio"
+            id={`${name}Choice${index}`}
+            name={name}
+            value={option.value}
+          />
+          <label
+            htmlFor={`${name}Choice${index}`}
+            style={{ cursor: "pointer" }}
+          >
+            {option.label}
+          </label>
+        </div>
+      ))}
+
+      {hasError && <p className="error-text">{errorMessage}</p>}
+    </fieldset>
+  );
+}

@@ -1,5 +1,5 @@
 //LIBRARIES
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Routes,
   Route,
@@ -30,6 +30,7 @@ import FormTemplate from "../components/ui/FormTemplate";
 import Uploader from "../components/ui/Uploader";
 import AuthGuard from "../components/logic/AuthGuard.jsx";
 import SignUpGuard from "../components/logic/SignUpGuard.jsx";
+import Button from "../components/ui/Button.jsx";
 
 import { ROLE_TYPES } from "../stores/roleTypes";
 
@@ -69,10 +70,17 @@ function App() {
 
   //console.log("app");
 
+  const mainDivRef = useRef(null);
+  const resetScroll = () => {
+    if (mainDivRef.current) {
+      mainDivRef.current.scrollTop = 0; // Reset scroll position to the top
+    }
+  };
+
   return (
     <>
       <Navbar accessRequestCount={pendingAccessRequestCount}></Navbar>
-      <main>
+      <main ref={mainDivRef}>
         {/*SPECIE AND SPECIMEN*/}
 
         <Routes>
@@ -99,9 +107,7 @@ function App() {
           <Route
             path="/Test"
             element={
-              <FormTemplate title="Agregar espécimen">
-                <NewSpecimen></NewSpecimen>
-              </FormTemplate>
+              <NewSpecimen onResetScroll={resetScroll}></NewSpecimen>
               /*
               <div className="p-1rem gap-1rem w-100 ">
               <UploaderImage></UploaderImage>
