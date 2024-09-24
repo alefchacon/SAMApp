@@ -1,9 +1,9 @@
-import TextField from "../../../../components/ui/TextField";
-import TextArea from "../../../../components/ui/TextArea";
-import RadioList from "../../../../components/ui/RadioList";
-import HeaderPage from "../../../../components/ui/HeaderPage";
+import TextField from "../../../components/ui/TextField";
+import TextArea from "../../../components/ui/TextArea";
+import RadioList from "../../../components/ui/RadioList";
+import HeaderPage from "../../../components/ui/HeaderPage";
 import moment from "moment";
-import { generalDataSchema } from "../../formikSchemas/generalDataSchema";
+import { specimenSchema } from "../formikSchemas/specimenSchema";
 
 import { Formik, Form, Field } from "formik";
 
@@ -11,21 +11,21 @@ export default function GeneralDataForm({
   children,
   initialValues,
   handleChange,
-  errors,
+  errors = [],
   values,
   touched,
   setFieldValue,
   inputWidth = "",
 }) {
   return (
-    <div className="form-section flex-col gap-2rem input-group">
+    <Form className="form-section flex-col gap-2rem input-group">
       <TextField
         label={"Número de preparación"}
         isFormik
         name="colection_code"
         value={values.colection_code}
         onChange={handleChange}
-        hasError={errors.colection_code && touched.colection_code}
+        hasError={Boolean(errors.colection_code)}
         errorMessage={errors.colection_code}
         maxWidth={inputWidth}
       ></TextField>
@@ -34,7 +34,7 @@ export default function GeneralDataForm({
         name="catalog_id"
         value={values.catalog_id}
         onChange={handleChange}
-        hasError={errors.catalog_id && touched.catalog_id}
+        hasError={Boolean(errors.catalog_id)}
         errorMessage={errors.catalog_id}
         label={"ID del catálogo"}
         maxWidth={inputWidth}
@@ -49,7 +49,7 @@ export default function GeneralDataForm({
         }
         value={values.colection_date}
         onChange={handleChange}
-        hasError={errors.colection_date && touched.colection_date}
+        hasError={Boolean(errors.colection_date)}
         errorMessage={errors.colection_date}
         type="date"
         maxWidth={inputWidth}
@@ -66,7 +66,7 @@ export default function GeneralDataForm({
         name="hour"
         value={values.hour}
         onChange={handleChange}
-        hasError={errors.hour && touched.hour}
+        hasError={Boolean(errors.hour)}
         errorMessage={errors.hour}
         step={60}
         min="00:00"
@@ -120,6 +120,6 @@ export default function GeneralDataForm({
         hasError={errors.comment && touched.comment}
         errorMessage={errors.comment}
       ></TextArea>
-    </div>
+    </Form>
   );
 }

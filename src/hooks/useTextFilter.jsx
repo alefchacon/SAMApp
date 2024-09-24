@@ -39,5 +39,9 @@ export default function useTextFilter(items = [], debounceMs = 700) {
     );
   }, [items, debouncedFilterText]);
 
-  return [filteredItems, handleFilterChange, filterText];
+  const clearFilter = useCallback(() => {
+    setFilterText("");
+  });
+
+  return [filteredItems, handleFilterChange, filterText, clearFilter];
 }

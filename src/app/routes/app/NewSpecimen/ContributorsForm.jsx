@@ -8,38 +8,62 @@ import TextField from "../../../../components/ui/TextField";
 import LoadingTextField from "../../../../components/ui/LoadingTextField";
 import Button from "../../../../components/ui/Button";
 import SelectList from "../../../../components/ui/SelectList";
-import Autocomplete from "../../../../components/ui/Autocomplete";
-import ContributorModal from "./ContributorModal";
+import ContributorForm from "./ContributorForm";
+import ContributorAutocomplete from "../../../../features/contributors/ContributorAutocomplete";
+
+import { useModal } from "../../../../components/contexts/ModalContext";
 
 //VALIDATION SCHEMAS
 import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 
-const CoordinateChangeListener = ({ coordinateX, coordinateY, onChange }) => {
-  const { values, setFieldValue } = useFormikContext();
+import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
+
+export default function ContributorsForm({ onLoad }) {
+  const [contributors, getContributors, addContributor] =
+    useContributorsAndRoles();
+  const { showModal, closeModal } = useModal();
 
   useEffect(() => {
-    //calculateUTMRegion();
-    onChange(values[coordinateX], values[coordinateY]);
-  }, [values[coordinateX], onChange, coordinateX]);
+    getContributors();
+  }, []);
 
-  const calculateUTMRegion = async (coordinateX, coordinateY) => {
-    const utmZone = Math.floor((coordinateX + 180) / 6) + 1;
-    const utmProjection = `+proj=utm +zone=${utmZone} +datum=WGS84 +units=m +no_defs`;
-    const [x, y] = proj4(wgs84, utmProjection, [coordinateX, coordinateY]);
-    console.log({ x, y, zone: utmZone });
-  };
-
-  return null;
-};
-
-export default function ContributorsForm() {
   const handleSubmit = async (values, formActions) => {
     console.log(values);
     console.log(formActions);
   };
 
+  const handleShowAddContributorModal = () => {
+    showModal(
+      "Agregar colaborador",
+      <ContributorForm onSubmit={addContributor} />
+    );
+  };
+
   return (
-    <div>
+    <div className="input-group">
+      <div className="flex-row gap-2rem align-items-center">
+        <p>
+          De clic en los campos de texto para ver o filtrar a los colaboradores
+          existentes, o registre uno nuevo.
+        </p>
+        <Button
+          iconType="person_add"
+          className="secondary"
+          onClick={handleShowAddContributorModal}
+        >
+          Registrar colaborador
+        </Button>
+      </div>
+      <ContributorAutocomplete
+        required
+        label={"Colector"}
+        contributors={contributors}
+      ></ContributorAutocomplete>
+      <ContributorAutocomplete
+        label={"Preparador"}
+        required
+        contributors={contributors}
+      ></ContributorAutocomplete>
       <Formik
         //validationSchema={specimenSchema}
         onSubmit={handleSubmit}
@@ -56,27 +80,7 @@ export default function ContributorsForm() {
         }}
       >
         {({ errors, touched, isValid, dirty, setFieldValue, values }) => (
-          <Form>
-            <div className="input-group divider">
-              <h3>Contribuidores</h3>
-              <SelectList modalBody={<ContributorModal />}></SelectList>
-            </div>
-            <Autocomplete label={"Preparador"}></Autocomplete>
-            <div className="form-actions">
-              <Button
-                variant="secondary"
-                label="Cancelar"
-                onClick={() =>
-                  console.log(values.coordinates_cartesian_plane_x)
-                }
-              ></Button>
-              <Button
-                variant="primary"
-                label="Agregar espécimen"
-                type="submit"
-              ></Button>
-            </div>
-          </Form>
+          <Form></Form>
         )}
       </Formik>
     </div>

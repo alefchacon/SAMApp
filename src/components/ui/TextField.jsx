@@ -27,10 +27,12 @@ export default function TextField({
   maxWidth = null,
   onKeydown = null,
   onEnter = null,
+  onFocus = null,
   ref = null,
   step = 1,
   max = null,
   min = null,
+  onBlur = null,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -126,6 +128,9 @@ export default function TextField({
               onKeyDown={onKeydown}
               max={max}
               min={min}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onChange={onChange}
             ></Field>
           </>
         ) : (

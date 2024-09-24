@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import messages from '../../../validation/messages';
 import { catalogIdSpecimenRegex, hourRegex, sexRegex } from '../../../validation/regexes';
 
-export const generalDataSchema = yup.object().shape({
+export const morphometricMeasures = yup.object().shape({
   colection_code: yup.string().required(messages.required),
   catalog_id: yup.string().max(20).matches(catalogIdSpecimenRegex, messages.id).required(messages.required),
   colection_date: yup.date()
@@ -16,14 +16,3 @@ export const generalDataSchema = yup.object().shape({
   number_embryos: yup.number().min(0),
   comment: yup.string().max(200),
 });
-
-/*
-  colection_code: "",
-  catalog_id: "",
-  colection_date: "",
-  hour: "",
-  status: "",
-  sex: "",
-  number_embryos: "",
-  comment: "",
-*/

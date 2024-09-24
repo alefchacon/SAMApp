@@ -20,8 +20,6 @@ export default function Stepper({
     setSelectedId(newSelectedIndex);
   };
 
-  console.log(children[0].props.id);
-
   const buttonRow = (index) => (
     <div className="button-row">
       {index > 0 && (
@@ -51,10 +49,14 @@ export default function Stepper({
   );
 
   return (
-    <div className="stepper-wrapper">
-      <ul className={`stepper`}>
+    <div className="stepper-wrapper" style={{ flexWrap: "wrap" }}>
+      <ul className={`stepper flex-row align-items-center`}>
         {children.map((tab, index) => (
-          <div className="step-wrapper flex-row align-items-center" key={index}>
+          <div
+            className="step-wrapper flex-row align-items-center"
+            key={index}
+            style={{ flex: 1 }}
+          >
             <div
               key={index}
               className={` step selectable rounded `}
@@ -66,7 +68,6 @@ export default function Stepper({
                 }`}
                 style={{ position: "relative" }}
               >
-                <Badge>!</Badge>
                 {index + 1}
               </div>
               <p className={`${selectedId === tab.props.id ? "selected" : ""}`}>
@@ -75,7 +76,12 @@ export default function Stepper({
             </div>
 
             {index < children.length - 1 && (
-              <div className="stepper-line"></div>
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "1.4rem" }}
+              >
+                chevron_right
+              </span>
             )}
           </div>
         ))}

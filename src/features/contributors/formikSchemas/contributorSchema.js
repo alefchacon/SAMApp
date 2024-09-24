@@ -1,7 +1,9 @@
 import * as yup from 'yup';
 //import { alphabeticSchema } from '../../../validation/formikSchemas/alphabeticSchema';
+import { onlyNamesRegex, colectorCodeRegex } from '../../../validation/regexes';
 import messages from '../../../validation/messages';
 
 export const contributorSchema = yup.object().shape({
-  //name: alphabeticSchema.clone().required(messages.required),
+  name: yup.string().matches(onlyNamesRegex, messages.onlyNames).required(messages.required),
+  code: yup.string().matches(colectorCodeRegex, messages.colectorCode).clone().required(messages.required),
 });

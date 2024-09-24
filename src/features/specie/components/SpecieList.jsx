@@ -12,8 +12,6 @@ import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
 import Taxonomy from "./Taxonomy";
 
-import Chip from "../../../components/ui/Chip";
-
 import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 

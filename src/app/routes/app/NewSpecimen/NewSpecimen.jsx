@@ -4,17 +4,17 @@ import { useState } from "react";
 import HeaderPage from "../../../../components/ui/HeaderPage";
 import Button from "../../../../components/ui/Button";
 // FORMS
-import LocationForm from "./LocationForm";
+import LocationForm from "../../../../features/specimens/newSpecimen/LocationForm";
 import Card from "../../../../components/ui/Card";
 import ContributorsForm from "./ContributorsForm";
-import GeneralDataForm from "../../../../features/specimens/newSpecimen/generalData/GeneralDataForm";
-import MorphometricMeasuresForm from "./MorphometricMeasuresForm";
+import GeneralDataForm from "../../../../features/specimens/newSpecimen/GeneralDataForm";
+import MorphometricMeasuresForm from "../../../../features/specimens/newSpecimen/MorphometricMeasuresForm";
 import Taxonomy from "../../../../features/specie/components/Taxonomy";
 // COMPONENTS
 import Stepper from "../../../../components/ui/Stepper";
 //import Stepper from "../../../../components/ui/Stepper";
 import { Formik, Form, Field } from "formik";
-import { generalDataSchema } from "../../../../features/specimens/formikSchemas/generalDataSchema";
+import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 import TextField from "../../../../components/ui/TextField";
 
 const INPUT_WIDTH = 300;
@@ -30,6 +30,13 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
     sex: "",
     number_embryos: 0,
     comment: "",
+
+    //Morphometric measures
+    length_total: "",
+    length_ear: "",
+    length_paw: "",
+    length_tail: "",
+    weight: "",
   });
 
   console.log(stepId);
@@ -50,8 +57,9 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
       <br />
       <br />
       <Formik
-        validationSchema={generalDataSchema}
+        validationSchema={specimenSchema}
         initialValues={{
+          //datos-generales
           colection_code: "",
           catalog_id: "",
           colection_date: "",
@@ -60,6 +68,32 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
           sex: "",
           number_embryos: 0,
           comment: "",
+
+          //medidas-morfometricas
+          length_total: "",
+          length_ear: "",
+          length_paw: "",
+          length_tail: "",
+          weight: "",
+
+          //ubicacion
+          coordinates_cartesian_plane_x: "",
+          coordinates_cartesian_plane_y: "",
+          geographical_coordinates_x: "",
+          geographical_coordinates_y: "",
+          utm_region: "",
+          msnm_google: "",
+          altitude: "",
+          institute_code: "",
+          institute: "",
+          specific_location: "",
+          municipality: "",
+          state: "",
+          country: "",
+
+          //colaboradores
+          colector: { contributor_id: "", contributor_role_id: "" },
+          preparador: { contributor_id: "", contributor_role_id: "" },
         }}
         onSubmit={handleSubmit}
       >
@@ -74,10 +108,7 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
           handleBlur,
           validateForm,
         }) => (
-          <Form
-            className="flex-col page-padding flex-grow-1"
-            autoComplete="off"
-          >
+          <div className="flex-col page-padding flex-grow-1" autoComplete="off">
             <Card>
               <Stepper selectedStepId={stepId} onResetScroll={onResetScroll}>
                 <div label={"Datos generales"} id={"datos-generales"}>
@@ -103,20 +134,41 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
                   label={"Medidas morfométricas"}
                   id={"medidas-morfometricas"}
                 >
-                  <MorphometricMeasuresForm></MorphometricMeasuresForm>
+                  <MorphometricMeasuresForm
+                    handleChange={handleChange}
+                    touched={touched}
+                    values={values}
+                    errors={errors}
+                    setFieldValue={setFieldValue}
+                    inputWidth={INPUT_WIDTH}
+                  ></MorphometricMeasuresForm>
                 </div>
                 <div label={"Ubicación"} id={"ubicacion"}>
-                  <LocationForm></LocationForm>
+                  <LocationForm
+                    handleChange={handleChange}
+                    touched={touched}
+                    values={values}
+                    errors={errors}
+                    setFieldValue={setFieldValue}
+                    inputWidth={INPUT_WIDTH}
+                  ></LocationForm>
                 </div>
                 <div label={"Colaboradores"} id={"colaboradores"}>
-                  <ContributorsForm></ContributorsForm>
+                  <ContributorsForm
+                    onLoad={() => console.log("loading contributors!!!!")}
+                  ></ContributorsForm>
                 </div>
               </Stepper>
             </Card>
-            <button onClick={() => validateForm().then((r) => console.log(r))}>
+            <button
+              onClick={() => {
+                validateForm().then((r) => console.log(r));
+                console.log(values);
+              }}
+            >
               asdf
             </button>
-          </Form>
+          </div>
         )}
       </Formik>
     </div>
