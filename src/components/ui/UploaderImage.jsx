@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Papa from "papaparse";
 import Button from "./Button";
-import ChipFile from "./ChipFile";
+import Chip from "./Chip";
 
 import { FILE_TYPES_STRING } from "../../stores/fileTypes";
 import { useSnackbar } from "../contexts/SnackbarContext";
@@ -108,7 +108,7 @@ export default function UploaderImage({
 
       <div className="file-list gap-05rem p-05rem grid">
         {files.map((file, index) => (
-          <ChipFile
+          <Chip
             index={index}
             fileName={file.name}
             extension={file.name.split(".").pop()}

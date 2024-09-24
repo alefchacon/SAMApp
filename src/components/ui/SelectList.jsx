@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import Button from "./Button";
 import TextField from "./TextField";
-import ContributorModal from "../../app/routes/app/NewSpecimen/ContributorModal";
+import ContributorForm from "../../app/routes/app/NewSpecimen/ContributorForm";
 import Modal from "./modal/Modal";
 import AddContributor from "../../features/contributors/AddContributor";
 import HoverableActions from "./HoverableActions";
