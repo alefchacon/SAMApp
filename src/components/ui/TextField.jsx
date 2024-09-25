@@ -131,6 +131,7 @@ export default function TextField({
               onFocus={onFocus}
               onBlur={onBlur}
               onChange={onChange}
+              step={step}
             ></Field>
           </>
         ) : (

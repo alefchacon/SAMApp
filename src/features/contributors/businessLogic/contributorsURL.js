@@ -1,3 +1,4 @@
 const CONTRIBUTORS_URL = "/contributors";
+const CONTRIBUTORS_SPECIMEN_URL = "/contributors-specimen";
 
-export default CONTRIBUTORS_URL;
+export {CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL};

@@ -17,9 +17,13 @@ import { Formik, Form, Field } from "formik";
 import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 import TextField from "../../../../components/ui/TextField";
 
+import { useSpecimens } from "../../../../features/specimens/businessLogic/useSpecimens";
+
 const INPUT_WIDTH = 300;
 
 export default function NewSpecimen({ specie_id, onResetScroll }) {
+  const [, , addSpecimen] = useSpecimens();
+
   const [stepId, setStepId] = useState("datos-generales");
   const [generalDataValues, setGeneralDataValues] = useState({
     colection_code: "",
@@ -39,13 +43,12 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
     weight: "",
   });
 
-  console.log(stepId);
   const handleStepChange = (newStepId) => {
     setStepId(newStepId);
   };
 
-  const handleSubmit = (v) => {
-    console.log(v);
+  const handleSubmit = async (v) => {
+    const response = await addSpecimen(v, 195);
   };
 
   return (
@@ -60,6 +63,7 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
         validationSchema={specimenSchema}
         initialValues={{
           //datos-generales
+
           colection_code: "",
           catalog_id: "",
           colection_date: "",
@@ -92,8 +96,8 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
           country: "",
 
           //colaboradores
-          colector: { contributor_id: "", contributor_role_id: "" },
-          preparador: { contributor_id: "", contributor_role_id: "" },
+          colector: "",
+          preparator: "",
         }}
         onSubmit={handleSubmit}
       >
@@ -107,6 +111,7 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
           handleChange,
           handleBlur,
           validateForm,
+          submitForm,
         }) => (
           <div className="flex-col page-padding flex-grow-1" autoComplete="off">
             <Card>
@@ -117,8 +122,8 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
                     touched={touched}
                     values={values}
                     errors={errors}
+                    onBlur={handleBlur}
                     setFieldValue={setFieldValue}
-                    inputWidth={INPUT_WIDTH}
                   >
                     <Button
                       value={"medidas-morfometricas"}
@@ -140,7 +145,6 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
                     values={values}
                     errors={errors}
                     setFieldValue={setFieldValue}
-                    inputWidth={INPUT_WIDTH}
                   ></MorphometricMeasuresForm>
                 </div>
                 <div label={"Ubicación"} id={"ubicacion"}>
@@ -150,11 +154,17 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
                     values={values}
                     errors={errors}
                     setFieldValue={setFieldValue}
-                    inputWidth={INPUT_WIDTH}
+                    onBlur={handleBlur}
                   ></LocationForm>
                 </div>
                 <div label={"Colaboradores"} id={"colaboradores"}>
                   <ContributorsForm
+                    handleChange={handleChange}
+                    touched={touched}
+                    values={values}
+                    errors={errors}
+                    setFieldValue={setFieldValue}
+                    onBlur={handleBlur}
                     onLoad={() => console.log("loading contributors!!!!")}
                   ></ContributorsForm>
                 </div>
@@ -162,7 +172,8 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
             </Card>
             <button
               onClick={() => {
-                validateForm().then((r) => console.log(r));
+                submitForm();
+                console.log(errors);
                 console.log(values);
               }}
             >

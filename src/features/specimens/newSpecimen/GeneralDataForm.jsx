@@ -42,6 +42,17 @@ export default function GeneralDataForm({
       ></TextField>
       <TextField
         isFormik
+        name="class_age"
+        value={values.class_age}
+        onChange={handleChange}
+        hasError={Boolean(errors.class_age)}
+        errorMessage={errors.class_age}
+        label={"Edad"}
+        maxWidth={inputWidth}
+        maxLength={50}
+      ></TextField>
+      <TextField
+        isFormik
         name="colection_date"
         label={"Fecha de la colecta"}
         helperText={

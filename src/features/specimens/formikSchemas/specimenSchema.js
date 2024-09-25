@@ -2,13 +2,14 @@
 import * as yup from 'yup';
 
 import messages from '../../../validation/messages';
-import { catalogIdSpecimenRegex, hourRegex, sexRegex } from '../../../validation/regexes';
+import { catalogIdSpecimenRegex, hourRegex, onlyWordsRegex, onlyWordsWithCommas, sexRegex } from '../../../validation/regexes';
 import { decimalSchema } from '../../../validation/formikSchemas/decimalSchema';
 
 export const specimenSchema = yup.object().shape({
   //General data
   colection_code: yup
     .string()
+    .matches(catalogIdSpecimenRegex, messages.id)
     .required(messages.required),
   catalog_id: yup
     .string()
@@ -32,6 +33,10 @@ export const specimenSchema = yup.object().shape({
   number_embryos: yup
     .number()
     .min(0),
+  class_age: yup
+    .string()
+    .max(50)
+    .required(messages.required),
   comment: yup
     .string()
     .max(200),
@@ -44,17 +49,58 @@ export const specimenSchema = yup.object().shape({
   weight: decimalSchema.clone(),
 
   //Location
-  coordinates_cartesian_plane_x: "1", //
-  coordinates_cartesian_plane_y: "", //
-  geographical_coordinates_x: "", //
-  geographical_coordinates_y: "", //
-  utm_region: "", //
-  msnm_google: "", //
-  altitude: "", 
-  institute_code: "", //
-  institute: "", //
-  specific_location: "", //
-  municipality: "", //
-  state: "", //
-  country: "", //
+  coordinates_cartesian_plane_x: yup
+    .number()
+    .required(messages.required), 
+  coordinates_cartesian_plane_y: yup
+    .number()
+    .required(messages.required), 
+  geographical_coordinates_x: yup
+    .number()
+    .required(messages.required), 
+  geographical_coordinates_y: yup
+    .number()
+    .required(messages.required), 
+  utm_region: yup
+    .string()
+    .max(4)
+    .required(messages.required),
+  msnm_google: yup
+    .number()
+    .required(messages.required), 
+  altitude: yup.number()
+    .required(messages.required),
+  institute_code: yup
+    .string()
+    .max(100)
+    .matches(catalogIdSpecimenRegex, messages.id)
+    .required(messages.required),
+  institute: yup
+    .string()
+    .max(150)
+    .matches(onlyWordsWithCommas, messages.onlyWords)
+    .required(messages.required),
+  specific_location: yup
+    .string()
+    .max(100)
+    .matches(onlyWordsRegex, messages.onlyWords),
+  municipality: yup
+    .string()
+    .max(100)
+    .matches(onlyWordsRegex, messages.onlyWords),
+  state: yup
+    .string()
+    .max(100)
+    .matches(onlyWordsRegex, messages.onlyWords)
+    .required(messages.required),
+  country: yup
+    .string()
+    .max(100)
+    .matches(onlyWordsRegex, messages.onlyWords)
+    .required(messages.required),
+
+    //Contributors
+    colector: yup.object().required(messages.required),
+    preparator: yup.object().required(messages.required),
+
 });

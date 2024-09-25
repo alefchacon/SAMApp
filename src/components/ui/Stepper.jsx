@@ -49,8 +49,11 @@ export default function Stepper({
   );
 
   return (
-    <div className="stepper-wrapper" style={{ flexWrap: "wrap" }}>
-      <ul className={`stepper flex-row align-items-center`}>
+    <div className="stepper-wrapper bg-white" style={{ flexWrap: "wrap" }}>
+      <ul
+        className={`stepper flex-row align-items-center bg-white shadow-down`}
+        style={{ position: "sticky", top: 0, zIndex: 10 }}
+      >
         {children.map((tab, index) => (
           <div
             className="step-wrapper flex-row align-items-center"
