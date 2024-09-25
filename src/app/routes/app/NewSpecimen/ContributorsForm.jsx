@@ -18,7 +18,17 @@ import { specimenSchema } from "../../../../features/specimens/formikSchemas/spe
 
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 
-export default function ContributorsForm({ onLoad }) {
+export default function ContributorsForm({
+  children,
+  initialValues,
+  handleChange,
+  errors = [],
+  values,
+  onBlur,
+  touched,
+  setFieldValue,
+  inputWidth = "",
+}) {
   const [contributors, getContributors, addContributor] =
     useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
@@ -40,7 +50,7 @@ export default function ContributorsForm({ onLoad }) {
   };
 
   return (
-    <div className="input-group">
+    <Form className="input-group" autoComplete="off">
       <div className="flex-row gap-2rem align-items-center">
         <p>
           De clic en los campos de texto para ver o filtrar a los colaboradores
@@ -55,34 +65,29 @@ export default function ContributorsForm({ onLoad }) {
         </Button>
       </div>
       <ContributorAutocomplete
+        roleId={1}
         required
+        id="colector"
+        name="colector"
+        onBlur={onBlur}
+        setFieldValue={setFieldValue}
         label={"Colector"}
+        hasError={Boolean(errors.colector && touched.colector)}
+        errorMessage={errors.colector}
         contributors={contributors}
       ></ContributorAutocomplete>
       <ContributorAutocomplete
+        roleId={2}
+        id="preparator"
+        name="preparator"
+        onBlur={onBlur}
+        setFieldValue={setFieldValue}
+        hasError={Boolean(errors.preparator && touched.preparator)}
+        errorMessage={errors.preparator}
         label={"Preparador"}
         required
         contributors={contributors}
       ></ContributorAutocomplete>
-      <Formik
-        //validationSchema={specimenSchema}
-        onSubmit={handleSubmit}
-        initialValues={{
-          coordinates_cartesian_plane_x: "1",
-          coordinates_cartesian_plane_y: "",
-          geographical_coordinates_x: "",
-          geographical_coordinates_y: "",
-          utm_region: "",
-          msnm_google: "",
-          municipality: "",
-          state: "",
-          country: "",
-        }}
-      >
-        {({ errors, touched, isValid, dirty, setFieldValue, values }) => (
-          <Form></Form>
-        )}
-      </Formik>
-    </div>
+    </Form>
   );
 }

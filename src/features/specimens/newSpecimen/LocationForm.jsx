@@ -15,102 +15,18 @@ import { getLocation } from "../businessLogic/external/getLocation";
 //VALIDATION SCHEMAS
 import { specimenSchema } from "../formikSchemas/specimenSchema";
 
-const CoordinateChangeListener = ({ coordinateX, coordinateY, onChange }) => {
-  const { values, setFieldValue } = useFormikContext();
-
-  useEffect(() => {
-    //calculateUTMRegion();
-    onChange(values[coordinateX], values[coordinateY]);
-  }, [values[coordinateX], onChange, coordinateX]);
-
-  const calculateUTMRegion = async (coordinateX, coordinateY) => {
-    const utmZone = Math.floor((coordinateX + 180) / 6) + 1;
-    const utmProjection = `+proj=utm +zone=${utmZone} +datum=WGS84 +units=m +no_defs`;
-    const [x, y] = proj4(wgs84, utmProjection, [coordinateX, coordinateY]);
-    console.log({ x, y, zone: utmZone });
-  };
-
-  return null;
-};
-
 export default function LocationForm({
   children,
   initialValues,
   handleChange,
   errors = [],
   values,
+  onBlur,
   touched,
   setFieldValue,
   inputWidth = "",
 }) {
-  const [UTMRegion, setUTMRegion] = useState("");
-  const wgs84 = proj4.WGS84;
-  useEffect(() => {}, []);
-  const handleSubmit = async (values, formActions) => {
-    console.log(values);
-    console.log(formActions);
-
-    const utmZone =
-      Math.floor((values.geographical_coordinates_x + 180) / 6) + 1;
-    const utmProjection = `+proj=utm +zone=${utmZone} +datum=WGS84 +units=m +no_defs`;
-    const [x, y] = proj4(wgs84, utmProjection, [
-      values.geographical_coordinates_x,
-      values.geographical_coordinates_y,
-    ]);
-
-    formActions.setFieldValue("utm_region", utmZone);
-
-    console.log({ x, y, zone: utmZone });
-
-    const elevationResponse = await getElevation(
-      values.geographical_coordinates_x,
-      values.geographical_coordinates_y
-    );
-
-    const locationResponse = await getLocation(
-      values.geographical_coordinates_x,
-      values.geographical_coordinates_y
-    );
-    console.log(locationResponse);
-
-    if (elevationResponse.status !== 200) {
-      return;
-    }
-
-    formActions.setFieldValue(
-      "msnm_google",
-      elevationResponse.data.results[0].elevation
-    );
-
-    formActions.setFieldValue("country", locationResponse.data.address.country);
-    formActions.setFieldValue("state", locationResponse.data.address.state);
-
-    const address = locationResponse.data.address;
-    let municipality = "";
-    if ("city" in address) {
-      municipality = address.city;
-    } else if ("town" in address) {
-      municipality = address.town;
-    } else if ("county" in address) {
-      municipality = address.county;
-    }
-
-    formActions.setFieldValue("municipality", municipality);
-  };
-
-  const handleCoordinateChange = () => {
-    const timer = setTimeout(() => {
-      onStateChange();
-    }, 3000); // wait for 3 seconds
-
-    clearTimeout(timer); // cleanup the timeout if the component unmounts or state changes
-  };
-
-  const handleCartesianChange = (newCoordinate, pairCoordinate) => {
-    console.log("Value changed:", newCoordinate);
-    console.log("Value old:", pairCoordinate);
-  };
-
+  console.log(touched);
   return (
     <div>
       <Form>
@@ -124,6 +40,7 @@ export default function LocationForm({
             errorMessage={errors.coordinates_cartesian_plane_x}
             onChange={handleChange}
             value={values.coordinates_cartesian_plane_x}
+            onBlur={onBlur}
             hasError={
               errors.coordinates_cartesian_plane_x &&
               touched.coordinates_cartesian_plane_x
@@ -138,6 +55,7 @@ export default function LocationForm({
             onChange={handleChange}
             value={values.coordinates_cartesian_plane_y}
             errorMessage={errors.coordinates_cartesian_plane_y}
+            onBlur={onBlur}
             hasError={
               errors.coordinates_cartesian_plane_y &&
               touched.coordinates_cartesian_plane_y
@@ -155,12 +73,13 @@ export default function LocationForm({
             id="geographical_coordinates_y"
             name="geographical_coordinates_y"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.geographical_coordinates_y}
             errorMessage={errors.geographical_coordinates_y}
-            hasError={
+            hasError={Boolean(
               errors.geographical_coordinates_y &&
-              touched.geographical_coordinates_y
-            }
+                touched.geographical_coordinates_y
+            )}
             required
             isFormik
             type="number"
@@ -169,28 +88,76 @@ export default function LocationForm({
             label={"Coordenada X (Longitud)"}
             id="geographical_coordinates_x"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.geographical_coordinates_x}
             name="geographical_coordinates_x"
             errorMessage={errors.geographical_coordinates_x}
-            hasError={
+            hasError={Boolean(
               errors.geographical_coordinates_x &&
-              touched.geographical_coordinates_x
-            }
+                touched.geographical_coordinates_x
+            )}
             required
             isFormik
             type="number"
+          ></TextField>
+        </div>
+        <div className="input-group divider">
+          <h3>Elevación</h3>
+          <TextField
+            label={"Metros a nivel del mar"}
+            id="msnm_google"
+            name="msnm_google"
+            type="number"
+            step={1}
+            onBlur={onBlur}
+            onChange={handleChange}
+            value={values.msnm_google}
+            errorMessage={errors.msnm_google}
+            hasError={Boolean(errors.msnm_google && touched.msnm_google)}
+            required
+            isFormik
+          ></TextField>
+          <TextField
+            label={"Altitud"}
+            id="altitude"
+            name="altitude"
+            type="number"
+            step={1}
+            onChange={handleChange}
+            onBlur={onBlur}
+            value={values.altitude}
+            errorMessage={errors.altitude}
+            hasError={Boolean(errors.altitude && touched.altitude)}
+            required
+            isFormik
+          ></TextField>
+        </div>
+
+        <div className="input-group divider">
+          <h3>Región</h3>
+          <TextField
+            label={"Región UTM"}
+            id="utm_region"
+            name="utm_region"
+            onChange={handleChange}
+            value={values.utm_region}
+            onBlur={onBlur}
+            errorMessage={errors.utm_region}
+            hasError={Boolean(errors.utm_region && touched.utm_region)}
+            maxLength={4}
+            required
+            isFormik
           ></TextField>
           <TextField
             label={"País"}
             id="country"
             name="country"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.country}
             errorMessage={errors.country}
-            hasError={errors.country && touched.country}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
-            }
+            hasError={Boolean(errors.country && touched.country)}
+            maxLength={100}
             isFormik
             required
           ></TextField>
@@ -198,13 +165,12 @@ export default function LocationForm({
             label={"Estado"}
             id="state"
             name="state"
+            onBlur={onBlur}
             onChange={handleChange}
             value={values.state}
             errorMessage={errors.state}
-            hasError={errors.state && touched.state}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
-            }
+            hasError={Boolean(errors.state && touched.state)}
+            maxLength={100}
             isFormik
             required
           ></TextField>
@@ -213,12 +179,11 @@ export default function LocationForm({
             id="municipality"
             name="municipality"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.municipality}
             errorMessage={errors.municipality}
-            hasError={errors.municipality && touched.municipality}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
-            }
+            hasError={Boolean(errors.municipality && touched.municipality)}
+            maxLength={100}
             isFormik
             required
           ></TextField>
@@ -227,55 +192,15 @@ export default function LocationForm({
             id="specific_location"
             name="specific_location"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.specific_location}
             errorMessage={errors.specific_location}
-            hasError={errors.specific_location && touched.specific_location}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
-            }
+            hasError={Boolean(errors.specific_location && touched.location)}
+            maxLength={100}
             isFormik
             required
-          ></TextField>
-          <TextField
-            label={"Metros a nivel del mar"}
-            id="msnm_google"
-            name="msnm_google"
-            onChange={handleChange}
-            value={values.msnm_google}
-            errorMessage={errors.msnm_google}
-            hasError={errors.msnm_google && touched.msnm_google}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas geográficas."
-            }
-            required
-            isFormik
-          ></TextField>
-          <TextField
-            label={"Región UTM"}
-            id="utm_region"
-            name="utm_region"
-            onChange={handleChange}
-            value={values.utm_region}
-            errorMessage={errors.utm_region}
-            hasError={errors.utm_region && touched.utm_region}
-            helperText={
-              "Este campo se llena automáticamente al ingresar las coordenadas cartesianas."
-            }
-            type="number"
-            required
-            isFormik
           ></TextField>
         </div>
-
-        {/* 
-
-
-            <CoordinateChangeListener
-              coordinateX="geographical_coordinates_x"
-              coordinateY="geographical_coordinates_y"
-              onChange={handleCartesianChange}
-            />
-            */}
         <div className="input-group">
           <h3>Instituto</h3>
 
@@ -284,24 +209,26 @@ export default function LocationForm({
             id="institute"
             name="institute"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.institute}
             errorMessage={errors.institute}
-            hasError={errors.institute && touched.institute}
+            hasError={Boolean(errors.institute && touched.institute)}
+            maxLength={150}
             required
             isFormik
-            type="number"
           ></TextField>
           <TextField
             id="institute_code"
             name="institute_code"
             onChange={handleChange}
+            onBlur={onBlur}
             value={values.institute_code}
             errorMessage={errors.institute_code}
-            hasError={errors.institute_code && touched.institute_code}
+            hasError={Boolean(errors.institute_code && touched.institute_code)}
             label={"Código del instituto"}
+            maxLength={100}
             required
             isFormik
-            type="number"
           ></TextField>
         </div>
       </Form>

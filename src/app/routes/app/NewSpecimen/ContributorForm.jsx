@@ -10,10 +10,15 @@ import Modal from "../../../../components/ui/modal/Modal";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 
 export default function ContributorForm({
-  open,
-  onSecondaryClick,
-  onPrimaryClick,
-  onSubmit,
+  children,
+  initialValues,
+  handleChange,
+  errors = [],
+  values,
+  onBlur,
+  touched,
+  setFieldValue,
+  inputWidth = "",
 }) {
   const handleSubmit = async (values, actions) => {
     const newItem = {

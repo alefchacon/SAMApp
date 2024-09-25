@@ -5,7 +5,7 @@ import { useModal } from "../../../components/contexts/ModalContext";
 
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
-import CONTRIBUTORS_URL from "./contributorsURL";
+import { CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL } from "./contributorsURL";
 
 export default function useContributorsAndRoles() {
   const [contributors, setContributors] = useState([]);
@@ -15,87 +15,6 @@ export default function useContributorsAndRoles() {
     const response = await api.get(CONTRIBUTORS_URL);
     setContributors(response.data);
   }
-
-  const addPhotosheet = async (photosheet) => {
-    let formData = new FormData();
-    formData.append("description", photosheet.description);
-    formData.append("sheet", photosheet.sheet);
-
-    const response = await api.post(PHOTOSHEETS_URL, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (response.request.status === 201) {
-      const newPhotosheet = {
-        id: response.data.data.id,
-        description: photosheet.description,
-        sheet: URL.createObjectURL(photosheet.sheet),
-      };
-      setContributors((prev) => [newPhotosheet, ...prev]);
-    }
-  };
-
-  const updatePhotosheet = async (photosheet) => {
-    let formData = new FormData();
-    formData.append("description", photosheet.description);
-    formData.append("sheet", photosheet.sheet);
-
-    const response = await api.put(
-      PHOTOSHEETS_URL.concat(`${photosheet.id}/`),
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    if (response.request.status === 200) {
-      const updatedPhotosheet = {
-        id: photosheet.id,
-        description: photosheet.description,
-        sheet: URL.createObjectURL(photosheet.sheet),
-      };
-      setContributors((prev) =>
-        prev.map((photosheet) =>
-          photosheet.id === updatedPhotosheet.id
-            ? updatedPhotosheet
-            : photosheet
-        )
-      );
-    }
-  };
-
-  const confirmDeletePhotosheet = async (photosheetId = 0) => {
-    showModal(
-      "Eliminar ficha fotográfica",
-      <div>
-        ¿Está seguro de eliminar la ficha fotográfica?
-        <div className="button-row">
-          <Button
-            iconType="delete"
-            className="danger"
-            value={photosheetId}
-            onClick={deletePhotosheet}
-          >
-            Sí, elimínala
-          </Button>
-        </div>
-      </div>
-    );
-  };
-
-  const deletePhotosheet = async (photosheetId = 0) => {
-    closeModal();
-    const response = await api.delete(PHOTOSHEETS_URL.concat(photosheetId));
-    if (response.request.status === 204) {
-      setContributors((prev) =>
-        prev.filter((photosheet) => photosheet.id !== photosheetId)
-      );
-      showSnackbar("La ficha fotográfica se ha eliminado", false, "check");
-    }
-  };
 
   const addContributor = async (newContributor = { name: "", code: "" }) => {
     const body = {
@@ -115,10 +34,30 @@ export default function useContributorsAndRoles() {
     return response;
   };
 
+  const addContributorSpecimen = async (
+    newContributorSpecimen = {
+      specimen: 0,
+      contributor: 0,
+      contributor_role: 0,
+    }
+  ) => {
+    const body = {
+      specimen: newContributorSpecimen.specimen,
+      contributor: newContributorSpecimen.contributor,
+      contributor_role: newContributorSpecimen.contributor_role,
+    };
+    const response = await api.post(
+      CONTRIBUTORS_SPECIMEN_URL.concat("/"),
+      body
+    );
+    return response;
+  };
+
   return [
     contributors,
     getContributors,
     addContributor,
+    addContributorSpecimen,
     /*
     updateContributor,
     roles,

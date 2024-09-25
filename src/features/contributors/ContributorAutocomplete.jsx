@@ -16,6 +16,7 @@ export default function ContributorAutocomplete({
       name: "name",
     },
   ],
+  roleId,
   label = null,
   helperText = null,
   placeholder = null,
@@ -48,8 +49,9 @@ export default function ContributorAutocomplete({
   };
 
   const handleOptionClick = (option) => {
-    //clearFilter();
+    option.contributor_role = roleId;
     setSelectedContributor(option);
+    setFieldValue(name, option);
     setIsOpen(false);
   };
 
@@ -74,6 +76,7 @@ export default function ContributorAutocomplete({
 
   const handleClearSelection = () => {
     setSelectedContributor(null);
+    setFieldValue(name, null);
   };
 
   function CardContributor({
@@ -113,15 +116,13 @@ export default function ContributorAutocomplete({
   const [paddingLeft, setPaddingLeft] = useState(0);
 
   useEffect(() => {
-    // Function to adjust padding based on icon width
     const adjustPadding = () => {
       if (iconRef.current && textFieldRef.current) {
         const iconWidth = iconRef.current.offsetWidth;
-        setPaddingLeft(iconWidth + 15); // Add some extra space between the icon and text
+        setPaddingLeft(iconWidth + 30);
       }
     };
 
-    // Call on component mount and window resize (in case of responsive changes)
     adjustPadding();
     window.addEventListener("resize", adjustPadding);
 
@@ -167,6 +168,7 @@ export default function ContributorAutocomplete({
           <input
             ref={textFieldRef}
             type="text"
+            name={name}
             className="w-100 h-100 input"
             style={{
               flex: 1,
@@ -177,7 +179,6 @@ export default function ContributorAutocomplete({
             disabled={disabled}
             onChange={handleFilterChange}
             onFocus={toggleDropdown}
-            onBlur={onBlur}
           />
 
           <span
@@ -199,7 +200,7 @@ export default function ContributorAutocomplete({
       </div>
 
       <div
-        className={`sam-text-field-error-text`}
+        className={`error-text`}
         htmlFor={`${id}`}
         id={`${id}-error-message`}
       >

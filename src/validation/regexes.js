@@ -6,6 +6,7 @@ export const sexRegex = /^[HhMm]$/;
 export const onlyNamesRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+(?:\.[ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+)*$/
 export const colectorCodeRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+(?:\.[ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*)*$/
 export const decimalRegex = /^\d+(\.\d{1,3})?$/
+export const onlyWordsWithCommas = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ, ]+$/
 
 export const floatRegex =  /^[+-]?(\d+(\.\d*)?|\.\d+)$/u;
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
