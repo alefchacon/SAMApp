@@ -78,7 +78,7 @@ export default function AccessRequests() {
         <br />
         {pendingAccessRequestCount > 0 ? (
           pendingAccessRequests.map((accessRequest, index) => (
-            <Card>
+            <Card className={"p-2rem"}>
               <AccessRequest
                 key={index}
                 accessRequest={accessRequest}

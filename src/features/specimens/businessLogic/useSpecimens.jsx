@@ -17,20 +17,22 @@ export const useSpecimens = (specieId = 0) => {
   useEffect(() => {
     //setSpecimens([]);
 
-    /*
     getSpecimensByRole(specieId, profile?.role).then((response) => {
       setSpecimens(response.data);
     });
-    */
 
     /*
     mockSpecimens().then((response) => {
       setSpecimens(response);
     });
     */
+
+    /*
+    
     mockSpecimens().then((response) => {
       setSpecimens(response);
     });
+    */
   }, [specieId]);
 
   const mockSpecimens = async () => {
@@ -60,6 +62,7 @@ export const useSpecimens = (specieId = 0) => {
       colection_code: newSpecimen.colection_code,
       catalog_id: newSpecimen.catalog_id,
       colection_date: newSpecimen.colection_date,
+      preparation_date: newSpecimen.preparation_date,
       hour: newSpecimen.hour,
       status: newSpecimen.status,
       sex: newSpecimen.sex,
@@ -68,14 +71,16 @@ export const useSpecimens = (specieId = 0) => {
 
       length_total: newSpecimen.length_total,
       length_ear: newSpecimen.length_ear,
-      length_paw: newSpecimen.paw,
-      length_tail: newSpecimen.tail,
+      length_paw: newSpecimen.length_paw,
+      length_tail: newSpecimen.length_tail,
       weight: newSpecimen.weight,
 
       class_age: newSpecimen.class_age,
 
       specie: specieId,
     };
+
+    console.log(body);
 
     const response = await api.post(SPECIMEN_URL.concat("/"), body);
     return response;

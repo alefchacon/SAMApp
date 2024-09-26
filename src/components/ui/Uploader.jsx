@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Papa from "papaparse";
 import Button from "./Button";
-import Chip from "./Chip";
+import Chip from "./ChipInput";
 import FileInfo from "./FileInfo";
 
 import { FILE_TYPES_STRING } from "../../stores/fileTypes";

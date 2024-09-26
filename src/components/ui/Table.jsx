@@ -152,29 +152,7 @@ function TableRow({ rowData, onEdit }) {
         className="tr selectable hoverable2"
         style={{ position: "relative" }}
       >
-        <div
-          className={"show-on-hover align-items-center rounded-20 h-100"}
-          style={{
-            backgroundColor: "red",
-            position: "absolute",
-            width: "100%",
-          }}
-        >
-          <div
-            className="flex-row bg-black-transparent rounded shadow-down"
-            style={{ height: "fit-content", position: "absolute", left: 0 }}
-          >
-            <Button
-              className="icon-only color-white"
-              iconType="edit"
-              onClick={onEdit}
-            />
-            <Button
-              className="icon-only color-white danger"
-              iconType="delete"
-            />
-          </div>
-        </div>
+        <HoverableActions></HoverableActions>
         {rowData.getVisibleCells().map((cell) => (
           <div
             className="td"

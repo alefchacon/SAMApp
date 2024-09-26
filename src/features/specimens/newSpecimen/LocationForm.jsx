@@ -30,7 +30,7 @@ export default function LocationForm({
   return (
     <div>
       <Form>
-        <div className="input-group divider">
+        <div className="input-group">
           <h3>Coordenadas cartesianas</h3>
 
           <TextField
@@ -65,8 +65,22 @@ export default function LocationForm({
             isFormik
             type="number"
           ></TextField>
+          <TextField
+            label={"Región UTM"}
+            id="utm_region"
+            name="utm_region"
+            onChange={handleChange}
+            value={values.utm_region}
+            onBlur={onBlur}
+            errorMessage={errors.utm_region}
+            hasError={Boolean(errors.utm_region && touched.utm_region)}
+            maxLength={4}
+            required
+            isFormik
+          ></TextField>
         </div>
-        <div className="input-group divider">
+        <hr />
+        <div className="input-group">
           <h3>Coordenadas geográficas</h3>
           <TextField
             label={"Coordenada Y (Latitud)"}
@@ -101,7 +115,8 @@ export default function LocationForm({
             type="number"
           ></TextField>
         </div>
-        <div className="input-group divider">
+        <hr />
+        <div className="input-group">
           <h3>Elevación</h3>
           <TextField
             label={"Metros a nivel del mar"}
@@ -132,22 +147,9 @@ export default function LocationForm({
             isFormik
           ></TextField>
         </div>
-
-        <div className="input-group divider">
+        <hr />
+        <div className="input-group">
           <h3>Región</h3>
-          <TextField
-            label={"Región UTM"}
-            id="utm_region"
-            name="utm_region"
-            onChange={handleChange}
-            value={values.utm_region}
-            onBlur={onBlur}
-            errorMessage={errors.utm_region}
-            hasError={Boolean(errors.utm_region && touched.utm_region)}
-            maxLength={4}
-            required
-            isFormik
-          ></TextField>
           <TextField
             label={"País"}
             id="country"
@@ -201,6 +203,7 @@ export default function LocationForm({
             required
           ></TextField>
         </div>
+        <hr />
         <div className="input-group">
           <h3>Instituto</h3>
 

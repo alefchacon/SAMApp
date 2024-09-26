@@ -39,7 +39,7 @@ export default function Taxonomy({
           )}
 
           {clickableRank ? (
-            <Link style={{ fontSize: "0.9rem" }}>
+            <Link style={{ fontSize: "0.9rem", color: "inherit" }}>
               <Highlight text={rank} highlight={filterText}></Highlight>
             </Link>
           ) : (

@@ -4,7 +4,8 @@ const ROUTES = Object.freeze({
   SOLICITAR_ACCESO: "solicitar-acceso",
   BUSCAR: "buscar",
   FICHAS: "/fichas",
-  REGISTRARSE: "/registrarse"
+  REGISTRARSE: "/registrarse",
+  AGREGAR_ESPECIMEN: "/agregar-especimen"
 })
 
 export default ROUTES;

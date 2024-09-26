@@ -10,6 +10,7 @@ export const specimenSchema = yup.object().shape({
   colection_code: yup
     .string()
     .matches(catalogIdSpecimenRegex, messages.id)
+    .max(20)
     .required(messages.required),
   catalog_id: yup
     .string()
@@ -20,6 +21,9 @@ export const specimenSchema = yup.object().shape({
     .date()
     .max(new Date(), messages.maxDatetoday)
     .required(messages.required),
+  preparation_date: yup
+    .date()
+    .max(new Date(), messages.maxDatetoday),
   hour: yup
     .string()
     .matches(hourRegex, messages.hour),
@@ -32,7 +36,8 @@ export const specimenSchema = yup.object().shape({
     .required(messages.required),
   number_embryos: yup
     .number()
-    .min(0),
+    .min(0)
+    .required("Si no tiene embriones, por favor ingrese un 0"),
   class_age: yup
     .string()
     .max(50)

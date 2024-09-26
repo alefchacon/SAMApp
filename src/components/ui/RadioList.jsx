@@ -1,3 +1,5 @@
+import ChipLabel from "./ChipLabel";
+
 export default function RadioList({
   options = [
     { label: "option 1", value: 1 },
@@ -9,6 +11,8 @@ export default function RadioList({
   errorMessage = null,
   hasError = false,
   maxWidth = null,
+  required = false,
+  onBlur,
 }) {
   const errorClass = errorMessage ? "hasError" : "";
 
@@ -17,9 +21,16 @@ export default function RadioList({
       name={name}
       className={`rounded-20 flex-col gap-05rem ${errorClass}`}
       onChange={onChange}
+      onBlur={onBlur}
       style={{ maxWidth: maxWidth ?? "" }}
     >
-      <legend className="input-label">{label}</legend>
+      <legend
+        className="input-label flex-row gap-05rem"
+        style={{ paddingBottom: "0.5rem" }}
+      >
+        {label}
+        {required && <ChipLabel iconType={"check"}>Requerido</ChipLabel>}
+      </legend>
 
       {options.map((option, index) => (
         <div className="option">

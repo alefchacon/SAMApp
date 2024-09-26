@@ -21,14 +21,9 @@ import { useSpecimens } from "../../../../features/specimens/businessLogic/useSp
 import { useLocations } from "../../../../features/specimens/businessLogic/useLocations";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
-import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
 
-export default function NewSpecimen({
-  selectedSpecie = {},
-  specie_id,
-  onResetScroll,
-}) {
+export default function NewSpecimen({ specie_id, onResetScroll }) {
   const [, , addSpecimen] = useSpecimens();
   const [, , addLocation] = useLocations();
   const [, , , addContributorSpecimen] = useContributorsAndRoles();
@@ -36,7 +31,7 @@ export default function NewSpecimen({
   const [stepId, setStepId] = useState("datos-generales");
 
   const handleSubmit = async (values) => {
-    const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
+    const responseSpecimen = await addSpecimen(values, 195);
 
     if (!responseSpecimen.status === 201) {
       return;
@@ -73,12 +68,7 @@ export default function NewSpecimen({
   };
 
   return (
-    <div className="form flex-col w-100">
-      <HeaderPage title="Nuevo espécimen">
-        <h2>{selectedSpecie.epithet}</h2>
-      </HeaderPage>
-      <br />
-      <br />
+    <div className="flex-col w-100">
       <Formik
         validationSchema={specimenSchema}
         initialValues={{
@@ -134,63 +124,58 @@ export default function NewSpecimen({
           validateForm,
           submitForm,
         }) => (
-          <div className="flex-col page-padding flex-grow-1" autoComplete="off">
-            <Card>
-              <Stepper selectedStepId={stepId} onResetScroll={onResetScroll}>
-                <div label={"Datos generales"} id={"datos-generales"}>
-                  <GeneralDataForm
-                    handleChange={handleChange}
-                    touched={touched}
-                    values={values}
-                    errors={errors}
-                    onBlur={handleBlur}
-                    setFieldValue={setFieldValue}
-                  >
-                    <Button
-                      value={"medidas-morfometricas"}
-                      iconType="chevron_right"
-                      className="secondary"
-                      onClick={validateForm}
-                    >
-                      Continuar con las medidas morfométricas
-                    </Button>
-                  </GeneralDataForm>
-                </div>
-                <div
-                  label={"Medidas morfométricas"}
-                  id={"medidas-morfometricas"}
+          <div className="flex-col flex-grow-1" autoComplete="off">
+            <Stepper selectedStepId={stepId} onResetScroll={onResetScroll}>
+              <div label={"Datos generales"} id={"datos-generales"}>
+                <GeneralDataForm
+                  handleChange={handleChange}
+                  touched={touched}
+                  values={values}
+                  errors={errors}
+                  onBlur={handleBlur}
+                  setFieldValue={setFieldValue}
                 >
-                  <MorphometricMeasuresForm
-                    handleChange={handleChange}
-                    touched={touched}
-                    values={values}
-                    errors={errors}
-                    setFieldValue={setFieldValue}
-                  ></MorphometricMeasuresForm>
-                </div>
-                <div label={"Ubicación"} id={"ubicacion"}>
-                  <LocationForm
-                    handleChange={handleChange}
-                    touched={touched}
-                    values={values}
-                    errors={errors}
-                    setFieldValue={setFieldValue}
-                    onBlur={handleBlur}
-                  ></LocationForm>
-                </div>
-                <div label={"Colaboradores"} id={"colaboradores"}>
-                  <ContributorsForm
-                    handleChange={handleChange}
-                    touched={touched}
-                    values={values}
-                    errors={errors}
-                    setFieldValue={setFieldValue}
-                    onBlur={handleBlur}
-                    onLoad={() => console.log("loading contributors!!!!")}
-                  ></ContributorsForm>
-                </div>
-              </Stepper>
-            </Card>
+                  <Button
+                    value={"medidas-morfometricas"}
+                    iconType="chevron_right"
+                    className="secondary"
+                    onClick={validateForm}
+                  >
+                    Continuar con las medidas morfométricas
+                  </Button>
+                </GeneralDataForm>
+              </div>
+              <div label={"Medidas morfométricas"} id={"medidas-morfometricas"}>
+                <MorphometricMeasuresForm
+                  handleChange={handleChange}
+                  touched={touched}
+                  values={values}
+                  errors={errors}
+                  setFieldValue={setFieldValue}
+                ></MorphometricMeasuresForm>
+              </div>
+              <div label={"Ubicación"} id={"ubicacion"}>
+                <LocationForm
+                  handleChange={handleChange}
+                  touched={touched}
+                  values={values}
+                  errors={errors}
+                  setFieldValue={setFieldValue}
+                  onBlur={handleBlur}
+                ></LocationForm>
+              </div>
+              <div label={"Colaboradores"} id={"colaboradores"}>
+                <ContributorsForm
+                  handleChange={handleChange}
+                  touched={touched}
+                  values={values}
+                  errors={errors}
+                  setFieldValue={setFieldValue}
+                  onBlur={handleBlur}
+                  onLoad={() => console.log("loading contributors!!!!")}
+                ></ContributorsForm>
+              </div>
+            </Stepper>
             <button
               onClick={() => {
                 submitForm();
@@ -203,7 +188,6 @@ export default function NewSpecimen({
           </div>
         )}
       </Formik>
-      <Footer></Footer>
     </div>
   );
 }

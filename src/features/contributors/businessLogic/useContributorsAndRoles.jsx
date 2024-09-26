@@ -6,6 +6,7 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
 import { CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL } from "./contributorsURL";
+import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 
 export default function useContributorsAndRoles() {
   const [contributors, setContributors] = useState([]);
@@ -38,7 +39,7 @@ export default function useContributorsAndRoles() {
     newContributorSpecimen = {
       specimen: 0,
       contributor: 0,
-      contributor_role: 0,
+      contributor_role: CONTRIBUTOR_ROLES.COLECTOR,
     }
   ) => {
     const body = {
