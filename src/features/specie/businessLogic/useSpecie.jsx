@@ -46,5 +46,7 @@ export const useSpecie = (specieId = 0) => {
   };
   const updateSpecie = async (newSpecie) => {};
 
-  return [species, getSpecies, addSpecie, updateSpecie];
+  const selectedSpecieDefault = species[0];
+
+  return [species, getSpecies, addSpecie, updateSpecie, selectedSpecieDefault];
 };

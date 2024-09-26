@@ -25,6 +25,7 @@ export default function SpecieList({
   onSelectionChange,
   onAdd,
   onEdit,
+  onAddSpecimen,
   onFold = null,
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -114,14 +115,19 @@ export default function SpecieList({
               {filteredItems.map((specie, index) => (
                 <>
                   <li
-                    className={`selectable p-1rem ${
+                    className={`selectable hoverable2  p-1rem ${
                       selectedIndex === specie.id ? "selected" : ""
                     }`}
                     style={{
                       borderRadius: "0 100px 100px 0",
+                      position: "relative",
                     }}
                     onClick={() => handleSelection(specie.id)}
                   >
+                    <HoverableActions
+                      action1={() => onEdit(specie)}
+                      action2={onAddSpecimen}
+                    ></HoverableActions>
                     <p style={{ fontWeight: 500 }}>
                       <i>{specie.epithet}</i>
                     </p>
@@ -134,13 +140,6 @@ export default function SpecieList({
                       filterText={filterText}
                     ></Taxonomy>
                   </li>
-
-                  {role === ROLE_TYPES.TECHNICAL_PERSON && (
-                    <HoverableActions
-                      secondaryAction={() => onEdit(specie)}
-                      primaryAction={() => showModal("asdf")}
-                    ></HoverableActions>
-                  )}
                 </>
               ))}
             </ul>

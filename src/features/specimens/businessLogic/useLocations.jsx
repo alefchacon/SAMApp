@@ -12,10 +12,10 @@ export const useLocations = (specieId = 0) => {
   const getLocations = async () => {};
   const addLocation = async (location = {}, specimenId = 0) => {
     const body = {
-      coordinates_cartesian_plane_x: location.coordinates_cartesian_plane_x,
-      coordinates_cartesian_plane_y: location.coordinates_cartesian_plane_y,
-      geographical_coordinates_x: location.geographical_coordinates_x,
-      geographical_coordinates_y: location.geographical_coordinates_y,
+      coordinates_cartesian_plane_x: location.coordinates_cartesian_plane_x, //
+      coordinates_cartesian_plane_y: location.coordinates_cartesian_plane_y, //
+      geographical_coordinates_x: location.geographical_coordinates_x, //
+      geographical_coordinates_y: location.geographical_coordinates_y, //
       utm_region: location.utm_region,
       msnm_google: location.msnm_google,
       altitude: location.altitude,
@@ -25,10 +25,10 @@ export const useLocations = (specieId = 0) => {
       municipality: location.municipality,
       state: location.state,
       country: location.country,
-      specie: specimenId,
+      specimen: specimenId,
     };
 
-    const response = await api.post(LOCATIONS_URL, body);
+    const response = await api.post(LOCATIONS_URL.concat("/"), body);
     return response;
   };
 

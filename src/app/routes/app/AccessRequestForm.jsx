@@ -99,7 +99,7 @@ export default function AccessRequestForm() {
           >
             <br />
             <br />
-            <Card className={"flex-col gap-2rem"}>
+            <Card className={"flex-col gap-2rem p-2rem"}>
               <div className="form-section flex-col gap-2rem">
                 <h2>Sobre su investigación</h2>
                 <TextField

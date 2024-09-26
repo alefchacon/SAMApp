@@ -74,7 +74,7 @@ export default function NewSpecie({
 
   return (
     <div className="fullwidth">
-      <div className="p-2rem">
+      <div className="">
         {isReady && (
           <Formik
             validationSchema={specieSchema}
@@ -93,7 +93,7 @@ export default function NewSpecie({
               handleChange,
               handleBlur,
             }) => (
-              <Form action="" autoComplete="off">
+              <Form className="input-group" action="" autoComplete="off">
                 <Autocomplete
                   required
                   id="orden"

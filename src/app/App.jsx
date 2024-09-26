@@ -47,6 +47,7 @@ function App() {
   useAxiosInterceptors();
   const location = useLocation();
   const [species, setSpecies] = useState([]);
+  const [selectedSpecie, setSelectedSpecie] = useState();
   const { profile } = useStatus();
   const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
@@ -64,16 +65,14 @@ function App() {
   }, []);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
-    //setSelectedSpecie(newSelectedSpecie);
+    setSelectedSpecie(newSelectedSpecie);
     console.log(newSelectedSpecie);
   };
-
-  //console.log("app");
 
   const mainDivRef = useRef(null);
   const resetScroll = () => {
     if (mainDivRef.current) {
-      mainDivRef.current.scrollTop = 0; // Reset scroll position to the top
+      mainDivRef.current.scrollTop = 0;
     }
   };
 
@@ -105,9 +104,12 @@ function App() {
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
 
           <Route
-            path="/Test"
+            path="coleccion/agregar-especimen/:specieId?"
             element={
-              <NewSpecimen onResetScroll={resetScroll}></NewSpecimen>
+              <NewSpecimen
+                selectedSpecie={selectedSpecie}
+                onResetScroll={resetScroll}
+              ></NewSpecimen>
               /*
               <div className="p-1rem gap-1rem w-100 ">
               <UploaderImage></UploaderImage>
@@ -125,10 +127,10 @@ function App() {
           ></Route>
 
           <Route
-            path={`/${ROUTES.COLECCION}?:name?/:catalog_id?`}
+            path={`/${ROUTES.COLECCION}/:epithet?`}
             element={
               <SpecieDashboard
-                onSelectionChange={handleSelectedSpecieChange}
+                onSpecieSelection={handleSelectedSpecieChange}
                 role={ROLE}
               />
             }

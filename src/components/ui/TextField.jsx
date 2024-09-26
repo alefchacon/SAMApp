@@ -4,6 +4,7 @@ import { Field } from "formik";
 
 // COMPONENTS
 import Button from "./Button";
+import ChipLabel from "./ChipLabel";
 
 export default function TextField({
   className = "",
@@ -33,6 +34,7 @@ export default function TextField({
   max = null,
   min = null,
   onBlur = null,
+  defaultValue,
 }) {
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -50,11 +52,11 @@ export default function TextField({
       className={`text-field ${getErrorClassName()} w-100 justify-content-center`}
     >
       <div className="sam-text-field-info">
-        <div className="form-label flex-row gap-05rem">
-          <label htmlFor={`${id}`} className="input-label">
+        <div className="form-label" style={{ paddingBottom: "0.5rem" }}>
+          <label htmlFor={`${id}`} className="input-label flex-row gap-1rem">
             {label}
+            {required && <ChipLabel iconType={"check"}>Requerido</ChipLabel>}
           </label>
-          {required && <p className="required">(requerido)</p>}
         </div>
 
         {helperText && (
@@ -131,6 +133,7 @@ export default function TextField({
               onFocus={onFocus}
               onBlur={onBlur}
               onChange={onChange}
+              defaultValue={defaultValue}
               step={step}
             ></Field>
           </>

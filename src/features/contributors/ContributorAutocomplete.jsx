@@ -3,7 +3,8 @@ import useTextFilter from "../../hooks/useTextFilter";
 import Highlight from "../../components/ui/Highlight";
 import TextField from "../../components/ui/TextField";
 import Button from "../../components/ui/Button";
-import Chip from "../../components/ui/Chip";
+import Chip from "../../components/ui/ChipInput";
+import ChipLabel from "../../components/ui/ChipLabel";
 
 export default function ContributorAutocomplete({
   contributors = [
@@ -136,12 +137,14 @@ export default function ContributorAutocomplete({
       <div className={`${getErrorClassName()}`}>
         <div className="flex-col">
           {label && (
-            <div className="flex-row gap-05rem">
-              <label htmlFor={`${id}`} className="input-label">
-                {label}
-              </label>
-              {required && <p className="required">(requerido)</p>}
-            </div>
+            <label htmlFor={`${id}`} className="input-label flex-row gap-1rem">
+              {label}
+              {required && (
+                <p className="required">
+                  <ChipLabel iconType={"check"}>Requerido</ChipLabel>
+                </p>
+              )}
+            </label>
           )}
           <div
             htmlFor={`${id}`}

@@ -27,7 +27,7 @@ export default function Modal({
             ></Button>
           )}
         </div>
-        {open && <div className="modal-body p-2rem">{children}</div>}
+        {open && <div className="modal-body">{children}</div>}
       </div>
     </div>
   );

@@ -1,18 +1,23 @@
 import Button from "./Button";
 
-export default function HoverableActions({ primaryAction, secondaryAction }) {
+export default function HoverableActions({ children, action1, action2 }) {
   return (
-    <div className="hoverable-actions ">
+    <div
+      className="show-on-hover bg-black-transparent rounded shadow-down"
+      style={{
+        position: "absolute",
+        right: 20,
+      }}
+    >
       <Button
-        className="secondary only-icon"
         iconType="edit"
-        onClick={secondaryAction}
+        className="icon-only color-white"
+        onClick={action1}
       ></Button>
-
       <Button
-        onClick={primaryAction}
-        className="only-icon danger"
-        iconType="delete"
+        onClick={action2}
+        iconType="add"
+        className="icon-only color-white"
       ></Button>
     </div>
   );
