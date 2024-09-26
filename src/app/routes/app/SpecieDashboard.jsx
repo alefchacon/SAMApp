@@ -247,22 +247,6 @@ export default function SpecieDashboard({
         onFold={setSpecieListFolded}
       ></SpecieList>
       <div className={`specie-view`}>
-        <ChipLabel
-          iconType={"female"}
-          color="var(--pink)"
-          backgroundColor="var(--light-pink)"
-          width="100px"
-        >
-          Hembra
-        </ChipLabel>
-        <ChipLabel
-          width="100px"
-          iconType={"male"}
-          color="var(--uv-blue)"
-          backgroundColor="var(--light-blue)"
-        >
-          Macho
-        </ChipLabel>
         <SpecieView />
       </div>
     </>

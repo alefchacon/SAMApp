@@ -66,7 +66,6 @@ function App() {
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     setSelectedSpecie(newSelectedSpecie);
-    console.log(newSelectedSpecie);
   };
 
   const mainDivRef = useRef(null);

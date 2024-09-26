@@ -13,6 +13,7 @@ import Card from "./Card";
 import Button from "./Button";
 import HoverableActions from "./HoverableActions";
 import TextField from "./TextField";
+import ChipLabel from "./ChipLabel";
 
 // ICONS
 import DeleteIcon from "../icons/DeleteIcon";
@@ -22,6 +23,28 @@ import DeleteIcon from "../icons/DeleteIcon";
 import "../../app/App.css";
 
 const columnHelper = createColumnHelper();
+
+const ChipFemale = (
+  <ChipLabel
+    iconType={"female"}
+    color="var(--pink)"
+    backgroundColor="var(--light-pink)"
+    width="100px"
+  >
+    Hembra
+  </ChipLabel>
+);
+
+const ChipMale = (
+  <ChipLabel
+    width="100px"
+    iconType={"male"}
+    color="var(--uv-blue)"
+    backgroundColor="var(--light-blue)"
+  >
+    Macho
+  </ChipLabel>
+);
 
 const defaultColumns = [
   columnHelper.accessor("id", {
@@ -36,7 +59,7 @@ const defaultColumns = [
   }),
   columnHelper.accessor("status", {
     header: () => "Estado",
-    cell: (info) => (info.getValue() ? "A" : "B"),
+    cell: (info) => (info.getValue() ? "Publicado" : "Dañado"),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("length_total", {
@@ -65,8 +88,8 @@ const defaultColumns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("sex", {
-    header: () => "SEXO!!!",
-    cell: (info) => info.getValue(),
+    header: () => "Sexo",
+    cell: (info) => (info.getValue() === "H" ? ChipFemale : ChipMale),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("weigth", {
@@ -75,12 +98,7 @@ const defaultColumns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("number_embryos", {
-    header: () => "Cantidad de embrios",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("colection_code", {
-    header: () => "Código de recolección",
+    header: () => "Cantidad de embriones",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
@@ -89,18 +107,33 @@ const defaultColumns = [
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("preparation_date", {
-    header: () => "Fecha de preparación",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
   columnHelper.accessor("hour", {
-    header: () => "Hora",
+    header: () => "Hora de colecta",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("comment", {
     header: () => "Comentario",
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("colector", {
+    header: () => "Colector",
+    cell: (info) => info.getValue().contributor.code,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("colection_code", {
+    header: () => "Número de colecta",
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("preparator", {
+    header: () => "Preparador",
+    cell: (info) => info.getValue().contributor.code,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("preparation_date", {
+    header: () => "Fecha de preparación",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
@@ -184,11 +217,12 @@ export default function Table({ data, onEdit }) {
     pageSize: 10,
   });
 
+  console.log(data);
+
   const filteredColumns = columns.filter((col) =>
     data.some((row) => row[col.accessorKey] !== undefined)
   );
 
-  console.log(columns);
   const handlePageSizeChange = (e) => {
     setPagination({
       pageIndex: pagination.pageIndex,
