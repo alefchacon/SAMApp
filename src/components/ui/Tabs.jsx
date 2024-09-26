@@ -6,8 +6,6 @@ export default function Tabs({
   buttons = null,
   center = false,
 }) {
-  console.log(children);
-
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleSelectedTabChange = (tabIndex, tabKey, tabLabel) => {

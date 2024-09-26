@@ -4,7 +4,7 @@ export default function Footer() {
       className="color-white bottom-0"
       style={{ marginTop: "100px", position: "relative" }}
     >
-      <div className="p-2rem">
+      <div className="p-05rem">
         © 2024 Universidad Veracruzana. Todos los derechos reservados.
       </div>
     </footer>

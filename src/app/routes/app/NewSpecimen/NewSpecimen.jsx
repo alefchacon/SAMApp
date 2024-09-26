@@ -60,7 +60,7 @@ export default function NewSpecimen({
     }
 
     const preparatorSpecimen = {
-      contributor: values.colector.id,
+      contributor: values.preparator.id,
       specimen: newSpecimenId,
       contributor_role: CONTRIBUTOR_ROLES.PREPARADOR,
     };

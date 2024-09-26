@@ -113,8 +113,8 @@ export default function SpecieList({
           {species.length > 0 ? (
             <ul role="list" className="specie-list-items">
               {filteredItems.map((specie, index) => (
-                <>
-                  <li
+                <li key={index}>
+                  <div
                     className={`selectable hoverable2  p-1rem ${
                       selectedIndex === specie.id ? "selected" : ""
                     }`}
@@ -139,8 +139,8 @@ export default function SpecieList({
                       showRankName={false}
                       filterText={filterText}
                     ></Taxonomy>
-                  </li>
-                </>
+                  </div>
+                </li>
               ))}
             </ul>
           ) : (

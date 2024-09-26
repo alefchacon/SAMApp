@@ -9,7 +9,6 @@ export default function HeaderPage({
   padding = true,
 }) {
   const location = useLocation();
-  console.log(location.pathname.split("/"));
 
   return (
     <div
@@ -23,7 +22,11 @@ export default function HeaderPage({
           {location.pathname.split("/").map(
             (crumb, index) =>
               crumb && (
-                <div id={`crumb-${index}`} className="crumb flex-row gap-05rem">
+                <div
+                  key={index}
+                  id={`crumb-${index}`}
+                  className="crumb flex-row gap-05rem"
+                >
                   <Link
                     className="link"
                     style={{ opacity: 0.8, color: "inherit" }}

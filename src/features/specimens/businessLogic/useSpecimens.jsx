@@ -9,30 +9,16 @@ import {
 } from "./specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { mockGetSpecimens, mockGetSpecimensAcademic } from "./GetSpecimens";
+import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 
 export const useSpecimens = (specieId = 0) => {
   const [specimens, setSpecimens] = useState([]);
   const { profile } = useStatus();
 
   useEffect(() => {
-    //setSpecimens([]);
-
     getSpecimensByRole(specieId, profile?.role).then((response) => {
       setSpecimens(response.data);
     });
-
-    /*
-    mockSpecimens().then((response) => {
-      setSpecimens(response);
-    });
-    */
-
-    /*
-    
-    mockSpecimens().then((response) => {
-      setSpecimens(response);
-    });
-    */
   }, [specieId]);
 
   const mockSpecimens = async () => {
@@ -94,15 +80,26 @@ async function getSpecimensByRole(specieId = 0, role = ROLE_TYPES.VISITOR) {
     throw new Error("Debe iniciar sesión");
   }
 
-  let url = SPECIMEN_LIST_VISITOR_URL(specieId);
+  let response = null;
 
-  if (role === ROLE_TYPES.ACADEMIC) {
-    url = SPECIMEN_LIST_ACADEMIC_URL(specieId);
-  }
   if (role === ROLE_TYPES.TECHNICAL_PERSON) {
-    url = SPECIMEN_LIST_URL(specieId);
+    response = await api.get(SPECIMEN_LIST_URL(specieId));
+    response.data = response.data.map((specimen) => {
+      specimen.colector = specimen.contributor_specimens.filter(
+        (contributor) =>
+          contributor.contributor_role === CONTRIBUTOR_ROLES.COLECTOR
+      )[0];
+      specimen.preparator = specimen.contributor_specimens.filter(
+        (contributor) =>
+          contributor.contributor_role === CONTRIBUTOR_ROLES.PREPARADOR
+      )[0];
+      return specimen;
+    });
+  } else if (role === ROLE_TYPES.ACADEMIC) {
+    response = await api.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
+  } else {
+    response = await api.get(SPECIMEN_LIST_VISITOR_URL(specieId));
   }
 
-  const response = await api.get(url);
   return response;
 }

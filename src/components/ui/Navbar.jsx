@@ -61,6 +61,7 @@ export default function Navbar({ accessRequestCount = 0 }) {
         >
           {NAV_ITEMS.map((navItem, index) => (
             <Link
+              key={index}
               to={navItem.route}
               className={`selectable nav-link ${
                 navItem.route === pathname ? "selected" : ""
