@@ -56,7 +56,7 @@ export default function SpecieDashboard({
   if (selectedSpecie) {
   }
 
-  const [specimens] = useSpecimens(selectedSpecieId);
+  const { specimens, downloadSpecimens } = useSpecimens(selectedSpecie);
   const [specieListFolded, setSpecieListFolded] = useState(false);
 
   const { showModal } = useModal();
@@ -89,7 +89,11 @@ export default function SpecieDashboard({
           Agregar espécimen
         </Button>
 
-        <Button className="secondary-white" iconType="download">
+        <Button
+          className="secondary-white"
+          iconType="download"
+          onClick={downloadSpecimens}
+        >
           Descargar especímenes
         </Button>
       </div>
