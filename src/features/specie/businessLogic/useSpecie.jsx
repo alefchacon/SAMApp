@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import { api, apiWrapper } from "../../../dataAccess/apiClient";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import { SPECIE_URL } from "./specieURL";
+import { SPECIE_IMPORT_URL, SPECIE_URL } from "./specieURL";
 export const useSpecie = (specieId = 0) => {
   const [species, setSpecies] = useState([]);
   const { profile } = useStatus();
@@ -46,7 +46,18 @@ export const useSpecie = (specieId = 0) => {
   };
   const updateSpecie = async (newSpecie) => {};
 
+  const uploadColection = async (species) => {
+    api.post(SPECIE_IMPORT_URL, species);
+  };
+
   const selectedSpecieDefault = species[0];
 
-  return [species, getSpecies, addSpecie, updateSpecie, selectedSpecieDefault];
+  return {
+    species,
+    getSpecies,
+    addSpecie,
+    updateSpecie,
+    selectedSpecieDefault,
+    uploadColection,
+  };
 };

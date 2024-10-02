@@ -82,7 +82,7 @@ export const useSpecimens = (specie) => {
   const flattenObject = (nestedObject, parentKey = "", result = {}) => {
     for (let key in nestedObject) {
       if (nestedObject.hasOwnProperty(key)) {
-        const newKey = parentKey ? `${parentKey}_${key}` : key;
+        const newKey = parentKey ? `${key}` : key;
 
         if (
           typeof nestedObject[key] === "object" &&
@@ -105,15 +105,7 @@ export const useSpecimens = (specie) => {
     csvRows.push(keys.join(","));
 
     specimens.forEach((object) => {
-      const values = keys.map((key) => {
-        const value = flattenObject(object)[key];
-
-        if (typeof value === "object" && value !== null) {
-          handleNestedObject(csvRows, value);
-        } else {
-          return value;
-        }
-      });
+      const values = keys.map((key) => flattenObject(object)[key]);
       csvRows.push(values.join(","));
     });
 

@@ -24,8 +24,19 @@ export function SnackbarProvider({ children }) {
     content = "This is a snackbar.",
     isError = false,
     iconType = "check",
-    duration = 3000
+    duration = 10000
   ) => {
+    if (typeof content === "object" && content !== null) {
+      content = (
+        <div>
+          {Object.entries(content).map(([key, value]) => (
+            <p>
+              <b>{key}:</b> {value}
+            </p>
+          ))}
+        </div>
+      );
+    }
     setSnackbarContent(content);
     setIsError(isError);
     setOpen(true);

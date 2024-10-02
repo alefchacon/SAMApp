@@ -64,17 +64,31 @@ export const useAxiosInterceptors = () => {
       return;
     }
 
-    showSnackbar(error.response?.data?.detail, true);
+    showSnackbar(getErrorContent(error), true);
 
     const status = error.response?.status;
+    if (status === 401) {
+      handleUnauthorized();
+      return;
+    }
+  }
+
+  function getErrorContent(error) {
+    if (error.response?.data?.detail) {
+      return error.response?.data?.detail;
+    }
+    if (error.response?.data?.message) {
+      return error.response?.data?.message;
+    }
+  }
+
+  function handleUnauthorized() {
     const canRefresh = Boolean(
       localStorage.getItem(CREDENTIALS_KEYS.TOKEN_REFRESH)
     );
-    if (status === 401 && canRefresh) {
-      console.log("aquí refrescaría");
-      showModal("La sesión ha expirado", <RefreshForm />, false);
-    } else {
+    if (!canRefresh) {
       logOutFront();
     }
+    showModal("La sesión ha expirado", <RefreshForm />, false);
   }
 };

@@ -19,6 +19,7 @@ export default function ContributorForm({
   touched,
   setFieldValue,
   inputWidth = "",
+  onSubmit,
 }) {
   const handleSubmit = async (values, actions) => {
     const newItem = {

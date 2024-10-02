@@ -15,7 +15,7 @@ import { snackbarTypes } from "../contexts/snackbarTypes";
 export default function Snackbar({
   open = false,
   onClose,
-  duration = 10000,
+  duration = 100000,
   children,
   isError = false,
   iconType = "add",
@@ -41,7 +41,7 @@ export default function Snackbar({
   return (
     <div
       className={`snackbar box-shadow ${isError && "error"} ${
-        isOpen ? "visible" : "invisible"
+        isOpen ? "visible2" : "invisible"
       }`}
     >
       <div className="flex-row w-100">

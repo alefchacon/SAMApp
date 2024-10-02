@@ -48,7 +48,7 @@ export default function Autocomplete({
   };
 
   const filteredItems = items.filter((item) =>
-    item.toLowerCase().includes(filterText.toLowerCase())
+    item?.toLowerCase().includes(filterText.toLowerCase())
   );
 
   useEffect(() => {

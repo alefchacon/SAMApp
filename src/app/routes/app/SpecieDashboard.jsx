@@ -40,8 +40,14 @@ export default function SpecieDashboard({
   role = ROLE_TYPES.VISITOR,
   onSpecieSelection,
 }) {
-  const [species, getSpecies, addSpecie, updateSpecie, selectedSpecieDefault] =
-    useSpecie();
+  const {
+    species,
+    getSpecies,
+    addSpecie,
+    updateSpecie,
+    uploadColection,
+    selectedSpecieDefault,
+  } = useSpecie();
   const [selectedSpecieId, setSelectedSpecieId] = useState(
     selectedSpecieDefault?.id ?? 0
   );
@@ -65,14 +71,8 @@ export default function SpecieDashboard({
     getSpecies();
   }, []);
 
-  const handleMultiAddSpecie = (species = []) => {
-    console.log(species[0]);
-    for (let i = 0; i < species[0].length; i++) {
-      species[0][
-        i
-      ].scientific_name = `${species[0][i].gender} ${species[0][i].epithet}`;
-      addSpecie(species[0][i]);
-    }
+  const handleUploadColection = async (species = []) => {
+    const response = await uploadColection(species);
   };
 
   const handleShowAddSpecimen = () => {
@@ -106,17 +106,13 @@ export default function SpecieDashboard({
         <div label="Una especie">
           <NewSpecie onSubmit={addSpecie} />
         </div>
-        <div
-          label="Múltiples"
-          className="flex-row justify-content-center align-items-center"
-        >
-          <br />
+        <div label="Múltiples" className="flex-col">
           <Uploader
             accept={FILE_TYPES_STRING.CSV}
             buttonLabel="Agregar especies"
             displayExtension=".CSV"
             multiple
-            onUpload={(species) => handleMultiAddSpecie(species)}
+            onUpload={handleUploadColection}
           ></Uploader>
         </div>
       </Tabs>
