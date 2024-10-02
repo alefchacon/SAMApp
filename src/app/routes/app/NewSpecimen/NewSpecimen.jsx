@@ -29,7 +29,7 @@ export default function NewSpecimen({
   specie_id,
   onResetScroll,
 }) {
-  const [, , addSpecimen] = useSpecimens();
+  const { addSpecimen } = useSpecimens();
   const [, , addLocation] = useLocations();
   const [, , , addContributorSpecimen] = useContributorsAndRoles();
 
@@ -93,6 +93,7 @@ export default function NewSpecimen({
           sex: "",
           number_embryos: 0,
           comment: "",
+          class_age: "",
 
           //medidas-morfometricas
           length_total: "",

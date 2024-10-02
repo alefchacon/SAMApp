@@ -114,12 +114,12 @@ const defaultColumns = [
   }),
   columnHelper.accessor("colector", {
     header: () => "Colector",
-    cell: (info) => `${info.getValue().code}`,
+    cell: (info) => `${info.getValue()?.code}`,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("colector", {
     header: () => "Colector (nombre)",
-    cell: (info) => `${info.getValue().name}`,
+    cell: (info) => `${info.getValue()?.name}`,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("colection_code", {
@@ -129,12 +129,12 @@ const defaultColumns = [
   }),
   columnHelper.accessor("preparator", {
     header: () => "Preparador",
-    cell: (info) => info.getValue().code,
+    cell: (info) => info.getValue()?.code,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("preparator", {
     header: () => "Preparador (nombre)",
-    cell: (info) => info.getValue().name,
+    cell: (info) => info.getValue()?.name,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("preparation_date", {
@@ -144,62 +144,62 @@ const defaultColumns = [
   }),
   columnHelper.accessor("location", {
     header: () => "País",
-    cell: (info) => info.getValue().country,
+    cell: (info) => info.getValue()?.country,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Estado",
-    cell: (info) => info.getValue().state,
+    cell: (info) => info.getValue()?.state,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Municipio",
-    cell: (info) => info.getValue().municipality,
+    cell: (info) => info.getValue()?.municipality,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Localidad específica",
-    cell: (info) => info.getValue().specific_location,
+    cell: (info) => info.getValue()?.specific_location,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Latitud",
-    cell: (info) => info.getValue().geographical_coordinates_y,
+    cell: (info) => info.getValue()?.geographical_coordinates_y,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Longitud",
-    cell: (info) => info.getValue().geographical_coordinates_x,
+    cell: (info) => info.getValue()?.geographical_coordinates_x,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Coordenada cartesiana Y",
-    cell: (info) => info.getValue().coordinates_cartesian_plane_y,
+    cell: (info) => info.getValue()?.coordinates_cartesian_plane_y,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Coordenada cartesiana Y",
-    cell: (info) => info.getValue().coordinates_cartesian_plane_x,
+    cell: (info) => info.getValue()?.coordinates_cartesian_plane_x,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Región UTM",
-    cell: (info) => info.getValue().utm_region,
+    cell: (info) => info.getValue()?.utm_region,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Metros sobre el nivel del mar",
-    cell: (info) => info.getValue().msnm_google,
+    cell: (info) => info.getValue()?.msnm_google,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "ID del instituto",
-    cell: (info) => info.getValue().institute_code,
+    cell: (info) => info.getValue()?.institute_code,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     header: () => "Instituto",
-    cell: (info) => info.getValue().institute,
+    cell: (info) => info.getValue()?.institute,
     footer: (info) => info.column.id,
   }),
 

@@ -18,26 +18,6 @@ export default function HeaderPage({
       style={{ backgroundColor: "red" }}
     >
       <div className={`flex-col`} style={{ padding: "1rem 0 0 0" }}>
-        <div id="crumbs" className="flex-row">
-          {location.pathname.split("/").map(
-            (crumb, index) =>
-              crumb && (
-                <div
-                  key={index}
-                  id={`crumb-${index}`}
-                  className="crumb flex-row gap-05rem"
-                >
-                  <Link
-                    className="link"
-                    style={{ opacity: 0.8, color: "inherit" }}
-                  >
-                    {crumb}
-                  </Link>
-                  /
-                </div>
-              )
-          )}
-        </div>
         <h1>{title}</h1>
         {children}
       </div>
