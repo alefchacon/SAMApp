@@ -61,26 +61,15 @@ export default function Uploader({
         return;
       }
     }
+    console.log(newFiles[0]);
 
     setFiles((prev) => [...prev, ...newFiles]);
-    await parseByType(newFiles);
-    setIsParsing(false);
-  };
-
-  const parseByType = async (fileArray = []) => {
-    try {
-      switch (accept) {
-        case FILE_TYPES_STRING.CSV:
-          for (let file of fileArray) {
-            parseCSV(file);
-          }
-          break;
-        default:
-          setParsedFiles(fileArray);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      parseCSV(event.target.result);
+      setIsParsing(false);
+    };
+    reader.readAsText(newFiles[0], "UTF-8");
   };
 
   const equals = (specieA, specieB) => {
@@ -89,6 +78,7 @@ export default function Uploader({
 
   const handleParsedFiles = (result) => {
     const colectionCsv = result.data;
+    console.log(colectionCsv);
     const allSpecies = colectionCsv.map((row) => new Specie(row));
     const uniqueSpecies = allSpecies.filter(
       (specieA, index, self) =>
@@ -101,13 +91,14 @@ export default function Uploader({
       specie.specimens = specimenData.map((data) => {
         let specimen = new Specimen(data);
         specimen.location = new Location(data);
-        specimen.colector = new Contributor(data.colector_code);
-        specimen.preparator = new Contributor(data.preparator_code);
+        specimen.colector = new Contributor(data.colector);
+        specimen.preparator = new Contributor(data.preparator);
         return specimen;
       });
       return specie;
     });
 
+    console.log(speciesWithSpecimens);
     setParsedFiles(speciesWithSpecimens);
   };
 
@@ -115,6 +106,8 @@ export default function Uploader({
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
+      encoding: "ISO-8859-1",
+
       complete: (result) => {
         handleParsedFiles(result);
       },

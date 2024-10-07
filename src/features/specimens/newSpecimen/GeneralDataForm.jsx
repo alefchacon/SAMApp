@@ -4,6 +4,7 @@ import RadioList from "../../../components/ui/RadioList";
 import HeaderPage from "../../../components/ui/HeaderPage";
 import moment from "moment";
 import { specimenSchema } from "../formikSchemas/specimenSchema";
+import Autocomplete from "../../../components/ui/Autocomplete";
 
 import { Formik, Form, Field } from "formik";
 
@@ -46,18 +47,20 @@ export default function GeneralDataForm({
         maxWidth={inputWidth}
         maxLength={20}
       ></TextField>
-      <TextField
-        onBlur={onBlur}
-        isFormik
+
+      <Autocomplete
+        id="class_age"
+        required
         name="class_age"
-        value={values.class_age}
-        onChange={handleChange}
-        hasError={Boolean(errors.class_age && touched.class_age)}
-        errorMessage={errors.class_age}
         label={"Edad"}
-        maxWidth={inputWidth}
-        maxLength={50}
-      ></TextField>
+        items={["Juvenil", "Adulto", "Subadulto", "Lactante"]}
+        value={values.class_age}
+        hasError={errors.class_age && touched.class_age}
+        errorMessage={errors.class_age}
+        setFieldValue={setFieldValue}
+        onChange={handleChange}
+        onBlur={onBlur}
+      ></Autocomplete>
 
       <RadioList
         required
@@ -80,6 +83,28 @@ export default function GeneralDataForm({
         options={[
           { label: "Macho", value: "M" },
           { label: "Hembra", value: "H" },
+          { label: "No identificado", value: "N" },
+        ]}
+        name="sex"
+        onChange={handleChange}
+        errorMessage={errors.sex}
+        maxWidth={inputWidth}
+        hasError={errors.sex && touched.sex}
+      />
+      <RadioList
+        required
+        onBlur={onBlur}
+        label="Naturaleza del ejemplar"
+        options={[
+          { label: "PC (Piel y craneo)", value: "PC" },
+          { label: "E/A (En alcohol)", value: "E/A" },
+          { label: "SE (Solo esqueleto)", value: "SE" },
+          { label: "EP (Equeleto postcraneal)", value: "EP" },
+          { label: "PE (Piel y equeleto)", value: "PE" },
+          { label: "CE (Craneo, esqueleto y piel)", value: "CE" },
+          { label: "CA (Craneo y piel en alcohol)", value: "CA" },
+          { label: "SC (Sólo craneo)", value: "SC" },
+          { label: "SP (Sólo piel)", value: "SP" },
         ]}
         name="sex"
         onChange={handleChange}

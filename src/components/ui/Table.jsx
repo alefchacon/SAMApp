@@ -87,7 +87,7 @@ const defaultColumns = [
     cell: (info) => (info.getValue() === "H" ? ChipFemale : ChipMale),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("weigth", {
+  columnHelper.accessor("weight", {
     header: () => "Peso",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
