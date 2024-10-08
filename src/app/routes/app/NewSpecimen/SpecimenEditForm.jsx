@@ -6,7 +6,7 @@ import Button from "../../../../components/ui/Button";
 // FORMS
 import LocationForm from "../../../../features/specimens/newSpecimen/LocationForm";
 import Card from "../../../../components/ui/Card";
-import ContributorsForm from "./ContributorsForm";
+import ContributorsForm from "./ColectForm";
 import GeneralDataForm from "../../../../features/specimens/newSpecimen/GeneralDataForm";
 import MorphometricMeasuresForm from "../../../../features/specimens/newSpecimen/MorphometricMeasuresForm";
 import Taxonomy from "../../../../features/specie/components/Taxonomy";
@@ -23,8 +23,10 @@ import useContributorsAndRoles from "../../../../features/contributors/businessL
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
 import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
+import { useLocation } from "react-router-dom";
+import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
 
-export default function NewSpecimen({
+export default function SpecimenEditForm({
   selectedSpecie = {},
   specie_id,
   onResetScroll,
@@ -32,6 +34,10 @@ export default function NewSpecimen({
   const { addSpecimen } = useSpecimens();
   const [, , addLocation] = useLocations();
   const [, , , addContributorSpecimen] = useContributorsAndRoles();
+
+  const location = useLocation();
+  const specimenToEdit = location.state;
+  const isEdit = Boolean(specimenToEdit);
 
   const [stepId, setStepId] = useState("datos-generales");
 
@@ -81,46 +87,7 @@ export default function NewSpecimen({
       <br />
       <Formik
         validationSchema={specimenSchema}
-        initialValues={{
-          //datos-generales
-
-          colection_code: "",
-          catalog_id: "",
-          colection_date: "",
-          preparation_date: "",
-          hour: "",
-          status: "",
-          sex: "",
-          number_embryos: 0,
-          comment: "",
-          class_age: "",
-
-          //medidas-morfometricas
-          length_total: "",
-          length_ear: "",
-          length_paw: "",
-          length_tail: "",
-          weight: "",
-
-          //ubicacion
-          coordinates_cartesian_plane_x: "",
-          coordinates_cartesian_plane_y: "",
-          geographical_coordinates_x: "",
-          geographical_coordinates_y: "",
-          utm_region: "",
-          msnm_google: "",
-          altitude: "",
-          institute_code: "",
-          institute: "",
-          specific_location: "",
-          municipality: "",
-          state: "",
-          country: "",
-
-          //colaboradores
-          colector: "",
-          preparator: "",
-        }}
+        initialValues={new SpecimenFormik()}
         onSubmit={handleSubmit}
       >
         {({
@@ -195,11 +162,12 @@ export default function NewSpecimen({
             <button
               onClick={() => {
                 submitForm();
+                console.log("errors");
                 console.log(errors);
                 console.log(values);
               }}
             >
-              asdf
+              asdff
             </button>
           </div>
         )}

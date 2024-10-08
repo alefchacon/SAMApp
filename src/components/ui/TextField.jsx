@@ -113,7 +113,7 @@ export default function TextField({
                 margin: "0 10px",
               }}
             >
-              {value.length} / {maxLength}
+              {value?.length} / {maxLength}
             </span>
             <Field
               id={id}

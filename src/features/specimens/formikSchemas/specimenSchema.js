@@ -2,7 +2,7 @@
 import * as yup from 'yup';
 
 import messages from '../../../validation/messages';
-import { catalogIdSpecimenRegex, hourRegex, onlyWordsRegex, onlyWordsWithCommas, sexRegex } from '../../../validation/regexes';
+import { catalogIdSpecimenRegex, hourRegex, onlyWordsRegex, onlyWordsWithCommas } from '../../../validation/regexes';
 import { decimalSchema } from '../../../validation/formikSchemas/decimalSchema';
 
 export const specimenSchema = yup.object().shape({
@@ -23,6 +23,7 @@ export const specimenSchema = yup.object().shape({
     .required(messages.required),
   preparation_date: yup
     .date()
+    .nullable()
     .max(new Date(), messages.maxDatetoday),
   hour: yup
     .string()
@@ -32,12 +33,18 @@ export const specimenSchema = yup.object().shape({
     .required(messages.required),
   sex: yup
     .string()
-    .matches(sexRegex, messages.sex)
+    .required(messages.required),
+  nature: yup
+    .string()
     .required(messages.required),
   number_embryos: yup
     .number()
     .min(0)
     .required("Si no tiene embriones, por favor ingrese un 0"),
+  colection_number: yup
+    .number()
+    .min(0)
+    .required(messages.required),
   class_age: yup
     .string()
     .max(50)
@@ -88,7 +95,7 @@ export const specimenSchema = yup.object().shape({
   specific_location: yup
     .string()
     .max(100)
-    .matches(onlyWordsRegex, messages.onlyWords),
+    .matches(onlyWordsWithCommas, messages.onlyWords),
   municipality: yup
     .string()
     .max(100)
