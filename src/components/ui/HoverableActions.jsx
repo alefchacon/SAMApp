@@ -19,6 +19,7 @@ export default function HoverableActions({ children, action1, action2 }) {
         iconType="add"
         className="icon-only color-white"
       ></Button>
+      {children}
     </div>
   );
 }

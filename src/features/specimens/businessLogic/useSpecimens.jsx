@@ -47,37 +47,24 @@ export const useSpecimens = (specie) => {
 
   const getSpecimens = async () => {};
   const addSpecimen = async (newSpecimen = {}, specieId = 0) => {
-    const body = {
-      colection_code: newSpecimen.colection_code,
-      catalog_id: newSpecimen.catalog_id,
-      colection_date: newSpecimen.colection_date,
-      preparation_date: newSpecimen.preparation_date,
-      hour: newSpecimen.hour,
-      status: newSpecimen.status,
-      sex: newSpecimen.sex,
-      number_embryos: newSpecimen.number_embryos,
-      comment: newSpecimen.comment,
+    newSpecimen.specie = specieId;
 
-      length_total: newSpecimen.length_total,
-      length_ear: newSpecimen.length_ear,
-      length_paw: newSpecimen.length_paw,
-      length_tail: newSpecimen.length_tail,
-      weight: newSpecimen.weight,
+    const response = await api.post(SPECIMEN_URL.concat("/"), newSpecimen);
 
-      class_age: newSpecimen.class_age,
-
-      specie: specieId,
-    };
-
-    console.log(body);
-
-    const response = await api.post(SPECIMEN_URL.concat("/"), body);
     return response;
   };
 
   const updateSpecimen = () => {};
 
-  const deleteSpecimen = () => {};
+  const deleteSpecimen = async (specimenId = 0) => {
+    const response = await api.delete(`${SPECIMEN_URL}/${specimenId}`);
+    if (response.status === 204) {
+      const newSpecimens = specimens.filter(
+        (specimen) => specimen.id !== specimenId
+      );
+      setSpecimens(newSpecimens);
+    }
+  };
 
   const flattenObject = (nestedObject, parentKey = "", result = {}) => {
     for (let key in nestedObject) {
@@ -97,7 +84,7 @@ export const useSpecimens = (specie) => {
     return result;
   };
 
-  const convertToCSV = async () => {
+  const toCSV = async () => {
     const keys = Object.keys(flattenObject(specimens[0]));
 
     const csvRows = [];
@@ -113,7 +100,7 @@ export const useSpecimens = (specie) => {
   };
 
   const downloadSpecimens = useCallback(() => {
-    convertToCSV().then((csv) => {
+    toCSV().then((csv) => {
       const blob = new Blob([csv], { type: "text/csv" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);

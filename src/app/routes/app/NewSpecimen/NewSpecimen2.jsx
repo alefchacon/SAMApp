@@ -6,7 +6,7 @@ import Button from "../../../../components/ui/Button";
 // FORMS
 import LocationForm from "../../../../features/specimens/newSpecimen/LocationForm";
 import Card from "../../../../components/ui/Card";
-import ContributorsForm from "./ContributorsForm";
+import ContributorsForm from "./ColectForm";
 import GeneralDataForm from "../../../../features/specimens/newSpecimen/GeneralDataForm";
 import MorphometricMeasuresForm from "../../../../features/specimens/newSpecimen/MorphometricMeasuresForm";
 import Taxonomy from "../../../../features/specie/components/Taxonomy";

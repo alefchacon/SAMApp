@@ -283,6 +283,10 @@ fieldset{
   color: var(--bg-main);
   background-color: var(--uv-green);
 }
+.sam-button.primary.danger{
+  color: var(--bg-main);
+  background-color: var(--error);
+}
 .sam-button.primary-white{
   color: black;
   background-color: white;

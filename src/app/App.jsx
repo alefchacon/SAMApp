@@ -10,7 +10,7 @@ import {
 
 // FEATURES
 import SpecieDashboard from "./routes/app/SpecieDashboard";
-import NewSpecimen from "./routes/app/NewSpecimen/NewSpecimen";
+import SpecimenAddForm from "./routes/app/NewSpecimen/SpecimenAddForm.jsx";
 import NewSpecie from "./routes/app/NewSpecie";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
@@ -103,17 +103,21 @@ function App() {
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
 
           <Route
-            path="coleccion/agregar-especimen/:specieId?"
+            path={ROUTES.AGREGAR_ESPECIMEN}
             element={
-              <NewSpecimen
+              <SpecimenAddForm
                 selectedSpecie={selectedSpecie}
                 onResetScroll={resetScroll}
-              ></NewSpecimen>
-              /*
-              <div className="p-1rem gap-1rem w-100 ">
-              <UploaderImage></UploaderImage>
-              </div>
-              */
+              ></SpecimenAddForm>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.EDITAR_ESPECIMEN}
+            element={
+              <SpecimenAddForm
+                selectedSpecie={selectedSpecie}
+                onResetScroll={resetScroll}
+              ></SpecimenAddForm>
             }
           ></Route>
           <Route

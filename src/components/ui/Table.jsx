@@ -14,6 +14,8 @@ import Button from "./Button";
 import HoverableActions from "./HoverableActions";
 import TextField from "./TextField";
 import ChipLabel from "./ChipLabel";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../contexts/ModalContext";
 
 // ICONS
 import DeleteIcon from "../icons/DeleteIcon";
@@ -21,6 +23,8 @@ import DeleteIcon from "../icons/DeleteIcon";
 // API CALLS
 
 import "../../app/App.css";
+import ROUTES from "../../stores/routes";
+import { useSpecimens } from "../../features/specimens/businessLogic/useSpecimens";
 
 const columnHelper = createColumnHelper();
 
@@ -202,47 +206,37 @@ const defaultColumns = [
     cell: (info) => info.getValue()?.institute,
     footer: (info) => info.column.id,
   }),
-
-  /*
-
-  {
-    accesorKey: "weigth",
-    header: "Peso",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "number_embryos",
-    header: "Cantidad de embriones",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "colection_code",
-    header: "Código de recolección",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "colection_date",
-    header: "Fecha de recolección",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "preparation_date",
-    header: "Fecha de preparación",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "hour",
-    header: "Hora",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },
-  {
-    accesorKey: "comment",
-    header: "Comentario",
-    cell: (props) => <p>{props.getValue()}</p>,
-  },*/
 ];
 
 function TableRow({ rowData, onEdit }) {
+  const navigate = useNavigate();
+  const { showModal, closeModal } = useModal();
+  const { deleteSpecimen } = useSpecimens();
+  const handleConfirmDelete = () => {
+    const body = (
+      <div className="flex-col">
+        <p>
+          ¿Está seguro de eliminar al espécimen? Esta acción no puede
+          deshacerse.
+        </p>
+        <div className="button-row">
+          <Button onClick={closeModal} className="secondary" iconType="close">
+            Cancelar
+          </Button>
+          <Button
+            onClick={() => deleteSpecimen(rowData.original.id)}
+            className="primary danger"
+            iconType="delete"
+          >
+            Eliminar especímen
+          </Button>
+        </div>
+      </div>
+    );
+
+    showModal("Eliminar espécimen", body);
+  };
+
   return (
     <div className="row-wrapper">
       <div
@@ -250,7 +244,17 @@ function TableRow({ rowData, onEdit }) {
         className="tr selectable hoverable2"
         style={{ position: "relative" }}
       >
-        <HoverableActions></HoverableActions>
+        <HoverableActions
+          action1={() =>
+            navigate(ROUTES.EDITAR_ESPECIMEN, { state: rowData.original })
+          }
+        >
+          <Button
+            iconType="delete"
+            className="icon-only color-white danger"
+            onClick={handleConfirmDelete}
+          ></Button>
+        </HoverableActions>
         {rowData.getVisibleCells().map((cell) => (
           <div
             className="td"

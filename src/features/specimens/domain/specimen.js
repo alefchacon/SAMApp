@@ -9,9 +9,7 @@ class Specimen {
     this.colection_code = data.colection_code;
     this.catalog_id = data.catalog_id;
     this.colection_date = this.formatDate(data)
-    if (data.preparation_date){
-      this.preparation_date = data.preparation_date
-    }
+    this.preparation_date = data.preparation_date ||null
     this.hour = data.hour;
     this.status = capitalize(data.status ?? "True");
     this.sex = defaults.getOrDefaultString(data.sex)

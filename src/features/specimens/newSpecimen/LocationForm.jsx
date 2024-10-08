@@ -197,7 +197,9 @@ export default function LocationForm({
             onBlur={onBlur}
             value={values.specific_location}
             errorMessage={errors.specific_location}
-            hasError={Boolean(errors.specific_location && touched.location)}
+            hasError={Boolean(
+              errors.specific_location && touched.specific_location
+            )}
             maxLength={100}
             isFormik
             required
@@ -232,6 +234,19 @@ export default function LocationForm({
             maxLength={100}
             required
             isFormik
+          ></TextField>
+          <TextField
+            label={"Código de la colección"}
+            required
+            isFormik
+            name="colection_code"
+            value={values.colection_code}
+            onChange={handleChange}
+            hasError={errors.colection_code && touched.colection_code}
+            errorMessage={errors.colection_code}
+            maxWidth={inputWidth}
+            onBlur={onBlur}
+            maxLength={20}
           ></TextField>
         </div>
       </Form>
