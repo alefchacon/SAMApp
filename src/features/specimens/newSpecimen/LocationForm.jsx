@@ -26,7 +26,6 @@ export default function LocationForm({
   setFieldValue,
   inputWidth = "",
 }) {
-  console.log(touched);
   return (
     <div>
       <Form>
@@ -34,12 +33,12 @@ export default function LocationForm({
           <h3>Coordenadas cartesianas</h3>
 
           <TextField
-            label={"Coordenada X"}
-            id="coordinates_cartesian_plane_x"
-            name="coordinates_cartesian_plane_x"
+            label={"UTM X"}
+            id="location.coordinates_cartesian_plane_x"
+            name="location.coordinates_cartesian_plane_x"
             errorMessage={errors.coordinates_cartesian_plane_x}
             onChange={handleChange}
-            value={values.coordinates_cartesian_plane_x}
+            value={values.location.coordinates_cartesian_plane_x}
             onBlur={onBlur}
             hasError={
               errors.coordinates_cartesian_plane_x &&
@@ -50,27 +49,27 @@ export default function LocationForm({
             type="number"
           ></TextField>
           <TextField
-            id="coordinates_cartesian_plane_y"
-            name="coordinates_cartesian_plane_y"
+            id="location.coordinates_cartesian_plane_y"
+            name="location.coordinates_cartesian_plane_y"
             onChange={handleChange}
-            value={values.coordinates_cartesian_plane_y}
+            value={values.location.coordinates_cartesian_plane_y}
             errorMessage={errors.coordinates_cartesian_plane_y}
             onBlur={onBlur}
             hasError={
               errors.coordinates_cartesian_plane_y &&
               touched.coordinates_cartesian_plane_y
             }
-            label={"Coordenada Y"}
+            label={"UTM Y"}
             required
             isFormik
             type="number"
           ></TextField>
           <TextField
             label={"Región UTM"}
-            id="utm_region"
-            name="utm_region"
+            id="location.utm_region"
+            name="location.utm_region"
             onChange={handleChange}
-            value={values.utm_region}
+            value={values.location.utm_region}
             onBlur={onBlur}
             errorMessage={errors.utm_region}
             hasError={Boolean(errors.utm_region && touched.utm_region)}
@@ -83,12 +82,12 @@ export default function LocationForm({
         <div className="input-group">
           <h3>Coordenadas geográficas</h3>
           <TextField
-            label={"Coordenada Y (Latitud)"}
-            id="geographical_coordinates_y"
-            name="geographical_coordinates_y"
+            label={"Latitud (LN)"}
+            id="location.geographical_coordinates_y"
+            name="location.geographical_coordinates_y"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.geographical_coordinates_y}
+            value={values.location.geographical_coordinates_y}
             errorMessage={errors.geographical_coordinates_y}
             hasError={Boolean(
               errors.geographical_coordinates_y &&
@@ -99,12 +98,12 @@ export default function LocationForm({
             type="number"
           ></TextField>
           <TextField
-            label={"Coordenada X (Longitud)"}
-            id="geographical_coordinates_x"
+            label={"Longitud (LW)"}
+            id="location.geographical_coordinates_x"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.geographical_coordinates_x}
-            name="geographical_coordinates_x"
+            value={values.location.geographical_coordinates_x}
+            name="location.geographical_coordinates_x"
             errorMessage={errors.geographical_coordinates_x}
             hasError={Boolean(
               errors.geographical_coordinates_x &&
@@ -120,13 +119,13 @@ export default function LocationForm({
           <h3>Elevación</h3>
           <TextField
             label={"Metros a nivel del mar"}
-            id="msnm_google"
-            name="msnm_google"
+            id="location.msnm_google"
+            name="location.msnm_google"
             type="number"
             step={1}
             onBlur={onBlur}
             onChange={handleChange}
-            value={values.msnm_google}
+            value={values.location.msnm_google}
             errorMessage={errors.msnm_google}
             hasError={Boolean(errors.msnm_google && touched.msnm_google)}
             required
@@ -134,13 +133,13 @@ export default function LocationForm({
           ></TextField>
           <TextField
             label={"Altitud"}
-            id="altitude"
-            name="altitude"
+            id="location.altitude"
+            name="location.altitude"
             type="number"
             step={1}
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.altitude}
+            value={values.location.altitude}
             errorMessage={errors.altitude}
             hasError={Boolean(errors.altitude && touched.altitude)}
             required
@@ -152,11 +151,11 @@ export default function LocationForm({
           <h3>Región</h3>
           <TextField
             label={"País"}
-            id="country"
-            name="country"
+            id="location.country"
+            name="location.country"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.country}
+            value={values.location.country}
             errorMessage={errors.country}
             hasError={Boolean(errors.country && touched.country)}
             maxLength={100}
@@ -165,11 +164,11 @@ export default function LocationForm({
           ></TextField>
           <TextField
             label={"Estado"}
-            id="state"
-            name="state"
+            id="location.state"
+            name="location.state"
             onBlur={onBlur}
             onChange={handleChange}
-            value={values.state}
+            value={values.location.state}
             errorMessage={errors.state}
             hasError={Boolean(errors.state && touched.state)}
             maxLength={100}
@@ -178,31 +177,41 @@ export default function LocationForm({
           ></TextField>
           <TextField
             label={"Municipio"}
-            id="municipality"
-            name="municipality"
+            id="location.municipality"
+            name="location.municipality"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.municipality}
+            value={values.location.municipality}
             errorMessage={errors.municipality}
             hasError={Boolean(errors.municipality && touched.municipality)}
             maxLength={100}
             isFormik
-            required
           ></TextField>
           <TextField
             label={"Lugar específico"}
-            id="specific_location"
-            name="specific_location"
+            id="location.specific_location"
+            name="location.specific_location"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.specific_location}
+            value={values.location.specific_location}
             errorMessage={errors.specific_location}
             hasError={Boolean(
               errors.specific_location && touched.specific_location
             )}
             maxLength={100}
             isFormik
-            required
+          ></TextField>
+          <TextField
+            label={"Kilómetro"}
+            id="location.kilometer"
+            name="location.kilometer"
+            onChange={handleChange}
+            onBlur={onBlur}
+            value={values.location.kilometer}
+            errorMessage={errors.kilometer}
+            hasError={Boolean(errors.kilometer && touched.kilometer)}
+            maxLength={100}
+            isFormik
           ></TextField>
         </div>
         <hr />
@@ -211,11 +220,11 @@ export default function LocationForm({
 
           <TextField
             label={"Nombre del instituto"}
-            id="institute"
-            name="institute"
+            id="location.institute"
+            name="location.institute"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.institute}
+            value={values.location.institute}
             errorMessage={errors.institute}
             hasError={Boolean(errors.institute && touched.institute)}
             maxLength={150}
@@ -223,11 +232,11 @@ export default function LocationForm({
             isFormik
           ></TextField>
           <TextField
-            id="institute_code"
-            name="institute_code"
+            id="location.institute_code"
+            name="location.institute_code"
             onChange={handleChange}
             onBlur={onBlur}
-            value={values.institute_code}
+            value={values.location.institute_code}
             errorMessage={errors.institute_code}
             hasError={Boolean(errors.institute_code && touched.institute_code)}
             label={"Código del instituto"}
@@ -239,7 +248,7 @@ export default function LocationForm({
             label={"Código de la colección"}
             required
             isFormik
-            name="colection_code"
+            name="location.colection_code"
             value={values.colection_code}
             onChange={handleChange}
             hasError={errors.colection_code && touched.colection_code}

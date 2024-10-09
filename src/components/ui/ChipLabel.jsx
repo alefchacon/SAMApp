@@ -16,7 +16,6 @@ export default function ChipLabel({
         padding: "0  0.5rem",
         borderRadius: "3px",
         width: width,
-        border: "1px solid white",
       }}
     >
       {iconType && (

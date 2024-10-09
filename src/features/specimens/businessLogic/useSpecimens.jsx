@@ -19,7 +19,9 @@ export const useSpecimens = (specie) => {
   useEffect(() => {
     if (specie) {
       getSpecimensByRole(specie.id, profile?.role).then((response) => {
-        setSpecimens(response.data);
+        const specimens = response.data;
+        specimens.map((specimen) => (specimen.specie = specie));
+        setSpecimens(specimens);
       });
     }
   }, [specie]);

@@ -13,9 +13,9 @@ export default function RadioList({
   maxWidth = null,
   required = false,
   onBlur,
+  value,
 }) {
   const errorClass = errorMessage ? "hasError" : "";
-
   return (
     <fieldset
       name={name}
@@ -23,6 +23,7 @@ export default function RadioList({
       onChange={onChange}
       onBlur={onBlur}
       style={{ maxWidth: maxWidth ?? "" }}
+      defaultChecked={value}
     >
       <legend
         className="input-label flex-row gap-05rem"
@@ -33,12 +34,13 @@ export default function RadioList({
       </legend>
 
       {options.map((option, index) => (
-        <div className="option">
+        <div key={index} className="option selectable rounded-20">
           <input
             type="radio"
             id={`${name}Choice${index}`}
             name={name}
             value={option.value}
+            defaultChecked={option.value === value}
           />
           <label
             htmlFor={`${name}Choice${index}`}

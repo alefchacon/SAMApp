@@ -5,6 +5,7 @@ import TextField from "../../components/ui/TextField";
 import Button from "../../components/ui/Button";
 import Chip from "../../components/ui/ChipInput";
 import ChipLabel from "../../components/ui/ChipLabel";
+import CardContributor from "./components/CardContributor";
 
 export default function ContributorAutocomplete({
   contributors = [
@@ -33,8 +34,8 @@ export default function ContributorAutocomplete({
   onChange,
   onBlur,
   maxLength = 50,
+  value,
 }) {
-  console.log(contributors);
   const [selectedContributor, setSelectedContributor] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
@@ -45,12 +46,24 @@ export default function ContributorAutocomplete({
     return hasError ? "hasError" : "";
   };
 
+  useEffect(() => {
+    const contributor = contributors.find(
+      (contributor) => contributor.code === value?.code
+    );
+
+    setSelectedContributor(contributor);
+  }, [value, contributors]);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (option) => {
-    option.contributor_role = roleId;
+    option.contributor_role_id = roleId;
+    if (value !== null) {
+      option.contributor_id = option.id;
+      option.id = value?.id;
+    }
     setSelectedContributor(option);
     setFieldValue(name, option);
     setIsOpen(false);
@@ -79,38 +92,6 @@ export default function ContributorAutocomplete({
     setSelectedContributor(null);
     setFieldValue(name, null);
   };
-
-  function CardContributor({
-    contributor = {
-      code: "code",
-      name: "name",
-    },
-    index = 0,
-  }) {
-    return (
-      <div
-        style={{ maxWidth: "fit-content", padding: "0.5rem 1rem" }}
-        id={`contributor-${index}`}
-        className="contributor flex-row align-items-center gap-1rem  "
-      >
-        <p
-          id={`contributor-code-${index}`}
-          className="contributor-code"
-          style={{ letterSpacing: "1px" }}
-        >
-          <b>
-            <Highlight
-              text={contributor.code}
-              highlight={filterText}
-            ></Highlight>
-          </b>
-        </p>
-        <p id={`contributor-name-${index}`} className="contributor-name">
-          <Highlight text={contributor.name} highlight={filterText}></Highlight>
-        </p>
-      </div>
-    );
-  }
 
   const inputRef = useRef(null);
   const iconRef = useRef(null);
@@ -195,7 +176,11 @@ export default function ContributorAutocomplete({
           >
             {selectedContributor && (
               <Chip onRemove={handleClearSelection}>
-                <CardContributor contributor={selectedContributor} index={1} />
+                <CardContributor
+                  filterText={filterText}
+                  contributor={selectedContributor}
+                  index={1}
+                />
               </Chip>
             )}
           </span>
@@ -213,8 +198,16 @@ export default function ContributorAutocomplete({
       {isOpen && (
         <ul className="dropdown-menu pop-up">
           {filteredItems.map((item, index) => (
-            <li className="selectable" onClick={() => handleOptionClick(item)}>
-              <CardContributor contributor={item} index={index} />
+            <li
+              key={index}
+              className="selectable"
+              onClick={() => handleOptionClick(item)}
+            >
+              <CardContributor
+                filterText={filterText}
+                contributor={item}
+                index={index}
+              />
             </li>
           ))}
         </ul>

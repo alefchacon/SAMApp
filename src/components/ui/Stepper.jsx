@@ -16,6 +16,7 @@ export default function Stepper({
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
+    console.log(newSelectedIndex);
     onResetScroll();
     setSelectedId(newSelectedIndex);
   };
@@ -90,17 +91,7 @@ export default function Stepper({
         ))}
       </ul>
 
-      {children.map((tab, index) => (
-        <div
-          key={index}
-          className={`${
-            selectedId === tab.props.id ? "visible tab-panel " : "invisible"
-          }`}
-        >
-          {selectedId === tab.props.id && tab.props.children}
-          {buttonRow(index)}
-        </div>
-      ))}
+      <div>{children.find((child) => child.props.id === selectedId)}</div>
     </div>
   );
 }

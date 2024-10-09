@@ -101,6 +101,7 @@ export default function ContributorsForm({
           required
           onBlur={onBlur}
           label="Naturaleza del ejemplar"
+          value={values.nature}
           options={[
             { label: "PC (Piel y craneo)", value: "PC" },
             { label: "E/A (En alcohol)", value: "E/A" },
@@ -122,6 +123,7 @@ export default function ContributorsForm({
           roleId={1}
           required
           id="colector"
+          value={values.colector}
           name="colector"
           onBlur={onBlur}
           setFieldValue={setFieldValue}
@@ -154,6 +156,7 @@ export default function ContributorsForm({
         <h3>Preparación</h3>
         <ContributorAutocomplete
           roleId={2}
+          value={values.preparator}
           id="preparator"
           name="preparator"
           onBlur={onBlur}
@@ -191,6 +194,7 @@ export default function ContributorsForm({
           required
           onBlur={onBlur}
           label="Estado"
+          value={values.status === "true"}
           options={[
             { label: "Publicado", value: true },
             { label: "Dañado", value: false },

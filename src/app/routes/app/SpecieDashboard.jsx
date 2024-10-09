@@ -80,7 +80,9 @@ export default function SpecieDashboard({
   };
 
   const navigateToAddSpecimen = () =>
-    navigate(`${ROUTES.AGREGAR_ESPECIMEN}`, { state: selectedSpecie });
+    navigate(`${ROUTES.AGREGAR_ESPECIMEN}`, {
+      state: { specie: selectedSpecie },
+    });
 
   function AddSpecimenButton() {
     return (
