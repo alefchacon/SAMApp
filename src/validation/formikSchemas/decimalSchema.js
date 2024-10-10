@@ -9,6 +9,6 @@ export const decimalSchema = yup
     .test(
         'is-decimal',
         messages.decimal,
-        (value) => (value === undefined || value.toString().match(decimalRegex))
+        (value) => (!Boolean(value) || value.toString().match(decimalRegex))
     )
     

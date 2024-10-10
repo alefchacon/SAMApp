@@ -51,7 +51,7 @@ export default function Navbar({ accessRequestCount = 0 }) {
 
   return (
     <nav
-      className="flex-row bg-gradient  shadow-down"
+      className="flex-row bg-gradient "
       style={{ minHeight: "60px", position: "relative", padding: "0 1rem" }}
     >
       <div className="flex-row align-items-center gap-2rem h-100">

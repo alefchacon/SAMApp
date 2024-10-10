@@ -26,7 +26,9 @@ const INPUT_WIDTH = 300;
 import { useLocation } from "react-router-dom";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
 import Specimen from "../../../../features/specimens/domain/specimen";
-
+import ChipSex from "../../../../features/specimens/ChipSex";
+import moment from "moment";
+import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
 export default function SpecimenAddForm({
   //selectedSpecie = {},
   specie_id,
@@ -37,13 +39,57 @@ export default function SpecimenAddForm({
   const [, , , addContributorSpecimen] = useContributorsAndRoles();
 
   const location = useLocation();
-  const selectedSpecie = location.state;
+  const selectedSpecie = location.state.specie;
+  const selectedSpecimen = location.state.specimen;
 
-  console.log(selectedSpecie);
+  const { getUpdatedFields } = useGetUpdatedFields();
 
-  const [stepId, setStepId] = useState("medidas-morfometricas");
+  const isEdit = Boolean(selectedSpecimen);
+  const title = isEdit
+    ? `${selectedSpecimen.specie.epithet} # ${selectedSpecimen.catalog_id}`
+    : "Agregar espécimen";
 
-  const handleSubmit = async (values) => {
+  let updateTypes = {
+    specimen: false,
+    location: false,
+    colector: false,
+    preparator: false,
+  };
+
+  const parseUpdatedFields = async (values, initialValues) => {
+    const updatedFields = getUpdatedFields(values, initialValues);
+
+    const specimenRelationships = ["location", "colector", "preparator"];
+
+    if (updatedFields.includes(specimenRelationships[0])) {
+      console.log("await update location");
+      // await update location
+    }
+    if (updatedFields.includes(specimenRelationships[1])) {
+      console.log("await update colector");
+      // await update colector
+    }
+    if (updatedFields.includes(specimenRelationships[2])) {
+      console.log("await update preparator");
+      // await update preparator
+    }
+
+    const specimenUpdatedFields = updatedFields.filter(
+      (field) => !specimenRelationships.includes(field)
+    );
+
+    //console.log(updatedFields);
+    //console.log(specimenUpdatedFields);
+    //console.log(values.preparator);
+    console.log(values.colector);
+
+    if (specimenUpdatedFields.length > 0) {
+      console.log("await update specimen");
+      // await update specimen
+    }
+  };
+
+  const handleSubmit2 = async (values) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
 
     if (!responseSpecimen.status === 201) {
@@ -70,7 +116,7 @@ export default function SpecimenAddForm({
     const preparatorSpecimen = {
       contributor: values.preparator.id,
       specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARADOR,
+      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
     };
     const preparatorResponse = await addContributorSpecimen(preparatorSpecimen);
     if (!preparatorResponse.status === 200) {
@@ -80,40 +126,56 @@ export default function SpecimenAddForm({
     //const responseCurator = await
   };
 
-  const defaultData = {
-    catalog_id: "ASDF",
-  };
-
   return (
     <div className="form flex-col w-100">
-      <HeaderPage title={`Agregar espécimen`}>
+      <HeaderPage title={title}>
+        {isEdit && (
+          <div className="flex-row gap-1rem align-items-center">
+            <ChipSex sex={selectedSpecimen.sex}></ChipSex>|
+            <p>
+              por <b>{selectedSpecimen.colector.code}</b>
+            </p>
+            |
+            <p>
+              {moment(selectedSpecimen.colection_date, "YYYY-MM-DD").format(
+                "DD/MM/YYYY"
+              )}
+            </p>
+          </div>
+        )}
         <h2>
-          <i>{selectedSpecie.epithet}</i>
+          <i>{selectedSpecie?.epithet}</i>
         </h2>
       </HeaderPage>
       <br />
       <br />
       <Formik
         validationSchema={specimenSchema}
-        initialValues={new SpecimenFormik(defaultData)}
-        onSubmit={handleSubmit}
+        initialValues={selectedSpecimen}
+        onSubmit={parseUpdatedFields}
         enableReinitialize
       >
         {({
           values,
+          initialValues,
           errors,
           touched,
           isValid,
           dirty,
+          status,
           setFieldValue,
           handleChange,
           handleBlur,
           validateForm,
           submitForm,
+          isSubmitting,
         }) => (
           <div className="flex-col page-padding flex-grow-1" autoComplete="off">
             <Card>
-              <Stepper selectedStepId={stepId} onResetScroll={onResetScroll}>
+              <Stepper
+                selectedStepId={"medidas-morfometricas"}
+                onResetScroll={onResetScroll}
+              >
                 <div
                   label={"Medidas morfométricas"}
                   id={"medidas-morfometricas"}
@@ -152,18 +214,30 @@ export default function SpecimenAddForm({
             </Card>
             <button
               onClick={() => {
-                submitForm();
-                console.log("errors");
-                console.log(errors);
-                console.log(values);
+                //console.log(values);
+                //console.log(errors);
+                parseUpdatedFields(values, initialValues);
+                //submitForm();
+                //handleUpdatedFields(values, initialValues);
+                //console.log(values[getUpdatedFields(values, initialValues)[0]]);
+                //console.log(getUpdatedFields(values, initialValues));
               }}
             >
               asdff
             </button>
+            {/*
+            
+            
+            
+            */}
           </div>
         )}
       </Formik>
       <Footer></Footer>
     </div>
   );
+
+  function StepForm() {
+    return;
+  }
 }

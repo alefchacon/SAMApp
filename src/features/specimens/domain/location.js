@@ -1,4 +1,4 @@
-import * as defaults from "../../../stores/getOrDefault";
+import * as defaults from "../../../utils/getOrDefault";
 
 class Location {
   constructor(

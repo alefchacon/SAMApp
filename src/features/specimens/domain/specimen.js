@@ -1,7 +1,7 @@
 import Location from "./location";
 import { capitalize } from "lodash";
 import moment from "moment";
-import * as defaults from "../../../stores/getOrDefault";
+import * as defaults from "../../../utils/getOrDefault";
 class Specimen {
   constructor(
     data,

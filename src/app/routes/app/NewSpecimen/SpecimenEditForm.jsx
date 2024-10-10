@@ -25,9 +25,12 @@ import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
 import { useLocation } from "react-router-dom";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
-
-export default function SpecimenEditForm({
-  selectedSpecie = {},
+import Specimen from "../../../../features/specimens/domain/specimen";
+import ChipSex from "../../../../features/specimens/ChipSex";
+import moment from "moment";
+import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
+export default function SpecimenAddForm({
+  //selectedSpecie = {},
   specie_id,
   onResetScroll,
 }) {
@@ -36,12 +39,37 @@ export default function SpecimenEditForm({
   const [, , , addContributorSpecimen] = useContributorsAndRoles();
 
   const location = useLocation();
-  const specimenToEdit = location.state;
-  const isEdit = Boolean(specimenToEdit);
+  const selectedSpecie = location.state.specie;
+  const selectedSpecimen = location.state.specimen;
 
-  const [stepId, setStepId] = useState("datos-generales");
+  const { getUpdatedFields } = useGetUpdatedFields();
 
-  const handleSubmit = async (values) => {
+  const isEdit = Boolean(selectedSpecimen);
+  const title = isEdit
+    ? `${selectedSpecimen.specie.epithet} # ${selectedSpecimen.catalog_id}`
+    : "Agregar espécimen";
+
+  console.log(selectedSpecie);
+  console.log(selectedSpecimen);
+
+  const handleSubmit = () => {
+    console.log("va");
+  };
+
+  const checkTouched = (values, initialValues) => {};
+
+  const handleUpdatedFields = (values, initialValues) => {
+    const updatedSpecimenFields = Object.keys(values).filter((fieldName) =>
+      hasFieldChanged(values, initialValues, fieldName)
+    );
+    const updatedLocationFields = Object.keys(values.location).filter(
+      (fieldName) =>
+        hasFieldChanged(values.location, initialValues.location, fieldName)
+    );
+    console.log(values);
+  };
+
+  const handleSubmit2 = async (values) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
 
     if (!responseSpecimen.status === 201) {
@@ -68,7 +96,7 @@ export default function SpecimenEditForm({
     const preparatorSpecimen = {
       contributor: values.preparator.id,
       specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARADOR,
+      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
     };
     const preparatorResponse = await addContributorSpecimen(preparatorSpecimen);
     if (!preparatorResponse.status === 200) {
@@ -80,50 +108,54 @@ export default function SpecimenEditForm({
 
   return (
     <div className="form flex-col w-100">
-      <HeaderPage title="Nuevo espécimen">
-        <h2>{selectedSpecie.epithet}</h2>
+      <HeaderPage title={title}>
+        {isEdit && (
+          <div className="flex-row gap-1rem align-items-center">
+            <ChipSex sex={selectedSpecimen.sex}></ChipSex>|
+            <p>
+              por <b>{selectedSpecimen.colector.code}</b>
+            </p>
+            |
+            <p>
+              {moment(selectedSpecimen.colection_date, "YYYY-MM-DD").format(
+                "DD/MM/YYYY"
+              )}
+            </p>
+          </div>
+        )}
+        <h2>
+          <i>{selectedSpecie?.epithet}</i>
+        </h2>
       </HeaderPage>
       <br />
       <br />
       <Formik
         validationSchema={specimenSchema}
-        initialValues={new SpecimenFormik()}
+        initialValues={selectedSpecimen}
         onSubmit={handleSubmit}
+        enableReinitialize
       >
         {({
           values,
+          initialValues,
           errors,
           touched,
           isValid,
           dirty,
+          status,
           setFieldValue,
           handleChange,
           handleBlur,
           validateForm,
           submitForm,
+          isSubmitting,
         }) => (
           <div className="flex-col page-padding flex-grow-1" autoComplete="off">
             <Card>
-              <Stepper selectedStepId={stepId} onResetScroll={onResetScroll}>
-                <div label={"Datos generales"} id={"datos-generales"}>
-                  <GeneralDataForm
-                    handleChange={handleChange}
-                    touched={touched}
-                    values={values}
-                    errors={errors}
-                    onBlur={handleBlur}
-                    setFieldValue={setFieldValue}
-                  >
-                    <Button
-                      value={"medidas-morfometricas"}
-                      iconType="chevron_right"
-                      className="secondary"
-                      onClick={validateForm}
-                    >
-                      Continuar con las medidas morfométricas
-                    </Button>
-                  </GeneralDataForm>
-                </div>
+              <Stepper
+                selectedStepId={"medidas-morfometricas"}
+                onResetScroll={onResetScroll}
+              >
                 <div
                   label={"Medidas morfométricas"}
                   id={"medidas-morfometricas"}
@@ -131,6 +163,7 @@ export default function SpecimenEditForm({
                   <MorphometricMeasuresForm
                     handleChange={handleChange}
                     touched={touched}
+                    onBlur={handleBlur}
                     values={values}
                     errors={errors}
                     setFieldValue={setFieldValue}
@@ -146,7 +179,7 @@ export default function SpecimenEditForm({
                     onBlur={handleBlur}
                   ></LocationForm>
                 </div>
-                <div label={"Colaboradores"} id={"colaboradores"}>
+                <div label={"Colecta"} id={"colecta"}>
                   <ContributorsForm
                     handleChange={handleChange}
                     touched={touched}
@@ -161,18 +194,28 @@ export default function SpecimenEditForm({
             </Card>
             <button
               onClick={() => {
-                submitForm();
-                console.log("errors");
-                console.log(errors);
+                //submitForm();
                 console.log(values);
+                //handleUpdatedFields(values, initialValues);
+                //console.log(values[getUpdatedFields(values, initialValues)[0]]);
+                console.log(getUpdatedFields(values, initialValues));
               }}
             >
               asdff
             </button>
+            {/*
+            
+            
+            
+            */}
           </div>
         )}
       </Formik>
       <Footer></Footer>
     </div>
   );
+
+  function StepForm() {
+    return;
+  }
 }

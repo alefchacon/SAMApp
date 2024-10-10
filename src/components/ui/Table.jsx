@@ -16,7 +16,7 @@ import TextField from "./TextField";
 import ChipLabel from "./ChipLabel";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../contexts/ModalContext";
-
+import ChipSex from "../../features/specimens/ChipSex";
 // ICONS
 import DeleteIcon from "../icons/DeleteIcon";
 
@@ -88,7 +88,7 @@ const defaultColumns = [
   }),
   columnHelper.accessor("sex", {
     header: () => "Sexo",
-    cell: (info) => (info.getValue() === "H" ? ChipFemale : ChipMale),
+    cell: (info) => <ChipSex sex={info.getValue()} />,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("weight", {
@@ -246,7 +246,9 @@ function TableRow({ rowData, onEdit }) {
       >
         <HoverableActions
           action1={() =>
-            navigate(ROUTES.EDITAR_ESPECIMEN, { state: rowData.original })
+            navigate(ROUTES.EDITAR_ESPECIMEN, {
+              state: { specimen: rowData.original },
+            })
           }
         >
           <Button

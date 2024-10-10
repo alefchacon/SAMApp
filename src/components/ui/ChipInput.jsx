@@ -13,11 +13,13 @@ export default function Chip({ children, index = 0, onRemove }) {
     >
       {children}
 
-      <Button
-        iconType="cancel"
-        onClick={() => onRemove(index)}
-        className="icon-only"
-      ></Button>
+      {onRemove && (
+        <Button
+          iconType="cancel"
+          onClick={() => onRemove(index)}
+          className="icon-only"
+        ></Button>
+      )}
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import TextField from "../../../components/ui/TextField";
 import RadioList from "../../../components/ui/RadioList";
 import { Form } from "formik";
-
+import { useEffect, useState } from "react";
+import useGetUpdatedFields from "../../../components/logic/UpdateListener";
+import { useFormikContext } from "formik";
 export default function MorphometricMeasuresForm({
   children,
-  initialValues,
   handleChange,
   errors = [],
   values,
@@ -13,9 +14,19 @@ export default function MorphometricMeasuresForm({
   inputWidth = "",
   onBlur,
 }) {
+  const [updated, setUpdated] = useState(false);
+  const { initialValues } = useFormikContext();
+
+  /*
+  const { getUpdatedFields } = useGetUpdatedFields();
+  useEffect(() => {
+    console.log(getUpdatedFields(values, initialValues));
+  }, [values]);
+*/
   return (
     <Form className="form-section flex-col gap-2rem input-group">
       <RadioList
+        value={values.sex}
         required
         onBlur={onBlur}
         label="Sexo"
@@ -32,6 +43,7 @@ export default function MorphometricMeasuresForm({
       />
       <RadioList
         required
+        value={values.class_age}
         onBlur={onBlur}
         label="Edad"
         options={[
@@ -47,11 +59,14 @@ export default function MorphometricMeasuresForm({
         maxWidth={inputWidth}
         hasError={errors.class_age && touched.class_age}
       />
+      {values.length_total}
       <TextField
         label={"Largo total"}
         type="number"
         name="length_total"
+        id="length_total"
         value={values.length_total}
+        defaultValue={values.length_total}
         onChange={handleChange}
         hasError={Boolean(errors.length_total)}
         errorMessage={errors.length_total}
@@ -59,8 +74,11 @@ export default function MorphometricMeasuresForm({
         step={0.001}
         min={0}
         max={99.999}
+        isFormik
       ></TextField>
+
       <TextField
+        isFormik
         label={"Largo de la cola"}
         type="number"
         name="length_tail"
@@ -74,6 +92,7 @@ export default function MorphometricMeasuresForm({
         max={99.999}
       ></TextField>
       <TextField
+        isFormik
         label={"Largo de la pata"}
         type="number"
         name="length_paw"
@@ -87,6 +106,7 @@ export default function MorphometricMeasuresForm({
         max={99.999}
       ></TextField>
       <TextField
+        isFormik
         label={"Largo de la oreja"}
         type="number"
         name="length_ear"
@@ -101,6 +121,7 @@ export default function MorphometricMeasuresForm({
       ></TextField>
 
       <TextField
+        isFormik
         label={"Peso"}
         type="number"
         name="weight"
