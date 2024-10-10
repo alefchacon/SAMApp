@@ -35,7 +35,7 @@ export default function ContributorsForm({
   setFieldValue,
   inputWidth = "",
 }) {
-  const [contributors, getContributors, addContributor] =
+  const { contributors, getContributors, addContributor } =
     useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
 
@@ -94,7 +94,7 @@ export default function ContributorsForm({
     <Form className="" autoComplete="off">
       <div className="input-group">
         <h3>Colecta</h3>
-        <div className="flex-row gap-1rem">
+        <div className="flex-row gap-1rem align-items-end">
           <TextField
             onBlur={onBlur}
             required

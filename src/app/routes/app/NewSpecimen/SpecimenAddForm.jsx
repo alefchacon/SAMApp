@@ -35,8 +35,9 @@ export default function SpecimenAddForm({
   onResetScroll,
 }) {
   const { addSpecimen } = useSpecimens();
-  const [, , addLocation] = useLocations();
-  const [, , , addContributorSpecimen] = useContributorsAndRoles();
+  const { updateLocation } = useLocations();
+  const { postContributorSpecimen, updateContributorSpecimen } =
+    useContributorsAndRoles();
 
   const location = useLocation();
   const selectedSpecie = location.state.specie;
@@ -56,20 +57,25 @@ export default function SpecimenAddForm({
     preparator: false,
   };
 
-  const parseUpdatedFields = async (values, initialValues) => {
+  const submitUpdates = async (values, initialValues) => {
     const updatedFields = getUpdatedFields(values, initialValues);
 
     const specimenRelationships = ["location", "colector", "preparator"];
 
+    console.log(updatedFields);
+
     if (updatedFields.includes(specimenRelationships[0])) {
-      console.log("await update location");
+      await updateLocation(values.location);
       // await update location
     }
     if (updatedFields.includes(specimenRelationships[1])) {
       console.log("await update colector");
+      console.log(values.colector.id);
+      await updateContributorSpecimen(values.colector);
       // await update colector
     }
     if (updatedFields.includes(specimenRelationships[2])) {
+      await updateContributorSpecimen(values.preparator);
       console.log("await update preparator");
       // await update preparator
     }
@@ -81,7 +87,7 @@ export default function SpecimenAddForm({
     //console.log(updatedFields);
     //console.log(specimenUpdatedFields);
     //console.log(values.preparator);
-    console.log(values.colector);
+    //console.log(values.colector);
 
     if (specimenUpdatedFields.length > 0) {
       console.log("await update specimen");
@@ -97,7 +103,7 @@ export default function SpecimenAddForm({
     }
 
     const newSpecimenId = responseSpecimen.data.specimen_id;
-    const responseLocation = await addLocation(values, newSpecimenId);
+    const responseLocation = await updateLocation(values, newSpecimenId);
 
     if (!responseLocation.status === 201) {
       return;
@@ -152,7 +158,7 @@ export default function SpecimenAddForm({
       <Formik
         validationSchema={specimenSchema}
         initialValues={selectedSpecimen}
-        onSubmit={parseUpdatedFields}
+        onSubmit={submitUpdates}
         enableReinitialize
       >
         {({
@@ -213,10 +219,24 @@ export default function SpecimenAddForm({
               </Stepper>
             </Card>
             <button
-              onClick={() => {
-                //console.log(values);
+              onClick={async () => {
+                const errors = await validateForm();
+                if (errors.length > 0) {
+                  return;
+                }
+
+                submitUpdates(values, initialValues);
+
+                /*
+                for (let update of updates) {
+                  await update(values);
+                }
+                  */
+
+                //console.log(values.location);
+                //console.log(touched);
                 //console.log(errors);
-                parseUpdatedFields(values, initialValues);
+                //handleSubmit(values, initialValues);
                 //submitForm();
                 //handleUpdatedFields(values, initialValues);
                 //console.log(values[getUpdatedFields(values, initialValues)[0]]);
