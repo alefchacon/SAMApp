@@ -27,6 +27,7 @@ export const specimenSchema = yup.object().shape({
     .max(new Date(), messages.maxDatetoday),
   hour: yup
     .string()
+    .nullable()
     .matches(hourRegex, messages.hour),
   status: yup
     .boolean()

@@ -36,7 +36,7 @@ export default function ContributorAutocomplete({
   maxLength = 50,
   value,
 }) {
-  const [selectedContributor, setSelectedContributor] = useState(null);
+  //const [selectedContributor, setSelectedContributor] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
@@ -46,13 +46,9 @@ export default function ContributorAutocomplete({
     return hasError ? "hasError" : "";
   };
 
-  useEffect(() => {
-    const contributor = contributors.find(
-      (contributor) => contributor.code === value?.code
-    );
-
-    setSelectedContributor(contributor);
-  }, [value, contributors]);
+  const selectedContributor = contributors.find(
+    (contributor) => contributor.code === value?.code
+  );
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -60,12 +56,9 @@ export default function ContributorAutocomplete({
 
   const handleOptionClick = (option) => {
     option.contributor_role_id = roleId;
-    if (value !== null) {
-      option.contributor_id = option.id;
-      option.id = value?.id;
-    }
-    setSelectedContributor(option);
-    setFieldValue(name, option);
+    //handleContributorUpdate(option);
+    //setSelectedContributor(option);
+    onChange(option, roleId);
     setIsOpen(false);
   };
 
@@ -89,8 +82,8 @@ export default function ContributorAutocomplete({
   }, []);
 
   const handleClearSelection = () => {
-    setSelectedContributor(null);
-    setFieldValue(name, null);
+    //setSelectedContributor(null);
+    onChange(null, roleId);
   };
 
   const inputRef = useRef(null);
@@ -163,6 +156,7 @@ export default function ContributorAutocomplete({
             disabled={disabled}
             onChange={handleFilterChange}
             onFocus={toggleDropdown}
+            placeholder="Busque colaboradores"
           />
 
           <span
@@ -175,7 +169,7 @@ export default function ContributorAutocomplete({
             }}
           >
             {selectedContributor && (
-              <Chip onRemove={handleClearSelection}>
+              <Chip>
                 <CardContributor
                   filterText={filterText}
                   contributor={selectedContributor}

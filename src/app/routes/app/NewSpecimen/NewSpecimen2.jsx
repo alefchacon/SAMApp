@@ -57,7 +57,7 @@ export default function NewSpecimen({ specie_id, onResetScroll }) {
     const preparatorSpecimen = {
       contributor: values.colector.id,
       specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARADOR,
+      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
     };
     const preparatorResponse = await addContributorSpecimen(preparatorSpecimen);
     if (!preparatorResponse.status === 200) {

@@ -62,12 +62,15 @@ export default function SpecimenAddForm({
     const specimenRelationships = ["location", "colector", "preparator"];
 
     if (updatedFields.includes(specimenRelationships[0])) {
+      console.log("await update location");
       // await update location
     }
     if (updatedFields.includes(specimenRelationships[1])) {
+      console.log("await update colector");
       // await update colector
     }
     if (updatedFields.includes(specimenRelationships[2])) {
+      console.log("await update preparator");
       // await update preparator
     }
 
@@ -75,10 +78,13 @@ export default function SpecimenAddForm({
       (field) => !specimenRelationships.includes(field)
     );
 
-    console.log(updatedFields);
-    console.log(specimenUpdatedFields);
+    //console.log(updatedFields);
+    //console.log(specimenUpdatedFields);
+    //console.log(values.preparator);
+    console.log(values.colector);
 
     if (specimenUpdatedFields.length > 0) {
+      console.log("await update specimen");
       // await update specimen
     }
   };
@@ -110,7 +116,7 @@ export default function SpecimenAddForm({
     const preparatorSpecimen = {
       contributor: values.preparator.id,
       specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARADOR,
+      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
     };
     const preparatorResponse = await addContributorSpecimen(preparatorSpecimen);
     if (!preparatorResponse.status === 200) {
@@ -208,6 +214,8 @@ export default function SpecimenAddForm({
             </Card>
             <button
               onClick={() => {
+                //console.log(values);
+                //console.log(errors);
                 parseUpdatedFields(values, initialValues);
                 //submitForm();
                 //handleUpdatedFields(values, initialValues);

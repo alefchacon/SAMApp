@@ -248,7 +248,7 @@ export default function LocationForm({
             label={"Código de la colección"}
             required
             isFormik
-            name="location.colection_code"
+            name="colection_code"
             value={values.colection_code}
             onChange={handleChange}
             hasError={errors.colection_code && touched.colection_code}

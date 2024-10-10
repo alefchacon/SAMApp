@@ -17,6 +17,12 @@ import RadioList from "../../../../components/ui/RadioList";
 import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 import TextArea from "../../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
+import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
+
+const CONTRIBUTOR_ROLE_NAMES = Object.freeze({
+  1: "colector",
+  2: "preparator",
+});
 
 export default function ContributorsForm({
   children,
@@ -37,11 +43,6 @@ export default function ContributorsForm({
     getContributors();
   }, []);
 
-  const handleSubmit = async (values, formActions) => {
-    console.log(values);
-    console.log(formActions);
-  };
-
   const handleShowAddContributorModal = () => {
     showModal(
       "Agregar colaborador",
@@ -61,6 +62,33 @@ export default function ContributorsForm({
       </Button>
     </div>
   );
+
+  const handleContributorChange = (newContributor) => {
+    const thisContributorRoleName =
+      CONTRIBUTOR_ROLE_NAMES[newContributor.contributor_role_id];
+
+    const userSelectedSameContributor =
+      values[thisContributorRoleName]?.contributor_id === newContributor.id;
+
+    if (userSelectedSameContributor) {
+      return;
+    }
+
+    let newContributorSpecimenRelationship = {
+      contributor_id: newContributor.id,
+      contributor_role_id: newContributor.contributor_role_id,
+      name: newContributor.name,
+      code: newContributor.code,
+    };
+
+    const relationshipId = values[thisContributorRoleName]?.id;
+    const userIsEditingExistingSpecimen = Boolean(relationshipId);
+    if (userIsEditingExistingSpecimen) {
+      newContributorSpecimenRelationship.id = relationshipId;
+    }
+
+    setFieldValue(thisContributorRoleName, newContributorSpecimenRelationship);
+  };
 
   return (
     <Form className="" autoComplete="off">
@@ -120,13 +148,13 @@ export default function ContributorsForm({
           hasError={errors.nature && touched.nature}
         />
         <ContributorAutocomplete
-          roleId={1}
+          roleId={CONTRIBUTOR_ROLES.COLECTOR}
           required
           id="colector"
           value={values.colector}
           name="colector"
           onBlur={onBlur}
-          setFieldValue={setFieldValue}
+          onChange={handleContributorChange}
           label={"Colector"}
           helperText={contributorHelperText}
           hasError={Boolean(errors.colector && touched.colector)}
@@ -155,12 +183,12 @@ export default function ContributorsForm({
       <div className="input-group">
         <h3>Preparación</h3>
         <ContributorAutocomplete
-          roleId={2}
+          roleId={CONTRIBUTOR_ROLES.PREPARATOR}
           value={values.preparator}
           id="preparator"
           name="preparator"
           onBlur={onBlur}
-          setFieldValue={setFieldValue}
+          onChange={handleContributorChange}
           helperText={contributorHelperText}
           hasError={Boolean(errors.preparator && touched.preparator)}
           errorMessage={errors.preparator}
