@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import { api } from "../../../dataAccess/apiClient";
 import LOCATIONS_URL from "./locationURL";
@@ -10,7 +10,7 @@ export const useLocations = (specieId = 0) => {
   const { profile } = useStatus();
 
   const getLocations = async () => {};
-  const addLocation = async (location = {}, specimenId = 0) => {
+  const postLocation = useCallback(async (location = {}, specimenId = 0) => {
     const body = {
       coordinates_cartesian_plane_x: location.coordinates_cartesian_plane_x, //
       coordinates_cartesian_plane_y: location.coordinates_cartesian_plane_y, //
@@ -30,7 +30,15 @@ export const useLocations = (specieId = 0) => {
 
     const response = await api.post(LOCATIONS_URL.concat("/"), body);
     return response;
-  };
+  });
 
-  return [locations, getLocations, addLocation];
+  const updateLocation = useCallback(async (location = {}) => {
+    const response = await api.put(
+      LOCATIONS_URL.concat(`/${location.id}/`),
+      location
+    );
+    return response;
+  });
+
+  return { locations, getLocations, postLocation, updateLocation };
 };

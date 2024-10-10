@@ -36,13 +36,13 @@ export default function LocationForm({
             label={"UTM X"}
             id="location.coordinates_cartesian_plane_x"
             name="location.coordinates_cartesian_plane_x"
-            errorMessage={errors.coordinates_cartesian_plane_x}
+            errorMessage={errors.location?.coordinates_cartesian_plane_x}
             onChange={handleChange}
             value={values.location.coordinates_cartesian_plane_x}
             onBlur={onBlur}
             hasError={
-              errors.coordinates_cartesian_plane_x &&
-              touched.coordinates_cartesian_plane_x
+              errors.location?.coordinates_cartesian_plane_x &&
+              touched.location?.coordinates_cartesian_plane_x
             }
             required
             isFormik
@@ -53,11 +53,11 @@ export default function LocationForm({
             name="location.coordinates_cartesian_plane_y"
             onChange={handleChange}
             value={values.location.coordinates_cartesian_plane_y}
-            errorMessage={errors.coordinates_cartesian_plane_y}
+            errorMessage={errors.location?.coordinates_cartesian_plane_y}
             onBlur={onBlur}
             hasError={
-              errors.coordinates_cartesian_plane_y &&
-              touched.coordinates_cartesian_plane_y
+              errors.location?.coordinates_cartesian_plane_y &&
+              touched.location?.coordinates_cartesian_plane_y
             }
             label={"UTM Y"}
             required
@@ -71,8 +71,10 @@ export default function LocationForm({
             onChange={handleChange}
             value={values.location.utm_region}
             onBlur={onBlur}
-            errorMessage={errors.utm_region}
-            hasError={Boolean(errors.utm_region && touched.utm_region)}
+            errorMessage={errors.location?.utm_region}
+            hasError={Boolean(
+              errors.location?.utm_region && touched.location?.utm_region
+            )}
             maxLength={4}
             required
             isFormik
@@ -88,10 +90,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.geographical_coordinates_y}
-            errorMessage={errors.geographical_coordinates_y}
+            errorMessage={errors.location?.geographical_coordinates_y}
             hasError={Boolean(
-              errors.geographical_coordinates_y &&
-                touched.geographical_coordinates_y
+              errors.location?.geographical_coordinates_y &&
+                touched.location?.geographical_coordinates_y
             )}
             required
             isFormik
@@ -104,10 +106,10 @@ export default function LocationForm({
             onBlur={onBlur}
             value={values.location.geographical_coordinates_x}
             name="location.geographical_coordinates_x"
-            errorMessage={errors.geographical_coordinates_x}
+            errorMessage={errors.location?.geographical_coordinates_x}
             hasError={Boolean(
-              errors.geographical_coordinates_x &&
-                touched.geographical_coordinates_x
+              errors.location?.geographical_coordinates_x &&
+                touched.location?.geographical_coordinates_x
             )}
             required
             isFormik
@@ -126,8 +128,10 @@ export default function LocationForm({
             onBlur={onBlur}
             onChange={handleChange}
             value={values.location.msnm_google}
-            errorMessage={errors.msnm_google}
-            hasError={Boolean(errors.msnm_google && touched.msnm_google)}
+            errorMessage={errors.location?.msnm_google}
+            hasError={Boolean(
+              errors.location?.msnm_google && touched.location?.msnm_google
+            )}
             required
             isFormik
           ></TextField>
@@ -140,8 +144,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.altitude}
-            errorMessage={errors.altitude}
-            hasError={Boolean(errors.altitude && touched.altitude)}
+            errorMessage={errors.location?.altitude}
+            hasError={Boolean(
+              errors.location?.altitude && touched.location?.altitude
+            )}
             required
             isFormik
           ></TextField>
@@ -156,8 +162,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.country}
-            errorMessage={errors.country}
-            hasError={Boolean(errors.country && touched.country)}
+            errorMessage={errors.location?.country}
+            hasError={Boolean(
+              errors.location?.country && touched.location?.country
+            )}
             maxLength={100}
             isFormik
             required
@@ -169,12 +177,15 @@ export default function LocationForm({
             onBlur={onBlur}
             onChange={handleChange}
             value={values.location.state}
-            errorMessage={errors.state}
-            hasError={Boolean(errors.state && touched.state)}
+            errorMessage={errors.location?.state}
+            hasError={Boolean(
+              errors.location?.state && touched.location?.state
+            )}
             maxLength={100}
             isFormik
             required
           ></TextField>
+
           <TextField
             label={"Municipio"}
             id="location.municipality"
@@ -182,8 +193,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.municipality}
-            errorMessage={errors.municipality}
-            hasError={Boolean(errors.municipality && touched.municipality)}
+            errorMessage={errors.location?.municipality}
+            hasError={Boolean(
+              errors.location?.municipality && touched.location?.municipality
+            )}
             maxLength={100}
             isFormik
           ></TextField>
@@ -194,9 +207,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.specific_location}
-            errorMessage={errors.specific_location}
+            errorMessage={errors.location?.specific_location}
             hasError={Boolean(
-              errors.specific_location && touched.specific_location
+              errors.location?.specific_location &&
+                touched.location?.specific_location
             )}
             maxLength={100}
             isFormik
@@ -208,8 +222,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.kilometer}
-            errorMessage={errors.kilometer}
-            hasError={Boolean(errors.kilometer && touched.kilometer)}
+            errorMessage={errors.location?.kilometer}
+            hasError={Boolean(
+              errors.location?.kilometer && touched.location?.kilometer
+            )}
             maxLength={100}
             isFormik
           ></TextField>
@@ -225,8 +241,10 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.institute}
-            errorMessage={errors.institute}
-            hasError={Boolean(errors.institute && touched.institute)}
+            errorMessage={errors.location?.institute}
+            hasError={Boolean(
+              errors.location?.institute && touched.location?.institute
+            )}
             maxLength={150}
             required
             isFormik
@@ -237,8 +255,11 @@ export default function LocationForm({
             onChange={handleChange}
             onBlur={onBlur}
             value={values.location.institute_code}
-            errorMessage={errors.institute_code}
-            hasError={Boolean(errors.institute_code && touched.institute_code)}
+            errorMessage={errors.location?.institute_code}
+            hasError={Boolean(
+              errors.location?.institute_code &&
+                touched.location?.institute_code
+            )}
             label={"Código del instituto"}
             maxLength={100}
             required

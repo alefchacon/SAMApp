@@ -17,6 +17,7 @@ export default function ChipLabel({
         borderRadius: "3px",
         width: width,
         minWidth: "fit-content",
+        height: "fit-content",
       }}
     >
       {iconType && (
