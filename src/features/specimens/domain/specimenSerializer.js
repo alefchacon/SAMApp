@@ -2,13 +2,18 @@ import Location from "./location";
 import { capitalize } from "lodash";
 import moment from "moment";
 import * as defaults from "../../../utils/getOrDefault";
-class Specimen {
+class SpecimenSerializer {
   constructor(
-    data,
+    data = {},
   ){
     this.colection_code = data.colection_code;
+    this.colection_number = data.colection_number;
     this.catalog_id = data.catalog_id;
-    this.colection_date = this.formatDate(data)
+    if (["day", "month", "year"].every(key => data.hasOwnProperty(key))){
+      this.colection_date = this.formatDate(data)
+    } else {
+      this.colection_date = data.colection_date
+    }
     this.preparation_date = data.preparation_date ||null
     this.hour = data.hour;
     this.status = capitalize(data.status ?? "True");
@@ -24,6 +29,11 @@ class Specimen {
     this.length_tail = defaults.getOrDefaultNumber(data.length_tail);
     this.weight = defaults.getOrDefaultNumber(data.weight);
     //this.location = new Location(data);
+    if (data.specie !== null && typeof data.specie === "object"){
+      this.specie = data.specie.id
+    } else if (data.specie){
+      this.specie = data.specie
+    }
   }
 
   formatDate(data) {
@@ -34,6 +44,7 @@ class Specimen {
       .format("YYYY-MM-DD")
   }
 
+
 }
 
-export default Specimen;
+export default SpecimenSerializer;

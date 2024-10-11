@@ -1108,7 +1108,7 @@ nav{
 
 .page-padding {
   padding-left: clamp(10%, 5%, 60%) !important;
-  padding-right: clamp(10%, 30%, 60%) !important;
+  padding-right: clamp(10%, 50%, 60%) !important;
 }
 
 .landing{

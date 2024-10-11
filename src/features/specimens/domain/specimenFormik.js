@@ -3,7 +3,7 @@ export default class SpecimenFormik {
     // Datos generales
     this.colection_number = data?.colection_number || "";
     this.colection_code = data?.colection_code || "";
-    this.catalog_id = data?.catalog_id || "";
+    this.catalog_id = data?.catalog_id || "ND";
     this.colection_date = data?.colection_date || "";
     this.preparation_date = data?.preparation_date || null;
     this.hour = data?.hour || "";
@@ -21,21 +21,24 @@ export default class SpecimenFormik {
     this.length_tail = data?.length_tail || "";
     this.weight = data?.weight || "";
 
-    // Ubicación
-    this.coordinates_cartesian_plane_x = data?.coordinates_cartesian_plane_x || "";
-    this.coordinates_cartesian_plane_y = data?.coordinates_cartesian_plane_y || "";
-    this.geographical_coordinates_x = data?.geographical_coordinates_x || "";
-    this.geographical_coordinates_y = data?.geographical_coordinates_y || "";
-    this.utm_region = data?.utm_region || "";
-    this.msnm_google = data?.msnm_google || "";
-    this.altitude = data?.altitude || "";
-    this.institute_code = data?.institute_code || "";
-    this.institute = data?.institute || "";
-    this.specific_location = data?.specific_location || "";
-    this.municipality = data?.municipality || "";
-    this.state = data?.state || "";
-    this.country = data?.country || "";
+    this.location = {
 
+      // Ubicación
+      coordinates_cartesian_plane_x: data?.coordinates_cartesian_plane_x || "",
+      coordinates_cartesian_plane_y: data?.coordinates_cartesian_plane_y || "",
+      geographical_coordinates_x: data?.geographical_coordinates_x || "",
+      geographical_coordinates_y: data?.geographical_coordinates_y || "",
+      utm_region: data?.utm_region || "",
+      msnm_google: data?.msnm_google || "",
+      altitude: data?.altitude || "",
+      institute_code: data?.institute_code || "",
+      institute: data?.institute || "",
+      specific_location: data?.specific_location || "",
+      municipality: data?.municipality || "",
+      state: data?.state || "",
+      country: data?.country || "",
+  }
+    
     // Colaboradores
     this.colector = data?.colector || "";
     this.preparator = data?.preparator || "";

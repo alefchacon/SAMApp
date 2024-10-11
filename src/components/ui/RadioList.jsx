@@ -23,7 +23,6 @@ export default function RadioList({
       onChange={onChange}
       onBlur={onBlur}
       style={{ maxWidth: maxWidth ?? "" }}
-      defaultChecked={value}
     >
       <legend
         className="input-label flex-row gap-05rem"
@@ -40,7 +39,7 @@ export default function RadioList({
             id={`${name}Choice${index}`}
             name={name}
             value={option.value}
-            defaultChecked={option.value === value}
+            checked={option.value === value}
           />
           <label
             htmlFor={`${name}Choice${index}`}

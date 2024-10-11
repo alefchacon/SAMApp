@@ -1,32 +1,17 @@
 import TextField from "../../../components/ui/TextField";
 import RadioList from "../../../components/ui/RadioList";
 import { Form } from "formik";
-import { useEffect, useState } from "react";
-import useGetUpdatedFields from "../../../components/logic/UpdateListener";
 import { useFormikContext } from "formik";
 export default function MorphometricMeasuresForm({
   children,
-  handleChange,
-  errors = [],
-  values,
-  touched,
-  setFieldValue,
   inputWidth = "",
-  onBlur,
 }) {
-  const [updated, setUpdated] = useState(false);
-  const { initialValues } = useFormikContext();
+  const { values, errors, touched, onBlur, handleChange } = useFormikContext();
 
-  /*
-  const { getUpdatedFields } = useGetUpdatedFields();
-  useEffect(() => {
-    console.log(getUpdatedFields(values, initialValues));
-  }, [values]);
-*/
   return (
     <Form className="form-section flex-col gap-2rem input-group">
       <RadioList
-        value={values.sex}
+        value={values?.sex}
         required
         onBlur={onBlur}
         label="Sexo"
@@ -43,7 +28,7 @@ export default function MorphometricMeasuresForm({
       />
       <RadioList
         required
-        value={values.class_age}
+        value={values?.class_age}
         onBlur={onBlur}
         label="Edad"
         options={[
@@ -59,14 +44,13 @@ export default function MorphometricMeasuresForm({
         maxWidth={inputWidth}
         hasError={errors.class_age && touched.class_age}
       />
-      {values.length_total}
       <TextField
         label={"Largo total"}
         type="number"
         name="length_total"
         id="length_total"
-        value={values.length_total}
-        defaultValue={values.length_total}
+        value={values?.length_total}
+        defaultValue={values?.length_total}
         onChange={handleChange}
         hasError={Boolean(errors.length_total)}
         errorMessage={errors.length_total}
@@ -76,13 +60,12 @@ export default function MorphometricMeasuresForm({
         max={99.999}
         isFormik
       ></TextField>
-
       <TextField
         isFormik
         label={"Largo de la cola"}
         type="number"
         name="length_tail"
-        value={values.length_tail}
+        value={values?.length_tail}
         onChange={handleChange}
         hasError={Boolean(errors.length_tail)}
         errorMessage={errors.length_tail}
@@ -96,7 +79,7 @@ export default function MorphometricMeasuresForm({
         label={"Largo de la pata"}
         type="number"
         name="length_paw"
-        value={values.length_paw}
+        value={values?.length_paw}
         onChange={handleChange}
         hasError={Boolean(errors.length_paw)}
         errorMessage={errors.length_paw}
@@ -110,7 +93,7 @@ export default function MorphometricMeasuresForm({
         label={"Largo de la oreja"}
         type="number"
         name="length_ear"
-        value={values.length_ear}
+        value={values?.length_ear}
         onChange={handleChange}
         hasError={Boolean(errors.length_ear)}
         errorMessage={errors.length_ear}
@@ -119,13 +102,12 @@ export default function MorphometricMeasuresForm({
         min={0}
         max={99.999}
       ></TextField>
-
       <TextField
         isFormik
         label={"Peso"}
         type="number"
         name="weight"
-        value={values.weight}
+        value={values?.weight}
         onChange={handleChange}
         hasError={Boolean(errors.weight)}
         errorMessage={errors.weight}
@@ -134,14 +116,13 @@ export default function MorphometricMeasuresForm({
         min={0}
         max={99.999}
       ></TextField>
-
       <TextField
         onBlur={onBlur}
         label={"Número de embriones"}
         type="number"
         isFormik
         name="number_embryos"
-        value={values.number_embryos}
+        value={values?.number_embryos}
         onChange={handleChange}
         hasError={Boolean(errors.number_embryos && touched.number_embryos)}
         errorMessage={errors.number_embryos}

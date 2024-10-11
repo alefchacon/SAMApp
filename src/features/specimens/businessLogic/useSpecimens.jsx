@@ -11,6 +11,7 @@ import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { mockGetSpecimens, mockGetSpecimensAcademic } from "./GetSpecimens";
 import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 import moment from "moment";
+import SpecimenSerializer from "../domain/specimenSerializer";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
@@ -47,8 +48,12 @@ export const useSpecimens = (specie) => {
     return fakeSpecimens;
   };
 
-  const getSpecimens = async () => {};
-  const addSpecimen = async (newSpecimen = {}, specieId = 0) => {
+  const getSpecimen = useCallback(async (specimenId) => {
+    const response = await api.get(`${SPECIMEN_URL}/${specimenId}`);
+    return response;
+  });
+
+  const postSpecimen = async (newSpecimen = {}, specieId = 0) => {
     newSpecimen.specie = specieId;
 
     const response = await api.post(SPECIMEN_URL.concat("/"), newSpecimen);
@@ -56,9 +61,18 @@ export const useSpecimens = (specie) => {
     return response;
   };
 
-  const updateSpecimen = () => {};
+  const updateSpecimen = useCallback(async (updatedSpecimen) => {
+    const body = new SpecimenSerializer(updatedSpecimen);
+    console.log(updatedSpecimen);
+    console.log(body);
+    const response = await api.put(
+      `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
+      body
+    );
+    return response;
+  });
 
-  const deleteSpecimen = async (specimenId = 0) => {
+  const deleteSpecimen = useCallback(async (specimenId = 0) => {
     const response = await api.delete(`${SPECIMEN_URL}/${specimenId}`);
     if (response.status === 204) {
       const newSpecimens = specimens.filter(
@@ -66,7 +80,7 @@ export const useSpecimens = (specie) => {
       );
       setSpecimens(newSpecimens);
     }
-  };
+  });
 
   const flattenObject = (nestedObject, parentKey = "", result = {}) => {
     for (let key in nestedObject) {
@@ -117,8 +131,8 @@ export const useSpecimens = (specie) => {
 
   return {
     specimens,
-    getSpecimens,
-    addSpecimen,
+    getSpecimen,
+    postSpecimen,
     updateSpecimen,
     deleteSpecimen,
     downloadSpecimens,
