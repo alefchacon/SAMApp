@@ -1,5 +1,5 @@
 // LIBRARIES
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import HeaderPage from "../../../../components/ui/HeaderPage";
 import Button from "../../../../components/ui/Button";
@@ -23,116 +23,88 @@ import useContributorsAndRoles from "../../../../features/contributors/businessL
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
 import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
-import Specimen from "../../../../features/specimens/domain/specimen";
+import SpecimenSerializer from "../../../../features/specimens/domain/specimenSerializer";
 import ChipSex from "../../../../features/specimens/ChipSex";
 import moment from "moment";
 import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
-export default function SpecimenAddForm({
-  //selectedSpecie = {},
-  specie_id,
-  onResetScroll,
-}) {
-  const { addSpecimen } = useSpecimens();
-  const [, , addLocation] = useLocations();
-  const [, , , addContributorSpecimen] = useContributorsAndRoles();
 
-  const location = useLocation();
-  const selectedSpecie = location.state.specie;
-  const selectedSpecimen = location.state.specimen;
-
+export default function SpecimenEditForm({ onResetScroll }) {
+  const { updateLocation } = useLocations();
+  const { specimenId } = useParams();
+  const { updateSpecimen, getSpecimen } = useSpecimens();
   const { getUpdatedFields } = useGetUpdatedFields();
+  const { updateContributorSpecimen } = useContributorsAndRoles();
 
-  const isEdit = Boolean(selectedSpecimen);
-  const title = isEdit
-    ? `${selectedSpecimen.specie.epithet} # ${selectedSpecimen.catalog_id}`
-    : "Agregar espécimen";
+  const [specimen, setSpecimen] = useState();
 
-  console.log(selectedSpecie);
-  console.log(selectedSpecimen);
+  useEffect(() => {
+    getSpecimen(specimenId).then((response) => setSpecimen(response.data));
+  }, []);
 
-  const handleSubmit = () => {
-    console.log("va");
-  };
+  const submitUpdates = async (values, initialValues) => {
+    const updatedFields = getUpdatedFields(values, initialValues);
 
-  const checkTouched = (values, initialValues) => {};
+    const specimenRelationships = ["location", "colector", "preparator"];
 
-  const handleUpdatedFields = (values, initialValues) => {
-    const updatedSpecimenFields = Object.keys(values).filter((fieldName) =>
-      hasFieldChanged(values, initialValues, fieldName)
+    const locationWasUpdated = updatedFields.includes(specimenRelationships[0]);
+    if (locationWasUpdated) {
+      const response = await updateLocation(values.location);
+      if (response.status === 200) {
+        setSpecimen((prevSpecimen) => ({
+          ...prevSpecimen,
+          location: response.data.data,
+        }));
+      }
+    }
+
+    const colectorWasUpdated = updatedFields.includes(specimenRelationships[1]);
+    if (colectorWasUpdated) {
+      const response = await updateContributorSpecimen(values.colector);
+    }
+
+    const preparatorWasUpdated = updatedFields.includes(
+      specimenRelationships[2]
     );
-    const updatedLocationFields = Object.keys(values.location).filter(
-      (fieldName) =>
-        hasFieldChanged(values.location, initialValues.location, fieldName)
+    if (preparatorWasUpdated) {
+      const response = await updateContributorSpecimen(values.preparator);
+    }
+
+    const specimenUpdatedFields = updatedFields.filter(
+      (field) => !specimenRelationships.includes(field)
     );
-    console.log(values);
-  };
-
-  const handleSubmit2 = async (values) => {
-    const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
-
-    if (!responseSpecimen.status === 201) {
-      return;
+    const specimenWasUpdated = specimenUpdatedFields.length > 0;
+    if (specimenWasUpdated) {
+      const response = await updateSpecimen(values);
+      if (response.status === 200) {
+        setSpecimen(response.data.data);
+      }
     }
-
-    const newSpecimenId = responseSpecimen.data.specimen_id;
-    const responseLocation = await addLocation(values, newSpecimenId);
-
-    if (!responseLocation.status === 201) {
-      return;
-    }
-
-    const colectorSpecimen = {
-      contributor: values.colector.id,
-      specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.COLECTOR,
-    };
-    const colectorResponse = await addContributorSpecimen(colectorSpecimen);
-    if (!colectorResponse.status === 200) {
-      return;
-    }
-
-    const preparatorSpecimen = {
-      contributor: values.preparator.id,
-      specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
-    };
-    const preparatorResponse = await addContributorSpecimen(preparatorSpecimen);
-    if (!preparatorResponse.status === 200) {
-      return;
-    }
-
-    //const responseCurator = await
   };
 
   return (
     <div className="form flex-col w-100">
-      <HeaderPage title={title}>
-        {isEdit && (
-          <div className="flex-row gap-1rem align-items-center">
-            <ChipSex sex={selectedSpecimen.sex}></ChipSex>|
-            <p>
-              por <b>{selectedSpecimen.colector.code}</b>
-            </p>
-            |
-            <p>
-              {moment(selectedSpecimen.colection_date, "YYYY-MM-DD").format(
-                "DD/MM/YYYY"
-              )}
-            </p>
-          </div>
-        )}
-        <h2>
-          <i>{selectedSpecie?.epithet}</i>
-        </h2>
+      <HeaderPage title={"title"}>
+        <div className="flex-row gap-1rem align-items-center">
+          <ChipSex sex={specimen?.sex}></ChipSex>|
+          <p>
+            por <b>{specimen?.colector.code}</b>
+          </p>
+          |
+          <p>
+            {moment(specimen?.colection_date, "YYYY-MM-DD").format(
+              "DD/MM/YYYY"
+            )}
+          </p>
+        </div>
       </HeaderPage>
       <br />
       <br />
       <Formik
         validationSchema={specimenSchema}
-        initialValues={selectedSpecimen}
-        onSubmit={handleSubmit}
+        initialValues={specimen}
+        onSubmit={submitUpdates}
         enableReinitialize
       >
         {({
@@ -147,8 +119,6 @@ export default function SpecimenAddForm({
           handleChange,
           handleBlur,
           validateForm,
-          submitForm,
-          isSubmitting,
         }) => (
           <div className="flex-col page-padding flex-grow-1" autoComplete="off">
             <Card>
@@ -193,12 +163,12 @@ export default function SpecimenAddForm({
               </Stepper>
             </Card>
             <button
-              onClick={() => {
-                //submitForm();
-                console.log(values);
-                //handleUpdatedFields(values, initialValues);
-                //console.log(values[getUpdatedFields(values, initialValues)[0]]);
-                console.log(getUpdatedFields(values, initialValues));
+              onClick={async () => {
+                const errors = await validateForm();
+                if (errors.length > 0) {
+                  return;
+                }
+                submitUpdates(values, initialValues);
               }}
             >
               asdff

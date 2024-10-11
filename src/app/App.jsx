@@ -10,6 +10,7 @@ import {
 
 // FEATURES
 import SpecieDashboard from "./routes/app/SpecieDashboard";
+import SpecimenEditForm from "./routes/app/NewSpecimen/SpecimenEditForm.jsx";
 import SpecimenAddForm from "./routes/app/NewSpecimen/SpecimenAddForm.jsx";
 import NewSpecie from "./routes/app/NewSpecie";
 import Landing from "./routes/app/Landing";
@@ -112,12 +113,12 @@ function App() {
             }
           ></Route>
           <Route
-            path={ROUTES.EDITAR_ESPECIMEN}
+            path={`${ROUTES.EDITAR_ESPECIMEN}/:specimenId`}
             element={
-              <SpecimenAddForm
+              <SpecimenEditForm
                 selectedSpecie={selectedSpecie}
                 onResetScroll={resetScroll}
-              ></SpecimenAddForm>
+              ></SpecimenEditForm>
             }
           ></Route>
           <Route

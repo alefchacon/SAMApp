@@ -81,7 +81,10 @@ export default function SpecieDashboard({
 
   const navigateToAddSpecimen = () =>
     navigate(`${ROUTES.AGREGAR_ESPECIMEN}`, {
-      state: { specie: selectedSpecie },
+      state: {
+        specie: selectedSpecie,
+        currentSpecimenId: specimens[specimens.length - 1].id,
+      },
     });
 
   function AddSpecimenButton() {
@@ -120,27 +123,6 @@ export default function SpecieDashboard({
       </Tabs>
     );
   }
-
-  const showDeleteSpecieModal = (specieId) => {
-    showModal(
-      "Eliminar especie",
-      <div className="flex-col">
-        <p>¿Está seguro de eliminar esta especie?</p>
-        <br />
-        <p>{selectedSpecie.scientific_name}</p>
-        <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
-        <div className="button-row">
-          <Button
-            iconType="delete"
-            className="danger"
-            onClick={() => deleteSpecie(specieId)}
-          >
-            Sí, elimina la especie
-          </Button>
-        </div>
-      </div>
-    );
-  };
 
   const showSpecieAddModal = () =>
     showModal("Agregar especie", <MultiAddSpecie />);

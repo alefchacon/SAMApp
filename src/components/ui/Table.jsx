@@ -246,7 +246,7 @@ function TableRow({ rowData, onEdit }) {
       >
         <HoverableActions
           action1={() =>
-            navigate(ROUTES.EDITAR_ESPECIMEN, {
+            navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
               state: { specimen: rowData.original },
             })
           }

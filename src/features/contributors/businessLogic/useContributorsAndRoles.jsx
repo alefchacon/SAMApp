@@ -13,7 +13,7 @@ export default function useContributorsAndRoles() {
     setContributors(response.data);
   });
 
-  const addContributor = useCallback(
+  const postContributor = useCallback(
     async (newContributor = { name: "", code: "" }) => {
       const body = {
         name: newContributor.name,
@@ -67,7 +67,7 @@ export default function useContributorsAndRoles() {
   return {
     contributors,
     getContributors,
-    addContributor,
+    postContributor,
     postContributorSpecimen,
     updateContributorSpecimen,
     /*

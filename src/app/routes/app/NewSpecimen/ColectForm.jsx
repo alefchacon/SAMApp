@@ -1,20 +1,16 @@
 // LIBRARIES
-import { useState, useEffect } from "react";
-import { Formik, Form, useFormikContext } from "formik";
-import proj4 from "proj4";
+import { useEffect } from "react";
+import { Form, useFormikContext } from "formik";
 
 // CUSTOM COMPONENTS
 import TextField from "../../../../components/ui/TextField";
-import LoadingTextField from "../../../../components/ui/LoadingTextField";
 import Button from "../../../../components/ui/Button";
-import SelectList from "../../../../components/ui/SelectList";
 import ContributorForm from "./ContributorForm";
 import ContributorAutocomplete from "../../../../features/contributors/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../../components/contexts/ModalContext";
 import RadioList from "../../../../components/ui/RadioList";
 //VALIDATION SCHEMAS
-import { specimenSchema } from "../../../../features/specimens/formikSchemas/specimenSchema";
 import TextArea from "../../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
@@ -24,18 +20,11 @@ const CONTRIBUTOR_ROLE_NAMES = Object.freeze({
   2: "preparator",
 });
 
-export default function ContributorsForm({
-  children,
-  initialValues,
-  handleChange,
-  errors = [],
-  values,
-  onBlur,
-  touched,
-  setFieldValue,
-  inputWidth = "",
-}) {
-  const { contributors, getContributors, addContributor } =
+export default function ContributorsForm({ inputWidth = "" }) {
+  const { values, errors, touched, onBlur, handleChange, setFieldValue } =
+    useFormikContext();
+
+  const { contributors, getContributors, postContributor } =
     useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
 
@@ -46,7 +35,7 @@ export default function ContributorsForm({
   const handleShowAddContributorModal = () => {
     showModal(
       "Agregar colaborador",
-      <ContributorForm onSubmit={addContributor} />
+      <ContributorForm onSubmit={postContributor} />
     );
   };
 
@@ -94,37 +83,35 @@ export default function ContributorsForm({
     <Form className="" autoComplete="off">
       <div className="input-group">
         <h3>Colecta</h3>
-        <div className="flex-row gap-1rem align-items-end">
-          <TextField
-            onBlur={onBlur}
-            required
-            isFormik
-            name="colection_date"
-            label={"Fecha de colecta"}
-            value={values.colection_date}
-            onChange={handleChange}
-            hasError={Boolean(errors.colection_date && touched.colection_date)}
-            errorMessage={errors.colection_date}
-            type="date"
-            maxWidth={inputWidth}
-            max={moment().format("YYYY-MM-DD")}
-          ></TextField>
-          <TextField
-            onBlur={onBlur}
-            isFormik
-            label={"Hora de la colecta"}
-            maxWidth={inputWidth}
-            type="time"
-            name="hour"
-            value={values.hour}
-            onChange={handleChange}
-            hasError={Boolean(errors.hour && touched.hour)}
-            errorMessage={errors.hour}
-            step={60}
-            min="00:00"
-            max="23:59"
-          ></TextField>
-        </div>
+        <TextField
+          onBlur={onBlur}
+          required
+          isFormik
+          name="colection_date"
+          label={"Fecha de colecta"}
+          value={values.colection_date}
+          onChange={handleChange}
+          hasError={Boolean(errors.colection_date && touched.colection_date)}
+          errorMessage={errors.colection_date}
+          type="date"
+          maxWidth={inputWidth}
+          max={moment().format("YYYY-MM-DD")}
+        ></TextField>
+        <TextField
+          onBlur={onBlur}
+          isFormik
+          label={"Hora de la colecta"}
+          maxWidth={inputWidth}
+          type="time"
+          name="hour"
+          value={values.hour}
+          onChange={handleChange}
+          hasError={Boolean(errors.hour && touched.hour)}
+          errorMessage={errors.hour}
+          step={60}
+          min="00:00"
+          max="23:59"
+        ></TextField>
         <RadioList
           required
           onBlur={onBlur}

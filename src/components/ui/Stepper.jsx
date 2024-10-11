@@ -52,14 +52,23 @@ export default function Stepper({
   return (
     <div className="stepper-wrapper bg-white" style={{ flexWrap: "wrap" }}>
       <ul
-        className={`stepper flex-row align-items-center bg-white shadow-down`}
-        style={{ position: "sticky", top: 0, zIndex: 10 }}
+        className={`stepper flex-row align-items-center bg-white`}
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          borderRadius: "10px",
+          padding: "10px 20px",
+        }}
       >
         {children.map((tab, index) => (
           <div
             className="step-wrapper flex-row align-items-center"
             key={index}
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              justifyContent: "space-between",
+            }}
           >
             <div
               key={index}
@@ -91,7 +100,10 @@ export default function Stepper({
         ))}
       </ul>
 
-      <div>{children.find((child) => child.props.id === selectedId)}</div>
+      <div>
+        {children.find((child) => child.props.id === selectedId)}
+        <Button>Siguiente</Button>
+      </div>
     </div>
   );
 }
