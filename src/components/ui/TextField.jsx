@@ -72,7 +72,7 @@ export default function TextField({
 
       <div
         style={{
-          height: "60px",
+          height: "50px",
 
           display: "flex",
           position: "relative",
@@ -102,19 +102,8 @@ export default function TextField({
             {customIcon}
           </span>
         )}
-        {isFormik ? (
+        {isFormik && type === "text" ? (
           <>
-            <span
-              className="character-counter caption"
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                margin: "0 10px",
-              }}
-            >
-              {value?.length} / {maxLength}
-            </span>
             <Field
               id={id}
               name={name}

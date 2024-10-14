@@ -79,7 +79,7 @@ export default function useAccessRequests() {
     }
   };
 
-  return [
+  return {
     pendingAccessRequests,
     getPendingAccessRequests,
     pendingAccessRequestCount,
@@ -88,5 +88,5 @@ export default function useAccessRequests() {
     rejectAccessRequest,
     addAccessRequest,
     verifyAccessRequestToken,
-  ];
+  };
 }

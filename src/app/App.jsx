@@ -52,12 +52,12 @@ function App() {
   const { profile } = useStatus();
   const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
 
-  const [
+  const {
     pendingAccessRequests,
     getPendingAccessRequests,
     pendingAccessRequestCount,
     getPendingAccessRequestCount,
-  ] = useAccessRequests();
+  } = useAccessRequests();
 
   useEffect(() => {
     if (ROLE === ROLE_TYPES.TECHNICAL_PERSON) {
@@ -121,14 +121,6 @@ function App() {
               ></SpecimenEditForm>
             }
           ></Route>
-          <Route
-            path={ROUTES.REGISTRARSE.concat("/:token")}
-            element={
-              <SignUpGuard>
-                <SignupForm />
-              </SignUpGuard>
-            }
-          ></Route>
 
           <Route
             path={`/${ROUTES.COLECCION}/:epithet?`}
@@ -144,6 +136,7 @@ function App() {
             path={ROUTES.SOLICITAR_ACCESO}
             element={<AccessRequestForm />}
           ></Route>
+          <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
           {/*
           
           <Route

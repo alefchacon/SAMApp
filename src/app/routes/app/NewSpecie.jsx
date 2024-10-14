@@ -22,9 +22,6 @@ import {
   getSubspecies,
 } from "../../../features/specie/businessLogic/getSpecies";
 
-import { mockGetSpecie } from "../../../features/specie/businessLogic/getSpecie";
-import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
-
 export default function NewSpecie({
   onSubmit,
   specie = {
@@ -41,13 +38,6 @@ export default function NewSpecie({
     values.scientific_name = `${values.gender} ${values.epithet}`;
     await onSubmit(values);
     actions.resetForm();
-    //showSnackbar(specieSnackbarTypes.addSpecieSuccess);
-    /*
-    if (!true) {
-    } else {
-      showSnackbar(specieSnackbarTypes.addSpecieError);
-    }
-      */
   };
 
   const [ordens, setOrdens] = useState([]);
@@ -74,107 +64,105 @@ export default function NewSpecie({
 
   return (
     <div className="fullwidth">
-      <div className="">
-        {isReady && (
-          <Formik
-            validationSchema={specieSchema}
-            initialValues={specie}
-            onSubmit={submitSpecie}
-            innerRef={formikRef}
-            enableReinitialize
-          >
-            {({
-              values,
-              errors,
-              touched,
-              isValid,
-              dirty,
-              setFieldValue,
-              handleChange,
-              handleBlur,
-            }) => (
-              <Form className="input-group" action="" autoComplete="off">
-                <Autocomplete
-                  required
-                  id="orden"
-                  name="orden"
-                  items={ordens}
-                  label="Orden"
-                  errorMessage={errors.orden}
-                  hasError={errors.orden && touched.orden}
-                  value={values.orden}
-                  setFieldValue={setFieldValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Autocomplete>
-                <Autocomplete
-                  required
-                  id="family"
-                  name="family"
-                  items={families}
-                  label="Familia"
-                  errorMessage={errors.family}
-                  hasError={errors.family && touched.family}
-                  value={values.family}
-                  setFieldValue={setFieldValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Autocomplete>
+      {isReady && (
+        <Formik
+          validationSchema={specieSchema}
+          initialValues={specie}
+          onSubmit={submitSpecie}
+          innerRef={formikRef}
+          enableReinitialize
+        >
+          {({
+            values,
+            errors,
+            touched,
+            isValid,
+            dirty,
+            setFieldValue,
+            handleChange,
+            handleBlur,
+          }) => (
+            <Form className="input-group" action="" autoComplete="off">
+              <Autocomplete
+                required
+                id="orden"
+                name="orden"
+                items={ordens}
+                label="Orden"
+                errorMessage={errors.orden}
+                hasError={errors.orden && touched.orden}
+                value={values.orden}
+                setFieldValue={setFieldValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              ></Autocomplete>
+              <Autocomplete
+                required
+                id="family"
+                name="family"
+                items={families}
+                label="Familia"
+                errorMessage={errors.family}
+                hasError={errors.family && touched.family}
+                value={values.family}
+                setFieldValue={setFieldValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              ></Autocomplete>
 
-                <Autocomplete
-                  id="gender"
-                  name="gender"
-                  label="Género"
-                  required
-                  items={genders}
-                  value={values.gender}
-                  hasError={errors.gender && touched.gender}
-                  errorMessage={errors.gender}
-                  setFieldValue={setFieldValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Autocomplete>
-                <Autocomplete
-                  id="specie_specie"
-                  name="specie_specie"
-                  label="Especie"
-                  required
-                  items={epithets}
-                  value={values.specie_specie}
-                  hasError={errors.specie_specie && touched.specie_specie}
-                  errorMessage={errors.specie_specie}
-                  setFieldValue={setFieldValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Autocomplete>
-                <Autocomplete
-                  id="subspecie"
-                  required
-                  name="subspecie"
-                  label="Sub especie"
-                  items={subspecies}
-                  value={values.subspecie}
-                  hasError={errors.subspecie && touched.subspecie}
-                  errorMessage={errors.subspecie}
-                  setFieldValue={setFieldValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></Autocomplete>
+              <Autocomplete
+                id="gender"
+                name="gender"
+                label="Género"
+                required
+                items={genders}
+                value={values.gender}
+                hasError={errors.gender && touched.gender}
+                errorMessage={errors.gender}
+                setFieldValue={setFieldValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              ></Autocomplete>
+              <Autocomplete
+                id="specie_specie"
+                name="specie_specie"
+                label="Especie"
+                required
+                items={epithets}
+                value={values.specie_specie}
+                hasError={errors.specie_specie && touched.specie_specie}
+                errorMessage={errors.specie_specie}
+                setFieldValue={setFieldValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              ></Autocomplete>
+              <Autocomplete
+                id="subspecie"
+                required
+                name="subspecie"
+                label="Sub especie"
+                items={subspecies}
+                value={values.subspecie}
+                hasError={errors.subspecie && touched.subspecie}
+                errorMessage={errors.subspecie}
+                setFieldValue={setFieldValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              ></Autocomplete>
 
-                <div className="flex-row justify-content-right ptop-2rem">
-                  <Button
-                    type="submit"
-                    label="Agregar especie"
-                    isDisabled={false}
-                  >
-                    Agregar especie
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </div>
+              <div className="flex-row justify-content-right ptop-2rem">
+                <Button
+                  type="submit"
+                  label="Agregar especie"
+                  isDisabled={false}
+                >
+                  Agregar especie
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
     </div>
   );
 }

@@ -41,6 +41,7 @@
   --dark: rgba(0, 0, 0, 0.7);
 
   background-color: var(--uv-gray);
+  --gradient: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
 }
   
 h3{
@@ -49,7 +50,14 @@ h3{
 
 .bg-gradient{
   color: white;
- background-image: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
+ background-image: var(--gradient);
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-link{
@@ -559,7 +567,7 @@ tr{
 .input-group{
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 30px;
 }
 
@@ -615,7 +623,7 @@ label.hasError{
   outline: none;
   border: none;
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   font-size: 0.9rem;
   color: black;
   background-color: transparent;
@@ -1207,6 +1215,9 @@ nav{
 }
 .justify-content-end{
   justify-content: end;
+}
+.justify-content-start{
+  justify-content: start;
 }
 .align-items-center{
   align-items: center;

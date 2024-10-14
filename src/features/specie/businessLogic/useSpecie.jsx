@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import { api, apiWrapper } from "../../../dataAccess/apiClient";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import { SPECIE_IMPORT_URL, SPECIE_URL } from "./specieURL";
+import SpecieSerializer from "../domain/specieSerializer";
+
 export const useSpecie = (specieId = 0) => {
   const [species, setSpecies] = useState([]);
   const { profile } = useStatus();
@@ -15,14 +17,15 @@ export const useSpecie = (specieId = 0) => {
       })
       .then((response) => {
         // build epithet:
-        for (let i = 0; i < response.data.length; i++) {
-          assignEpithet(response.data[i]);
-        }
-        setSpecies(response.data);
+        const species = response.data.map(
+          (specie) => new SpecieSerializer(specie)
+        );
+        console.log(species);
+        setSpecies(species);
       });
   };
 
-  const addSpecie = async (newSpecie) => {
+  const postSpecie = async (newSpecie) => {
     const body = {
       class_specie: "Mammalia",
       orden: newSpecie.orden,
@@ -44,7 +47,16 @@ export const useSpecie = (specieId = 0) => {
   const assignEpithet = (specie) => {
     specie.epithet = `${specie.gender} ${specie.specie_specie} ${specie.subspecie}`;
   };
-  const updateSpecie = async (newSpecie) => {};
+  const updateSpecie = useCallback(async (newSpecie) => {
+    const response = await api.put(`${SPECIE_URL}/${newSpecie.id}/`, newSpecie);
+    console.log(response.status);
+    if (response.status === 200) {
+      const newSpecies = species.map((specie) =>
+        specie.id === newSpecie.id ? newSpecie : specie
+      );
+      setSpecies(newSpecies);
+    }
+  });
 
   const uploadColection = async (species) => {
     api.post(SPECIE_IMPORT_URL, species);
@@ -55,7 +67,7 @@ export const useSpecie = (specieId = 0) => {
   return {
     species,
     getSpecies,
-    addSpecie,
+    postSpecie,
     updateSpecie,
     selectedSpecieDefault,
     uploadColection,

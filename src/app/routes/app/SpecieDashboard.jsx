@@ -43,7 +43,7 @@ export default function SpecieDashboard({
   const {
     species,
     getSpecies,
-    addSpecie,
+    postSpecie,
     updateSpecie,
     uploadColection,
     selectedSpecieDefault,
@@ -109,7 +109,7 @@ export default function SpecieDashboard({
     return (
       <Tabs>
         <div label="Una especie">
-          <NewSpecie onSubmit={addSpecie} />
+          <NewSpecie onSubmit={postSpecie} />
         </div>
         <div label="Múltiples" className="flex-col">
           <Uploader
@@ -127,8 +127,11 @@ export default function SpecieDashboard({
   const showSpecieAddModal = () =>
     showModal("Agregar especie", <MultiAddSpecie />);
 
-  const showSpecieEditModal = (specie) => {
-    showModal("Editar especie", <NewSpecie specie={specie} />);
+  const showSpecieUpdateModal = (specie) => {
+    showModal(
+      "Editar especie",
+      <NewSpecie specie={specie} onSubmit={updateSpecie} />
+    );
   };
 
   const handleSelectedSpecieChange = async (newSelectedIndex) => {
@@ -226,7 +229,7 @@ export default function SpecieDashboard({
         species={species}
         onSelectionChange={handleSelectedSpecieChange}
         onAdd={showSpecieAddModal}
-        onEdit={showSpecieEditModal}
+        onEdit={showSpecieUpdateModal}
         onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
       ></SpecieList>

@@ -20,14 +20,14 @@ import {
 } from "../../../features/access/businessLogic/getAccessRequests";
 
 export default function AccessRequests() {
-  const [
+  const {
     pendingAccessRequests,
     getPendingAccessRequests,
     pendingAccessRequestCount,
     getPendingAccessRequestCount,
     approveAccessRequest,
     rejectAccessRequest,
-  ] = useAccessRequests();
+  } = useAccessRequests();
 
   const { showModal } = useModal();
 
@@ -76,7 +76,7 @@ export default function AccessRequests() {
         style={{ flexGrow: 1 }}
       >
         <br />
-        {pendingAccessRequestCount > 0 ? (
+        {pendingAccessRequests.length > 0 ? (
           pendingAccessRequests.map((accessRequest, index) => (
             <Card className={"p-2rem"}>
               <AccessRequest
