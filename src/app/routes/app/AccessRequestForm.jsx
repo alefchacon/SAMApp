@@ -12,9 +12,10 @@ import { accessRequestSchema } from "../../../features/access/formikSchemas/acce
 import { Link } from "react-router-dom";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
 import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
-
+import ROUTES from "../../../stores/routes.js";
+import { useNavigate } from "react-router-dom";
 export default function AccessRequestForm() {
-  const [
+  const {
     pendingAccessRequests,
     getPendingAccessRequests,
     pendingAccessRequestCount,
@@ -22,31 +23,43 @@ export default function AccessRequestForm() {
     approveAccessRequest,
     rejectAccessRequest,
     addAccessRequest,
-  ] = useAccessRequests();
+  } = useAccessRequests();
+
+  const navigate = useNavigate();
 
   const { showModal, closeModal } = useModal();
 
   const handleSubmit = async (values, actions) => {
-    let response = null;
-
-    try {
-      response = await addAccessRequest(values);
-    } catch (e) {
-      console.log(e);
-    }
-
+    const response = await addUser(values, token);
     if (response.status === 201) {
-      showModal(
-        "Solicitud enviada",
-        <div>
-          <p>
-            Recibirá una respuesta a su correo, <b>{values.email}</b>,
-            confirmando su acceso.
-          </p>
-        </div>
-      );
-      actions.resetForm();
+      handleShowModal();
     }
+
+    actions.resetForm();
+  };
+
+  const handleShowModal = () => {
+    showModal(
+      "Solicitud enviada",
+      <div>
+        <p>
+          Recibirá una respuesta a su correo, <b>{"values.email"}</b>,
+          confirmando su acceso.
+        </p>
+        <div className="button-row">
+          <Link to={ROUTES.COLECCION}>
+            <Button onClick={goToColection} iconType="pets">
+              Regresar a la colección
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
+  const goToColection = () => {
+    closeModal();
+    navigate(ROUTES.COLECCION);
   };
 
   return (
@@ -262,8 +275,8 @@ export default function AccessRequestForm() {
               </div>
 
               <div className="button-row">
-                <Button type="submit" iconType="send">
-                  Enviar solicitud
+                <Button iconType="send" onClick={handleShowModal}>
+                  Enviar solicitudd
                 </Button>
               </div>
             </Card>

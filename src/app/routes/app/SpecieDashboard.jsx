@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import SpecieList from "../../../features/specie/components/SpecieList";
 import SpecimenView from "../../../features/specie/components/SpecimenView";
 import Table from "../../../components/ui/Table";
-import {
-  mockGetSpecies,
-  getSpecieList,
-} from "../../../features/specie/businessLogic/getSpecies";
+
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
@@ -43,7 +40,7 @@ export default function SpecieDashboard({
   const {
     species,
     getSpecies,
-    addSpecie,
+    postSpecie,
     updateSpecie,
     uploadColection,
     selectedSpecieDefault,
@@ -109,7 +106,7 @@ export default function SpecieDashboard({
     return (
       <Tabs>
         <div label="Una especie">
-          <NewSpecie onSubmit={addSpecie} />
+          <NewSpecie onSubmit={postSpecie} />
         </div>
         <div label="Múltiples" className="flex-col">
           <Uploader
@@ -127,8 +124,11 @@ export default function SpecieDashboard({
   const showSpecieAddModal = () =>
     showModal("Agregar especie", <MultiAddSpecie />);
 
-  const showSpecieEditModal = (specie) => {
-    showModal("Editar especie", <NewSpecie specie={specie} />);
+  const showSpecieUpdateModal = (specie) => {
+    showModal(
+      "Editar especie",
+      <NewSpecie specie={specie} onSubmit={updateSpecie} />
+    );
   };
 
   const handleSelectedSpecieChange = async (newSelectedIndex) => {
@@ -162,10 +162,10 @@ export default function SpecieDashboard({
                     Especímenes <ChipLabel>{specimens.length}</ChipLabel>
                   </div>
                 }
-                className={`specimens flex-col h-100 p-1rem`}
+                className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
-                <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
+                <div className="specimens-controls p-05rem gap-1rem flex-row align-items-center">
                   <TextField
                     iconType={"search"}
                     placeholder={
@@ -214,7 +214,6 @@ export default function SpecieDashboard({
         ) : (
           <NoResults itemName="especímenes" />
         )}
-        <Footer></Footer>
       </>
     );
   }
@@ -226,7 +225,7 @@ export default function SpecieDashboard({
         species={species}
         onSelectionChange={handleSelectedSpecieChange}
         onAdd={showSpecieAddModal}
-        onEdit={showSpecieEditModal}
+        onEdit={showSpecieUpdateModal}
         onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
       ></SpecieList>

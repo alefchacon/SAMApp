@@ -1,19 +1,19 @@
 import Button from "../../../components/ui/Button";
 import TextField from "../../../components/ui/TextField";
-import Tabs from "../../../components/ui/Tabs";
-import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
+
 import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
-
-import { Link } from "react-router-dom";
 
 import logIn from "../businessLogic/logIn.js";
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
 import ROUTES from "../../../stores/routes.js";
+import { useModal } from "../../../components/contexts/ModalContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function LogInForm({ onSubmit }) {
   const { setCredentials } = useStatus();
-
+  const { closeModal } = useModal();
+  const navigate = useNavigate();
   const handleSubmit = async (values, actions) => {
     const credentials = await logIn(values.username, values.password);
     setCredentials(credentials);
@@ -34,7 +34,6 @@ export default function LogInForm({ onSubmit }) {
                 name="username"
                 label={"Nombre de usuario"}
                 iconType={"person"}
-                required
                 fullwidth
                 errorMessage={errors.username}
                 hasError={errors.username && touched.username}
@@ -50,7 +49,6 @@ export default function LogInForm({ onSubmit }) {
                 label={"Contraseña"}
                 iconType={"key"}
                 type="password"
-                required
                 fullwidth
                 errorMessage={errors.password}
                 hasError={errors.password && touched.password}
@@ -60,7 +58,8 @@ export default function LogInForm({ onSubmit }) {
               ></TextField>
               <br />
               <br />
-              <div className="flex-col align-items-center w-100 gap-1rem">
+              <br />
+              <div className="flex-col ">
                 <Button
                   iconType="login"
                   type="submit"
@@ -68,11 +67,18 @@ export default function LogInForm({ onSubmit }) {
                 >
                   Entrar
                 </Button>
-                <Link to={ROUTES.SOLICITAR_ACCESO}>
-                  <Button iconType="passkey" className="secondary w-100">
-                    Solicitar acceso
-                  </Button>
-                </Link>
+                <br />
+                <Button
+                  iconType="passkey"
+                  className="secondary w-100"
+                  fullwidth
+                  onClick={() => {
+                    closeModal();
+                    navigate(ROUTES.SOLICITAR_ACCESO);
+                  }}
+                >
+                  Solicitar acceso
+                </Button>
               </div>
             </Form>
           )}

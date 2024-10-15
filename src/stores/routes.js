@@ -1,5 +1,6 @@
 const ROUTES = Object.freeze({
   LANDING: "/",
+  ENTRAR: "/entrar",
   COLECCION: "/coleccion",
   SOLICITAR_ACCESO: "solicitar-acceso",
   BUSCAR: "buscar",

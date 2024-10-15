@@ -96,15 +96,16 @@ export default function SpecimenAddForm({ onResetScroll }) {
       >
         {({
           values,
-          initialValues,
           errors,
           touched,
           setFieldValue,
           handleChange,
           handleBlur,
-          submitForm,
         }) => (
-          <div className="flex-col page-padding flex-grow-1" autoComplete="off">
+          <Form
+            className="flex-col page-padding flex-grow-1"
+            autoComplete="off"
+          >
             <Card>
               <Stepper
                 selectedStepId={"medidas-morfometricas"}
@@ -146,23 +147,13 @@ export default function SpecimenAddForm({ onResetScroll }) {
                 </div>
               </Stepper>
             </Card>
-            <button
-              onClick={() => {
-                submitForm();
-                console.log(errors);
 
-                //handleUpdatedFields(values, initialValues);
-                //console.log(values[getUpdatedFields(values, initialValues)[0]]);
-              }}
-            >
-              asdff
-            </button>
             {/*
             
             
             
             */}
-          </div>
+          </Form>
         )}
       </Formik>
       <Footer></Footer>

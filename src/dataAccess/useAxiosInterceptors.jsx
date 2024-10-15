@@ -16,7 +16,7 @@ import RefreshForm from "../features/auth/components/RefreshForm";
 
 export const useAxiosInterceptors = () => {
   const { showSnackbar } = useContext(SnackbarContext);
-  const { showModal } = useContext(ModalContext);
+  const { showModal, closeModal } = useContext(ModalContext);
   const { setLoading, logOutFront } = useContext(StatusContext);
 
   api.interceptors.request.use(
@@ -88,7 +88,12 @@ export const useAxiosInterceptors = () => {
     );
     if (!canRefresh) {
       logOutFront();
+      return;
     }
-    showModal("La sesión ha expirado", <RefreshForm />, false);
+    showModal(
+      "La sesión ha expirado",
+      <RefreshForm onLogOut={closeModal} />,
+      false
+    );
   }
 };

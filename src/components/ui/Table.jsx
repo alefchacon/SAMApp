@@ -9,70 +9,64 @@ import {
 } from "@tanstack/react-table";
 
 // COMPONENTS
-import Card from "./Card";
 import Button from "./Button";
 import HoverableActions from "./HoverableActions";
-import TextField from "./TextField";
-import ChipLabel from "./ChipLabel";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../contexts/ModalContext";
-import ChipSex from "../../features/specimens/ChipSex";
-// ICONS
-import DeleteIcon from "../icons/DeleteIcon";
-
-// API CALLS
 
 import "../../app/App.css";
 import ROUTES from "../../stores/routes";
 import { useSpecimens } from "../../features/specimens/businessLogic/useSpecimens";
+import ChipSex from "../../features/specimens/ChipSex";
 
 const columnHelper = createColumnHelper();
 
-const ChipFemale = (
-  <ChipLabel
-    iconType={"female"}
-    color="var(--pink)"
-    backgroundColor="var(--light-pink)"
-    width="100px"
-  >
-    Hembra
-  </ChipLabel>
-);
-
-const ChipMale = (
-  <ChipLabel
-    width="100px"
-    iconType={"male"}
-    color="var(--uv-blue)"
-    backgroundColor="var(--light-blue)"
-  >
-    Macho
-  </ChipLabel>
-);
-
 const defaultColumns = [
-  columnHelper.accessor("catalog_id", {
-    header: () => "ID del catálogo",
+  columnHelper.accessor("id", {
+    header: () => "ID",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("status", {
-    header: () => "Estado",
-    cell: (info) => (info.getValue() ? "Publicado" : "Dañado"),
+  columnHelper.accessor("location", {
+    id: "geographical_coordinates_x",
+    header: () => "LW",
+    cell: (info) => {
+      return info.getValue()?.geographical_coordinates_x || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "geographical_coordinates_y",
+    header: () => "LN",
+    cell: (info) => {
+      return info.getValue()?.geographical_coordinates_y || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "coordinates_cartesian_plane_x",
+    header: () => "UTM X",
+    cell: (info) => {
+      return info.getValue()?.coordinates_cartesian_plane_x || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "coordinates_cartesian_plane_y",
+    header: () => "UTM Y",
+    cell: (info) => {
+      return info.getValue()?.coordinates_cartesian_plane_y || "";
+    },
+  }),
+  columnHelper.accessor("sex", {
+    header: () => "Sexo",
+    cell: (info) => <ChipSex sex={info.getValue()} />,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("class_age", {
+    header: () => "Edad",
+    cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("length_total", {
     header: () => "Longitud",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("length_ear", {
-    header: () => "Longitud de oreja",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("length_paw", {
-    header: () => "Longitud de pata",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
@@ -81,14 +75,14 @@ const defaultColumns = [
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("class_age", {
-    header: () => "Edad",
+  columnHelper.accessor("length_paw", {
+    header: () => "Longitud de pata",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("sex", {
-    header: () => "Sexo",
-    cell: (info) => <ChipSex sex={info.getValue()} />,
+  columnHelper.accessor("length_ear", {
+    header: () => "Longitud de oreja",
+    cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("weight", {
@@ -97,113 +91,134 @@ const defaultColumns = [
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("number_embryos", {
-    header: () => "Cantidad de embriones",
+    header: () => "Embriones",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("location", {
+    id: "country",
+    header: () => "País",
+    cell: (info) => {
+      return info.getValue()?.country || "N/A";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "state",
+    header: () => "Estado",
+    cell: (info) => {
+      return info.getValue()?.state || "N/A";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "municipality",
+    header: () => "Municipio",
+    cell: (info) => {
+      return info.getValue()?.municipality || "N/A";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "specific_location",
+    header: () => "Localidad específica",
+    cell: (info) => {
+      return info.getValue()?.specific_location || "N/A";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "kilometer",
+    header: () => "Kilómetro",
+    cell: (info) => {
+      return info.getValue()?.kilometer || "";
+    },
+  }),
+
+  columnHelper.accessor("location", {
+    id: "institute",
+    header: () => "Instituto",
+    cell: (info) => {
+      return info.getValue()?.institute || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "institute_code",
+    header: () => "Código del Instituto",
+    cell: (info) => {
+      return info.getValue()?.institute_code || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "colection_code",
+    header: () => "Código de la colección",
+    cell: (info) => {
+      return info.getValue()?.colection_code || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "utm_region",
+    header: () => "UTM",
+    cell: (info) => {
+      return info.getValue()?.utm_region || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "msnm_google",
+    header: () => "MSNM Google",
+    cell: (info) => {
+      return info.getValue()?.msnm_google || "";
+    },
+  }),
+  columnHelper.accessor("location", {
+    id: "altitude",
+    header: () => "Altitud",
+    cell: (info) => {
+      return info.getValue()?.altitude || "";
+    },
   }),
   columnHelper.accessor("colection_date", {
-    header: () => "Fecha de recolección",
+    header: () => "Fecha de la colecta",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("hour", {
-    header: () => "Hora de colecta",
+  columnHelper.accessor("nature", {
+    header: () => "Naturaleza",
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("colector", {
+    id: "colector-code",
+    header: "Código de Colector",
+    cell: (info) => {
+      return info.getValue()?.code || "N/A";
+    },
+  }),
+  columnHelper.accessor("colector", {
+    id: "colector-name",
+    header: "Nombre del Colector",
+    cell: (info) => {
+      return info.getValue()?.name || "N/A";
+    },
+  }),
+  columnHelper.accessor("preparator", {
+    id: "preparator-code",
+    header: "Preparador",
+    cell: (info) => {
+      return info.getValue()?.code || "N/A";
+    },
+  }),
+  columnHelper.accessor("preparator", {
+    id: "preparator-name",
+    header: "Nombre del Preparador",
+    cell: (info) => {
+      return info.getValue()?.name || "N/A";
+    },
+  }),
+  columnHelper.accessor("colection_number", {
+    header: () => "Número de colecta",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor("comment", {
     header: () => "Comentario",
     cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("colector", {
-    header: () => "Colector",
-    cell: (info) => `${info.getValue()?.code}`,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("colector", {
-    header: () => "Colector (nombre)",
-    cell: (info) => `${info.getValue()?.name}`,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("colection_code", {
-    header: () => "Número de colecta",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("preparator", {
-    header: () => "Preparador",
-    cell: (info) => info.getValue()?.code,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("preparator", {
-    header: () => "Preparador (nombre)",
-    cell: (info) => info.getValue()?.name,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("preparation_date", {
-    header: () => "Fecha de preparación",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "País",
-    cell: (info) => info.getValue()?.country,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Estado",
-    cell: (info) => info.getValue()?.state,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Municipio",
-    cell: (info) => info.getValue()?.municipality,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Localidad específica",
-    cell: (info) => info.getValue()?.specific_location,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Latitud",
-    cell: (info) => info.getValue()?.geographical_coordinates_y,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Longitud",
-    cell: (info) => info.getValue()?.geographical_coordinates_x,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Coordenada cartesiana Y",
-    cell: (info) => info.getValue()?.coordinates_cartesian_plane_y,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Coordenada cartesiana Y",
-    cell: (info) => info.getValue()?.coordinates_cartesian_plane_x,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Región UTM",
-    cell: (info) => info.getValue()?.utm_region,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Metros sobre el nivel del mar",
-    cell: (info) => info.getValue()?.msnm_google,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "ID del instituto",
-    cell: (info) => info.getValue()?.institute_code,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("location", {
-    header: () => "Instituto",
-    cell: (info) => info.getValue()?.institute,
     footer: (info) => info.column.id,
   }),
 ];
@@ -238,44 +253,48 @@ function TableRow({ rowData, onEdit }) {
   };
 
   return (
-    <div className="row-wrapper">
-      <div
-        key={rowData.id}
-        className="tr selectable hoverable2"
-        style={{ position: "relative" }}
+    <tr
+      key={rowData.id}
+      className="tr selectable hoverable2"
+      style={{ position: "relative" }}
+    >
+      <HoverableActions
+        action1={() =>
+          navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
+            state: { specimen: rowData.original },
+          })
+        }
+        position="fixed"
       >
-        <HoverableActions
-          action1={() =>
+        <Button
+          iconType="edit"
+          className="icon-only color-white"
+          onClick={() =>
             navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
               state: { specimen: rowData.original },
             })
           }
+        ></Button>
+        <Button
+          iconType="delete"
+          className="icon-only color-white danger"
+          onClick={handleConfirmDelete}
+        ></Button>
+      </HoverableActions>
+      {rowData.getVisibleCells().map((cell) => (
+        <td
+          className="td"
+          key={cell.id}
+          {...{
+            style: {
+              width: cell.column.getSize(),
+            },
+          }}
         >
-          <Button
-            iconType="delete"
-            className="icon-only color-white danger"
-            onClick={handleConfirmDelete}
-          ></Button>
-        </HoverableActions>
-        {rowData.getVisibleCells().map((cell) => (
-          <div
-            className="td"
-            key={cell.id}
-            {...{
-              style: {
-                width: cell.column.getSize(),
-              },
-            }}
-          >
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </div>
-        ))}
-        {/*
-        
-        <HoverableActions></HoverableActions>
-        */}
-      </div>
-    </div>
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </td>
+      ))}
+    </tr>
   );
 }
 
@@ -287,8 +306,6 @@ export default function Table({ data, onEdit }) {
     pageIndex: 0,
     pageSize: 10,
   });
-
-  console.log(data);
 
   const filteredColumns = columns.filter((col) =>
     data.some((row) => row[col.accessorKey] !== undefined)
@@ -316,7 +333,7 @@ export default function Table({ data, onEdit }) {
 
   return (
     <>
-      <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
+      <div className="table-actions flex-row p-05rem align-items-center justify-content-space-between bg-white">
         <div className="table-page-buttons flex-row align-items-center">
           <Button
             className="secondary"
@@ -367,10 +384,9 @@ export default function Table({ data, onEdit }) {
       </div>
       <div
         className="table-wrapper"
-        style={{ overflow: "scroll", height: "100%" }}
+        style={{ overflowX: "scroll", height: "100%" }}
       >
         <table
-          className="h-100 table"
           {...{
             style: {
               //width: table.getCenterTotalSize(),

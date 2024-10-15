@@ -35,12 +35,13 @@
   --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(40, 173, 86, 0.1);
   --bg-hovered2: rgba(28, 175, 79, 0.249);
-  --disabled: rgba(129, 129, 129, 0.63);
+  --disabled: rgba(232, 236, 237, 0.63);
   
 
   --dark: rgba(0, 0, 0, 0.7);
 
   background-color: var(--uv-gray);
+  --gradient: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
 }
   
 h3{
@@ -49,7 +50,14 @@ h3{
 
 .bg-gradient{
   color: white;
- background-image: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
+ background-image: var(--gradient);
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-link{
@@ -88,12 +96,16 @@ footer{
 }
 
 .specie-view{
+  /*
   flex-grow: 100;
+  height: 100%;
+  
+  */
   display: flex;
   flex-direction: column;
-  width: 10%;
-  max-height: 100%;
+  width: 100%;
   height: 100%;
+  max-height: 100%;
   overflow: auto;
   /*overflow: scroll;*/
 }
@@ -108,14 +120,36 @@ footer{
   */
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  padding:  10px 20px;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%; /* This ensures the div takes full height of its container */
+  max-height: 100%;
   flex-grow: 2;
 }
 
+.header{
+  flex-shrink: 0;
+}
 
+.tab-content{
+  flex: 2;
+  flex-grow: 1; /* Makes the tab-content grow to fill available space */
+  overflow: auto;
+  height: 100%;
+}
+
+table{
+  /*
+  flex-grow: 1;
+  flex-direction: column;
+  
+  */
+  table-layout: auto;
+  
+  max-width: 100px;
+  table-layout: fixed; 
+  height: 100%;
+  
+}
 
 
 .specie-actions{
@@ -205,6 +239,17 @@ input[type="radio"]{
 
 fieldset{
   border: none;
+}
+
+
+
+
+
+
+.specimens{
+  max-height: 100%;
+  flex-grow: 1; /* Makes the tab-content grow to fill available space */
+  overflow: auto;
 }
 
 .tab-panel{
@@ -323,6 +368,7 @@ fieldset{
 }
 .sam-button.disabled{
   background-color: var(--disabled);
+  color: lightgrey;
   cursor: not-allowed;
 }
 .sam-button.disabled:hover{
@@ -418,12 +464,7 @@ a.sam-button{
 }
 
 
-table{
-  flex-grow: 1;
-  table-layout: auto;
-  flex-direction: column;
-  overflow: auto;
-}
+
 
 tbody{
   max-height: 100px;
@@ -438,6 +479,7 @@ tbody{
 tr,
 .tr {
   width: 100%;
+  border-bottom: 1px solid var(--uv-gray-darker);
 }
 
 th,
@@ -448,15 +490,22 @@ td,
   
   overflow:  hidden;
   padding: 0.65rem 1rem;
+  flex-wrap: nowrap;
+  text-wrap: nowrap;
 }
 
 thead{
+  position: sticky;
+  top: 0;
   background-color: var(--bg-main);
-  
+  z-index: 2;
+  box-shadow: var(--box-shadow-lower-solid)
+
 }
 
 th,
 .th {
+  
   position: relative;
   font-weight: 600;
   text-align: start;
@@ -477,10 +526,6 @@ select {
 
 
 
-tr{
-  box-shadow: var(--box-shadow-lower-solid)
-
-}
 
 .resize-bar{
   position: absolute;
@@ -502,7 +547,7 @@ tr{
   position: absolute;
   top: 0;
   height: 100%;
-  width: 2px;
+  width: 10px;
   cursor: col-resize;
   user-select: none;
   touch-action: none;
@@ -559,7 +604,7 @@ tr{
 .input-group{
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 30px;
 }
 
@@ -614,20 +659,30 @@ label.hasError{
   width: 100%;
   outline: none;
   border: none;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
   font-size: 0.9rem;
   color: black;
   background-color: transparent;
   height: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  border: 2px solid var(--uv-gray-darker);
-  background-color: var(--uv-gray-light);
+  border: 1px solid var(--uv-gray-darker);
 }
 .input.has-icon{
   padding-left: 50px;
 
+}
+
+.grid-3column{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.grid-2column{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .icon-only{
@@ -641,9 +696,7 @@ label.hasError{
   background-color: var(--uv-gray-darker);
 }
 
-input{
-  
-}
+
 input:hover, .input:hover{
   background-color: var(--uv-gray-dark);
 
@@ -1108,7 +1161,7 @@ nav{
 
 .page-padding {
   padding-left: clamp(10%, 5%, 60%) !important;
-  padding-right: clamp(10%, 50%, 60%) !important;
+  padding-right: clamp(10%, 52%, 60%) !important;
 }
 
 .landing{
@@ -1207,6 +1260,9 @@ nav{
 }
 .justify-content-end{
   justify-content: end;
+}
+.justify-content-start{
+  justify-content: start;
 }
 .align-items-center{
   align-items: center;

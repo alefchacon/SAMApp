@@ -3,6 +3,7 @@ class SpecieSerializer {
     data,
     specimens = []
   ){
+    this.id = data.id;
     this.class_specie = "Mammalia";
     this.orden = data.orden;
     this.family = data.family;

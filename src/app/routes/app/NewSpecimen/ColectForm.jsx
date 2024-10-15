@@ -6,7 +6,7 @@ import { Form, useFormikContext } from "formik";
 import TextField from "../../../../components/ui/TextField";
 import Button from "../../../../components/ui/Button";
 import ContributorForm from "./ContributorForm";
-import ContributorAutocomplete from "../../../../features/contributors/ContributorAutocomplete";
+import ContributorAutocomplete from "../../../../features/contributors/components/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../../components/contexts/ModalContext";
 import RadioList from "../../../../components/ui/RadioList";
@@ -80,38 +80,40 @@ export default function ContributorsForm({ inputWidth = "" }) {
   };
 
   return (
-    <Form className="" autoComplete="off">
+    <div className="">
       <div className="input-group">
         <h3>Colecta</h3>
-        <TextField
-          onBlur={onBlur}
-          required
-          isFormik
-          name="colection_date"
-          label={"Fecha de colecta"}
-          value={values.colection_date}
-          onChange={handleChange}
-          hasError={Boolean(errors.colection_date && touched.colection_date)}
-          errorMessage={errors.colection_date}
-          type="date"
-          maxWidth={inputWidth}
-          max={moment().format("YYYY-MM-DD")}
-        ></TextField>
-        <TextField
-          onBlur={onBlur}
-          isFormik
-          label={"Hora de la colecta"}
-          maxWidth={inputWidth}
-          type="time"
-          name="hour"
-          value={values.hour}
-          onChange={handleChange}
-          hasError={Boolean(errors.hour && touched.hour)}
-          errorMessage={errors.hour}
-          step={60}
-          min="00:00"
-          max="23:59"
-        ></TextField>
+        <div className="grid-2column">
+          <TextField
+            onBlur={onBlur}
+            required
+            isFormik
+            name="colection_date"
+            label={"Fecha de colecta"}
+            value={values.colection_date}
+            onChange={handleChange}
+            hasError={Boolean(errors.colection_date && touched.colection_date)}
+            errorMessage={errors.colection_date}
+            type="date"
+            maxWidth={inputWidth}
+            max={moment().format("YYYY-MM-DD")}
+          ></TextField>
+          <TextField
+            onBlur={onBlur}
+            isFormik
+            label={"Hora de la colecta"}
+            maxWidth={inputWidth}
+            type="time"
+            name="hour"
+            value={values.hour}
+            onChange={handleChange}
+            hasError={Boolean(errors.hour && touched.hour)}
+            errorMessage={errors.hour}
+            step={60}
+            min="00:00"
+            max="23:59"
+          ></TextField>
+        </div>
         <RadioList
           required
           onBlur={onBlur}
@@ -134,6 +136,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
           maxWidth={inputWidth}
           hasError={errors.nature && touched.nature}
         />
+
         <ContributorAutocomplete
           roleId={CONTRIBUTOR_ROLES.COLECTOR}
           required
@@ -233,6 +236,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           errorMessage={errors.comment}
         ></TextArea>
       </div>
-    </Form>
+    </div>
   );
 }

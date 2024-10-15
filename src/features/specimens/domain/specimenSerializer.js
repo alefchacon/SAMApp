@@ -28,7 +28,9 @@ class SpecimenSerializer {
     this.length_paw = defaults.getOrDefaultNumber(data.length_paw); 
     this.length_tail = defaults.getOrDefaultNumber(data.length_tail);
     this.weight = defaults.getOrDefaultNumber(data.weight);
-    //this.location = new Location(data);
+    if (Boolean(data.location)){
+      this.location = new Location(data.location);
+    }
     if (data.specie !== null && typeof data.specie === "object"){
       this.specie = data.specie.id
     } else if (data.specie){

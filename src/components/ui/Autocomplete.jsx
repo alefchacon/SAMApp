@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import useTextFilter from "../../hooks/useTextFilter";
+import TextField from "./TextField";
+import Highlight from "./Highlight";
 
 export default function Autocomplete({
   items = ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
@@ -9,7 +12,6 @@ export default function Autocomplete({
   errorMessage = "",
   name = ``,
   id = `${name}`,
-  validate = true,
   hasError = false,
   value = ``,
   disabled = false,
@@ -19,16 +21,14 @@ export default function Autocomplete({
   onBlur,
   maxLength = 50,
 }) {
-  const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
   const textFieldRef = useRef();
+  const [filteredItems, handleFilterChange, filterText, clearFilter] =
+    useTextFilter(items, 0);
+
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
-  };
-  const handleFilterChange = (event) => {
-    onChange(event);
-    setFilterText(event.target.value);
   };
 
   const toggleDropdown = () => {
@@ -47,72 +47,52 @@ export default function Autocomplete({
     }
   };
 
-  const filteredItems = items.filter((item) =>
-    item?.toLowerCase().includes(filterText.toLowerCase())
-  );
-
   useEffect(() => {
-    console.log("asdf");
     document.addEventListener("click", handleOutsideClick);
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
 
+  const handleChange = (e) => {
+    setFieldValue(name, e.target.value);
+    handleFilterChange(e);
+  };
+
   return (
     <div className="dropdown" ref={dropdownRef}>
-      <div className={`${getErrorClassName()}`}>
-        <div className="flex-col">
-          {label && (
-            <div className="flex-row gap-05rem">
-              <label htmlFor={`${id}`} className="input-label">
-                {label}
-              </label>
-              {required && <p className="required">(requerido)</p>}
-            </div>
-          )}
-          <div
-            htmlFor={`${id}`}
-            className={`sam-text-field-helper-text`}
-            id={`${id}-helper-text`}
-          >
-            {helperText}
-          </div>
-        </div>
-        <div className="flex-row">
-          <input
-            id={id}
-            name={name}
-            type={type}
-            value={value}
-            className={`${getErrorClassName()} input`}
-            maxLength={maxLength}
-            disabled={disabled}
-            onChange={handleFilterChange}
-            onFocus={toggleDropdown}
-            onBlur={onBlur}
-            ref={textFieldRef}
-          ></input>
-        </div>
-      </div>
-
-      <div
-        className={`sam-text-field-error-text`}
-        htmlFor={`${id}`}
-        id={`${id}-error-message`}
-      >
-        {hasError && errorMessage}
-      </div>
+      <TextField
+        label={label}
+        placeholder={placeholder}
+        required={required}
+        id={id}
+        name={name}
+        type={type}
+        className={`${getErrorClassName()} input`}
+        maxLength={maxLength}
+        disabled={disabled}
+        onChange={handleChange}
+        onFocus={toggleDropdown}
+        onBlur={onBlur}
+        ref={textFieldRef}
+        hasError={hasError}
+        errorMessage={errorMessage}
+      ></TextField>
 
       {isOpen && (
-        <ul className="dropdown-menu pop-up">
+        <ul className="dropdown-menu pop-up" role="listbox">
           {filteredItems.map((item, index) => (
             <li
               className="selectable p-05rem"
               key={index}
+              role="option"
               onClick={() => handleOptionClick(item)}
             >
-              {item}
+              <Highlight
+                text={item}
+                highlight={filterText}
+                key={index}
+              ></Highlight>
             </li>
           ))}
         </ul>
