@@ -37,7 +37,7 @@ export default function Tabs({
 
   return (
     <div
-      className="tab-content"
+      className="tab-content h-100"
       style={{
         flexGrow: 1,
         display: "flex",

@@ -22,7 +22,7 @@ export default function Stepper({
   };
 
   const buttonRow = (index) => (
-    <div className="button-row">
+    <div className="button-row p-1rem">
       {index > 0 && (
         <Button
           value={children[index + -1]?.props.id}
@@ -48,6 +48,9 @@ export default function Stepper({
       )}
     </div>
   );
+
+  const currentChild = children.find((child) => child.props.id === selectedId);
+  const currentIndex = children.indexOf(currentChild);
 
   return (
     <div className="stepper-wrapper bg-white" style={{ flexWrap: "wrap" }}>
@@ -100,10 +103,8 @@ export default function Stepper({
         ))}
       </ul>
 
-      <div>
-        {children.find((child) => child.props.id === selectedId)}
-        <Button>Siguiente</Button>
-      </div>
+      {children.find((child) => child.props.id === selectedId)}
+      {buttonRow(currentIndex)}
     </div>
   );
 }

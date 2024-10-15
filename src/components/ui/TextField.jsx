@@ -53,7 +53,11 @@ export default function TextField({
     >
       <div className="sam-text-field-info">
         <div className="form-label" style={{ paddingBottom: "0.5rem" }}>
-          <label htmlFor={`${id}`} className="input-label flex-row gap-1rem">
+          <label
+            htmlFor={`${id}`}
+            className="input-label flex-row gap-05rem"
+            style={{ cursor: "pointer", flexWrap: "wrap" }}
+          >
             {label}
             {required && <ChipLabel iconType={"check"}>Requerido</ChipLabel>}
           </label>
@@ -72,7 +76,7 @@ export default function TextField({
 
       <div
         style={{
-          height: "50px",
+          height: "40px",
 
           display: "flex",
           position: "relative",

@@ -28,10 +28,9 @@ export default function LocationForm({
 }) {
   return (
     <div>
-      <Form>
-        <div className="input-group">
-          <h3>Coordenadas cartesianas</h3>
-
+      <div className="input-group">
+        <h3>Coordenadas cartesianas</h3>
+        <div className="grid-2column">
           <TextField
             label={"UTM X"}
             id="location.coordinates_cartesian_plane_x"
@@ -64,6 +63,8 @@ export default function LocationForm({
             isFormik
             type="number"
           ></TextField>
+        </div>
+        <div className="grid-2column">
           <TextField
             label={"Región UTM"}
             id="location.utm_region"
@@ -80,9 +81,10 @@ export default function LocationForm({
             isFormik
           ></TextField>
         </div>
-        <hr />
-        <div className="input-group">
-          <h3>Coordenadas geográficas</h3>
+      </div>
+      <div className="input-group">
+        <h3>Coordenadas geográficas</h3>
+        <div className="grid-2column">
           <TextField
             label={"Latitud (LN)"}
             id="location.geographical_coordinates_y"
@@ -116,9 +118,10 @@ export default function LocationForm({
             type="number"
           ></TextField>
         </div>
-        <hr />
-        <div className="input-group">
-          <h3>Elevación</h3>
+      </div>
+      <div className="input-group">
+        <h3>Elevación</h3>
+        <div className="grid-2column">
           <TextField
             label={"Metros a nivel del mar"}
             id="location.msnm_google"
@@ -152,9 +155,10 @@ export default function LocationForm({
             isFormik
           ></TextField>
         </div>
-        <hr />
-        <div className="input-group">
-          <h3>Región</h3>
+      </div>
+      <div className="input-group">
+        <h3>Región</h3>
+        <div className="grid-3column">
           <TextField
             label={"País"}
             id="location.country"
@@ -230,25 +234,25 @@ export default function LocationForm({
             isFormik
           ></TextField>
         </div>
-        <hr />
-        <div className="input-group">
-          <h3>Instituto</h3>
-
-          <TextField
-            label={"Nombre del instituto"}
-            id="location.institute"
-            name="location.institute"
-            onChange={handleChange}
-            onBlur={onBlur}
-            value={values.location.institute}
-            errorMessage={errors.location?.institute}
-            hasError={Boolean(
-              errors.location?.institute && touched.location?.institute
-            )}
-            maxLength={150}
-            required
-            isFormik
-          ></TextField>
+      </div>
+      <div className="input-group">
+        <h3>Instituto</h3>
+        <TextField
+          label={"Nombre del instituto"}
+          id="location.institute"
+          name="location.institute"
+          onChange={handleChange}
+          onBlur={onBlur}
+          value={values.location.institute}
+          errorMessage={errors.location?.institute}
+          hasError={Boolean(
+            errors.location?.institute && touched.location?.institute
+          )}
+          maxLength={150}
+          required
+          isFormik
+        ></TextField>
+        <div className="grid-2column">
           <TextField
             id="location.institute_code"
             name="location.institute_code"
@@ -279,7 +283,7 @@ export default function LocationForm({
             maxLength={20}
           ></TextField>
         </div>
-      </Form>
+      </div>
     </div>
   );
 }
