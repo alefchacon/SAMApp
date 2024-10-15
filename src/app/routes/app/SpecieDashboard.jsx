@@ -168,7 +168,7 @@ export default function SpecieDashboard({
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
-                <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
+                <div className="specimens-controls p-05rem gap-1rem flex-row align-items-center">
                   <TextField
                     iconType={"search"}
                     placeholder={

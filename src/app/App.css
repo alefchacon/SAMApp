@@ -496,12 +496,16 @@ td,
 }
 
 thead{
+  position: sticky;
+  top: 0;
   background-color: var(--bg-main);
+  z-index: 2;
   
 }
 
 th,
 .th {
+  
   position: relative;
   font-weight: 600;
   text-align: start;

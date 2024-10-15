@@ -329,7 +329,7 @@ export default function Table({ data, onEdit }) {
 
   return (
     <>
-      <div className="table-actions flex-row p-1rem align-items-center justify-content-space-between bg-white">
+      <div className="table-actions flex-row p-05rem align-items-center justify-content-space-between bg-white">
         <div className="table-page-buttons flex-row align-items-center">
           <Button
             className="secondary"
