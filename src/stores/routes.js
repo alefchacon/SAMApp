@@ -6,6 +6,7 @@ const ROUTES = Object.freeze({
   BUSCAR: "buscar",
   FICHAS: "/fichas",
   REGISTRARSE: "/registrarse",
+  USUARIOS: "/usuarios",
   AGREGAR_ESPECIMEN: "/coleccion/agregar-especimen",
   EDITAR_ESPECIMEN: "/coleccion/editar-especimen"
 })

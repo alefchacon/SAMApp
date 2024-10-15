@@ -126,6 +126,12 @@ footer{
   flex-grow: 2;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .header{
   flex-shrink: 0;
 }
@@ -1081,7 +1087,7 @@ a{
   left: 0;
   background-color: white;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   width: 100%;
   min-width: 250px;
   max-height: 40vh;

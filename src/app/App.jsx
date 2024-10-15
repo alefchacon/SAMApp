@@ -20,6 +20,7 @@ import Photosheets from "./routes/app/Photosheets";
 import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
+import Users from "./routes/app/Users.jsx";
 
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
@@ -126,6 +127,7 @@ function App() {
             path={ROUTES.SOLICITAR_ACCESO}
             element={<AccessRequestForm />}
           ></Route>
+          <Route path={ROUTES.USUARIOS} element={<Users />}></Route>
           <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
           {/*
           
