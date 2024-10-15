@@ -16,7 +16,7 @@ export default function useTextFilter(items = [], debounceMs = 700) {
 
   const handleFilterChange = useCallback(
     (event) => {
-      setLoading(true);
+      setLoading(debounceMs > 100);
       const value = event.target.value;
       setFilterText(value);
       debouncedSetFilter(value);

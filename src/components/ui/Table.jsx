@@ -253,44 +253,48 @@ function TableRow({ rowData, onEdit }) {
   };
 
   return (
-    <div className="row-wrapper">
-      <div
-        key={rowData.id}
-        className="tr selectable hoverable2"
-        style={{ position: "relative" }}
+    <tr
+      key={rowData.id}
+      className="tr selectable hoverable2"
+      style={{ position: "relative" }}
+    >
+      <HoverableActions
+        action1={() =>
+          navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
+            state: { specimen: rowData.original },
+          })
+        }
+        position="fixed"
       >
-        <HoverableActions
-          action1={() =>
+        <Button
+          iconType="edit"
+          className="icon-only color-white"
+          onClick={() =>
             navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
               state: { specimen: rowData.original },
             })
           }
+        ></Button>
+        <Button
+          iconType="delete"
+          className="icon-only color-white danger"
+          onClick={handleConfirmDelete}
+        ></Button>
+      </HoverableActions>
+      {rowData.getVisibleCells().map((cell) => (
+        <td
+          className="td"
+          key={cell.id}
+          {...{
+            style: {
+              width: cell.column.getSize(),
+            },
+          }}
         >
-          <Button
-            iconType="delete"
-            className="icon-only color-white danger"
-            onClick={handleConfirmDelete}
-          ></Button>
-        </HoverableActions>
-        {rowData.getVisibleCells().map((cell) => (
-          <div
-            className="td"
-            key={cell.id}
-            {...{
-              style: {
-                width: cell.column.getSize(),
-              },
-            }}
-          >
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </div>
-        ))}
-        {/*
-        
-        <HoverableActions></HoverableActions>
-        */}
-      </div>
-    </div>
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </td>
+      ))}
+    </tr>
   );
 }
 

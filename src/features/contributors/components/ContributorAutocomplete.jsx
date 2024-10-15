@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import useTextFilter from "../../hooks/useTextFilter";
-import Highlight from "../../components/ui/Highlight";
-import TextField from "../../components/ui/TextField";
-import Button from "../../components/ui/Button";
-import Chip from "../../components/ui/ChipInput";
-import ChipLabel from "../../components/ui/ChipLabel";
-import CardContributor from "./components/CardContributor";
+import useTextFilter from "../../../hooks/useTextFilter";
 
+import Chip from "../../../components/ui/ChipInput";
+import ChipLabel from "../../../components/ui/ChipLabel";
+import CardContributor from "./CardContributor";
 export default function ContributorAutocomplete({
   contributors = [
     {

@@ -17,22 +17,12 @@ import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 import AccessRequests from "./routes/app/AccessRequests";
 import Photosheets from "./routes/app/Photosheets";
-import UploaderImage from "../components/ui/UploaderImage";
-import SpecieList from "../features/specie/components/SpecieList";
 import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
-import {
-  mockGetSpecies,
-  getSpecieList,
-} from "../features/specie/businessLogic/getSpecies";
-import FormTemplate from "../components/ui/FormTemplate";
-// COMPONENTS
-import Uploader from "../components/ui/Uploader";
-import AuthGuard from "../components/logic/AuthGuard.jsx";
-import SignUpGuard from "../components/logic/SignUpGuard.jsx";
-import Button from "../components/ui/Button.jsx";
 
+// COMPONENTS
+import AuthGuard from "../components/logic/AuthGuard.jsx";
 import { ROLE_TYPES } from "../stores/roleTypes";
 
 import Navbar from "../components/ui/Navbar";

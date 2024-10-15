@@ -6,7 +6,7 @@ import { Form, useFormikContext } from "formik";
 import TextField from "../../../../components/ui/TextField";
 import Button from "../../../../components/ui/Button";
 import ContributorForm from "./ContributorForm";
-import ContributorAutocomplete from "../../../../features/contributors/ContributorAutocomplete";
+import ContributorAutocomplete from "../../../../features/contributors/components/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../../components/contexts/ModalContext";
 import RadioList from "../../../../components/ui/RadioList";
@@ -14,7 +14,6 @@ import RadioList from "../../../../components/ui/RadioList";
 import TextArea from "../../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
-import Autocomplete from "../../../../components/ui/Autocomplete";
 
 const CONTRIBUTOR_ROLE_NAMES = Object.freeze({
   1: "colector",

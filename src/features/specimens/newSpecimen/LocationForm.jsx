@@ -123,7 +123,7 @@ export default function LocationForm({
         <h3>Elevación</h3>
         <div className="grid-2column">
           <TextField
-            label={"Metros a nivel del mar"}
+            label={"MSNM Google"}
             id="location.msnm_google"
             name="location.msnm_google"
             type="number"

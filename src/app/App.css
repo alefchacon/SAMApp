@@ -35,7 +35,7 @@
   --bg-unfocused: rgba(0, 0, 0, 0.5);
   --bg-hovered: rgba(40, 173, 86, 0.1);
   --bg-hovered2: rgba(28, 175, 79, 0.249);
-  --disabled: rgba(129, 129, 129, 0.63);
+  --disabled: rgba(232, 236, 237, 0.63);
   
 
   --dark: rgba(0, 0, 0, 0.7);
@@ -147,7 +147,6 @@ table{
   
   max-width: 100px;
   table-layout: fixed; 
-  border: 5px solid blue;
   height: 100%;
   
 }
@@ -248,7 +247,6 @@ fieldset{
 
 
 .specimens{
-  border: 5px solid red;
   max-height: 100%;
   flex-grow: 1; /* Makes the tab-content grow to fill available space */
   overflow: auto;
@@ -370,6 +368,7 @@ fieldset{
 }
 .sam-button.disabled{
   background-color: var(--disabled);
+  color: lightgrey;
   cursor: not-allowed;
 }
 .sam-button.disabled:hover{
@@ -500,7 +499,8 @@ thead{
   top: 0;
   background-color: var(--bg-main);
   z-index: 2;
-  
+  box-shadow: var(--box-shadow-lower-solid)
+
 }
 
 th,
@@ -526,10 +526,6 @@ select {
 
 
 
-tr{
-  box-shadow: var(--box-shadow-lower-solid)
-
-}
 
 .resize-bar{
   position: absolute;
@@ -672,7 +668,6 @@ label.hasError{
   max-width: 100%;
   box-sizing: border-box;
   border: 1px solid var(--uv-gray-darker);
-  background-color: var(--uv-gray-light);
 }
 .input.has-icon{
   padding-left: 50px;
@@ -701,9 +696,7 @@ label.hasError{
   background-color: var(--uv-gray-darker);
 }
 
-input{
-  
-}
+
 input:hover, .input:hover{
   background-color: var(--uv-gray-dark);
 
@@ -1168,7 +1161,7 @@ nav{
 
 .page-padding {
   padding-left: clamp(10%, 5%, 60%) !important;
-  padding-right: clamp(10%, 50%, 60%) !important;
+  padding-right: clamp(10%, 52%, 60%) !important;
 }
 
 .landing{

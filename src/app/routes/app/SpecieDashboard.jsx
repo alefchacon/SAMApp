@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import SpecieList from "../../../features/specie/components/SpecieList";
 import SpecimenView from "../../../features/specie/components/SpecimenView";
 import Table from "../../../components/ui/Table";
-import {
-  mockGetSpecies,
-  getSpecieList,
-} from "../../../features/specie/businessLogic/getSpecies";
+
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";

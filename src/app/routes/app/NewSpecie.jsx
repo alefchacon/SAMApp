@@ -3,24 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 
 // CUSTOM COMPONENTS
-import SearchField from "../../../components/ui/SearchField";
 import Button from "../../../components/ui/Button";
-import AddIcon from "../../../components/icons/AddIcon";
-import CloseIcon from "../../../components/icons/CloseIcon";
 import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS
 import { specieSchema } from "../../../features/specie/formikSchemas/specieSchema";
 
-// API CALLS
-import {
-  mockGetSpecies,
-  getOrdens,
-  getFamilies,
-  getGenders,
-  getEpithets,
-  getSubspecies,
-} from "../../../features/specie/businessLogic/getSpecies";
+import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 
 export default function NewSpecie({
   onSubmit,
@@ -33,32 +22,32 @@ export default function NewSpecie({
   },
   open,
 }) {
-  const formikRef = useRef();
   const submitSpecie = async (values, actions) => {
-    values.scientific_name = `${values.gender} ${values.epithet}`;
     await onSubmit(values);
     actions.resetForm();
+    fetchTaxonomyWanks();
   };
 
-  const [ordens, setOrdens] = useState([]);
-  const [families, setFamilies] = useState([]);
-  const [genders, setGenders] = useState([]);
-  const [epithets, setEpithets] = useState([]);
-  const [subspecies, setSubspecies] = useState([]);
+  const { getTaxonomyRanks } = useSpecie();
+
   const [isReady, setIsReady] = useState(false);
 
+  const [ranks, setRanks] = useState({
+    ordens: [],
+    families: [],
+    genders: [],
+    species_specie: [],
+    subspecies: [],
+  });
+
+  const fetchTaxonomyWanks = () => {
+    getTaxonomyRanks().then((response) => {
+      setRanks(response.data);
+    });
+  };
+
   useEffect(() => {
-    async function fetchData() {
-      setOrdens(await getOrdens());
-
-      setFamilies(await getFamilies());
-      setGenders(await getGenders());
-      setEpithets(await getEpithets());
-      setSubspecies(await getSubspecies());
-    }
-
-    fetchData();
-
+    fetchTaxonomyWanks();
     setIsReady(true);
   }, []);
 
@@ -69,15 +58,12 @@ export default function NewSpecie({
           validationSchema={specieSchema}
           initialValues={specie}
           onSubmit={submitSpecie}
-          innerRef={formikRef}
           enableReinitialize
         >
           {({
             values,
             errors,
             touched,
-            isValid,
-            dirty,
             setFieldValue,
             handleChange,
             handleBlur,
@@ -87,7 +73,7 @@ export default function NewSpecie({
                 required
                 id="orden"
                 name="orden"
-                items={ordens}
+                items={ranks?.ordens}
                 label="Orden"
                 errorMessage={errors.orden}
                 hasError={errors.orden && touched.orden}
@@ -100,7 +86,7 @@ export default function NewSpecie({
                 required
                 id="family"
                 name="family"
-                items={families}
+                items={ranks?.families}
                 label="Familia"
                 errorMessage={errors.family}
                 hasError={errors.family && touched.family}
@@ -115,7 +101,7 @@ export default function NewSpecie({
                 name="gender"
                 label="Género"
                 required
-                items={genders}
+                items={ranks?.genders}
                 value={values.gender}
                 hasError={errors.gender && touched.gender}
                 errorMessage={errors.gender}
@@ -128,7 +114,7 @@ export default function NewSpecie({
                 name="specie_specie"
                 label="Especie"
                 required
-                items={epithets}
+                items={ranks?.species_specie}
                 value={values.specie_specie}
                 hasError={errors.specie_specie && touched.specie_specie}
                 errorMessage={errors.specie_specie}
@@ -141,7 +127,7 @@ export default function NewSpecie({
                 required
                 name="subspecie"
                 label="Sub especie"
-                items={subspecies}
+                items={ranks?.subspecies}
                 value={values.subspecie}
                 hasError={errors.subspecie && touched.subspecie}
                 errorMessage={errors.subspecie}

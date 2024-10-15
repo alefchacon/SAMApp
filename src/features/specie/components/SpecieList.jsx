@@ -16,7 +16,6 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
-import { mockGetSpecies } from "../businessLogic/getSpecies";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export default function SpecieList({
@@ -30,12 +29,8 @@ export default function SpecieList({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [fold, setFold] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [specieToEdit, setSpecieToEdit] = useState(null);
   const [filteredItems, handleFilterChange, filterText] =
     useTextFilter(species);
-
-  const { showModal } = useModal();
 
   const handleSelection = (newSelectedIndex) => {
     setSelectedIndex(newSelectedIndex);
@@ -124,10 +119,18 @@ export default function SpecieList({
                     }}
                     onClick={() => handleSelection(specie.id)}
                   >
-                    <HoverableActions
-                      action1={() => onEdit(specie)}
-                      action2={onAddSpecimen}
-                    ></HoverableActions>
+                    <HoverableActions>
+                      <Button
+                        iconType="edit"
+                        className="icon-only color-white"
+                        onClick={() => onEdit(specie)}
+                      ></Button>
+                      <Button
+                        iconType="add"
+                        className="icon-only color-white"
+                        onClick={onAddSpecimen}
+                      ></Button>
+                    </HoverableActions>
                     <p style={{ fontWeight: 500 }}>
                       <i>{specie.epithet}</i>
                     </p>
