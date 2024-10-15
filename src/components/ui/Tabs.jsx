@@ -36,14 +36,7 @@ export default function Tabs({
   preventConditionalTabCrash();
 
   return (
-    <div
-      className="tab-content h-100"
-      style={{
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="tab-content flex-col">
       <div
         className={`tab-bar flex-rowalign-content-center  ${
           center ? "justify-content-center" : "justify-content-space-between"

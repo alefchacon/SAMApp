@@ -165,7 +165,7 @@ export default function SpecieDashboard({
                     Especímenes <ChipLabel>{specimens.length}</ChipLabel>
                   </div>
                 }
-                className={`specimens flex-col h-100 p-1rem`}
+                className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
                 <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
@@ -217,7 +217,6 @@ export default function SpecieDashboard({
         ) : (
           <NoResults itemName="especímenes" />
         )}
-        <Footer></Footer>
       </>
     );
   }
