@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import useTextFilter from "../../hooks/useTextFilter";
 import TextField from "./TextField";
 import Highlight from "./Highlight";
+import useKeyboardSelection from "../../hooks/useKeyboardSelection";
 
 export default function Autocomplete({
   items = ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
@@ -26,6 +27,17 @@ export default function Autocomplete({
   const textFieldRef = useRef();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(items, 0);
+  const handleOptionSelect = (option) => {
+    textFieldRef.current.value = option;
+    setFieldValue(name, option);
+    setIsOpen(false);
+  };
+  const { handleKeyDown, selectedIndex } = useKeyboardSelection(
+    isOpen,
+    setIsOpen,
+    filteredItems,
+    handleOptionSelect
+  );
 
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
@@ -33,12 +45,6 @@ export default function Autocomplete({
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option) => {
-    textFieldRef.current.value = option;
-    setFieldValue(name, option);
-    setIsOpen(false);
   };
 
   const handleOutsideClick = (event) => {
@@ -73,6 +79,7 @@ export default function Autocomplete({
         disabled={disabled}
         onChange={handleChange}
         onFocus={toggleDropdown}
+        onKeydown={handleKeyDown}
         onBlur={onBlur}
         ref={textFieldRef}
         hasError={hasError}
@@ -83,10 +90,12 @@ export default function Autocomplete({
         <ul className="dropdown-menu pop-up" role="listbox">
           {filteredItems.map((item, index) => (
             <li
-              className="selectable p-05rem"
+              className={`selectable p-05rem ${
+                selectedIndex === index ? "selected" : ""
+              }`}
               key={index}
               role="option"
-              onClick={() => handleOptionClick(item)}
+              onClick={() => handleOptionSelect(item)}
             >
               <Highlight
                 text={item}

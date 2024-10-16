@@ -29,7 +29,7 @@ export default function Account({
               {accessRequestCount > 0 && <Badge>{accessRequestCount}</Badge>}
               <Button
                 iconType="notifications"
-                className="icon-only secondary"
+                className="icon-only color-white"
               ></Button>
             </div>
           </Link>

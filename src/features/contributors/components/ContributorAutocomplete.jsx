@@ -4,6 +4,7 @@ import useTextFilter from "../../../hooks/useTextFilter";
 import Chip from "../../../components/ui/ChipInput";
 import ChipLabel from "../../../components/ui/ChipLabel";
 import CardContributor from "./CardContributor";
+import useKeyboardSelection from "../../../hooks/useKeyboardSelection";
 export default function ContributorAutocomplete({
   contributors = [
     {
@@ -33,12 +34,22 @@ export default function ContributorAutocomplete({
   maxLength = 50,
   value,
 }) {
-  //const [selectedContributor, setSelectedContributor] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
   const dropdownRef = useRef();
   const textFieldRef = useRef();
+  const handleOptionSelect = (option) => {
+    option.contributor_role_id = roleId;
+    onChange(option, roleId);
+    setIsOpen(false);
+  };
+  const { handleKeyDown, selectedIndex } = useKeyboardSelection(
+    isOpen,
+    setIsOpen,
+    filteredItems,
+    handleOptionSelect
+  );
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
   };
@@ -49,14 +60,6 @@ export default function ContributorAutocomplete({
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option) => {
-    option.contributor_role_id = roleId;
-    //handleContributorUpdate(option);
-    //setSelectedContributor(option);
-    onChange(option, roleId);
-    setIsOpen(false);
   };
 
   const handleOutsideClick = (event) => {
@@ -153,6 +156,7 @@ export default function ContributorAutocomplete({
             disabled={disabled}
             onChange={handleFilterChange}
             onFocus={toggleDropdown}
+            onKeyDown={handleKeyDown}
             placeholder="Busque colaboradores"
           />
 
@@ -191,8 +195,10 @@ export default function ContributorAutocomplete({
           {filteredItems.map((item, index) => (
             <li
               key={index}
-              className="selectable"
-              onClick={() => handleOptionClick(item)}
+              className={`selectable p-05rem ${
+                selectedIndex === index ? "selected" : ""
+              }`}
+              onClick={() => handleOptionSelect(item)}
             >
               <CardContributor
                 filterText={filterText}

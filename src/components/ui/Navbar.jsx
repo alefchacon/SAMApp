@@ -92,8 +92,16 @@ export default function Navbar({ accessRequestCount = 0 }) {
       </div>
       <span></span>
       <div style={{ flex: 1 }}></div>
-      <div className="right-side flex-row gap-1rem ">
-        <div className="hide-if-mobile">
+      <div className="right-side flex-row gap-1rem h-100">
+        <div className="hide-if-mobile flex-row gap-1rem align-items-center">
+          <Link
+            to={ROUTES.USUARIOS}
+            className={`selectable nav-link ${
+              ROUTES.USUARIOS === pathname ? "selected" : ""
+            }`}
+          >
+            <InfoItem label={"Usuarios"} iconType={"person"}></InfoItem>
+          </Link>
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>
         <Button

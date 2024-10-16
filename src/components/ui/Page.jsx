@@ -1,15 +1,10 @@
 import Card from "./Card.jsx";
 import Footer from "./Footer.jsx";
 import HeaderPage from "./HeaderPage.jsx";
-export default function Page({ children }) {
+export default function Page({ children, title, subtitle }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-      <HeaderPage
-        title="Regístrese"
-        subtitle={
-          "Le agradecemos su paciencia. Antes de acceder a la colección, le pedimos que ingrese algunos datos personales a continuación. Todos los campos son necesarios."
-        }
-      ></HeaderPage>
+      <HeaderPage title={title} subtitle={subtitle}></HeaderPage>
 
       <div
         className="flex-col page-padding"
