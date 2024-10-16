@@ -41,25 +41,16 @@ export default function Photosheets({
     },
     add = true,
   }) {
-    const [description, setDescription] = useState("");
-    const [sheet, setSheet] = useState("");
     const formikRef = useRef(null);
 
-    console.log(photosheet);
-
     const handleSubmit = async (values, actions) => {
-      console.log(values);
-      //console.log(actions);
       if (add) {
         await addPhotosheet(values);
       } else {
         await updatePhotosheet(values);
       }
       actions.resetForm();
-      //console.log(formikRef.current.submitForm());
     };
-
-    const handleUploadClic = () => {};
 
     return (
       <>
@@ -87,10 +78,13 @@ export default function Photosheets({
                 onUpload={(sheet) => setFieldValue("sheet", sheet)}
               ></UploaderImage>
               <TextField
-                name="description"
-                errorMessage={errors.description}
                 label={"Descripción de la ficha"}
+                id="description"
+                name="description"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 value={values.description}
+                errorMessage={errors.description}
                 hasError={errors.description && touched.description}
                 maxLength={100}
                 isFormik
@@ -119,12 +113,11 @@ export default function Photosheets({
     confirmDeletePhotosheet(id);
   };
 
-  const handleUpdate = (photosheet) => {
+  const showEditPhotosheetModal = (photosheet) => {
     showModal(
       "Editar ficha fotográfica",
       <PhotosheetForm photosheet={photosheet} add={false} />
     );
-    console.log(photosheet);
   };
 
   return (
@@ -152,7 +145,7 @@ export default function Photosheets({
             photosheet={photosheet}
             key={index}
             onDelete={handleDelete}
-            onUpdate={handleUpdate}
+            onUpdate={showEditPhotosheetModal}
             role={role}
           />
         ))}

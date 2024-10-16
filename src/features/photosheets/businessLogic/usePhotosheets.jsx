@@ -61,7 +61,14 @@ export default function usePhotosheets() {
   const updatePhotosheet = async (photosheet) => {
     let formData = new FormData();
     formData.append("description", photosheet.description);
-    formData.append("sheet", photosheet.sheet);
+
+    //When editing, the pre-edit photosheet is not a blob (binary file), but the image's URL sent by the backnd.
+    //If the user updates only the description, then the sheet payload is a URL instead of a blob.
+    //Backend rejects non-blob sheets. However, if the user switches the sheet for another, then the sheet
+    //becomes a blob. Hence:
+    if (photosheet.sheet instanceof Blob) {
+      formData.append("sheet", photosheet.sheet);
+    }
 
     const response = await api.put(
       PHOTOSHEETS_URL.concat(`${photosheet.id}/`),
