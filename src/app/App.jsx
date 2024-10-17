@@ -21,6 +21,7 @@ import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
 import Users from "./routes/app/Users.jsx";
+import Migrate from "./routes/app/Migrate.jsx";
 
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
@@ -128,6 +129,7 @@ function App() {
             element={<AccessRequestForm />}
           ></Route>
           <Route path={ROUTES.USUARIOS} element={<Users />}></Route>
+          <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
           <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
           {/*
           

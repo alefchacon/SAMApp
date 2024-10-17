@@ -145,12 +145,11 @@ const defaultColumns = [
       return info.getValue()?.institute_code || "";
     },
   }),
-  columnHelper.accessor("location", {
-    id: "colection_code",
+
+  columnHelper.accessor("colection_code", {
     header: () => "Código de la colección",
-    cell: (info) => {
-      return info.getValue()?.colection_code || "";
-    },
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
   }),
   columnHelper.accessor("location", {
     id: "utm_region",

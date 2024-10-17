@@ -5,7 +5,7 @@ import { Form, useFormikContext } from "formik";
 // CUSTOM COMPONENTS
 import TextField from "../../../../components/ui/TextField";
 import Button from "../../../../components/ui/Button";
-import ContributorForm from "./ContributorForm";
+import ContributorForm from "../../../../features/contributors/components/ContributorForm";
 import ContributorAutocomplete from "../../../../features/contributors/components/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../../components/contexts/ModalContext";

@@ -42,8 +42,9 @@ export default function SpecieDashboard({
     getSpecies,
     postSpecie,
     updateSpecie,
-    uploadColection,
+    migrateColection,
     selectedSpecieDefault,
+    downloadMigrationFormat,
   } = useSpecie();
   const [selectedSpecieId, setSelectedSpecieId] = useState(
     selectedSpecieDefault?.id ?? 0
@@ -68,8 +69,8 @@ export default function SpecieDashboard({
     getSpecies();
   }, []);
 
-  const handleUploadColection = async (species = []) => {
-    const response = await uploadColection(species);
+  const handleMigrateColection = async (species = []) => {
+    const response = await migrateColection(species);
   };
 
   const handleShowAddSpecimen = () => {
@@ -98,6 +99,13 @@ export default function SpecieDashboard({
         >
           Descargar especímenes
         </Button>
+        <Button
+          className="secondary-white"
+          iconType="download"
+          onClick={downloadMigrationFormat}
+        >
+          Descargar formato
+        </Button>
       </div>
     );
   }
@@ -114,7 +122,7 @@ export default function SpecieDashboard({
             buttonLabel="Agregar especies"
             displayExtension=".CSV"
             multiple
-            onUpload={handleUploadColection}
+            onUpload={handleMigrateColection}
           ></Uploader>
         </div>
       </Tabs>

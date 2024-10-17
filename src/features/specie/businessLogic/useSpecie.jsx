@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import { api, apiWrapper } from "../../../dataAccess/apiClient";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import { SPECIE_IMPORT_URL, SPECIE_URL, TAXONOMY_RANKS_URL } from "./specieURL";
+import {
+  SPECIE_MIGRATE_URL,
+  SPECIE_URL,
+  TAXONOMY_RANKS_URL,
+} from "./specieURL";
 import SpecieSerializer from "../domain/specieSerializer";
 
 export const useSpecie = (specieId = 0) => {
@@ -53,11 +57,26 @@ export const useSpecie = (specieId = 0) => {
     }
   });
 
-  const uploadColection = useCallback(async (species) => {
-    api.post(SPECIE_IMPORT_URL, species);
+  const migrateColection = useCallback(async (species) => {
+    api.post(`${SPECIE_MIGRATE_URL}`, species);
   });
+
   const getTaxonomyRanks = useCallback(async () => {
     return await api.get(TAXONOMY_RANKS_URL);
+  });
+
+  const downloadMigrationFormat = useCallback(async () => {
+    const response = await api.get(SPECIE_MIGRATE_URL);
+    console.log(response);
+    const blob = new Blob([response.data], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = "SAM_MIGRACION.csv";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
   });
 
   const selectedSpecieDefault = species[0];
@@ -68,7 +87,8 @@ export const useSpecie = (specieId = 0) => {
     postSpecie,
     updateSpecie,
     selectedSpecieDefault,
-    uploadColection,
+    migrateColection,
     getTaxonomyRanks,
+    downloadMigrationFormat,
   };
 };

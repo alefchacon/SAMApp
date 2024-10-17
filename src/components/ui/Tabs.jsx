@@ -44,7 +44,7 @@ export default function Tabs({
         style={{ padding: "0 1rem" }}
       >
         <ul
-          className={`tab-group flex-row ${className} justify-content-start align-items-center`}
+          className={`tab-group flex-row ${className} justify-content-start align-items-center unstyled`}
           style={{
             position: "sticky",
             top: 0,

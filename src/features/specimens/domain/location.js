@@ -17,6 +17,8 @@ class Location {
     this.municipality = data.municipality;
     this.state = data.state;
     this.country = data.country;
+    this.kilometer = data.kilometer;
+
   }
 
 }
