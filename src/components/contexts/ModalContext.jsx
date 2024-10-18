@@ -15,8 +15,9 @@ export function ModalProvider({ children }) {
   const [modalContent, setModalContent] = useState(null);
   const [dismissable, setDismissable] = useState(true);
   const [width, setWidth] = useState(null);
+  const [maxHeight, setMaxHeight] = useState(null);
 
-  const showModal = (title, content, dismissable, width) => {
+  const showModal = (title, content, dismissable, width, maxHeight) => {
     /*
     setMessage(message);
     setContent(content);
@@ -27,6 +28,7 @@ export function ModalProvider({ children }) {
     setModalTitle(title);
     setOpen(true);
     setWidth(width);
+    setMaxHeight(maxHeight);
   };
 
   const closeModal = (event, reason) => {
@@ -52,6 +54,7 @@ export function ModalProvider({ children }) {
         children={modalContent}
         dismissable={dismissable}
         width={width}
+        maxHeight={maxHeight}
       />
     </ModalContext.Provider>
   );

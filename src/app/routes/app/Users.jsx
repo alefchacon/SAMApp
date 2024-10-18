@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import useUsers from "../../../features/user/businessLogic/useUsers";
 import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CardContributor from "../../../features/contributors/components/CardContributor";
-import ContributorForm from "./NewSpecimen/ContributorForm";
+import ContributorForm from "../../../features/contributors/components/ContributorForm";
+import ContributorPanel from "../../../features/contributors/components/ContributorPanel";
 export default function Users() {
   const { technicalPersons, getTechnicalPersons } = useUsers();
   const { contributors, getContributors, postContributor } =
@@ -45,7 +46,7 @@ export default function Users() {
         </Button>
       </div>
       <br />
-      <ul>
+      <ul className="unstyled">
         {technicalPersons.map((technicalPerson, index) => (
           <OptionWrapper key={index}>
             <HoverableActions position="absolute">
@@ -69,30 +70,7 @@ export default function Users() {
           {technicalPersonTab}
         </div>
         <div label="Colaboradores" className="p-1rem">
-          <div className="flex-row gap-1rem">
-            <p>
-              Estos son los individuos que aportan especímenes a la colección.{" "}
-            </p>
-            <Button iconType="person_add" onClick={handleShowContributorModal}>
-              Registrar colaborador
-            </Button>
-          </div>
-          <ul>
-            {contributors.map((contributor, index) => (
-              <OptionWrapper>
-                <HoverableActions position="absolute">
-                  <Button
-                    iconType="edit"
-                    className="icon-only color-white"
-                  ></Button>
-                </HoverableActions>
-                <CardContributor
-                  contributor={contributor}
-                  key={index}
-                ></CardContributor>
-              </OptionWrapper>
-            ))}
-          </ul>
+          <ContributorPanel></ContributorPanel>
         </div>
       </Tabs>
     </Page>

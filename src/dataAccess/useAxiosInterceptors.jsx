@@ -74,12 +74,15 @@ export const useAxiosInterceptors = () => {
   }
 
   function getErrorContent(error) {
+    console.log(error);
+    let message = "Ocurrió un error inesperado";
     if (error.response?.data?.detail) {
-      return error.response?.data?.detail;
+      message = error.response?.data?.detail;
     }
     if (error.response?.data?.message) {
-      return error.response?.data?.message;
+      message = error.response?.data?.message;
     }
+    return message;
   }
 
   function handleUnauthorized() {

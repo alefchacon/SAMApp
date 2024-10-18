@@ -20,6 +20,7 @@ export default function Uploader({
   displayExtension = ".CSV",
   accept = FILE_TYPES_STRING.CSV,
   onUpload,
+  onParse,
 }) {
   const [files, setFiles] = useState([]);
   const [parsedFiles, setParsedFiles] = useState();
@@ -61,7 +62,6 @@ export default function Uploader({
         return;
       }
     }
-    console.log(newFiles[0]);
 
     setFiles((prev) => [...prev, ...newFiles]);
     const reader = new FileReader();
@@ -69,7 +69,7 @@ export default function Uploader({
       parseCSV(event.target.result);
       setIsParsing(false);
     };
-    reader.readAsText(newFiles[0], "UTF-8");
+    reader.readAsText(newFiles[0], "ISO-8859-1");
   };
 
   const equals = (specieA, specieB) => {
@@ -78,7 +78,6 @@ export default function Uploader({
 
   const handleParsedFiles = (result) => {
     const colectionCsv = result.data;
-    console.log(colectionCsv);
     const allSpecies = colectionCsv.map((row) => new SpecieSerializer(row));
     const uniqueSpecies = allSpecies.filter(
       (specieA, index, self) =>
@@ -98,7 +97,7 @@ export default function Uploader({
       return specie;
     });
 
-    console.log(speciesWithSpecimens);
+    onParse(speciesWithSpecimens);
     setParsedFiles(speciesWithSpecimens);
   };
 
@@ -159,10 +158,6 @@ export default function Uploader({
             />
           </Chip>
         ))}
-      </div>
-
-      <div className="button-row">
-        <Button onClick={handleUpload}>{buttonLabel}</Button>
       </div>
 
       <input

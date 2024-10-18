@@ -7,7 +7,9 @@ class SpecimenSerializer {
     data = {},
   ){
     this.colection_code = data.colection_code;
-    this.colection_number = data.colection_number;
+    this.colection_number =(typeof data.colection_number === "string" && data.colection_number.trim() !== "") 
+    ? parseInt(data.colection_number, 10) 
+    : data.colection_number || null; 
     this.catalog_id = data.catalog_id;
     if (["day", "month", "year"].every(key => data.hasOwnProperty(key))){
       this.colection_date = this.formatDate(data)

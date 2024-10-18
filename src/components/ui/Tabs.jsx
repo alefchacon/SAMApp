@@ -8,8 +8,8 @@ export default function Tabs({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleSelectedTabChange = (tabIndex, tabKey, tabLabel) => {
-    setSelectedIndex(tabIndex);
+  const handleSelectedTabChange = (newIndex) => {
+    setSelectedIndex(newIndex);
   };
 
   function preventSingleTabCrash() {
@@ -27,7 +27,7 @@ export default function Tabs({
         {foo && <div label="Conditional tab"></div>}
       </Tabs>
 
-      If foo = true, Tabs will receive a React element and render as expected. 
+      If foo = true, Tabs will receive a valid React element and render as expected. 
       But if !foo, then Tabs receives a "false" boolean value and crashes, 
       so we need to remove any such values:
     */
@@ -44,7 +44,7 @@ export default function Tabs({
         style={{ padding: "0 1rem" }}
       >
         <ul
-          className={`tab-group flex-row ${className} justify-content-start align-items-center`}
+          className={`tab-group flex-row ${className} justify-content-start align-items-center unstyled`}
           style={{
             position: "sticky",
             top: 0,
@@ -54,19 +54,10 @@ export default function Tabs({
           {children.map((tab, index) => (
             <li
               key={index}
-              style={{
-                borderRadius: "10px 10px 0 0",
-              }}
               className={`tab selectable ${
                 selectedIndex === index ? "selected-tab" : ""
               }`}
-              onClick={() =>
-                handleSelectedTabChange(
-                  index,
-                  tab.props.tabKey,
-                  tab.props.label
-                )
-              }
+              onClick={() => handleSelectedTabChange(index)}
             >
               {tab.props.label}
             </li>
@@ -77,15 +68,9 @@ export default function Tabs({
         </div>
       </div>
 
-      {children.map((tab, index) => (
-        <div
-          key={index}
-          className={`${tab.props.className}
-            ${selectedIndex === index ? "visible tab-panel" : "invisible"}`}
-        >
-          {selectedIndex === index && tab.props.children}
-        </div>
-      ))}
+      <div className={`${children[selectedIndex].props.className} tab-panel`}>
+        {children[selectedIndex]}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
-import SpecimenView from "../../../features/specie/components/SpecimenView";
 import Table from "../../../components/ui/Table";
 
 import Taxonomy from "../../../features/specie/components/Taxonomy";
@@ -11,9 +10,7 @@ import Uploader from "../../../components/ui/Uploader";
 import Header from "../../../components/ui/Header";
 import TextField from "../../../components/ui/TextField";
 
-import { api } from "../../../dataAccess/apiClient";
-
-import NewSpecie from "./NewSpecie";
+import SpecieForm from "../../../features/specie/components/SpecieForm";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
@@ -25,13 +22,14 @@ import NewSpecimen from "./NewSpecimen/NewSpecimen2";
 
 import DATE_TYPES from "../../../features/graphing/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
-const METRICAS_TAB_KEY = "METRICAS";
 import HeaderPage from "../../../components/ui/HeaderPage";
 import NoResults from "../../../components/ui/NoResults";
 import ChipLabel from "../../../components/ui/ChipLabel";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "../../../stores/routes";
 
+const METRICS_TAB_ID = "METRICAS";
+const SPECIMENS_TAB_ID = "METRICAS";
 export default function SpecieDashboard({
   onSelectionChange,
   role = ROLE_TYPES.VISITOR,
@@ -42,22 +40,19 @@ export default function SpecieDashboard({
     getSpecies,
     postSpecie,
     updateSpecie,
-    uploadColection,
+    migrateColection,
     selectedSpecieDefault,
+    downloadMigrationFormat,
   } = useSpecie();
   const [selectedSpecieId, setSelectedSpecieId] = useState(
     selectedSpecieDefault?.id ?? 0
   );
-  const location = useLocation();
   const navigate = useNavigate();
 
   const selectedSpecie =
     species.find((specie) => specie.id === selectedSpecieId) ??
     selectedSpecieDefault;
   onSpecieSelection(selectedSpecie);
-
-  if (selectedSpecie) {
-  }
 
   const { specimens, downloadSpecimens } = useSpecimens(selectedSpecie);
   const [specieListFolded, setSpecieListFolded] = useState(false);
@@ -68,10 +63,6 @@ export default function SpecieDashboard({
     getSpecies();
   }, []);
 
-  const handleUploadColection = async (species = []) => {
-    const response = await uploadColection(species);
-  };
-
   const handleShowAddSpecimen = () => {
     showModal("Agregar espécimen", <NewSpecimen />, true, "fit-content");
   };
@@ -80,7 +71,7 @@ export default function SpecieDashboard({
     navigate(`${ROUTES.AGREGAR_ESPECIMEN}`, {
       state: {
         specie: selectedSpecie,
-        currentSpecimenId: specimens[specimens.length - 1].id,
+        currentSpecimenId: specimens[specimens.length - 1]?.id || 0,
       },
     });
 
@@ -102,32 +93,13 @@ export default function SpecieDashboard({
     );
   }
 
-  function MultiAddSpecie() {
-    return (
-      <Tabs>
-        <div label="Una especie">
-          <NewSpecie onSubmit={postSpecie} />
-        </div>
-        <div label="Múltiples" className="flex-col">
-          <Uploader
-            accept={FILE_TYPES_STRING.CSV}
-            buttonLabel="Agregar especies"
-            displayExtension=".CSV"
-            multiple
-            onUpload={handleUploadColection}
-          ></Uploader>
-        </div>
-      </Tabs>
-    );
-  }
-
   const showSpecieAddModal = () =>
-    showModal("Agregar especie", <MultiAddSpecie />);
+    showModal("Agregar especie", <SpecieForm onSubmit={postSpecie} />);
 
   const showSpecieUpdateModal = (specie) => {
     showModal(
       "Editar especie",
-      <NewSpecie specie={specie} onSubmit={updateSpecie} />
+      <SpecieForm specie={specie} onSubmit={updateSpecie} />
     );
   };
 
@@ -162,6 +134,7 @@ export default function SpecieDashboard({
                     Especímenes <ChipLabel>{specimens.length}</ChipLabel>
                   </div>
                 }
+                id={SPECIMENS_TAB_ID}
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
@@ -176,7 +149,7 @@ export default function SpecieDashboard({
                 <Table data={specimens} onEdit={handleShowAddSpecimen}></Table>
               </div>
             )}
-            <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>
+            <div label={"Métricas"} id={METRICS_TAB_ID}>
               <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
                 <Multigraph
                   graphTitle="Especímenes recolectados por mes"

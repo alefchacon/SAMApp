@@ -64,6 +64,8 @@ export default function UploaderImage({
 
     setFiles((prev) => [...prev, ...newFiles]);
     setIsParsing(false);
+
+    console.log("on upload");
     onUpload(newFiles[0]);
   };
 
@@ -73,8 +75,6 @@ export default function UploaderImage({
     onUpload(null);
   };
 
-  const handleUpload = async () => {};
-  //URL.createObjectURL(photosheet.sheet[0])
   return (
     <>
       <label

@@ -22,6 +22,16 @@ const chipMale = (
     Macho
   </ChipLabel>
 );
+const chipUndefined = (
+  <ChipLabel
+    width="100px"
+    iconType={"question_mark"}
+    color="var(--dark)"
+    backgroundColor="var(--uv-gray-dark)"
+  >
+    ND
+  </ChipLabel>
+);
 
 export default function ChipSex({ sex = SEX.FEMALE }) {
   switch (sex) {
@@ -29,5 +39,7 @@ export default function ChipSex({ sex = SEX.FEMALE }) {
       return chipFemale;
     case SEX.MALE:
       return chipMale;
+    default:
+      return chipUndefined;
   }
 }

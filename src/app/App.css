@@ -126,7 +126,7 @@ footer{
   flex-grow: 2;
 }
 
-ul {
+.unstyled {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -277,7 +277,6 @@ fieldset{
 
   overflow-y: hidden;
   overflow-x: hidden;
-  border-radius: 0px 20px 20px 0;
 }
 
 .specie-list-items{
@@ -1167,7 +1166,7 @@ nav{
 
 .page-padding {
   padding-left: clamp(10%, 5%, 60%) !important;
-  padding-right: clamp(10%, 52%, 60%) !important;
+  padding-right: clamp(10%, 30%, 60%) !important;
 }
 
 .landing{

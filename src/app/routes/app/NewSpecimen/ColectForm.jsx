@@ -5,7 +5,7 @@ import { Form, useFormikContext } from "formik";
 // CUSTOM COMPONENTS
 import TextField from "../../../../components/ui/TextField";
 import Button from "../../../../components/ui/Button";
-import ContributorForm from "./ContributorForm";
+import ContributorForm from "../../../../features/contributors/components/ContributorForm";
 import ContributorAutocomplete from "../../../../features/contributors/components/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../../components/contexts/ModalContext";
@@ -169,7 +169,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           required
         ></TextField>
       </div>
-      <hr />
       <div className="input-group">
         <h3>Preparación</h3>
         <ContributorAutocomplete
@@ -206,7 +205,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           max={moment().format("YYYY-MM-DD")}
         ></TextField>
       </div>
-      <hr />
       <div className="input-group">
         <RadioList
           required

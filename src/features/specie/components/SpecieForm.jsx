@@ -7,11 +7,11 @@ import Button from "../../../components/ui/Button";
 import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS
-import { specieSchema } from "../../../features/specie/formikSchemas/specieSchema";
+import { specieSchema } from "../formikSchemas/specieSchema";
 
-import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
+import { useSpecie } from "../businessLogic/useSpecie";
 
-export default function NewSpecie({
+export default function SpecieForm({
   onSubmit,
   specie = {
     orden: "",

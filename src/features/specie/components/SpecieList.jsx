@@ -1,22 +1,20 @@
 // LIBRARIES
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Specie from "./Specie";
-
-import { useSearchParams } from "react-router-dom";
 
 import Button from "../../../components/ui/Button";
 import HoverableActions from "../../../components/ui/HoverableActions";
 import NoResults from "../../../components/ui/NoResults";
-import NewSpecie from "../../../app/routes/app/NewSpecie";
 import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
 import Taxonomy from "./Taxonomy";
+import { useNavigate } from "react-router-dom";
 
-import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
 import { ROLE_TYPES } from "../../../stores/roleTypes";
+import ROUTES from "../../../stores/routes";
 
 export default function SpecieList({
   role = ROLE_TYPES.VISITOR,
@@ -31,6 +29,8 @@ export default function SpecieList({
   const [fold, setFold] = useState(false);
   const [filteredItems, handleFilterChange, filterText] =
     useTextFilter(species);
+
+  const navigate = useNavigate();
 
   const handleSelection = (newSelectedIndex) => {
     setSelectedIndex(newSelectedIndex);
@@ -49,8 +49,12 @@ export default function SpecieList({
       <Button iconType="add" className="primary" onClick={onAdd}>
         Agregar especie
       </Button>
-      <Button iconType="upload" onClick={onAdd} className="secondary">
-        Importar especies
+      <Button
+        iconType="upload"
+        onClick={() => navigate(ROUTES.MIGRAR)}
+        className="secondary"
+      >
+        Migrar colección
       </Button>
     </div>
   );
@@ -93,20 +97,10 @@ export default function SpecieList({
                 iconType={"search"}
               ></TextField>
             </div>
-            {/*
-            <div
-              className="flex-row gap-05rem"
-              style={{ padding: "0 1rem 1rem 1rem" }}
-            >
-              <Chip>Familias</Chip>
-              <Chip>Géneros</Chip>
-              <Chip>Epítetos</Chip>
-            </div>
-            */}
           </div>
 
           {species.length > 0 ? (
-            <ul role="list" className="specie-list-items">
+            <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
                 <li key={index}>
                   <div

@@ -87,7 +87,7 @@ export default function Autocomplete({
       ></TextField>
 
       {isOpen && (
-        <ul className="dropdown-menu pop-up" role="listbox">
+        <ul className="dropdown-menu pop-up unstyled" role="listbox">
           {filteredItems.map((item, index) => (
             <li
               className={`selectable p-05rem ${

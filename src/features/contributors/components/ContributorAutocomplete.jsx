@@ -191,7 +191,7 @@ export default function ContributorAutocomplete({
       </div>
 
       {isOpen && (
-        <ul className="dropdown-menu pop-up">
+        <ul className="dropdown-menu pop-up unstyled">
           {filteredItems.map((item, index) => (
             <li
               key={index}

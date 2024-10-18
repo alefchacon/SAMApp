@@ -17,7 +17,9 @@ export default function Stepper({
 
   const handleSelectedTabChange = (newSelectedIndex) => {
     console.log(newSelectedIndex);
-    onResetScroll();
+    if (onResetScroll) {
+      onResetScroll();
+    }
     setSelectedId(newSelectedIndex);
   };
 
@@ -55,7 +57,7 @@ export default function Stepper({
   return (
     <div className="stepper-wrapper bg-white" style={{ flexWrap: "wrap" }}>
       <ul
-        className={`stepper flex-row align-items-center bg-white`}
+        className={`stepper flex-row align-items-center bg-white unstyled`}
         style={{
           position: "sticky",
           top: 0,

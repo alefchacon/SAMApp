@@ -1,26 +1,19 @@
 //LIBRARIES
 import { useState, useEffect, useRef } from "react";
-import {
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 // FEATURES
 import SpecieDashboard from "./routes/app/SpecieDashboard";
 import SpecimenEditForm from "./routes/app/NewSpecimen/SpecimenEditForm.jsx";
 import SpecimenAddForm from "./routes/app/NewSpecimen/SpecimenAddForm.jsx";
-import NewSpecie from "./routes/app/NewSpecie";
 import Landing from "./routes/app/Landing";
 import Searchbar from "../components/ui/Searchbar";
 import AccessRequests from "./routes/app/AccessRequests";
 import Photosheets from "./routes/app/Photosheets";
-import Search from "./routes/app/Search";
 import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
 import Users from "./routes/app/Users.jsx";
+import Migrate from "./routes/app/Migrate.jsx";
 
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
@@ -82,7 +75,6 @@ function App() {
               </Landing>
             }
           ></Route>
-          <Route path={ROUTES.BUSCAR} element={<Search />}></Route>
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
           <Route
             path={"/fichas"}
@@ -122,12 +114,12 @@ function App() {
               />
             }
           ></Route>
-          <Route path={"/agregarEspecie"} element={<NewSpecie />}></Route>
           <Route
             path={ROUTES.SOLICITAR_ACCESO}
             element={<AccessRequestForm />}
           ></Route>
           <Route path={ROUTES.USUARIOS} element={<Users />}></Route>
+          <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
           <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
           {/*
           
