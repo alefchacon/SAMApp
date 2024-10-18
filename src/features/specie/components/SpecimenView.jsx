@@ -95,7 +95,7 @@ export default function SpecimenView({
             <Table data={specimens}></Table>
           </div>
         )}
-        <div label={"Métricas"} tabKey={METRICAS_TAB_KEY}>
+        <div label={"Métricas"} id={METRICAS_TAB_KEY}>
           <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
             <Multigraph
               graphTitle="Especímenes recolectados por mes"

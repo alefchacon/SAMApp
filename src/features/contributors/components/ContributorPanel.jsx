@@ -49,7 +49,7 @@ export default function ContributorPanel() {
       <ul className="unstyled">
         {contributors.length > 0 ? (
           filteredItems.map((contributor, index) => (
-            <OptionWrapper>
+            <OptionWrapper key={index}>
               <HoverableActions position="absolute">
                 <Button
                   iconType="edit"

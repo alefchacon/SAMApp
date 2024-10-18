@@ -1,23 +1,14 @@
-import { useState, useEffect } from "react";
-//import { getAccessRequests } from "../../../features/access/businessLogic/getAccessRequests";
+import { useEffect } from "react";
 import Button from "../../../components/ui/Button";
-import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { useModal } from "../../../components/contexts/ModalContext";
 import AccessRequest from "../../../features/access/components/AccessRequest";
 import Card from "../../../components/ui/Card";
-import Header from "../../../components/ui/Header";
 import HeaderPage from "../../../components/ui/HeaderPage";
 import Footer from "../../../components/ui/Footer";
-import RequestAccessResponseForm from "../../../features/access/RequestAccessResponseForm";
 
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests";
 
 import NoResults from "../../../components/ui/NoResults";
-
-import {
-  getPendingAccessRequests,
-  getPendingAccessRequestsCount,
-} from "../../../features/access/businessLogic/getAccessRequests";
 
 export default function AccessRequests() {
   const {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
-import { api, apiWrapper } from "../../../dataAccess/apiClient";
+import useApi from "../../../dataAccess/useApi";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import {
   SPECIE_MIGRATE_URL,
@@ -8,13 +8,18 @@ import {
   TAXONOMY_RANKS_URL,
 } from "./specieURL";
 import SpecieSerializer from "../domain/specieSerializer";
+import { AxiosError } from "axios";
+import useDownload from "../../../hooks/useDownload";
 
 export const useSpecie = (specieId = 0) => {
   const [species, setSpecies] = useState([]);
   const { profile } = useStatus();
+  const download = useDownload();
+
+  const { apiWrapper } = useApi();
 
   const getSpecies = useCallback(async () => {
-    api
+    apiWrapper
       .get(SPECIE_URL, {
         requestName: "getSpecie",
         cancelable: false,
@@ -30,7 +35,6 @@ export const useSpecie = (specieId = 0) => {
   });
 
   const postSpecie = useCallback(async (newSpecie) => {
-    console.log(`${SPECIE_URL}/`);
     const response = await apiWrapper.post(
       `${SPECIE_URL}/`,
       new SpecieSerializer(newSpecie)
@@ -48,7 +52,10 @@ export const useSpecie = (specieId = 0) => {
     specie.epithet = `${specie.gender} ${specie.specie_specie} ${specie.subspecie}`;
   };
   const updateSpecie = useCallback(async (newSpecie) => {
-    const response = await api.put(`${SPECIE_URL}/${newSpecie.id}/`, newSpecie);
+    const response = await apiWrapper.put(
+      `${SPECIE_URL}/${newSpecie.id}/`,
+      newSpecie
+    );
     if (response.status === 200) {
       const newSpecies = species.map((specie) =>
         specie.id === newSpecie.id ? newSpecie : specie
@@ -58,25 +65,23 @@ export const useSpecie = (specieId = 0) => {
   });
 
   const migrateColection = useCallback(async (species) => {
-    api.post(`${SPECIE_MIGRATE_URL}`, species);
+    const response = await apiWrapper.post(`${SPECIE_MIGRATE_URL}`, species, {
+      noSnackbar: true,
+      getError: true,
+    });
+
+    if (response instanceof AxiosError) {
+      return response.response.data.errors;
+    }
   });
 
   const getTaxonomyRanks = useCallback(async () => {
-    return await api.get(TAXONOMY_RANKS_URL);
+    return await apiWrapper.get(TAXONOMY_RANKS_URL);
   });
 
   const downloadMigrationFormat = useCallback(async () => {
-    const response = await api.get(SPECIE_MIGRATE_URL);
-    console.log(response);
-    const blob = new Blob([response.data], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = "SAM_MIGRACION.csv";
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
+    const response = await apiWrapper.get(SPECIE_MIGRATE_URL);
+    download(response.data, "text/csv", "SAM_MIGRACION.csv");
   });
 
   const selectedSpecieDefault = species[0];

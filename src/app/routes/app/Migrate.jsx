@@ -5,16 +5,39 @@ import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 import Uploader from "../../../components/ui/Uploader";
 import ContributorPanel from "../../../features/contributors/components/ContributorPanel";
 import { Formik, Form } from "formik";
-
+import { useModal } from "../../../components/contexts/ModalContext";
 import { useState } from "react";
 
 export default function Migrate() {
   const { downloadMigrationFormat, migrateColection } = useSpecie();
   const [colection, setColection] = useState();
+  const { showModal } = useModal();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(colection);
-    migrateColection(colection);
+    const errors = await migrateColection(colection);
+    if (errors) {
+      showModal(
+        "La migración falló",
+        <div>
+          {errors.map((error, index) => (
+            <div>
+              <h3>catalog_id: {error.specimen}</h3>
+              <ul>
+                {Object.entries(error.errors).map(([key, value]) => (
+                  <li>
+                    <b>{key}:</b> {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>,
+        true,
+        "",
+        "500px"
+      );
+    }
   };
 
   return (
@@ -60,24 +83,25 @@ export default function Migrate() {
                 de la colección original, por lo que puede copiar y pegar los
                 registros. Antes de hacerlo, deberá eliminar algunas columnas de
                 la colección. Haga una copia de la colección y elimine:
-                <ul>
-                  <li>
-                    Columnas marcadas como <b>NO TOCAR</b>
-                  </li>
-                  <li>
-                    La columna <b>FECHA_COL:</b> El sistema utilizará las
-                    columnas de DIA, MES y AÑO para registrar la fecha de
-                    colecta de cada espécimen. Por favor, asegure que todas las
-                    fechas tengan ese orden (por ejemplo, que ningún valor de la
-                    columna MES sea mayor a 12).
-                  </li>
-                </ul>
               </p>
+              <ul>
+                <li>
+                  Columnas marcadas como <b>NO TOCAR</b>
+                </li>
+                <li>
+                  La columna <b>FECHA_COL:</b> El sistema utilizará las columnas
+                  de DIA, MES y AÑO para registrar la fecha de colecta de cada
+                  espécimen. Por favor, asegure que todas las fechas tengan ese
+                  orden (por ejemplo, que ningún valor de la columna MES sea
+                  mayor a 12).
+                </li>
+              </ul>
               <br />
               <h2>Celdas vacías</h2>
               <p>
-                Las siguientes columnas requieren un valor — si no lo tienen, se
-                les asignará el siguiente por defecto:
+                Varias columnas requieren un valor. El sistema asignará valores
+                por defecto a algunas columnas, otras requieren que usted las
+                asigne:
               </p>
               <ul>
                 <li>SEXO / sex: ND</li>

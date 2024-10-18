@@ -169,7 +169,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           required
         ></TextField>
       </div>
-      <hr />
       <div className="input-group">
         <h3>Preparación</h3>
         <ContributorAutocomplete
@@ -206,7 +205,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           max={moment().format("YYYY-MM-DD")}
         ></TextField>
       </div>
-      <hr />
       <div className="input-group">
         <RadioList
           required

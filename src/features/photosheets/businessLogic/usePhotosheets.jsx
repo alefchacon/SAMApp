@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../dataAccess/apiClient";
 import PHOTOSHEETS_URL from "./photosheetsURL";
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 import { useModal } from "../../../components/contexts/ModalContext";
+import useApi from "../../../dataAccess/useApi";
 
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
@@ -11,6 +11,7 @@ export default function usePhotosheets() {
   const [photosheets, setPhotosheets] = useState([]);
 
   const { showSnackbar } = useSnackbar();
+  const { apiWrapper } = useApi();
   const { showModal, closeModal } = useModal();
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function usePhotosheets() {
   };
 
   async function getPhotosheets() {
-    const response = await api.get(PHOTOSHEETS_URL);
+    const response = await apiWrapper.get(PHOTOSHEETS_URL);
     return response;
   }
 
@@ -43,7 +44,7 @@ export default function usePhotosheets() {
     formData.append("description", photosheet.description);
     formData.append("sheet", photosheet.sheet);
 
-    const response = await api.post(PHOTOSHEETS_URL, formData, {
+    const response = await apiWrapper.post(PHOTOSHEETS_URL, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -70,7 +71,7 @@ export default function usePhotosheets() {
       formData.append("sheet", photosheet.sheet);
     }
 
-    const response = await api.put(
+    const response = await apiWrapper.put(
       PHOTOSHEETS_URL.concat(`${photosheet.id}/`),
       formData,
       {
@@ -117,7 +118,9 @@ export default function usePhotosheets() {
 
   const deletePhotosheet = async (photosheetId = 0) => {
     closeModal();
-    const response = await api.delete(PHOTOSHEETS_URL.concat(photosheetId));
+    const response = await apiWrapper.delete(
+      PHOTOSHEETS_URL.concat(photosheetId)
+    );
     if (response.request.status === 204) {
       setPhotosheets((prev) =>
         prev.filter((photosheet) => photosheet.id !== photosheetId)

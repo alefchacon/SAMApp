@@ -30,7 +30,6 @@ export function StatusProvider({ children }) {
   const logOutFront = async () => {
     //await logOut();
     clearStorage();
-    console.log(storedCredentials);
     setCredentials(null);
     setProfile(null);
   };

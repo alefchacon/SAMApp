@@ -160,10 +160,6 @@ export default function Uploader({
         ))}
       </div>
 
-      <div className="button-row">
-        <Button onClick={handleUpload}>{buttonLabel}</Button>
-      </div>
-
       <input
         style={{ opacity: 0, position: "absolute", zIndex: -1 }}
         type="file"

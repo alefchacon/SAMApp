@@ -1,9 +1,10 @@
 import { useState, useCallback } from "react";
-import { apiWrapper } from "../../../dataAccess/apiClient";
 import { TECHNICAL_PERSON_URL } from "./userURL";
+import useApi from "../../../dataAccess/useApi";
 
 export default function useUsers() {
   const [technicalPersons, setTechnicalPersons] = useState([]);
+  const { apiWrapper } = useApi();
 
   const getTechnicalPersons = useCallback(async () => {
     apiWrapper

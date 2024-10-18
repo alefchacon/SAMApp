@@ -9,9 +9,6 @@ import CloseIcon from "../icons/CloseIcon";
 //PROVIDERS
 import { useModal } from "../contexts/ModalContext";
 
-//JS
-import { snackbarTypes } from "../contexts/snackbarTypes";
-
 export default function Snackbar({
   open = false,
   onClose,

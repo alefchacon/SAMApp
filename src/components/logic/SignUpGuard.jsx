@@ -17,23 +17,11 @@ export default function SignUpGuard({ children }) {
     approveAccessRequest,
     rejectAccessRequest,
     addAccessRequest,
-    verifyAccessRequestToken,
   ] = useAccessRequests();
 
   const isTryingToSeeSignUpForm = location.pathname.includes(
     ROUTES.REGISTRARSE
   );
-
-  useEffect(() => {
-    const checkTokenValidity = async () => {
-      if (token && tokenIsValid === null) {
-        const isValid = await verifyAccessRequestToken(token);
-        setTokenIsValid(isValid);
-      }
-    };
-
-    checkTokenValidity();
-  }, [token]);
 
   console.log(tokenIsValid);
   if (isTryingToSeeSignUpForm && tokenIsValid === false) {

@@ -1,19 +1,15 @@
 // LIBRARIES
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Specie from "./Specie";
-
-import { useSearchParams } from "react-router-dom";
 
 import Button from "../../../components/ui/Button";
 import HoverableActions from "../../../components/ui/HoverableActions";
 import NoResults from "../../../components/ui/NoResults";
-import NewSpecie from "../../../app/routes/app/NewSpecie";
 import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
 import Taxonomy from "./Taxonomy";
 import { useNavigate } from "react-router-dom";
 
-import { useModal } from "../../../components/contexts/ModalContext";
 import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
@@ -101,16 +97,6 @@ export default function SpecieList({
                 iconType={"search"}
               ></TextField>
             </div>
-            {/*
-            <div
-              className="flex-row gap-05rem"
-              style={{ padding: "0 1rem 1rem 1rem" }}
-            >
-              <Chip>Familias</Chip>
-              <Chip>Géneros</Chip>
-              <Chip>Epítetos</Chip>
-            </div>
-            */}
           </div>
 
           {species.length > 0 ? (
