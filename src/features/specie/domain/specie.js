@@ -1,4 +1,4 @@
-class SpecieSerializer {
+class Specie {
   constructor(
     data,
     specimens = []
@@ -18,4 +18,4 @@ class SpecieSerializer {
   }
 }
 
-export default SpecieSerializer;
+export default Specie;

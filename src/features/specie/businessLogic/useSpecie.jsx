@@ -7,7 +7,7 @@ import {
   SPECIE_URL,
   TAXONOMY_RANKS_URL,
 } from "./specieURL";
-import SpecieSerializer from "../domain/specieSerializer";
+import Specie from "../domain/specie";
 import { AxiosError } from "axios";
 import useDownload from "../../../hooks/useDownload";
 
@@ -26,9 +26,7 @@ export const useSpecie = (specieId = 0) => {
       })
       .then((response) => {
         // build epithet:
-        const species = response.data.map(
-          (specie) => new SpecieSerializer(specie)
-        );
+        const species = response.data.map((specie) => new Specie(specie));
         console.log(species);
         setSpecies(species);
       });
@@ -37,7 +35,7 @@ export const useSpecie = (specieId = 0) => {
   const postSpecie = useCallback(async (newSpecie) => {
     const response = await apiWrapper.post(
       `${SPECIE_URL}/`,
-      new SpecieSerializer(newSpecie)
+      new Specie(newSpecie)
     );
     newSpecie.id = response.data.specie_id;
     if (response.status === 201) {

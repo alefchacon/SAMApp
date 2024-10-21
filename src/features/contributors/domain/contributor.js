@@ -1,8 +1,20 @@
+import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
+
 class Contributor {
   constructor(
-    code,
+    data,
+    role = null
   ){
-    this.code = code;
+    if (data?.id){
+      this.id = data.id;
+    }
+    this.code = data?.code 
+    || (role === CONTRIBUTOR_ROLES.COLECTOR 
+    ? data?.colector 
+    : data?.preparator) 
+    || "";
+    this.name = data?.name || "";
+    
   }
 
 }

@@ -52,9 +52,15 @@ export default function Migrate() {
             endButtonLabel="Migrar biocolección"
           >
             <div label={"Colaboradores"} id="colaboradores" className="p-2rem">
-              Antes de comenzar, por favor asegúrese que ya estén registrados en
-              el sistema todos los colectores y preparadores que aparezcan en la
-              colección que desea migrar.
+              Antes de comenzar, se recomienda que ya estén registrados en el
+              sistema todos los colectores y preparadores cuyos códigos
+              aparezcan en el archivo que desea migrar.
+              <br />
+              <br />
+              Este paso es opcional: el sistema registrará todos los códigos que
+              estén en el archivo y que aún no se hayan registrado, pero sólo se
+              registrará el código; el nombre lo tendrá que asignar usted
+              después en la sección Personal.
               <ContributorPanel></ContributorPanel>
             </div>
             <div label={"Consiga el formato"} id="formato" className="p-2rem">

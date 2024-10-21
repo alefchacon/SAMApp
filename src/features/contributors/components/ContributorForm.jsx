@@ -8,13 +8,14 @@ import TextField from "../../../components/ui/TextField";
 import Modal from "../../../components/ui/modal/Modal";
 
 import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";
+import Contributor from "../domain/contributor";
 
-export default function ContributorForm({ onSubmit }) {
+export default function ContributorForm({
+  onSubmit,
+  contributor = new Contributor(),
+}) {
   const handleSubmit = async (values, actions) => {
-    const newItem = {
-      id: Math.floor(Math.random() * 200),
-      name: values.name,
-    };
+    console.log(values);
     const response = await onSubmit(values);
 
     if (response.status === 201) {
@@ -22,14 +23,15 @@ export default function ContributorForm({ onSubmit }) {
     }
     //onSecondaryClick();
   };
+
+  console.log(contributor);
+
   return (
     <Formik
       validationSchema={contributorSchema}
-      initialValues={{
-        name: "",
-        code: "",
-      }}
+      initialValues={contributor}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {({ values, errors, touched, handleSubmit, handleChange }) => (
         <Form action="" autoComplete="off">
@@ -60,13 +62,14 @@ export default function ContributorForm({ onSubmit }) {
             <div className="button-row">
               <Button
                 className="primary"
-                label="Registrar colaborador"
+                label="Agregar colaborador"
                 type="submit"
               >
                 Agregar colaborador
               </Button>
             </div>
           </div>
+          <Button onClick={() => console.log(values)}></Button>
         </Form>
       )}
     </Formik>

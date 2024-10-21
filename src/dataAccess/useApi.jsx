@@ -66,7 +66,7 @@ export default function useApi() {
     error.intercepted = true;
 
     if (!config.noSnackbar) {
-      handleSnackbar();
+      handleSnackbar(error);
     }
 
     const status = error.response?.status;
@@ -76,7 +76,8 @@ export default function useApi() {
     }
   }
 
-  function handleSnackbar() {
+  function handleSnackbar(error) {
+    console.log(error);
     if (error.code === "ERR_NETWORK") {
       showSnackbar("No hay conexión", true);
       return;
@@ -88,6 +89,9 @@ export default function useApi() {
   function getErrorContent(error) {
     if (error.response?.data?.detail) {
       return error.response?.data?.detail;
+    }
+    if (error.response?.data?.error) {
+      return error.response?.data?.error;
     }
     if (error.response?.data?.message) {
       return error.response?.data?.message;

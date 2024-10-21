@@ -118,7 +118,7 @@ function App() {
             path={ROUTES.SOLICITAR_ACCESO}
             element={<AccessRequestForm />}
           ></Route>
-          <Route path={ROUTES.USUARIOS} element={<Users />}></Route>
+          <Route path={ROUTES.PERSONAL} element={<Users />}></Route>
           <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
           <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
           {/*
