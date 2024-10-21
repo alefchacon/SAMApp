@@ -8,10 +8,11 @@ import { FILE_TYPES_STRING } from "../../stores/fileTypes";
 import { useSnackbar } from "../contexts/SnackbarContext";
 import ProgressBar from "./ProgressBar";
 import { specieSchema } from "../../features/specie/formikSchemas/specieSchema";
-import SpecieSerializer from "../../features/specie/domain/specieSerializer";
-import Specimen from "../../features/specimens/domain/specimenSerializer";
+import Specie from "../../features/specie/domain/specie";
+import Specimen from "../../features/specimens/domain/specimen";
 import Location from "../../features/specimens/domain/location";
 import Contributor from "../../features/contributors/domain/contributor";
+import CONTRIBUTOR_ROLES from "../../stores/contributorRoles";
 
 export default function Uploader({
   id = "upload",
@@ -78,20 +79,23 @@ export default function Uploader({
 
   const handleParsedFiles = (result) => {
     const colectionCsv = result.data;
-    const allSpecies = colectionCsv.map((row) => new SpecieSerializer(row));
+    const allSpecies = colectionCsv.map((row) => new Specie(row));
     const uniqueSpecies = allSpecies.filter(
       (specieA, index, self) =>
         index === self.findIndex((specieB) => equals(specieA, specieB))
     );
     const speciesWithSpecimens = uniqueSpecies.map((specie) => {
       const specimenData = colectionCsv.filter((row) =>
-        equals(specie, new SpecieSerializer(row))
+        equals(specie, new Specie(row))
       );
       specie.specimens = specimenData.map((data) => {
         let specimen = new Specimen(data);
         specimen.location = new Location(data);
-        specimen.colector = new Contributor(data.colector);
-        specimen.preparator = new Contributor(data.preparator);
+        specimen.colector = new Contributor(data, CONTRIBUTOR_ROLES.COLECTOR);
+        specimen.preparator = new Contributor(
+          data,
+          CONTRIBUTOR_ROLES.PREPARATOR
+        );
         return specimen;
       });
       return specie;

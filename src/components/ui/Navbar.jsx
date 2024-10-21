@@ -95,12 +95,12 @@ export default function Navbar({ accessRequestCount = 0 }) {
       <div className="right-side flex-row gap-1rem h-100">
         <div className="hide-if-mobile flex-row gap-1rem align-items-center">
           <Link
-            to={ROUTES.USUARIOS}
+            to={ROUTES.PERSONAL}
             className={`selectable nav-link ${
-              ROUTES.USUARIOS === pathname ? "selected" : ""
+              ROUTES.PERSONAL === pathname ? "selected" : ""
             }`}
           >
-            <InfoItem label={"Usuarios"} iconType={"person"}></InfoItem>
+            <InfoItem label={"Personal"} iconType={"group"}></InfoItem>
           </Link>
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>

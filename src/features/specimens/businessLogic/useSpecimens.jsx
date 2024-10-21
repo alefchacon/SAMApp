@@ -8,7 +8,7 @@ import {
 } from "./specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import moment from "moment";
-import SpecimenSerializer from "../domain/specimenSerializer";
+import Specimen from "../domain/specimen";
 import useDownload from "../../../hooks/useDownload";
 import useApi from "../../../dataAccess/useApi";
 
@@ -47,7 +47,7 @@ export const useSpecimens = (specie) => {
   };
 
   const updateSpecimen = useCallback(async (updatedSpecimen) => {
-    const body = new SpecimenSerializer(updatedSpecimen);
+    const body = new Specimen(updatedSpecimen);
     const response = await apiWrapper.put(
       `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
       body

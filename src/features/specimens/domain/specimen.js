@@ -2,7 +2,7 @@ import Location from "./location";
 import { capitalize } from "lodash";
 import moment from "moment";
 import * as defaults from "../../../utils/getOrDefault";
-class SpecimenSerializer {
+class Specimen {
   constructor(
     data = {},
   ){
@@ -51,4 +51,4 @@ class SpecimenSerializer {
 
 }
 
-export default SpecimenSerializer;
+export default Specimen;

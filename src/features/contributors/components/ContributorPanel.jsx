@@ -8,8 +8,9 @@ import ContributorForm from "./ContributorForm";
 import NoResults from "../../../components/ui/NoResults";
 import TextField from "../../../components/ui/TextField";
 import useTextFilter from "../../../hooks/useTextFilter";
+import ListItem from "../../../components/ui/ListItem";
 export default function ContributorPanel() {
-  const { contributors, getContributors, postContributor } =
+  const { contributors, getContributors, postContributor, updateContributor } =
     useContributorsAndRoles();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
@@ -21,15 +22,10 @@ export default function ContributorPanel() {
   const handleShowContributorModal = () => {
     showModal("Colaborador", <ContributorForm onSubmit={postContributor} />);
   };
-
-  const OptionWrapper = ({ children }) => {
-    return (
-      <li
-        className="selectable p-05rem hoverable2 rounded-20"
-        style={{ position: "relative" }}
-      >
-        {children}
-      </li>
+  const handleEditContributorModal = (contributor) => {
+    showModal(
+      "Colaborador",
+      <ContributorForm onSubmit={updateContributor} contributor={contributor} />
     );
   };
 
@@ -42,17 +38,18 @@ export default function ContributorPanel() {
           onChange={handleFilterChange}
         ></TextField>
         <Button iconType="person_add" onClick={handleShowContributorModal}>
-          Registrar colaborador
+          Agregar colaborador
         </Button>
       </div>
       <br />
       <ul className="unstyled">
         {contributors.length > 0 ? (
           filteredItems.map((contributor, index) => (
-            <OptionWrapper key={index}>
+            <ListItem key={index}>
               <HoverableActions position="absolute">
                 <Button
                   iconType="edit"
+                  onClick={() => handleEditContributorModal(contributor)}
                   className="icon-only color-white"
                 ></Button>
               </HoverableActions>
@@ -61,7 +58,7 @@ export default function ContributorPanel() {
                 filterText={filterText}
                 key={index}
               ></CardContributor>
-            </OptionWrapper>
+            </ListItem>
           ))
         ) : (
           <NoResults itemName="colaboradores" />

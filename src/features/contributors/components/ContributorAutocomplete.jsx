@@ -149,7 +149,6 @@ export default function ContributorAutocomplete({
             className="w-100 h-100 input"
             style={{
               flex: 1,
-              border: "none",
               paddingLeft: `${paddingLeft}px`,
             }}
             maxLength={maxLength}

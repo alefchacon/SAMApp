@@ -28,7 +28,7 @@ import { useLocation } from "react-router-dom";
 import ChipSex from "../../../../features/specimens/ChipSex";
 import moment from "moment";
 import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
-import SpecimenSerializer from "../../../../features/specimens/domain/specimenSerializer";
+import Specimen from "../../../../features/specimens/domain/specimen";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
 
 export default function SpecimenAddForm({ onResetScroll }) {

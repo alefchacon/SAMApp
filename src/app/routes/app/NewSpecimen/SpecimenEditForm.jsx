@@ -25,7 +25,7 @@ import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
-import SpecimenSerializer from "../../../../features/specimens/domain/specimenSerializer";
+import Specimen from "../../../../features/specimens/domain/specimen";
 import ChipSex from "../../../../features/specimens/ChipSex";
 import moment from "moment";
 import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
