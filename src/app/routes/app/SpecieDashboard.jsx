@@ -68,7 +68,7 @@ export default function SpecieDashboard({
   };
 
   const navigateToAddSpecimen = () =>
-    navigate(`${ROUTES.AGREGAR_ESPECIMEN}`, {
+    navigate(`${ROUTES.ADD_SPECIMEN}`, {
       state: {
         specie: selectedSpecie,
         currentSpecimenId: specimens[specimens.length - 1]?.id || 0,

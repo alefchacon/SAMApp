@@ -259,7 +259,7 @@ function TableRow({ rowData, onEdit }) {
     >
       <HoverableActions
         action1={() =>
-          navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
+          navigate(`${ROUTES.EDIT_SPECIMEN}/${rowData.original.id}`, {
             state: { specimen: rowData.original },
           })
         }
@@ -269,7 +269,7 @@ function TableRow({ rowData, onEdit }) {
           iconType="edit"
           className="icon-only color-white"
           onClick={() =>
-            navigate(`${ROUTES.EDITAR_ESPECIMEN}/${rowData.original.id}`, {
+            navigate(`${ROUTES.EDIT_SPECIMEN}/${rowData.original.id}`, {
               state: { specimen: rowData.original },
             })
           }

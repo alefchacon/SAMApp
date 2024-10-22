@@ -47,7 +47,7 @@ export default function AccessRequestForm() {
           confirmando su acceso.
         </p>
         <div className="button-row">
-          <Link to={ROUTES.COLECCION}>
+          <Link to={ROUTES.COLLECTION}>
             <Button onClick={goToColection} iconType="pets">
               Regresar a la colección
             </Button>
@@ -59,7 +59,7 @@ export default function AccessRequestForm() {
 
   const goToColection = () => {
     closeModal();
-    navigate(ROUTES.COLECCION);
+    navigate(ROUTES.COLLECTION);
   };
 
   return (
@@ -276,7 +276,7 @@ export default function AccessRequestForm() {
 
               <div className="button-row">
                 <Button iconType="send" onClick={handleShowModal}>
-                  Enviar solicitudd
+                  Enviar solicitud
                 </Button>
               </div>
             </Card>

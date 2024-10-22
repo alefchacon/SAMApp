@@ -20,17 +20,20 @@ export default function ContributorPanel() {
   }, []);
 
   const handleShowContributorModal = () => {
-    showModal("Colaborador", <ContributorForm onSubmit={postContributor} />);
+    showModal(
+      "Agregar colaborador",
+      <ContributorForm onSubmit={postContributor} />
+    );
   };
   const handleEditContributorModal = (contributor) => {
     showModal(
-      "Colaborador",
+      "Editar colaborador",
       <ContributorForm onSubmit={updateContributor} contributor={contributor} />
     );
   };
 
   return (
-    <div label="Colaboradores" className="p-1rem">
+    <>
       <div className="flex-row gap-1rem align-items-center justify-content-center">
         <TextField
           iconType="search"
@@ -64,7 +67,7 @@ export default function ContributorPanel() {
           <NoResults itemName="colaboradores" />
         )}
       </ul>
-    </div>
+    </>
   );
 
   function asdf() {}

@@ -10,7 +10,7 @@ export default function CardContributor({
 }) {
   return (
     <div
-      style={{ maxWidth: "fit-content", padding: "0.1rem 1rem" }}
+      style={{ maxWidth: "fit-content" }}
       id={`contributor-${index}`}
       className="contributor flex-row align-items-center gap-1rem  "
     >

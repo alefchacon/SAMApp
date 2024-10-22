@@ -24,7 +24,7 @@ export default function ContributorForm({
     //onSecondaryClick();
   };
 
-  console.log(contributor);
+  const isEdit = Boolean(contributor.id);
 
   return (
     <Formik
@@ -65,11 +65,10 @@ export default function ContributorForm({
                 label="Agregar colaborador"
                 type="submit"
               >
-                Agregar colaborador
+                {isEdit ? "Editar" : "Agregar"} colaborador
               </Button>
             </div>
           </div>
-          <Button onClick={() => console.log(values)}></Button>
         </Form>
       )}
     </Formik>

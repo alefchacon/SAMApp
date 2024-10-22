@@ -61,28 +61,32 @@ const TextField = forwardRef(
       <div
         className={`text-field ${getErrorClassName()} w-100 justify-content-center`}
       >
-        <div className="sam-text-field-info">
-          <div className="form-label" style={{ paddingBottom: "0.5rem" }}>
-            <label
-              htmlFor={`${id}`}
-              className="input-label flex-row gap-05rem"
-              style={{ cursor: "pointer", flexWrap: "wrap" }}
-            >
-              {label}
-              {required && <ChipLabel iconType={"check"}>Requerido</ChipLabel>}
-            </label>
-          </div>
-
-          {helperText && (
-            <div
-              htmlFor={`${id}`}
-              className={`sam-text-field-helper-text`}
-              id={`${id}-helper-text`}
-            >
-              {helperText}
+        {label && (
+          <div className="sam-text-field-info">
+            <div className="form-label" style={{ paddingBottom: "0.5rem" }}>
+              <label
+                htmlFor={`${id}`}
+                className="input-label flex-row gap-05rem"
+                style={{ cursor: "pointer", flexWrap: "wrap" }}
+              >
+                {label}
+                {required && (
+                  <ChipLabel iconType={"check"}>Requerido</ChipLabel>
+                )}
+              </label>
             </div>
-          )}
-        </div>
+
+            {helperText && (
+              <div
+                htmlFor={`${id}`}
+                className={`sam-text-field-helper-text`}
+                id={`${id}-helper-text`}
+              >
+                {helperText}
+              </div>
+            )}
+          </div>
+        )}
 
         <div
           style={{
