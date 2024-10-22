@@ -1,18 +1,4 @@
-// LIBRARIES
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-// CUSTOM COMPONENTS
-import Button from "../../../components/ui/Button";
-import LinkButton from "../../../components/ui/LinkButton";
-import Modal from "../../../components/ui/modal/Modal";
-import ModalActions from "../../../components/ui/modal/ModalActions";
 import Taxonomy from "./Taxonomy";
-
-// ICONS
-import EditIcon from "../../../components/icons/EditIcon";
-import DeleteIcon from "../../../components/icons/DeleteIcon";
-import { filter } from "lodash";
 
 export default function Specie({
   specie = {

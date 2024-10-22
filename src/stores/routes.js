@@ -1,15 +1,16 @@
 const ROUTES = Object.freeze({
   LANDING: "/",
-  ENTRAR: "/entrar",
-  COLECCION: "/coleccion",
-  SOLICITAR_ACCESO: "solicitar-acceso",
-  BUSCAR: "buscar",
-  FICHAS: "/fichas",
-  REGISTRARSE: "/registrarse",
+  SIGN_IN: "/entrar",
+  COLLECTION: "/coleccion",
+  REQUEST_ACCESS: "solicitar-acceso",
+  SEARCH: "buscar",
+  PHOTOSHEETS: "/fichas",
+  SIGN_UP: "/registrarse",
   PERSONAL: "/personal",
-  AGREGAR_ESPECIMEN: "/coleccion/agregar-especimen",
-  EDITAR_ESPECIMEN: "/coleccion/editar-especimen",
-  MIGRAR: "/migrar"
+  ADD_SPECIMEN: "/coleccion/agregar-especimen",
+  EDIT_SPECIMEN: "/coleccion/editar-especimen",
+  MIGRATE: "/migrar",
+  PROFILE: "/perfil"
 })
 
 export default ROUTES;

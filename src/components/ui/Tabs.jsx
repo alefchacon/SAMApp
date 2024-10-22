@@ -38,7 +38,7 @@ export default function Tabs({
   return (
     <div className="tab-content flex-col">
       <div
-        className={`tab-bar flex-rowalign-content-center  ${
+        className={`tab-bar divider flex-rowalign-content-center  ${
           center ? "justify-content-center" : "justify-content-space-between"
         }`}
         style={{ padding: "0 1rem" }}

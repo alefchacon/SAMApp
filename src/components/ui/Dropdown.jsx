@@ -25,14 +25,14 @@ export default function Dropdown({ header, children, className }) {
   };
   return (
     <div
-      className={`${className} dropdown flex-row selectable align-items-center gap-1rem`}
+      className={`${className} dropdown flex-row selectable align-items-center gap-05rem`}
       onClick={toggleDropdown}
       ref={dropdownRef}
     >
       {header}
       <span className="material-symbols-outlined">arrow_drop_down</span>
 
-      {isOpen && <div className="dropdown-menu rounded">{children}</div>}
+      {isOpen && <div className="dropdown-menu ">{children}</div>}
     </div>
   );
 }

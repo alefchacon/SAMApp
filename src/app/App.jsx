@@ -27,6 +27,7 @@ import "./App.css";
 
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 import SignupForm from "./routes/app/SignupForm.jsx";
+import Profile from "./routes/app/Profile.jsx";
 
 function App() {
   useAxiosInterceptors();
@@ -87,7 +88,7 @@ function App() {
           <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
 
           <Route
-            path={ROUTES.AGREGAR_ESPECIMEN}
+            path={ROUTES.ADD_SPECIMEN}
             element={
               <SpecimenAddForm
                 selectedSpecie={selectedSpecie}
@@ -96,7 +97,7 @@ function App() {
             }
           ></Route>
           <Route
-            path={`${ROUTES.EDITAR_ESPECIMEN}/:specimenId`}
+            path={`${ROUTES.EDIT_SPECIMEN}/:specimenId`}
             element={
               <SpecimenEditForm
                 selectedSpecie={selectedSpecie}
@@ -106,7 +107,7 @@ function App() {
           ></Route>
 
           <Route
-            path={`/${ROUTES.COLECCION}/:epithet?`}
+            path={`/${ROUTES.COLLECTION}/:epithet?`}
             element={
               <SpecieDashboard
                 onSpecieSelection={handleSelectedSpecieChange}
@@ -121,6 +122,10 @@ function App() {
           <Route path={ROUTES.PERSONAL} element={<Users />}></Route>
           <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
           <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
+          <Route
+            path={ROUTES.PROFILE}
+            element={<Profile profile={profile} />}
+          ></Route>
           {/*
           
           <Route

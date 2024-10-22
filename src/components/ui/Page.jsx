@@ -14,7 +14,7 @@ export default function Page({ children, title, subtitle }) {
       >
         <br />
         <br />
-        <Card className={"flex-col gap-2rem"}>{children}</Card>
+        <Card className={"flex-col gap-2rem p-1rem"}>{children}</Card>
       </div>
       <br />
       <br />

@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 //CUSTOM COMPONENTS
 import Button from "./Button";
-import CheckIcon from "../icons/CheckIcon";
-import CloseIcon from "../icons/CloseIcon";
 
 //PROVIDERS
 import { useModal } from "../contexts/ModalContext";

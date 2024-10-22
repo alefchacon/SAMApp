@@ -25,7 +25,8 @@ function Checker({ children, fulfilled = false, hasError = true }) {
 }
 
 export default function PasswordValidator({
-  password,
+  label = "Contraseña",
+  password = "",
   passwordConfirmation,
   onChange,
   name = "name",
@@ -66,7 +67,7 @@ export default function PasswordValidator({
         name={name}
         value={password}
         type="password"
-        label={"Contraseña"}
+        label={label}
         helperText={
           "Ingrese una contraseña que cumpla los siguientes criterios"
         }

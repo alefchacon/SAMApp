@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-import EditIcon from "../icons/EditIcon";
-import { Icons } from "../icons/Icons";
-
 import PropTypes from "prop-types";
 
 export default function Button({

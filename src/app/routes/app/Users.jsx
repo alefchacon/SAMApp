@@ -9,6 +9,11 @@ import useContributorsAndRoles from "../../../features/contributors/businessLogi
 import CardContributor from "../../../features/contributors/components/CardContributor";
 import ContributorForm from "../../../features/contributors/components/ContributorForm";
 import ContributorPanel from "../../../features/contributors/components/ContributorPanel";
+import TechnicalPersonPanel from "../../../features/user/technicalperson/TechnicalPersonPanel";
+import ListItem from "../../../components/ui/ListItem";
+
+import TehnicalPersonForm from "../../../features/user/technicalperson/TechnicalPersonForm";
+
 export default function Users() {
   const { technicalPersons, getTechnicalPersons } = useUsers();
   const { contributors, getContributors, postContributor } =
@@ -20,7 +25,7 @@ export default function Users() {
   }, []);
 
   const handleShowTechnicalPersonModal = () => {
-    showModal("testing!");
+    showModal("Agregar técnico", <TehnicalPersonForm />);
   };
   const handleShowContributorModal = () => {
     showModal("Colaborador", <ContributorForm onSubmit={postContributor} />);
@@ -39,8 +44,10 @@ export default function Users() {
 
   const technicalPersonTab = (
     <>
-      <div className="flex-row gap-1rem">
-        <p>Estos son los usuarios que administran la colección. </p>
+      <div className="flex-row gap-1rem justify-content-space-between">
+        <p>
+          Estos son los usuarios que administran la colección de mamíferos.{" "}
+        </p>
         <Button iconType="person_add" onClick={handleShowTechnicalPersonModal}>
           Registrar técnico
         </Button>
@@ -48,7 +55,7 @@ export default function Users() {
       <br />
       <ul className="unstyled">
         {technicalPersons.map((technicalPerson, index) => (
-          <OptionWrapper key={index}>
+          <ListItem key={index}>
             <HoverableActions position="absolute">
               <Button
                 iconType="edit"
@@ -57,7 +64,7 @@ export default function Users() {
             </HoverableActions>
             <p>{technicalPerson.fullname}</p>
             <p className="caption">{technicalPerson.position}</p>
-          </OptionWrapper>
+          </ListItem>
         ))}
       </ul>
     </>

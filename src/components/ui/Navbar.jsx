@@ -38,12 +38,12 @@ export default function Navbar({ accessRequestCount = 0 }) {
       iconType: "home",
     },
     {
-      route: ROUTES.COLECCION,
+      route: ROUTES.COLLECTION,
       label: "Colección",
       iconType: "pets",
     },
     {
-      route: ROUTES.FICHAS,
+      route: ROUTES.PHOTOSHEETS,
       label: "Fichas fotográficas",
       iconType: "image",
     },
