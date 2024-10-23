@@ -32,7 +32,7 @@ export default function Dropdown({ header, children, className }) {
       {header}
       <span className="material-symbols-outlined">arrow_drop_down</span>
 
-      {isOpen && <div className="dropdown-menu ">{children}</div>}
+      {isOpen && <ul className="dropdown-menu unstyled">{children}</ul>}
     </div>
   );
 }

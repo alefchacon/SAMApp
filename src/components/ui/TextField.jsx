@@ -43,6 +43,7 @@ const TextField = forwardRef(
       min = null,
       onBlur = null,
       defaultValue,
+      onPaste,
     },
     ref
   ) => {
@@ -79,7 +80,7 @@ const TextField = forwardRef(
             {helperText && (
               <div
                 htmlFor={`${id}`}
-                className={`sam-text-field-helper-text`}
+                className={`helper-text`}
                 id={`${id}-helper-text`}
               >
                 {helperText}
@@ -142,6 +143,7 @@ const TextField = forwardRef(
                 onChange={onChange}
                 defaultValue={defaultValue}
                 step={step}
+                onPaste={onPaste}
               ></Field>
             </>
           ) : (

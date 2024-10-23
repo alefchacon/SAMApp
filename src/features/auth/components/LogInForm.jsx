@@ -74,7 +74,7 @@ export default function LogInForm({ onSubmit }) {
                   fullwidth
                   onClick={() => {
                     closeModal();
-                    navigate(ROUTES.SOLICITAR_ACCESO);
+                    navigate(ROUTES.REQUEST_ACCESS);
                   }}
                 >
                   Solicitar acceso

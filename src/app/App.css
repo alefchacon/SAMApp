@@ -636,7 +636,7 @@ select {
   font-size: 1rem;
   overflow-wrap: break-word;
 }
-.sam-text-field-helper-text{
+.helper-text{
   overflow-wrap: break-word;
   color:gray;
   padding: 0 0 0.5rem 0;
@@ -1063,6 +1063,11 @@ a{
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
   color: black;
+}
+
+hr{
+  margin: 0;
+  border: 1px solid var(--uv-gray-darker);
 }
 
 .w-100{

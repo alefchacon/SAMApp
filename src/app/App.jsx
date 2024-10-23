@@ -116,12 +116,11 @@ function App() {
             }
           ></Route>
           <Route
-            path={ROUTES.SOLICITAR_ACCESO}
+            path={ROUTES.REQUEST_ACCESS}
             element={<AccessRequestForm />}
           ></Route>
           <Route path={ROUTES.PERSONAL} element={<Users />}></Route>
-          <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
-          <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
+          <Route path={ROUTES.MIGRATE} element={<Migrate />}></Route>
           <Route
             path={ROUTES.PROFILE}
             element={<Profile profile={profile} />}

@@ -30,6 +30,7 @@ export default function AccessRequestForm() {
   const { showModal, closeModal } = useModal();
 
   const handleSubmit = async (values, actions) => {
+    console.log(values);
     const response = await addUser(values, token);
     if (response.status === 201) {
       handleShowModal();
@@ -275,7 +276,7 @@ export default function AccessRequestForm() {
               </div>
 
               <div className="button-row">
-                <Button iconType="send" onClick={handleShowModal}>
+                <Button iconType="send" type="submit">
                   Enviar solicitud
                 </Button>
               </div>
