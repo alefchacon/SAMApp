@@ -27,7 +27,7 @@ import NoResults from "../../../components/ui/NoResults";
 import ChipLabel from "../../../components/ui/ChipLabel";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "../../../stores/routes";
-
+import Tooltip from "../../../components/ui/Tooltip";
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
 export default function SpecieDashboard({
@@ -138,6 +138,20 @@ export default function SpecieDashboard({
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
+                <Tooltip content="This is a tooltip!">
+                  <button
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "#3498db",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    Hover over me
+                  </button>
+                </Tooltip>
+
                 <div className="specimens-controls p-05rem gap-1rem flex-row align-items-center">
                   <TextField
                     iconType={"search"}

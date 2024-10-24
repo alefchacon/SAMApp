@@ -34,8 +34,9 @@ function App() {
   const location = useLocation();
   const [species, setSpecies] = useState([]);
   const [selectedSpecie, setSelectedSpecie] = useState();
-  const { profile } = useStatus();
-  const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
+  const { getProfile } = useStatus();
+  const profile = getProfile();
+  const isTechnicalPerson = profile?.isTechnicalPerson;
 
   const {
     pendingAccessRequests,
@@ -45,7 +46,7 @@ function App() {
   } = useAccessRequests();
 
   useEffect(() => {
-    if (ROLE === ROLE_TYPES.TECHNICAL_PERSON) {
+    if (isTechnicalPerson) {
       getPendingAccessRequestCount();
     }
   }, []);
@@ -63,7 +64,10 @@ function App() {
 
   return (
     <>
-      <Navbar accessRequestCount={pendingAccessRequestCount}></Navbar>
+      <Navbar
+        profile={profile}
+        accessRequestCount={pendingAccessRequestCount}
+      ></Navbar>
       <main ref={mainDivRef}>
         {/*SPECIE AND SPECIMEN*/}
 
@@ -80,8 +84,8 @@ function App() {
           <Route
             path={"/fichas"}
             element={
-              <AuthGuard>
-                <Photosheets role={ROLE} />
+              <AuthGuard profile={profile}>
+                <Photosheets isTechnicalPerson={isTechnicalPerson} />
               </AuthGuard>
             }
           ></Route>
@@ -111,7 +115,7 @@ function App() {
             element={
               <SpecieDashboard
                 onSpecieSelection={handleSelectedSpecieChange}
-                role={ROLE}
+                role={profile?.role}
               />
             }
           ></Route>
@@ -119,7 +123,15 @@ function App() {
             path={ROUTES.REQUEST_ACCESS}
             element={<AccessRequestForm />}
           ></Route>
-          <Route path={ROUTES.PERSONAL} element={<Users />}></Route>
+
+          <Route
+            path={ROUTES.PERSONAL}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <Users />
+              </AuthGuard>
+            }
+          ></Route>
           <Route path={ROUTES.MIGRATE} element={<Migrate />}></Route>
           <Route
             path={ROUTES.PROFILE}

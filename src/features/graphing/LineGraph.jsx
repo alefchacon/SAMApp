@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import TooltipCustom from "./TooltipCustom";
+import TooltipGraph from "./TooltipGraph";
 
 import Button from "../../components/ui/Button";
 
@@ -169,7 +169,7 @@ export default function LineGraph({ initialData = testData }) {
             tickFormatter={(value) => Math.floor(value)}
           />
 
-          <Tooltip content={<TooltipCustom />} />
+          <Tooltip content={<TooltipGraph />} />
           <Line
             yAxisId="1"
             type="linear"

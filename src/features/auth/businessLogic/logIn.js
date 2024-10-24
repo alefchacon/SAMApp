@@ -17,65 +17,17 @@ const logIn = async (username = "", password = "") => {
 
   const accessToken = response?.data[CREDENTIALS_KEYS.TOKEN_ACCESS];
   const refreshToken = response?.data[CREDENTIALS_KEYS.TOKEN_REFRESH];
+  const credentials = response?.data[CREDENTIALS_KEYS.PROFILE];
   if (!accessToken || !refreshToken){
       return;
   }
   localStorage.setItem(CREDENTIALS_KEYS.TOKEN_ACCESS, accessToken)
   localStorage.setItem(CREDENTIALS_KEYS.TOKEN_REFRESH, refreshToken)
-  
-  /*
-  The log in endpoint (http://localhost:8000/login/) returns only two values: an access token 
-  and a refresh token. Each token has the following structure:
-
-    exp: 1725381218
-    iat: 1725294818
-    jti: "72c8f9ef573a43e1a218de279f756869"
-    token_type: "access" <- or "refresh"
-    user_id: 2
-
-  This app requires user credentials to serve role-specific views of specimens. Given that I
-  lack such data, I have to make the following additional API calls:
-  */
-
-  const userId = jwtDecode(accessToken)["user_id"];
-  const academics = (await getAcademics()).data;
-  const technicalPersons = (await getTechnicalPersons()).data;
-
-  let matchingAcademic = 
-    academics.filter(academic => academic.user === userId)[0];
-  if (matchingAcademic){
-    matchingAcademic.role = ROLE_TYPES.ACADEMIC;
-  }
-  
-  let matchingTechnicalPerson = 
-    technicalPersons.filter(technicalPerson => technicalPerson.user === userId)[0];
-
-  processTechnicalPerson(matchingTechnicalPerson);
-  
-  const credentials = {
-    userId: userId,
-    academic: matchingAcademic,
-    technicalPerson: matchingTechnicalPerson,
-  }  
-
-  localStorage.setItem(
-    CREDENTIALS_KEYS.CREDENTIALS, 
-    JSON.stringify(credentials));
+  localStorage.setItem(CREDENTIALS_KEYS.PROFILE, JSON.stringify(credentials))
 
   window.location.reload();
     
 }
 
-const processTechnicalPerson = (technicalPerson) => {
-  if (!Boolean(technicalPerson)){
-    return;
-  }
-  
-  technicalPerson.role = ROLE_TYPES.TECHNICAL_PERSON;
-  let allNames = technicalPerson.fullname.split(" ");
-  technicalPerson["mother_last_name"] = allNames.pop();
-  technicalPerson["father_last_name"] = allNames.pop();
-  technicalPerson["names"] = allNames.join(" ");
-}
 
 export default logIn

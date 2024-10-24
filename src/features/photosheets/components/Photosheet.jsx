@@ -8,7 +8,7 @@ export default function Photosheet({
     description: "description",
     sheet: "src/assets/images/0.webp",
   },
-  role = ROLE_TYPES.VISITOR,
+  isTechnicalPerson = false,
   onDelete,
   onUpdate,
 }) {
@@ -66,7 +66,7 @@ export default function Photosheet({
           iconType="download"
           onClick={handleDownload}
         ></Button>
-        {role === ROLE_TYPES.TECHNICAL_PERSON && technicalPersonButtons}
+        {isTechnicalPerson && technicalPersonButtons}
       </div>
       <img className="photosheet" src={sheetURL} alt={photosheet.description} />
       <div className="photosheet-description bg-black-transparent color-white w-100 text-wrap position-absolute">

@@ -12,7 +12,7 @@ export default function useApi() {
     baseURL: "http://localhost:8000/api/",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: token ? `Bearer ${token}` : "",
     },
   });
 
@@ -60,6 +60,7 @@ export default function useApi() {
   };
 
   function handleError(error, config) {
+    console.log(token);
     if (error.response) {
       error.response.intercepted = true;
     }

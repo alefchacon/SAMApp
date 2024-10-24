@@ -219,6 +219,7 @@ const defaultColumns = [
     header: () => "Comentario",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
+    minSize: 500, // Minimum width
   }),
 ];
 
@@ -254,42 +255,36 @@ function TableRow({ rowData, onEdit }) {
   return (
     <tr
       key={rowData.id}
-      className="tr selectable hoverable2"
-      style={{ position: "relative" }}
+      className="tr selectable"
+      style={{ position: "relative", overflow: "hidden" }}
     >
-      <HoverableActions
-        action1={() =>
-          navigate(`${ROUTES.EDIT_SPECIMEN}/${rowData.original.id}`, {
-            state: { specimen: rowData.original },
-          })
-        }
-        position="fixed"
-      >
-        <Button
-          iconType="edit"
-          className="icon-only color-white"
-          onClick={() =>
-            navigate(`${ROUTES.EDIT_SPECIMEN}/${rowData.original.id}`, {
-              state: { specimen: rowData.original },
-            })
-          }
-        ></Button>
-        <Button
-          iconType="delete"
-          className="icon-only color-white danger"
-          onClick={handleConfirmDelete}
-        ></Button>
-      </HoverableActions>
       {rowData.getVisibleCells().map((cell) => (
         <td
-          className="td"
+          className="td hoverable2"
           key={cell.id}
           {...{
             style: {
               width: cell.column.getSize(),
+              position: "relative",
             },
           }}
         >
+          <HoverableActions>
+            <Button
+              iconType="edit"
+              className="icon-only color-white"
+              onClick={() =>
+                navigate(`${ROUTES.EDIT_SPECIMEN}/${rowData.original.id}`, {
+                  state: { specimen: rowData.original },
+                })
+              }
+            ></Button>
+            <Button
+              iconType="delete"
+              className="icon-only color-white danger"
+              onClick={handleConfirmDelete}
+            ></Button>
+          </HoverableActions>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </td>
       ))}
@@ -443,7 +438,7 @@ export default function Table({ data, onEdit }) {
             ))}
           </thead>
 
-          <tbody>
+          <tbody style={{ overflow: "hidden" }}>
             {table.getRowModel().rows.map((row, index) => (
               <TableRow key={index} rowData={row} onEdit={onEdit} />
             ))}

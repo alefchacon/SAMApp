@@ -16,22 +16,31 @@ export function StatusProvider({ children }) {
   const storedCredentials =
     JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.CREDENTIALS)) || null;
 
-  const [credentials, setCredentials] = useState(
-    JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.CREDENTIALS)) || null
+  const [profile, setProfile] = useState(
+    JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.PROFILE)) || {
+      role: ROLE_TYPES.VISITOR,
+    }
   );
 
   /*
   Profile is a wrapper used to make all role-based validations.
   */
-  const [profile, setProfile] = useState(
-    storedCredentials?.technicalPerson ?? storedCredentials?.academic
-  );
 
   const logOutFront = async () => {
     //await logOut();
     clearStorage();
-    setCredentials(null);
     setProfile(null);
+    setProfile(null);
+  };
+
+  const getProfile = () => {
+    let profile = JSON.parse(localStorage.getItem(CREDENTIALS_KEYS.PROFILE));
+    if (!Boolean(profile)) {
+      profile = {
+        role: ROLE_TYPES.VISITOR,
+      };
+    }
+    return profile;
   };
 
   return (
@@ -39,8 +48,8 @@ export function StatusProvider({ children }) {
       value={{
         loading,
         setLoading,
-        setCredentials,
-        credentials,
+        setProfile,
+        getProfile,
         profile,
         logOutFront,
       }}

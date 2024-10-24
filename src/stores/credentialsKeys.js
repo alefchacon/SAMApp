@@ -4,7 +4,7 @@ const CREDENTIALS_KEYS = Object.freeze({
   USER_ID: "userId",
   ACADEMIC: "academic",
   TECHNICAL_PERSON: "technicalPerson",
-  CREDENTIALS: "credentials",
+  PROFILE: "profile",
   /*
   The API typically refers to the refresh token as simply "refresh", however, the log out 
   endpoint (http://localhost:8000/api/logout/) expects this value to be called 

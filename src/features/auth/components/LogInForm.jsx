@@ -11,12 +11,12 @@ import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function LogInForm({ onSubmit }) {
-  const { setCredentials } = useStatus();
+  const { setProfile } = useStatus();
   const { closeModal } = useModal();
   const navigate = useNavigate();
   const handleSubmit = async (values, actions) => {
     const credentials = await logIn(values.username, values.password);
-    setCredentials(credentials);
+    setProfile(credentials);
     onSubmit();
   };
 

@@ -151,9 +151,10 @@ table{
   */
   table-layout: auto;
   
-  max-width: 100px;
+  
   table-layout: fixed; 
   height: 100%;
+  overflow: hidden;
   
 }
 

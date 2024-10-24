@@ -14,7 +14,8 @@ import useApi from "../../../dataAccess/useApi";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
-  const { profile } = useStatus();
+  const { getProfile } = useStatus();
+  const profile = getProfile();
   const download = useDownload();
   const { apiWrapper } = useApi();
 

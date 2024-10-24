@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import TooltipCustom from "./TooltipCustom";
+import TooltipGraph from "./TooltipGraph";
 
 import "../../app/App.css";
 
@@ -56,7 +56,7 @@ export default function BarGraph({
               offset: 10,
             }}
           />
-          <Tooltip content={<TooltipCustom />} />
+          <Tooltip content={<TooltipGraph />} />
 
           <Bar dataKey="value" />
         </BarChart>

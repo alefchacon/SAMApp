@@ -13,7 +13,8 @@ import { useStatus } from "../contexts/StatusContext";
 
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-export default function Navbar({ accessRequestCount = 0 }) {
+import { ROLE_TYPES } from "../../stores/roleTypes";
+export default function Navbar({ accessRequestCount = 0, profile }) {
   const { loading } = useStatus();
   const navigate = useNavigate();
 
@@ -41,11 +42,6 @@ export default function Navbar({ accessRequestCount = 0 }) {
       route: ROUTES.COLLECTION,
       label: "Colección",
       iconType: "pets",
-    },
-    {
-      route: ROUTES.PHOTOSHEETS,
-      label: "Fichas fotográficas",
-      iconType: "image",
     },
   ];
 
@@ -79,6 +75,31 @@ export default function Navbar({ accessRequestCount = 0 }) {
             </Link>
           ))}
 
+          {profile?.role !== ROLE_TYPES.VISITOR && (
+            <Link
+              to={ROUTES.PHOTOSHEETS}
+              className={`selectable nav-link ${
+                ROUTES.PHOTOSHEETS === pathname ? "selected" : ""
+              }`}
+            >
+              <InfoItem
+                label={"Fichas fotográficas"}
+                iconType={"image"}
+              ></InfoItem>
+            </Link>
+          )}
+
+          {profile.role === ROLE_TYPES.TECHNICAL_PERSON && (
+            <Link
+              to={ROUTES.PERSONAL}
+              className={`selectable nav-link ${
+                ROUTES.PERSONAL === pathname ? "selected" : ""
+              }`}
+            >
+              <InfoItem label={"Personal"} iconType={"group"}></InfoItem>
+            </Link>
+          )}
+
           <Dropdown
             className={"nav-link"}
             header={
@@ -94,14 +115,6 @@ export default function Navbar({ accessRequestCount = 0 }) {
       <div style={{ flex: 1 }}></div>
       <div className="right-side flex-row gap-1rem h-100">
         <div className="hide-if-mobile flex-row gap-1rem align-items-center">
-          <Link
-            to={ROUTES.PERSONAL}
-            className={`selectable nav-link ${
-              ROUTES.PERSONAL === pathname ? "selected" : ""
-            }`}
-          >
-            <InfoItem label={"Personal"} iconType={"group"}></InfoItem>
-          </Link>
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>
         <Button

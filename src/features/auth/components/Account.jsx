@@ -9,20 +9,22 @@ import Dropdown from "../../../components/ui/Dropdown";
 import DropdownItem from "../../../components/ui/DropdownItem";
 import Badge from "../../../components/ui/Badge";
 import ROUTES from "../../../stores/routes";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export default function Account({
   authenticated = false,
   accessRequestCount = "",
 }) {
   const { showModal, closeModal } = useModal();
-  const { profile, logOutFront } = useStatus();
+  const { getProfile, logOutFront } = useStatus();
+  const profile = getProfile();
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
     logOutFront();
   };
 
-  if (!Boolean(profile)) {
+  if (profile.role === ROLE_TYPES.VISITOR) {
     return (
       <div className="flex-row">
         <Button
@@ -57,7 +59,7 @@ export default function Account({
         <Dropdown
           header={
             <div>
-              <p>{profile.names}</p>
+              <p>@{profile.username}</p>
             </div>
           }
         >

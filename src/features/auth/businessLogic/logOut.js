@@ -36,7 +36,7 @@ const logOut = async () => {
 const clearStorage = () => {
   localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_ACCESS);
   localStorage.removeItem(CREDENTIALS_KEYS.TOKEN_REFRESH);
-  localStorage.removeItem(CREDENTIALS_KEYS.CREDENTIALS);
+  localStorage.removeItem(CREDENTIALS_KEYS.PROFILE);
 }
 
 export {logOut, clearStorage};
