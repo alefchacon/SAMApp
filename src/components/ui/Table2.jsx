@@ -421,7 +421,7 @@ export default function Table({ data, onEdit }) {
         >
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <div className="tr" key={headerGroup.id}>
+              <tr className="tr" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     className="th selectable"
@@ -465,7 +465,7 @@ export default function Table({ data, onEdit }) {
                     />
                   </th>
                 ))}
-              </div>
+              </tr>
             ))}
           </thead>
 

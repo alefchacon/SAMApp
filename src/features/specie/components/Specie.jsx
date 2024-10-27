@@ -1,5 +1,6 @@
 import Taxonomy from "./Taxonomy";
-
+import Highlight from "../../../components/ui/Highlight";
+import { filter } from "lodash";
 export default function Specie({
   specie = {
     id: 0,
@@ -10,34 +11,32 @@ export default function Specie({
     epithet: "építeto",
     subspecie: "subespecie",
   },
-  selectedIndex = 0,
-  index = -1,
-  isListItem = true,
+  showRankName = false,
+  clickableRank = false,
+  filterText,
+  selected,
   onClick,
-  className,
-  onDelete,
-  onEdit,
-  filterText = null,
-  showRankName = true,
-  clickableRank = true,
 }) {
   return (
     <div
-      className={`specie selectable rounded ${className}  ${
-        selectedIndex === index ? "selected" : ""
+      className={`selectable hoverable2  p-1rem position-relative ${
+        selected ? "selected" : ""
       }`}
+      onClick={onClick}
     >
-      <li
-        className={""}
-        onClick={isListItem ? () => onClick(index) : console.log}
-      >
-        <p className="bold ellipsis">{specie.scientific_name}</p>
-        <Taxonomy
-          clickableRank={clickableRank}
-          showRankName={showRankName}
-          specie={specie}
-        ></Taxonomy>
-      </li>
+      <p style={{ fontWeight: 500 }}>
+        {" "}
+        <i>
+          <Highlight text={specie.epithet} highlight={filterText}></Highlight>
+        </i>
+      </p>
+      <Taxonomy
+        specie={specie}
+        center={false}
+        clickableRank={clickableRank}
+        showRankName={showRankName}
+        filterText={filterText}
+      ></Taxonomy>
     </div>
   );
 }

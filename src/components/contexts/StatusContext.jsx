@@ -11,19 +11,11 @@ export function useStatus() {
 export function StatusProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
-  const logOutFront = async () => {
-    //await logOut();
-    clearStorage();
-    setProfile(null);
-    setProfile(null);
-  };
-
   return (
     <StatusContext.Provider
       value={{
         loading,
         setLoading,
-        logOutFront,
       }}
     >
       {children}

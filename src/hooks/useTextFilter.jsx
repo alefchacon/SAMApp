@@ -6,7 +6,6 @@ import { useStatus } from "../components/contexts/StatusContext";
 export default function useTextFilter(items = [], debounceMs = 700) {
   const [filterText, setFilterText] = useState("");
   const [debouncedFilterText, setDebouncedFilterText] = useState("");
-
   const { setLoading } = useStatus();
 
   const debouncedSetFilter = useCallback(
@@ -16,22 +15,19 @@ export default function useTextFilter(items = [], debounceMs = 700) {
 
   const handleFilterChange = useCallback(
     (event) => {
-      setLoading(debounceMs > 100);
+      setLoading(true);
       const value = event.target.value;
       setFilterText(value);
       debouncedSetFilter(value);
     },
-    [debouncedSetFilter]
+    [debouncedSetFilter, setLoading]
   );
 
   useEffect(() => {
-    return () => {
-      debouncedSetFilter.cancel();
-    };
-  }, [debouncedSetFilter]);
+    setLoading(false);
+  }, [debouncedFilterText, setLoading]);
 
   const filteredItems = useMemo(() => {
-    setLoading(false);
     return items.filter((item) =>
       JSON.stringify(item)
         .toLowerCase()
@@ -41,7 +37,7 @@ export default function useTextFilter(items = [], debounceMs = 700) {
 
   const clearFilter = useCallback(() => {
     setFilterText("");
-  });
+  }, []);
 
   return [filteredItems, handleFilterChange, filterText, clearFilter];
 }

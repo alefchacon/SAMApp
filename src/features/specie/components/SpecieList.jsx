@@ -25,7 +25,7 @@ export default function SpecieList({
   onAddSpecimen,
   onFold = null,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedSpecieId, setSelectedSpecieId] = useState(species[0]?.id ?? 0);
   const [fold, setFold] = useState(false);
   const [filteredItems, handleFilterChange, filterText] =
     useTextFilter(species);
@@ -33,7 +33,7 @@ export default function SpecieList({
   const navigate = useNavigate();
 
   const handleSelection = (newSelectedIndex) => {
-    setSelectedIndex(newSelectedIndex);
+    setSelectedSpecieId(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
 
@@ -103,41 +103,26 @@ export default function SpecieList({
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
                 <li key={index}>
-                  <div
-                    className={`selectable hoverable2  p-1rem ${
-                      selectedIndex === specie.id ? "selected" : ""
-                    }`}
-                    style={{
-                      position: "relative",
-                    }}
+                  {role === ROLE_TYPES.TECHNICAL_PERSON && (
+                    <HoverableActions>
+                      <Button
+                        iconType="edit"
+                        className="icon-only color-white"
+                        onClick={() => onEdit(specie)}
+                      ></Button>
+                      <Button
+                        iconType="add"
+                        className="icon-only color-white"
+                        onClick={onAddSpecimen}
+                      ></Button>
+                    </HoverableActions>
+                  )}
+                  <Specie
+                    specie={specie}
+                    filterText={filterText}
                     onClick={() => handleSelection(specie.id)}
-                  >
-                    {role === ROLE_TYPES.TECHNICAL_PERSON && (
-                      <HoverableActions>
-                        <Button
-                          iconType="edit"
-                          className="icon-only color-white"
-                          onClick={() => onEdit(specie)}
-                        ></Button>
-                        <Button
-                          iconType="add"
-                          className="icon-only color-white"
-                          onClick={onAddSpecimen}
-                        ></Button>
-                      </HoverableActions>
-                    )}
-                    <p style={{ fontWeight: 500 }}>
-                      <i>{specie.epithet}</i>
-                    </p>
-                    <Taxonomy
-                      key={specie.id}
-                      specie={specie}
-                      center={false}
-                      clickableRank={false}
-                      showRankName={false}
-                      filterText={filterText}
-                    ></Taxonomy>
-                  </div>
+                    selected={specie.id === selectedSpecieId}
+                  ></Specie>
                 </li>
               ))}
             </ul>
