@@ -6,6 +6,7 @@ import {
   flexRender,
   createColumnHelper,
   getPaginationRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 // COMPONENTS
@@ -21,6 +22,13 @@ import ChipSex from "../../features/specimens/ChipSex";
 import useSession from "../../features/auth/businessLogic/useSession";
 import { ROLE_TYPES } from "../../stores/roleTypes";
 
+// Custom filter function for 'specific_location'
+function specificLocationFilterFn(row, columnId, filterValue) {
+  console.log("fuck");
+  const location = row.getValue(columnId)?.specific_location || ""; // Access 'specific_location' safely
+  return location.toLowerCase().includes(filterValue.toLowerCase()); // Check if it includes the filter value
+}
+
 const columnHelper = createColumnHelper();
 
 const EditableCell = ({ initialValue, row, column, table }) => {
@@ -28,7 +36,7 @@ const EditableCell = ({ initialValue, row, column, table }) => {
   const [value, setValue] = useState(initialValue);
 
   const onBlur = () => {
-    table.options.meta?.updateData(row.index, column.id, value);
+    table?.options.meta?.updateData(row.index, column.id, value);
   };
 
   return (
@@ -52,6 +60,7 @@ const defaultColumns = [
     header: () => "ID",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
+    filterFn: "includesString",
   }),
   columnHelper.accessor("location", {
     id: "geographical_coordinates_x",
@@ -150,6 +159,7 @@ const defaultColumns = [
     cell: (info) => {
       return info.getValue()?.specific_location || "N/A";
     },
+    filterFn: specificLocationFilterFn, // Use the custom filter function
   }),
   columnHelper.accessor("location", {
     id: "kilometer",
@@ -325,6 +335,7 @@ function TableRow({ rowData, onEdit, role }) {
 export default function Table({ data, onEdit }) {
   const { role } = useSession().getProfile();
   const [columns] = useState(() => [...defaultColumns]);
+  const [columnFilters, setColumnFilters] = useState([]);
   const [columnResizeMode, setColumnResizeMode] = useState("onChange");
   const [columnResizeDirection, setColumnResizeDirection] = useState("ltr");
   const [pagination, setPagination] = useState({
@@ -353,8 +364,14 @@ export default function Table({ data, onEdit }) {
     onPaginationChange: setPagination,
     state: {
       pagination,
+      columnFilters,
     },
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
+
+  console.log(columnFilters);
 
   return (
     <>
@@ -407,6 +424,7 @@ export default function Table({ data, onEdit }) {
           </select>
         </div>
       </div>
+
       <div
         className="table-wrapper"
         style={{ overflowX: "scroll", height: "100%" }}
@@ -433,6 +451,18 @@ export default function Table({ data, onEdit }) {
                       },
                     }}
                   >
+                    {header.column.getCanFilter() && (
+                      <input
+                        type="text"
+                        placeholder={`Filter ${header.column.id}`}
+                        value={header.column.getFilterValue() || ""}
+                        onChange={(e) =>
+                          header.column.setFilterValue(
+                            e.target.value || undefined
+                          )
+                        }
+                      />
+                    )}
                     {header.isPlaceholder
                       ? null
                       : flexRender(

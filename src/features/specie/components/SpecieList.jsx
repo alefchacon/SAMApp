@@ -20,12 +20,12 @@ export default function SpecieList({
   role = ROLE_TYPES.VISITOR,
   species,
   onSelectionChange,
+  selectedSpecieId = 0,
   onAdd,
   onEdit,
   onAddSpecimen,
   onFold = null,
 }) {
-  const [selectedSpecieId, setSelectedSpecieId] = useState(species[0]?.id ?? 0);
   const [fold, setFold] = useState(false);
   const [filteredItems, handleFilterChange, filterText] =
     useTextFilter(species);
@@ -33,7 +33,6 @@ export default function SpecieList({
   const navigate = useNavigate();
 
   const handleSelection = (newSelectedIndex) => {
-    setSelectedSpecieId(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
 

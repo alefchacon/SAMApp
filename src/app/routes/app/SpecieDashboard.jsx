@@ -44,7 +44,6 @@ export default function SpecieDashboard({
     downloadMigrationFormat,
   } = useSpecie();
   const navigate = useNavigate();
-
   const [selectedSpecieId, setSelectedSpecieId] = useState(
     selectedSpecieDefault?.id ?? 0
   );
@@ -201,6 +200,7 @@ export default function SpecieDashboard({
         role={role}
         species={species}
         onSelectionChange={handleSelectedSpecieChange}
+        selectedSpecieId={selectedSpecieId}
         onAdd={showSpecieAddModal}
         onEdit={showSpecieUpdateModal}
         onAddSpecimen={navigateToAddSpecimen}
