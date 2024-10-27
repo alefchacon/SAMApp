@@ -18,8 +18,34 @@ import "../../app/App.css";
 import ROUTES from "../../stores/routes";
 import { useSpecimens } from "../../features/specimens/businessLogic/useSpecimens";
 import ChipSex from "../../features/specimens/ChipSex";
+import useSession from "../../features/auth/businessLogic/useSession";
+import { ROLE_TYPES } from "../../stores/roleTypes";
 
 const columnHelper = createColumnHelper();
+
+const EditableCell = ({ initialValue, row, column, table }) => {
+  //const initialValue = getValue();
+  const [value, setValue] = useState(initialValue);
+
+  const onBlur = () => {
+    table.options.meta?.updateData(row.index, column.id, value);
+  };
+
+  return (
+    <input
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onBlur={onBlur}
+      style={{
+        padding: "4px",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        width: "100%",
+        height: "100%",
+      }}
+    />
+  );
+};
 
 const defaultColumns = [
   columnHelper.accessor("id", {
@@ -44,9 +70,11 @@ const defaultColumns = [
   columnHelper.accessor("location", {
     id: "coordinates_cartesian_plane_x",
     header: () => "UTM X",
-    cell: (info) => {
-      return info.getValue()?.coordinates_cartesian_plane_x || "";
-    },
+    cell: (info) => (
+      <EditableCell
+        initialValue={info.getValue()?.coordinates_cartesian_plane_x}
+      />
+    ),
   }),
   columnHelper.accessor("location", {
     id: "coordinates_cartesian_plane_y",
@@ -223,7 +251,7 @@ const defaultColumns = [
   }),
 ];
 
-function TableRow({ rowData, onEdit }) {
+function TableRow({ rowData, onEdit, role }) {
   const navigate = useNavigate();
   const { showModal, closeModal } = useModal();
   const { deleteSpecimen } = useSpecimens();
@@ -295,6 +323,7 @@ function TableRow({ rowData, onEdit }) {
 }
 
 export default function Table({ data, onEdit }) {
+  const { role } = useSession().getProfile();
   const [columns] = useState(() => [...defaultColumns]);
   const [columnResizeMode, setColumnResizeMode] = useState("onChange");
   const [columnResizeDirection, setColumnResizeDirection] = useState("ltr");
@@ -442,7 +471,7 @@ export default function Table({ data, onEdit }) {
 
           <tbody style={{ overflow: "hidden" }}>
             {table.getRowModel().rows.map((row, index) => (
-              <TableRow key={index} rowData={row} onEdit={onEdit} />
+              <TableRow role={role} key={index} rowData={row} onEdit={onEdit} />
             ))}
           </tbody>
         </table>

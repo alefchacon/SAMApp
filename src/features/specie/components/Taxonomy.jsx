@@ -53,7 +53,7 @@ export default function Taxonomy({
     );
   }
 
-  const hasSubspecie = Boolean(specie.subspecie);
+  const hasSubspecie = Boolean(specie?.subspecie);
 
   return (
     <div
@@ -65,26 +65,26 @@ export default function Taxonomy({
       <Rank
         showRankName={showRankName}
         rankName="Orden"
-        rank={specie.orden}
+        rank={specie?.orden}
         clickableRank={clickableRank}
       ></Rank>
       <Rank
         clickableRank={clickableRank}
         showRankName={showRankName}
         rankName="Familia"
-        rank={specie.family}
+        rank={specie?.family}
       ></Rank>
       <Rank
         clickableRank={clickableRank}
         showRankName={showRankName}
         rankName="Género"
-        rank={specie.gender}
+        rank={specie?.gender}
       ></Rank>
       <Rank
         clickableRank={clickableRank}
         showRankName={showRankName}
         rankName="Especie"
-        rank={specie.specie_specie}
+        rank={specie?.specie_specie}
         showDelimiter={hasSubspecie}
       ></Rank>
       {hasSubspecie && (

@@ -6,6 +6,7 @@ import useApi from "../../../dataAccess/useApi";
 
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
+import HttpStatus from "../../../stores/httpStatus";
 
 export default function usePhotosheets() {
   const [photosheets, setPhotosheets] = useState([]);
@@ -49,7 +50,7 @@ export default function usePhotosheets() {
         "Content-Type": "multipart/form-data",
       },
     });
-    if (response.request.status === 201) {
+    if (response.request.status === HttpStatus.CREATED) {
       const newPhotosheet = {
         id: response.data.data.id,
         description: photosheet.description,
@@ -81,7 +82,7 @@ export default function usePhotosheets() {
       }
     );
 
-    if (response.request.status === 200) {
+    if (response.request.status === HttpStatus.OK) {
       const updatedPhotosheet = {
         id: photosheet.id,
         description: photosheet.description,
@@ -121,7 +122,7 @@ export default function usePhotosheets() {
     const response = await apiWrapper.delete(
       PHOTOSHEETS_URL.concat(photosheetId)
     );
-    if (response.request.status === 204) {
+    if (response.request.status === HttpStatus.NO_CONTENT) {
       setPhotosheets((prev) =>
         prev.filter((photosheet) => photosheet.id !== photosheetId)
       );

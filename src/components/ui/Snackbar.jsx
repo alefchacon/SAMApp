@@ -4,9 +4,6 @@ import PropTypes from "prop-types";
 //CUSTOM COMPONENTS
 import Button from "./Button";
 
-//PROVIDERS
-import { useModal } from "../contexts/ModalContext";
-
 export default function Snackbar({
   open = false,
   onClose,
@@ -16,8 +13,6 @@ export default function Snackbar({
   iconType = "add",
 }) {
   const [isOpen, setIsOpen] = useState(open);
-
-  const { showModal } = useModal();
 
   useEffect(() => {
     if (open) {

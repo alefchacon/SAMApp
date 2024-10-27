@@ -4,19 +4,18 @@ import TextField from "../../../components/ui/TextField";
 import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
-import logIn from "../businessLogic/logIn.js";
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
 import ROUTES from "../../../stores/routes.js";
 import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../businessLogic/useAuth.jsx";
 
 export default function LogInForm({ onSubmit }) {
-  const { setProfile } = useStatus();
   const { closeModal } = useModal();
+  const { logIn } = useAuth();
   const navigate = useNavigate();
   const handleSubmit = async (values, actions) => {
-    const credentials = await logIn(values.username, values.password);
-    setProfile(credentials);
+    await logIn(values.username, values.password);
     onSubmit();
   };
 

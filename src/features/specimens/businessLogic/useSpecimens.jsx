@@ -11,25 +11,49 @@ import moment from "moment";
 import Specimen from "../domain/specimen";
 import useDownload from "../../../hooks/useDownload";
 import useApi from "../../../dataAccess/useApi";
+import HttpStatus from "../../../stores/httpStatus";
+import useSession from "../../auth/businessLogic/useSession";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
-  const { getProfile } = useStatus();
-  const profile = getProfile();
+  const { getProfile } = useSession();
+  const [profile] = useState(getProfile());
   const download = useDownload();
   const { apiWrapper } = useApi();
+
+  const getSpecimensByRole = useCallback(
+    async (specieId = 0, role = ROLE_TYPES.VISITOR) => {
+      if (!Boolean(role)) {
+        throw new Error("Debe iniciar sesión");
+      }
+
+      let response = null;
+
+      if (role === ROLE_TYPES.TECHNICAL_PERSON) {
+        response = await apiWrapper.get(SPECIMEN_LIST_URL(specieId));
+      } else if (role === ROLE_TYPES.ACADEMIC) {
+        response = await apiWrapper.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
+      } else {
+        response = await apiWrapper.get(SPECIMEN_LIST_VISITOR_URL(specieId));
+      }
+
+      return response;
+    },
+    [apiWrapper]
+  );
 
   useEffect(() => {
     if (specie) {
       getSpecimensByRole(specie.id, profile?.role).then((response) => {
-        const specimens = response.data.map((specimen) => {
+        const specimens = response?.data.map((specimen) => {
           specimen.specie = specie;
           return specimen;
         });
+
         setSpecimens(specimens);
       });
     }
-  }, [specie]);
+  }, [specie, profile?.role]);
 
   const getSpecimen = useCallback(async (specimenId) => {
     const response = await apiWrapper.get(`${SPECIMEN_URL}/${specimenId}`);
@@ -58,7 +82,7 @@ export const useSpecimens = (specie) => {
 
   const deleteSpecimen = useCallback(async (specimenId = 0) => {
     const response = await apiWrapper.delete(`${SPECIMEN_URL}/${specimenId}`);
-    if (response.status === 204) {
+    if (response.status === HttpStatus.NO_CONTENT) {
       const newSpecimens = specimens.filter(
         (specimen) => specimen.id !== specimenId
       );
@@ -111,23 +135,6 @@ export const useSpecimens = (specie) => {
     });
   });
 
-  async function getSpecimensByRole(specieId = 0, role = ROLE_TYPES.VISITOR) {
-    if (!Boolean(role)) {
-      throw new Error("Debe iniciar sesión");
-    }
-
-    let response = null;
-
-    if (role === ROLE_TYPES.TECHNICAL_PERSON) {
-      response = await apiWrapper.get(SPECIMEN_LIST_URL(specieId));
-    } else if (role === ROLE_TYPES.ACADEMIC) {
-      response = await apiWrapper.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
-    } else {
-      response = await apiWrapper.get(SPECIMEN_LIST_VISITOR_URL(specieId));
-    }
-
-    return response;
-  }
   return {
     specimens,
     getSpecimen,

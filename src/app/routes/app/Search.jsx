@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { api } from "../../../dataAccess/apiClient";
 import axios from "axios";
 
 import Tabs from "../../../components/ui/Tabs";
@@ -21,7 +20,7 @@ export default function Search() {
   //const [query, setQuery] = useState(searchParams.get("q"));
 
   console.log(searchParams.get("q"));
-
+  /*
   useEffect(() => {
     const query = searchParams.get("q");
     const byScientificName = api.get(`species/scientific_name/${query}`);
@@ -38,7 +37,7 @@ export default function Search() {
       })
     );
   }, [searchParams]);
-
+*/
   function SpecieResults({ label = "label", species }) {
     return (
       <div label="Nombres / Géneros" className="page-padding">

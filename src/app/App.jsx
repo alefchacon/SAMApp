@@ -21,35 +21,29 @@ import { ROLE_TYPES } from "../stores/roleTypes";
 
 import Navbar from "../components/ui/Navbar";
 import { useStatus } from "../components/contexts/StatusContext";
-import { useAxiosInterceptors } from "../dataAccess/useAxiosInterceptors.jsx";
 // CSS
 import "./App.css";
 
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 import SignupForm from "./routes/app/SignupForm.jsx";
 import Profile from "./routes/app/Profile.jsx";
+import useSession from "../features/auth/businessLogic/useSession.jsx";
 
 function App() {
-  useAxiosInterceptors();
-  const location = useLocation();
   const [species, setSpecies] = useState([]);
   const [selectedSpecie, setSelectedSpecie] = useState();
-  const { getProfile } = useStatus();
+  const { getProfile } = useSession();
   const profile = getProfile();
   const isTechnicalPerson = profile?.isTechnicalPerson;
 
-  const {
-    pendingAccessRequests,
-    getPendingAccessRequests,
-    pendingAccessRequestCount,
-    getPendingAccessRequestCount,
-  } = useAccessRequests();
+  const { pendingAccessRequestCount, getPendingAccessRequestCount } =
+    useAccessRequests();
 
   useEffect(() => {
     if (isTechnicalPerson) {
       getPendingAccessRequestCount();
     }
-  }, []);
+  }, [profile]);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     setSelectedSpecie(newSelectedSpecie);

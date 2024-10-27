@@ -99,7 +99,7 @@ export default function SpecieList({
             </div>
           </div>
 
-          {species.length > 0 ? (
+          {species?.length > 0 ? (
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
                 <li key={index}>
@@ -112,18 +112,20 @@ export default function SpecieList({
                     }}
                     onClick={() => handleSelection(specie.id)}
                   >
-                    <HoverableActions>
-                      <Button
-                        iconType="edit"
-                        className="icon-only color-white"
-                        onClick={() => onEdit(specie)}
-                      ></Button>
-                      <Button
-                        iconType="add"
-                        className="icon-only color-white"
-                        onClick={onAddSpecimen}
-                      ></Button>
-                    </HoverableActions>
+                    {role === ROLE_TYPES.TECHNICAL_PERSON && (
+                      <HoverableActions>
+                        <Button
+                          iconType="edit"
+                          className="icon-only color-white"
+                          onClick={() => onEdit(specie)}
+                        ></Button>
+                        <Button
+                          iconType="add"
+                          className="icon-only color-white"
+                          onClick={onAddSpecimen}
+                        ></Button>
+                      </HoverableActions>
+                    )}
                     <p style={{ fontWeight: 500 }}>
                       <i>{specie.epithet}</i>
                     </p>

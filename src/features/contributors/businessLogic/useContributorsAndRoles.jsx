@@ -5,6 +5,7 @@ import { CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL } from "./contributorsURL";
 import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 import ContributorSpecimenSerializer from "../domain/contributorSpecimenSerializer";
 import Contributor from "../domain/contributor";
+import HttpStatus from "../../../stores/httpStatus";
 
 export default function useContributorsAndRoles() {
   const [contributors, setContributors] = useState([]);
@@ -28,7 +29,7 @@ export default function useContributorsAndRoles() {
         body
       );
 
-      if (response.status === 201) {
+      if (response.status === HttpStatus.CREATED) {
         setContributors((prevContributors) => [
           response.data.data,
           ...prevContributors,
@@ -47,7 +48,7 @@ export default function useContributorsAndRoles() {
         contributorToUpdate
       );
 
-      if (response.status === 200) {
+      if (response.status === HttpStatus.OK) {
         const contributorsSansOldValue = contributors.filter(
           (contributor) => contributor.id !== contributorToUpdate.id
         );

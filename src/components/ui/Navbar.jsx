@@ -16,21 +16,8 @@ import { useRef, useState } from "react";
 import { ROLE_TYPES } from "../../stores/roleTypes";
 export default function Navbar({ accessRequestCount = 0, profile }) {
   const { loading } = useStatus();
-  const navigate = useNavigate();
-
-  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const pathname = location.pathname.toLowerCase();
-
-  const handleSearchQueryChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    params.set("q", searchQuery);
-    navigate(ROUTES.BUSCAR.concat(`?${params.toString()}`));
-  };
 
   const NAV_ITEMS = [
     {
@@ -89,7 +76,7 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
             </Link>
           )}
 
-          {profile.role === ROLE_TYPES.TECHNICAL_PERSON && (
+          {profile?.role === ROLE_TYPES.TECHNICAL_PERSON && (
             <Link
               to={ROUTES.PERSONAL}
               className={`selectable nav-link ${

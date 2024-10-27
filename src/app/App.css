@@ -154,7 +154,6 @@ table{
   
   table-layout: fixed; 
   height: 100%;
-  overflow: hidden;
   
 }
 
@@ -499,9 +498,11 @@ td,
   flex-grow: 1;
   
   overflow:  hidden;
-  padding: 0.65rem 1rem;
+  padding: 0.5rem 1rem;
   flex-wrap: nowrap;
   text-wrap: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 thead{
@@ -785,6 +786,7 @@ h2{
   pointer-events: none;
   position: absolute;
   z-index: -1000;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .visible{

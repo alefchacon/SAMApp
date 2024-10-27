@@ -9,6 +9,7 @@ import Modal from "../../../components/ui/modal/Modal";
 
 import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";
 import Contributor from "../domain/contributor";
+import HttpStatus from "../../../stores/httpStatus";
 
 export default function ContributorForm({
   onSubmit,
@@ -18,7 +19,7 @@ export default function ContributorForm({
     console.log(values);
     const response = await onSubmit(values);
 
-    if (response.status === 201) {
+    if (response.status === HttpStatus.CREATED) {
       actions.resetForm();
     }
     //onSecondaryClick();

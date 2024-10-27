@@ -4,24 +4,24 @@ import Button from "../../../components/ui/Button";
 import { useModal } from "../../../components/contexts/ModalContext";
 import { Link, useNavigate } from "react-router-dom";
 import LogInForm from "../components/LogInForm";
-import { useStatus } from "../../../components/contexts/StatusContext";
 import Dropdown from "../../../components/ui/Dropdown";
 import DropdownItem from "../../../components/ui/DropdownItem";
 import Badge from "../../../components/ui/Badge";
 import ROUTES from "../../../stores/routes";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
+import useSession from "../businessLogic/useSession";
 
 export default function Account({
   authenticated = false,
   accessRequestCount = "",
 }) {
   const { showModal, closeModal } = useModal();
-  const { getProfile, logOutFront } = useStatus();
+  const { getProfile, deleteSession } = useSession();
   const profile = getProfile();
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    logOutFront();
+    deleteSession();
   };
 
   if (profile.role === ROLE_TYPES.VISITOR) {

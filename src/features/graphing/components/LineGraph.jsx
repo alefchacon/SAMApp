@@ -13,11 +13,11 @@ import {
 
 import TooltipGraph from "./TooltipGraph";
 
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 
-import testData from "./TestData";
+import testData from "../stores/testData";
 
-import "../../app/App.css";
+import "../../../app/App.css";
 
 export default function LineGraph({ initialData = testData }) {
   const initialState = {

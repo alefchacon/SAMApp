@@ -14,6 +14,7 @@ import PasswordValidator from "../../../features/auth/components/PasswordValidat
 import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
 import ROUTES from "../../../stores/routes.js";
 import { useNavigate } from "react-router-dom";
+import HttpStatus from "../../../stores/httpStatus.js";
 export default function AccessRequestForm() {
   const {
     pendingAccessRequests,
@@ -32,7 +33,7 @@ export default function AccessRequestForm() {
   const handleSubmit = async (values, actions) => {
     console.log(values);
     const response = await addUser(values, token);
-    if (response.status === 201) {
+    if (response.status === HttpStatus.CREATED) {
       handleShowModal();
     }
 

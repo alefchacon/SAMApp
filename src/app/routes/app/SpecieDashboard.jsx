@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
-import Table from "../../../components/ui/Table";
+import Table from "../../../components/ui/Table2";
 
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
@@ -14,13 +14,12 @@ import SpecieForm from "../../../features/specie/components/SpecieForm";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import Multigraph from "../../../features/graphing/Multigraph";
+import Multigraph from "../../../features/graphing/components/Multigraph";
 import Footer from "../../../components/ui/Footer";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
-import NewSpecimen from "./NewSpecimen/NewSpecimen2";
 
-import DATE_TYPES from "../../../features/graphing/dateTypes";
+import DATE_TYPES from "../../../features/graphing/stores/dateTypes";
 import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import HeaderPage from "../../../components/ui/HeaderPage";
 import NoResults from "../../../components/ui/NoResults";
@@ -44,15 +43,20 @@ export default function SpecieDashboard({
     selectedSpecieDefault,
     downloadMigrationFormat,
   } = useSpecie();
+  const navigate = useNavigate();
+
   const [selectedSpecieId, setSelectedSpecieId] = useState(
     selectedSpecieDefault?.id ?? 0
   );
-  const navigate = useNavigate();
+  const selectedSpecie = useMemo(
+    () =>
+      species?.find((specie) => specie.id === selectedSpecieId) ??
+      selectedSpecieDefault
+  );
 
-  const selectedSpecie =
-    species.find((specie) => specie.id === selectedSpecieId) ??
-    selectedSpecieDefault;
-  onSpecieSelection(selectedSpecie);
+  useEffect(() => {
+    onSpecieSelection(selectedSpecie);
+  }, [selectedSpecie]);
 
   const { specimens, downloadSpecimens } = useSpecimens(selectedSpecie);
   const [specieListFolded, setSpecieListFolded] = useState(false);
@@ -125,7 +129,7 @@ export default function SpecieDashboard({
           )}
         </HeaderPage>
 
-        {specimens.length > 0 ? (
+        {specimens?.length > 0 ? (
           <Tabs className={`divider`}>
             {ROLE_TYPES.validate(role) && (
               <div
@@ -138,20 +142,6 @@ export default function SpecieDashboard({
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
-                <Tooltip content="This is a tooltip!">
-                  <button
-                    style={{
-                      padding: "8px 16px",
-                      backgroundColor: "#3498db",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    Hover over me
-                  </button>
-                </Tooltip>
-
                 <div className="specimens-controls p-05rem gap-1rem flex-row align-items-center">
                   <TextField
                     iconType={"search"}

@@ -10,6 +10,7 @@ import {
 import Specie from "../domain/specie";
 import { AxiosError } from "axios";
 import useDownload from "../../../hooks/useDownload";
+import HttpStatus from "../../../stores/httpStatus";
 
 export const useSpecie = (specieId = 0) => {
   const [species, setSpecies] = useState([]);
@@ -26,8 +27,7 @@ export const useSpecie = (specieId = 0) => {
       })
       .then((response) => {
         // build epithet:
-        const species = response.data.map((specie) => new Specie(specie));
-        console.log(species);
+        const species = response?.data.map((specie) => new Specie(specie));
         setSpecies(species);
       });
   });
@@ -38,7 +38,7 @@ export const useSpecie = (specieId = 0) => {
       new Specie(newSpecie)
     );
     newSpecie.id = response.data.specie_id;
-    if (response.status === 201) {
+    if (response.status === HttpStatus.CREATED) {
       addSpecieLocal(newSpecie);
     }
   });
@@ -54,7 +54,7 @@ export const useSpecie = (specieId = 0) => {
       `${SPECIE_URL}/${newSpecie.id}/`,
       newSpecie
     );
-    if (response.status === 200) {
+    if (response.status === HttpStatus.OK) {
       const newSpecies = species.map((specie) =>
         specie.id === newSpecie.id ? newSpecie : specie
       );
@@ -65,6 +65,11 @@ export const useSpecie = (specieId = 0) => {
   const migrateColection = useCallback(async (species) => {
     const response = await apiWrapper.post(`${SPECIE_MIGRATE_URL}`, species, {
       noSnackbar: true,
+
+      /*
+        configuring apiWrapper to return the error instead of 
+        displaying it with Snackbar:
+      */
       getError: true,
     });
 
@@ -82,7 +87,7 @@ export const useSpecie = (specieId = 0) => {
     download(response.data, "text/csv", "SAM_MIGRACION.csv");
   });
 
-  const selectedSpecieDefault = species[0];
+  const selectedSpecieDefault = species ? species[0] : null;
 
   return {
     species,

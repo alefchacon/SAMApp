@@ -28,7 +28,8 @@ import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik
 import Specimen from "../../../../features/specimens/domain/specimen";
 import ChipSex from "../../../../features/specimens/ChipSex";
 import moment from "moment";
-import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
+import useGetUpdatedFields from "../../../../components/logic/useGetUpdatedFields";
+import HttpStatus from "../../../../stores/httpStatus";
 
 export default function SpecimenEditForm({ onResetScroll }) {
   const { updateLocation } = useLocations();
@@ -51,7 +52,7 @@ export default function SpecimenEditForm({ onResetScroll }) {
     const locationWasUpdated = updatedFields.includes(specimenRelationships[0]);
     if (locationWasUpdated) {
       const response = await updateLocation(values.location);
-      if (response.status === 200) {
+      if (response.status === HttpStatus.OK) {
         setSpecimen((prevSpecimen) => ({
           ...prevSpecimen,
           location: response.data.data,
@@ -77,7 +78,7 @@ export default function SpecimenEditForm({ onResetScroll }) {
     const specimenWasUpdated = specimenUpdatedFields.length > 0;
     if (specimenWasUpdated) {
       const response = await updateSpecimen(values);
-      if (response.status === 200) {
+      if (response.status === HttpStatus.OK) {
         setSpecimen(response.data.data);
       }
     }
