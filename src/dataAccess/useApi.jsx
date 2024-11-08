@@ -9,6 +9,7 @@ import useSession from "../features/auth/businessLogic/useSession";
 import CREDENTIALS_KEYS from "../stores/credentialsKeys";
 import HttpStatus from "../stores/httpStatus";
 import LogInForm from "../features/auth/components/LogInForm";
+import flattenObject from "../utils/flattenObject";
 export default function useApi() {
   const {
     deleteSession,
@@ -142,6 +143,8 @@ export default function useApi() {
     }
     if (error.response?.data?.message) {
       return error.response?.data?.message;
+    } else {
+      return flattenObject(error.response.data);
     }
   }
 

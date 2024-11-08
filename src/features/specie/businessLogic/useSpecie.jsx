@@ -44,7 +44,7 @@ export const useSpecie = (specieId = 0) => {
   });
   const addSpecieLocal = async (newSpecie) => {
     assignEpithet(newSpecie);
-    setSpecies((prevSpecies) => [newSpecie, ...prevSpecies]);
+    setSpecies((previousSpecies) => [newSpecie, ...previousSpecies]);
   };
   const assignEpithet = (specie) => {
     specie.epithet = `${specie.gender} ${specie.specie_specie} ${specie.subspecie}`;

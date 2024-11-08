@@ -30,9 +30,9 @@ export default function useContributorsAndRoles() {
       );
 
       if (response.status === HttpStatus.CREATED) {
-        setContributors((prevContributors) => [
+        setContributors((previousContributors) => [
           response.data.data,
-          ...prevContributors,
+          ...previousContributors,
         ]);
       }
 

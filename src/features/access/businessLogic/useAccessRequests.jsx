@@ -28,15 +28,15 @@ export default function useAccessRequests() {
 
   const approveAccessRequest = async (requestId = 0) => {
     const response = await apiWrapper.get(REQUEST_APPROVE(requestId));
-    setPendingAccessRequests((prevRequests) =>
-      prevRequests.filter((request) => request.id !== requestId)
+    setPendingAccessRequests((previousRequests) =>
+      previousRequests.filter((request) => request.id !== requestId)
     );
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
   const rejectAccessRequest = async (requestId = 0) => {
     const response = await apiWrapper.get(REQUEST_REJECT(requestId));
-    setPendingAccessRequests((prevRequests) =>
-      prevRequests.filter((request) => request.id !== requestId)
+    setPendingAccessRequests((previousRequests) =>
+      previousRequests.filter((request) => request.id !== requestId)
     );
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
@@ -44,9 +44,6 @@ export default function useAccessRequests() {
     const body = {
       orcid: accessRequest.orcid,
       about: accessRequest.about,
-      email: accessRequest.email,
-      username: accessRequest.username,
-      password: accessRequest.password,
       academic: {
         names: accessRequest.names,
         father_last_name: accessRequest.father_last_name,
@@ -57,6 +54,11 @@ export default function useAccessRequests() {
         college: accessRequest.college,
         position: accessRequest.position,
         degree: accessRequest.degree,
+        user: {
+          username: accessRequest.username,
+          password: accessRequest.password,
+          email: accessRequest.email,
+        },
       },
     };
     return await apiWrapper.post(ACCESS_REQUESTS_URL, body);

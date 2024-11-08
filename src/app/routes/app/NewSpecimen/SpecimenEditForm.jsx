@@ -53,8 +53,8 @@ export default function SpecimenEditForm({ onResetScroll }) {
     if (locationWasUpdated) {
       const response = await updateLocation(values.location);
       if (response.status === HttpStatus.OK) {
-        setSpecimen((prevSpecimen) => ({
-          ...prevSpecimen,
+        setSpecimen((previousSpecimen) => ({
+          ...previousSpecimen,
           location: response.data.data,
         }));
       }

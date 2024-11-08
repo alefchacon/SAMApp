@@ -19,9 +19,7 @@ export default function Specie({
 }) {
   return (
     <div
-      className={`selectable hoverable2  p-1rem position-relative ${
-        selected ? "selected" : ""
-      }`}
+      className={`selectable p-1rem  ${selected ? "selected" : ""}`}
       onClick={onClick}
     >
       <p style={{ fontWeight: 500 }}>

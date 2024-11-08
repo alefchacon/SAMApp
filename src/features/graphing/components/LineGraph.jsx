@@ -32,8 +32,8 @@ export default function LineGraph({ initialData = testData }) {
   };
 
   useEffect(() => {
-    setState((prevState) => ({
-      ...prevState,
+    setState((previousState) => ({
+      ...previousState,
       data: initialData,
       left: "dataMin",
       right: "dataMax",
@@ -70,8 +70,8 @@ export default function LineGraph({ initialData = testData }) {
     let { refAreaLeft, refAreaRight, data } = state;
 
     if (refAreaLeft === refAreaRight || refAreaRight === "") {
-      setState((prevState) => ({
-        ...prevState,
+      setState((previousState) => ({
+        ...previousState,
         refAreaLeft: "",
         refAreaRight: "",
       }));
@@ -83,8 +83,8 @@ export default function LineGraph({ initialData = testData }) {
 
     const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, "value", 1);
 
-    setState((prevState) => ({
-      ...prevState,
+    setState((previousState) => ({
+      ...previousState,
       refAreaLeft: "",
       refAreaRight: "",
       data: data.slice(),
@@ -97,8 +97,8 @@ export default function LineGraph({ initialData = testData }) {
 
   const zoomOut = () => {
     const { data } = state;
-    setState((prevState) => ({
-      ...prevState,
+    setState((previousState) => ({
+      ...previousState,
       data: data.slice(),
       refAreaLeft: "",
       refAreaRight: "",
@@ -137,15 +137,15 @@ export default function LineGraph({ initialData = testData }) {
           height={400}
           data={data}
           onMouseDown={(e) =>
-            setState((prevState) => ({
-              ...prevState,
+            setState((previousState) => ({
+              ...previousState,
               refAreaLeft: e.activeLabel,
             }))
           }
           onMouseMove={(e) =>
             state.refAreaLeft &&
-            setState((prevState) => ({
-              ...prevState,
+            setState((previousState) => ({
+              ...previousState,
               refAreaRight: e.activeLabel,
             }))
           }

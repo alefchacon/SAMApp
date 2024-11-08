@@ -33,6 +33,11 @@ class Specimen {
     if (Boolean(data.location)){
       this.location = new Location(data.location);
     }
+
+    /*
+    The backend's serializer calls the specie FK "specie", so the 
+    following like is written as such to be backend-compliant 
+    */
     if (data.specie !== null && typeof data.specie === "object"){
       this.specie = data.specie.id
     } else if (data.specie){

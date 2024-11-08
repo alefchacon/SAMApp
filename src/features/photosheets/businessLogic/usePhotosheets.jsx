@@ -56,7 +56,7 @@ export default function usePhotosheets() {
         description: photosheet.description,
         sheet: URL.createObjectURL(photosheet.sheet),
       };
-      setPhotosheets((prev) => [newPhotosheet, ...prev]);
+      setPhotosheets((previous) => [newPhotosheet, ...previous]);
     }
   };
 
@@ -88,8 +88,8 @@ export default function usePhotosheets() {
         description: photosheet.description,
         sheet: URL.createObjectURL(photosheet.sheet),
       };
-      setPhotosheets((prev) =>
-        prev.map((photosheet) =>
+      setPhotosheets((previous) =>
+        previous.map((photosheet) =>
           photosheet.id === updatedPhotosheet.id
             ? updatedPhotosheet
             : photosheet
@@ -123,8 +123,8 @@ export default function usePhotosheets() {
       PHOTOSHEETS_URL.concat(photosheetId)
     );
     if (response.request.status === HttpStatus.NO_CONTENT) {
-      setPhotosheets((prev) =>
-        prev.filter((photosheet) => photosheet.id !== photosheetId)
+      setPhotosheets((previous) =>
+        previous.filter((photosheet) => photosheet.id !== photosheetId)
       );
       showSnackbar("La ficha fotográfica se ha eliminado", false, "check");
     }

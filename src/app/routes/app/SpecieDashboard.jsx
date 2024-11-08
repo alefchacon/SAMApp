@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
-import Table from "../../../components/ui/Table2";
 
+import Table from "../../../components/ui/table/Table";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
@@ -66,8 +66,8 @@ export default function SpecieDashboard({
     getSpecies();
   }, []);
 
-  const handleShowAddSpecimen = () => {
-    showModal("Agregar espécimen", <NewSpecimen />, true, "fit-content");
+  const handleEditSpecimen = () => {
+    showModal("Agregar espécimen");
   };
 
   const navigateToAddSpecimen = () =>
@@ -141,15 +141,7 @@ export default function SpecieDashboard({
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
-                <div className="specimens-controls p-05rem gap-1rem flex-row align-items-center">
-                  <TextField
-                    iconType={"search"}
-                    placeholder={
-                      "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
-                    }
-                  ></TextField>
-                </div>
-                <Table data={specimens} onEdit={handleShowAddSpecimen}></Table>
+                <Table data={specimens} onEdit={handleEditSpecimen}></Table>
               </div>
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>

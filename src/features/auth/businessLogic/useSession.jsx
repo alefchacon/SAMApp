@@ -21,6 +21,7 @@ export default function useSession() {
     deleteProfile();
     window.location.reload();
   };
+
   const deleteSessionWithoutReload = () => {
     deleteAccessToken();
     deleteRefreshToken();

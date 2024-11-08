@@ -50,7 +50,7 @@ export default function SpecieList({
       </Button>
       <Button
         iconType="upload"
-        onClick={() => navigate(ROUTES.MIGRAR)}
+        onClick={() => navigate(ROUTES.MIGRATE)}
         className="secondary"
       >
         Migrar colección
@@ -101,7 +101,11 @@ export default function SpecieList({
           {species?.length > 0 ? (
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
-                <li key={index}>
+                <li
+                  key={index}
+                  style={{ position: "relative" }}
+                  className="hoverable2"
+                >
                   {role === ROLE_TYPES.TECHNICAL_PERSON && (
                     <HoverableActions>
                       <Button

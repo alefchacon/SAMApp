@@ -34,7 +34,7 @@ function App() {
   const [selectedSpecie, setSelectedSpecie] = useState();
   const { getProfile } = useSession();
   const profile = getProfile();
-  const isTechnicalPerson = profile?.isTechnicalPerson;
+  const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
 
   const { pendingAccessRequestCount, getPendingAccessRequestCount } =
     useAccessRequests();
@@ -43,7 +43,7 @@ function App() {
     if (isTechnicalPerson) {
       getPendingAccessRequestCount();
     }
-  }, [profile]);
+  }, []);
 
   const handleSelectedSpecieChange = async (newSelectedSpecie) => {
     setSelectedSpecie(newSelectedSpecie);
@@ -74,7 +74,14 @@ function App() {
               </Landing>
             }
           ></Route>
-          <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
+          <Route
+            path={"/solicitudes"}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <AccessRequests />
+              </AuthGuard>
+            }
+          ></Route>
           <Route
             path={"/fichas"}
             element={
@@ -88,19 +95,23 @@ function App() {
           <Route
             path={ROUTES.ADD_SPECIMEN}
             element={
-              <SpecimenAddForm
-                selectedSpecie={selectedSpecie}
-                onResetScroll={resetScroll}
-              ></SpecimenAddForm>
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <SpecimenAddForm
+                  selectedSpecie={selectedSpecie}
+                  onResetScroll={resetScroll}
+                ></SpecimenAddForm>
+              </AuthGuard>
             }
           ></Route>
           <Route
             path={`${ROUTES.EDIT_SPECIMEN}/:specimenId`}
             element={
-              <SpecimenEditForm
-                selectedSpecie={selectedSpecie}
-                onResetScroll={resetScroll}
-              ></SpecimenEditForm>
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <SpecimenEditForm
+                  selectedSpecie={selectedSpecie}
+                  onResetScroll={resetScroll}
+                ></SpecimenEditForm>
+              </AuthGuard>
             }
           ></Route>
 
@@ -115,7 +126,11 @@ function App() {
           ></Route>
           <Route
             path={ROUTES.REQUEST_ACCESS}
-            element={<AccessRequestForm />}
+            element={
+              <AuthGuard profile={profile} visitorOnly>
+                <AccessRequestForm />
+              </AuthGuard>
+            }
           ></Route>
 
           <Route
@@ -126,7 +141,14 @@ function App() {
               </AuthGuard>
             }
           ></Route>
-          <Route path={ROUTES.MIGRATE} element={<Migrate />}></Route>
+          <Route
+            path={ROUTES.MIGRATE}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <Migrate />
+              </AuthGuard>
+            }
+          ></Route>
           <Route
             path={ROUTES.PROFILE}
             element={<Profile profile={profile} />}

@@ -40,7 +40,9 @@ const Tooltip = ({ content, children }) => {
     padding: "8px 16px",
     fontSize: "14px",
     minWidth: "100px",
+    overflow: "visible",
     pointerEvents: "none",
+    display: "flex",
   };
 
   return (
@@ -51,7 +53,6 @@ const Tooltip = ({ content, children }) => {
       onMouseLeave={() => setIsVisible(false)}
       onMouseMove={handleMouseMove}
     >
-      {children}
       {isVisible && (
         <div
           ref={tooltipRef}
@@ -61,6 +62,7 @@ const Tooltip = ({ content, children }) => {
           {content}
         </div>
       )}
+      {children}
     </div>
   );
 };

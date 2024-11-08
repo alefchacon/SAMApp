@@ -176,6 +176,7 @@ const TextField = forwardRef(
           <div
             className={`error-text`}
             htmlFor={`${id}`}
+            style={{ textWrap: "wrap" }}
             id={`${id}-error-message`}
           >
             {errorMessage}

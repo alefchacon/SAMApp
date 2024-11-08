@@ -1,19 +1,4 @@
-// LIBRARIES
-import { useState, useEffect } from "react";
-import { Formik, Form, useFormikContext } from "formik";
-import proj4 from "proj4";
-
-// CUSTOM COMPONENTS
 import TextField from "../../../components/ui/TextField";
-import LoadingTextField from "../../../components/ui/LoadingTextField";
-import Button from "../../../components/ui/Button";
-
-// API CALLS
-import { getElevation } from "../businessLogic/external/getElevation";
-
-import { getLocation } from "../businessLogic/external/getLocation";
-//VALIDATION SCHEMAS
-import { specimenSchema } from "../formikSchemas/specimenSchema";
 
 export default function LocationForm({
   children,

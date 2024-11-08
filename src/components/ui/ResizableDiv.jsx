@@ -31,19 +31,19 @@ export default function ResizableDiv({
       document.body.classList.add("no-select");
       const { movementX, movementY } = e;
 
-      setSize((prevSize) => {
-        const newSize = { ...prevSize };
+      setSize((previousSize) => {
+        const newSize = { ...previousSize };
 
         if (resizeDirection.includes("w")) {
-          newSize.width = Math.max(50, prevSize.width - movementX);
+          newSize.width = Math.max(50, previousSize.width - movementX);
         } else if (resizeDirection.includes("e")) {
-          newSize.width = Math.max(50, prevSize.width + movementX);
+          newSize.width = Math.max(50, previousSize.width + movementX);
         }
 
         if (resizeDirection.includes("n")) {
-          newSize.height = Math.max(50, prevSize.height - movementY);
+          newSize.height = Math.max(50, previousSize.height - movementY);
         } else if (resizeDirection.includes("s")) {
-          newSize.height = Math.max(50, prevSize.height + movementY);
+          newSize.height = Math.max(50, previousSize.height + movementY);
         }
 
         return newSize;

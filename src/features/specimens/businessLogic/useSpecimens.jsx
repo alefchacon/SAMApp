@@ -5,7 +5,7 @@ import {
   SPECIMEN_LIST_ACADEMIC_URL,
   SPECIMEN_LIST_VISITOR_URL,
   SPECIMEN_URL,
-} from "./specimenURL";
+} from "./urls/specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import moment from "moment";
 import Specimen from "../domain/specimen";
@@ -13,6 +13,7 @@ import useDownload from "../../../hooks/useDownload";
 import useApi from "../../../dataAccess/useApi";
 import HttpStatus from "../../../stores/httpStatus";
 import useSession from "../../auth/businessLogic/useSession";
+import flattenObject from "../../../utils/flattenObject";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
@@ -71,15 +72,6 @@ export const useSpecimens = (specie) => {
     return response;
   };
 
-  const updateSpecimen = useCallback(async (updatedSpecimen) => {
-    const body = new Specimen(updatedSpecimen);
-    const response = await apiWrapper.put(
-      `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
-      body
-    );
-    return response;
-  });
-
   const deleteSpecimen = useCallback(async (specimenId = 0) => {
     const response = await apiWrapper.delete(`${SPECIMEN_URL}/${specimenId}`);
     if (response.status === HttpStatus.NO_CONTENT) {
@@ -89,24 +81,6 @@ export const useSpecimens = (specie) => {
       setSpecimens(newSpecimens);
     }
   });
-
-  const flattenObject = (nestedObject, parentKey = "", result = {}) => {
-    for (let key in nestedObject) {
-      if (nestedObject.hasOwnProperty(key)) {
-        const newKey = parentKey ? `${key}` : key;
-
-        if (
-          typeof nestedObject[key] === "object" &&
-          nestedObject[key] !== null
-        ) {
-          flattenObject(nestedObject[key], newKey, result);
-        } else {
-          result[newKey] = nestedObject[key];
-        }
-      }
-    }
-    return result;
-  };
 
   const toCSV = async () => {
     const keys = Object.keys(flattenObject(specimens[0]));
@@ -139,7 +113,6 @@ export const useSpecimens = (specie) => {
     specimens,
     getSpecimen,
     postSpecimen,
-    updateSpecimen,
     deleteSpecimen,
     downloadSpecimens,
   };

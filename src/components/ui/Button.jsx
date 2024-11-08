@@ -29,8 +29,8 @@ export default function Button({
       onClick={handleClick}
     >
       <span
-        className="material-symbols-outlined"
-        style={{ fontSize: "1.4rem" }}
+        className={`material-symbols-outlined`}
+        style={{ fontSize: "1.3rem" }}
       >
         {iconType}
       </span>
