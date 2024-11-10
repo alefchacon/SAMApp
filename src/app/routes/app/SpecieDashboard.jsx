@@ -6,27 +6,23 @@ import Table from "../../../components/ui/table/Table";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
-import Uploader from "../../../components/ui/Uploader";
-import Header from "../../../components/ui/Header";
-import TextField from "../../../components/ui/TextField";
 
 import SpecieForm from "../../../features/specie/components/SpecieForm";
 
 import { useModal } from "../../../components/contexts/ModalContext";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import Multigraph from "../../../features/graphing/components/Multigraph";
-import Footer from "../../../components/ui/Footer";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 
 import DATE_TYPES from "../../../features/graphing/stores/dateTypes";
-import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import HeaderPage from "../../../components/ui/HeaderPage";
 import NoResults from "../../../components/ui/NoResults";
 import ChipLabel from "../../../components/ui/ChipLabel";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../stores/routes";
-import Tooltip from "../../../components/ui/Tooltip";
+import editableSpecimenColumns from "../../../features/specimens/editableSpecimenColumns";
+
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
 export default function SpecieDashboard({
@@ -141,7 +137,11 @@ export default function SpecieDashboard({
                 className={`specimens flex-col h-100`}
                 style={{ overflow: "auto" }}
               >
-                <Table data={specimens} onEdit={handleEditSpecimen}></Table>
+                <Table
+                  data={specimens}
+                  onEdit={handleEditSpecimen}
+                  defaultColumns={editableSpecimenColumns}
+                ></Table>
               </div>
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>

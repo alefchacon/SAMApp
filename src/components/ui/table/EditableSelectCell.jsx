@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-
-export default function EditableDropdownCell({
+import StaticCell from "./StaticCell,";
+export default function EditableSelectCell({
   path,
   initialValue,
   row,
@@ -9,6 +9,7 @@ export default function EditableDropdownCell({
   onUpdate,
   databaseTableId,
   children,
+  onEditing,
 }) {
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
@@ -60,13 +61,12 @@ export default function EditableDropdownCell({
     );
   }
 
-  return (
-    <div
-      onDoubleClick={() => setEditing(true)}
-      className="w-100 h-100"
-      style={{ position: "relative", zIndex: 9000 }}
-    >
-      {selected}
-    </div>
-  );
+  const enableEditing = () => {
+    setEditing(true);
+    if (onEditing) {
+      onEditing();
+    }
+  };
+
+  return <StaticCell onDoubleClick={enableEditing}>{selected}</StaticCell>;
 }

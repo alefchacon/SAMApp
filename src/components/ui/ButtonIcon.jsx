@@ -10,14 +10,12 @@ export default function ButtonIcon({
   isDisabled,
 }) {
   return (
-    <Tooltip content={tooltip}>
-      <Button
-        isDisabled={isDisabled}
-        className={`icon-only ${white ? "color-white" : ""}`}
-        iconType={iconType}
-        onClick={onClick}
-        type={type}
-      ></Button>
-    </Tooltip>
+    <Button
+      isDisabled={isDisabled}
+      className={`icon-only ${white ? "color-white" : ""}`}
+      iconType={iconType}
+      onClick={onClick}
+      type={type}
+    ></Button>
   );
 }

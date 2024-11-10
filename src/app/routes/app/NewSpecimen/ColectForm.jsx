@@ -15,11 +15,7 @@ import TextArea from "../../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
 import NATURE from "../../../../stores/nature";
-
-const CONTRIBUTOR_ROLE_NAMES = Object.freeze({
-  1: "colector",
-  2: "preparator",
-});
+import CONTRIBUTOR_ROLE_NAMES from "../../../../stores/contributorRoleNames";
 
 export default function ContributorsForm({ inputWidth = "" }) {
   const { values, errors, touched, onBlur, handleChange, setFieldValue } =

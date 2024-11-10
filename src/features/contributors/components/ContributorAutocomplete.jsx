@@ -19,22 +19,17 @@ export default function ContributorAutocomplete({
   roleId,
   label = null,
   helperText = null,
-  placeholder = null,
   required = false,
   errorMessage = "",
   name = ``,
   id = `${name}`,
-  validate = true,
   hasError = false,
   disabled = false,
-  type = "text",
-  setFieldValue,
   onChange,
-  onBlur,
   maxLength = 50,
   value,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
   const dropdownRef = useRef();
@@ -80,13 +75,6 @@ export default function ContributorAutocomplete({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-
-  const handleClearSelection = () => {
-    //setSelectedContributor(null);
-    onChange(null, roleId);
-  };
-
-  const inputRef = useRef(null);
   const iconRef = useRef(null);
   const [paddingLeft, setPaddingLeft] = useState(0);
 

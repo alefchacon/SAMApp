@@ -7,8 +7,9 @@ import { Formik, Form, useFormikContext } from "formik";
 import { getPartialSchema } from "../../../validation/formikSchemas/schemaUtils";
 import { locationSchema } from "../../../features/specimens/formikSchemas/locationSchema";
 import Dropdown from "../Dropdown";
+import StaticCell from "./StaticCell,";
 
-export default function EditableTextCell({
+export default function EditableInputCell({
   domainObject,
   path,
   initialValue,
@@ -19,6 +20,7 @@ export default function EditableTextCell({
   databaseTableId,
   validationSchema,
   type = "text",
+  max,
 }) {
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
@@ -85,8 +87,9 @@ export default function EditableTextCell({
               onBlur={handleBlur}
               hasError={errors[column.id] && touched[column.id]}
               required
-              type="text"
+              type={type}
               isFormik
+              max={max}
             />
             <ButtonIcon
               iconType={"close"}
@@ -107,12 +110,8 @@ export default function EditableTextCell({
   }
 
   return (
-    <p
-      onDoubleClick={() => setEditing(true)}
-      className="w-100 h-100"
-      style={{ color: initialValue == 0 ? "lightgrey" : "black" }}
-    >
+    <StaticCell onDoubleClick={() => setEditing(true)}>
       {initialValue}
-    </p>
+    </StaticCell>
   );
 }
