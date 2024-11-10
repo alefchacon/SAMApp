@@ -5,30 +5,56 @@ import {
   SPECIMEN_LIST_ACADEMIC_URL,
   SPECIMEN_LIST_VISITOR_URL,
   SPECIMEN_URL,
-} from "./specimenURL";
+} from "./urls/specimenURL";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import moment from "moment";
 import Specimen from "../domain/specimen";
 import useDownload from "../../../hooks/useDownload";
 import useApi from "../../../dataAccess/useApi";
+import HttpStatus from "../../../stores/httpStatus";
+import useSession from "../../auth/businessLogic/useSession";
+import flattenObject from "../../../utils/flattenObject";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
-  const { profile } = useStatus();
+  const { getProfile } = useSession();
+  const [profile] = useState(getProfile());
   const download = useDownload();
   const { apiWrapper } = useApi();
+
+  const getSpecimensByRole = useCallback(
+    async (specieId = 0, role = ROLE_TYPES.VISITOR) => {
+      if (!Boolean(role)) {
+        throw new Error("Debe iniciar sesión");
+      }
+
+      let response = null;
+
+      if (role === ROLE_TYPES.TECHNICAL_PERSON) {
+        response = await apiWrapper.get(SPECIMEN_LIST_URL(specieId));
+      } else if (role === ROLE_TYPES.ACADEMIC) {
+        response = await apiWrapper.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
+      } else {
+        response = await apiWrapper.get(SPECIMEN_LIST_VISITOR_URL(specieId));
+      }
+
+      return response;
+    },
+    [apiWrapper]
+  );
 
   useEffect(() => {
     if (specie) {
       getSpecimensByRole(specie.id, profile?.role).then((response) => {
-        const specimens = response.data.map((specimen) => {
+        const specimens = response?.data.map((specimen) => {
           specimen.specie = specie;
           return specimen;
         });
+
         setSpecimens(specimens);
       });
     }
-  }, [specie]);
+  }, [specie, profile?.role]);
 
   const getSpecimen = useCallback(async (specimenId) => {
     const response = await apiWrapper.get(`${SPECIMEN_URL}/${specimenId}`);
@@ -46,42 +72,15 @@ export const useSpecimens = (specie) => {
     return response;
   };
 
-  const updateSpecimen = useCallback(async (updatedSpecimen) => {
-    const body = new Specimen(updatedSpecimen);
-    const response = await apiWrapper.put(
-      `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
-      body
-    );
-    return response;
-  });
-
   const deleteSpecimen = useCallback(async (specimenId = 0) => {
     const response = await apiWrapper.delete(`${SPECIMEN_URL}/${specimenId}`);
-    if (response.status === 204) {
+    if (response.status === HttpStatus.NO_CONTENT) {
       const newSpecimens = specimens.filter(
         (specimen) => specimen.id !== specimenId
       );
       setSpecimens(newSpecimens);
     }
   });
-
-  const flattenObject = (nestedObject, parentKey = "", result = {}) => {
-    for (let key in nestedObject) {
-      if (nestedObject.hasOwnProperty(key)) {
-        const newKey = parentKey ? `${key}` : key;
-
-        if (
-          typeof nestedObject[key] === "object" &&
-          nestedObject[key] !== null
-        ) {
-          flattenObject(nestedObject[key], newKey, result);
-        } else {
-          result[newKey] = nestedObject[key];
-        }
-      }
-    }
-    return result;
-  };
 
   const toCSV = async () => {
     const keys = Object.keys(flattenObject(specimens[0]));
@@ -110,28 +109,10 @@ export const useSpecimens = (specie) => {
     });
   });
 
-  async function getSpecimensByRole(specieId = 0, role = ROLE_TYPES.VISITOR) {
-    if (!Boolean(role)) {
-      throw new Error("Debe iniciar sesión");
-    }
-
-    let response = null;
-
-    if (role === ROLE_TYPES.TECHNICAL_PERSON) {
-      response = await apiWrapper.get(SPECIMEN_LIST_URL(specieId));
-    } else if (role === ROLE_TYPES.ACADEMIC) {
-      response = await apiWrapper.get(SPECIMEN_LIST_ACADEMIC_URL(specieId));
-    } else {
-      response = await apiWrapper.get(SPECIMEN_LIST_VISITOR_URL(specieId));
-    }
-
-    return response;
-  }
   return {
     specimens,
     getSpecimen,
     postSpecimen,
-    updateSpecimen,
     deleteSpecimen,
     downloadSpecimens,
   };

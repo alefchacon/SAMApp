@@ -14,11 +14,8 @@ import RadioList from "../../../../components/ui/RadioList";
 import TextArea from "../../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
-
-const CONTRIBUTOR_ROLE_NAMES = Object.freeze({
-  1: "colector",
-  2: "preparator",
-});
+import NATURE from "../../../../stores/nature";
+import CONTRIBUTOR_ROLE_NAMES from "../../../../stores/contributorRoleNames";
 
 export default function ContributorsForm({ inputWidth = "" }) {
   const { values, errors, touched, onBlur, handleChange, setFieldValue } =
@@ -120,15 +117,15 @@ export default function ContributorsForm({ inputWidth = "" }) {
           label="Naturaleza del ejemplar"
           value={values.nature}
           options={[
-            { label: "PC (Piel y craneo)", value: "PC" },
-            { label: "E/A (En alcohol)", value: "E/A" },
-            { label: "SE (Solo esqueleto)", value: "SE" },
-            { label: "EP (Equeleto postcraneal)", value: "EP" },
-            { label: "PE (Piel y equeleto)", value: "PE" },
-            { label: "CE (Craneo, esqueleto y piel)", value: "CE" },
-            { label: "CA (Craneo y piel en alcohol)", value: "CA" },
-            { label: "SC (Sólo craneo)", value: "SC" },
-            { label: "SP (Sólo piel)", value: "SP" },
+            { label: "PC (Piel y craneo)", value: NATURE.PC },
+            { label: "E/A (En alcohol)", value: NATURE.EA },
+            { label: "SE (Solo esqueleto)", value: NATURE.SE },
+            { label: "EP (Equeleto postcraneal)", value: NATURE.EP },
+            { label: "PE (Piel y equeleto)", value: NATURE.PE },
+            { label: "CE (Craneo, esqueleto y piel)", value: NATURE.CE },
+            { label: "CA (Craneo y piel en alcohol)", value: NATURE.CA },
+            { label: "SC (Sólo craneo)", value: NATURE.SC },
+            { label: "SP (Sólo piel)", value: NATURE.SP },
           ]}
           name="nature"
           onChange={handleChange}

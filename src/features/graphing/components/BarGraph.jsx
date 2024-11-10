@@ -1,21 +1,19 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
-import TooltipCustom from "./TooltipCustom";
+import TooltipGraph from "./TooltipGraph";
 
-import "../../app/App.css";
+import "../../../app/App.css";
 
-import testData from "./TestData";
+import testData from "../stores/testData";
 
 export default function BarGraph({
   yLabel = "yLabel",
@@ -56,7 +54,7 @@ export default function BarGraph({
               offset: 10,
             }}
           />
-          <Tooltip content={<TooltipCustom />} />
+          <Tooltip content={<TooltipGraph />} />
 
           <Bar dataKey="value" />
         </BarChart>

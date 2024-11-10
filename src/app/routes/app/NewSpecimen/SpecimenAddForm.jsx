@@ -25,11 +25,8 @@ import Footer from "../../../../components/ui/Footer";
 const INPUT_WIDTH = 300;
 import { useLocation } from "react-router-dom";
 
-import ChipSex from "../../../../features/specimens/ChipSex";
-import moment from "moment";
-import useGetUpdatedFields from "../../../../components/logic/UpdateListener";
-import Specimen from "../../../../features/specimens/domain/specimen";
 import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik";
+import HttpStatus from "../../../../stores/httpStatus";
 
 export default function SpecimenAddForm({ onResetScroll }) {
   const { postSpecimen } = useSpecimens();
@@ -45,14 +42,14 @@ export default function SpecimenAddForm({ onResetScroll }) {
   const handleSubmit = async (values) => {
     const responseSpecimen = await postSpecimen(values, selectedSpecie.id);
 
-    if (!responseSpecimen.status === 201) {
+    if (!responseSpecimen.status === HttpStatus.CREATED) {
       return;
     }
 
     const newSpecimenId = responseSpecimen.data.specimen_id;
     const responseLocation = await postLocation(values.location, newSpecimenId);
 
-    if (!responseLocation.status === 201) {
+    if (!responseLocation.status === HttpStatus.CREATED) {
       return;
     }
 
@@ -62,7 +59,7 @@ export default function SpecimenAddForm({ onResetScroll }) {
       contributor_role: CONTRIBUTOR_ROLES.COLECTOR,
     };
     const colectorResponse = await postContributorSpecimen(colectorSpecimen);
-    if (!colectorResponse.status === 200) {
+    if (!colectorResponse.status === HttpStatus.OK) {
       return;
     }
 
@@ -74,7 +71,7 @@ export default function SpecimenAddForm({ onResetScroll }) {
     const preparatorResponse = await postContributorSpecimen(
       preparatorSpecimen
     );
-    if (!preparatorResponse.status === 200) {
+    if (!preparatorResponse.status === HttpStatus.OK) {
       return;
     }
 

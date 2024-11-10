@@ -151,7 +151,7 @@ table{
   */
   table-layout: auto;
   
-  max-width: 100px;
+  
   table-layout: fixed; 
   height: 100%;
   
@@ -498,12 +498,16 @@ td,
   flex-grow: 1;
   
   overflow:  hidden;
-  padding: 0.65rem 1rem;
+  
+  padding: 0.5rem 1rem;
   flex-wrap: nowrap;
   text-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--uv-gray-darker);
 }
 
-thead{
+thead, .thead{
   position: sticky;
   top: 0;
   background-color: var(--bg-main);
@@ -514,11 +518,12 @@ thead{
 
 th,
 .th {
-  
+  display: flex;
+  justify-content: space-between;
   position: relative;
   font-weight: 600;
   text-align: start;
-  overflow: hidden;
+  /*overflow: hidden;*/
   font-size: 1rem;
 }
 
@@ -532,9 +537,6 @@ select {
   font-size: inherit;
   cursor: pointer;
 }
-
-
-
 
 .resize-bar{
   position: absolute;
@@ -636,14 +638,15 @@ select {
   font-size: 1rem;
   overflow-wrap: break-word;
 }
-.sam-text-field-helper-text{
+.helper-text{
   overflow-wrap: break-word;
   color:gray;
   padding: 0 0 0.5rem 0;
 }
 .error-text{
   color: var(--error);
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 0.8rem;
   padding: 0 0 0.5rem 0;
 }
 
@@ -698,6 +701,7 @@ label.hasError{
 .icon-only{
   padding: 5px 10px;
   background-color: transparent;
+  font-weight: 700;
 }
 
 
@@ -784,6 +788,7 @@ h2{
   pointer-events: none;
   position: absolute;
   z-index: -1000;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .visible{
@@ -1050,19 +1055,23 @@ a{
 
 
 .dropdown-menu {
-  position: absolute;
+  position: relative;
   top: 100%;
   left: 0;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 0 0 5px 5px;
   width: 100%;
-  min-width: 250px;
   max-height: 40vh;
   overflow: auto;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 1000000000;
   color: black;
+}
+
+hr{
+  margin: 0;
+  border: 1px solid var(--uv-gray-darker);
 }
 
 .w-100{

@@ -1,4 +1,4 @@
-import { SPECIE_URL } from "../../specie/businessLogic/specieURL";
+import { SPECIE_URL } from "../../../specie/businessLogic/specieURL";
 
 export const SPECIMEN_URL = "/specimens"
 export const SPECIMEN_LIST_VISITOR_URL = (specieId) => SPECIE_URL.concat(`/${specieId}/specimen-list-visitor/`);

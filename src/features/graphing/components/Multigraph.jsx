@@ -3,11 +3,10 @@ import { useState, useEffect } from "react";
 import PieGraph from "./PieGraph";
 import BarGraph from "./BarGraph";
 import LineGraph from "./LineGraph";
-
-import Button from "../../components/ui/Button";
-import Card from "../../components/ui/Card";
-import DATE_TYPES from "./dateTypes";
-import { sortByDate } from "./specimenSorter";
+import Button from "../../../components/ui/Button";
+import Card from "../../../components/ui/Card";
+import DATE_TYPES from "../stores/dateTypes";
+import { sortByDate } from "../util/specimenSorter";
 
 const PIE_GRAPH_KEY = 1;
 const BAR_GRAPH_KEY = 2;

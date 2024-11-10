@@ -11,11 +11,11 @@ import { StatusProvider } from "./components/contexts/StatusContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <StatusProvider>
-      <ModalProvider>
-        <SnackbarProvider>
+      <SnackbarProvider>
+        <ModalProvider>
           <App />
-        </SnackbarProvider>
-      </ModalProvider>
+        </ModalProvider>
+      </SnackbarProvider>
     </StatusProvider>
   </BrowserRouter>
 );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
-import TooltipCustom from "./TooltipCustom";
+import TooltipGraph from "./TooltipGraph";
 
 export default function PieGraph({ data }) {
   const [_data, setData] = useState(data);
@@ -58,7 +58,7 @@ export default function PieGraph({ data }) {
           onMouseLeave={handleMouseLeave}
         />
 
-        <Tooltip content={<TooltipCustom />} />
+        <Tooltip content={<TooltipGraph />} />
         <Legend
           onMouseEnter={(o) => handleMouseEnter(o.payload)}
           onMouseLeave={handleMouseLeave}

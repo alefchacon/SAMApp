@@ -1,13 +1,12 @@
 import { useState, useCallback } from "react";
 import { useStatus } from "../../../components/contexts/StatusContext";
 import useApi from "../../../dataAccess/useApi";
-import LOCATIONS_URL from "./locationURL";
+import LOCATIONS_URL from "./urls/locationURL";
 
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export const useLocations = (specieId = 0) => {
   const [locations, setLocations] = useState([]);
-  const { profile } = useStatus();
   const { apiWrapper } = useApi();
 
   const getLocations = async () => {};
@@ -33,13 +32,5 @@ export const useLocations = (specieId = 0) => {
     return response;
   });
 
-  const updateLocation = useCallback(async (location = {}) => {
-    const response = await apiWrapper.put(
-      LOCATIONS_URL.concat(`/${location.id}/`),
-      location
-    );
-    return response;
-  });
-
-  return { locations, getLocations, postLocation, updateLocation };
+  return { locations, getLocations, postLocation };
 };

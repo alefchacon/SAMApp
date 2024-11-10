@@ -3,6 +3,7 @@ import { alnumWithSpacesRegex } from "./regexes";
 const messages = {
   required: "Este campo es requerido",
   alphanumeric: "Este campo sólo acepta letras, números, comas y puntos.",
+  numeric: "Este campo sólo acepta números.",
   username: "Este campo sólo acepta letras, números y los signos: @ + - _ .",
   onlyWords: "Este campo sólo acepta letras del alfabeto y espacios.",
   onlyNames: "Este campo sólo acepta letras del alfabeto, espacios y puntos.",

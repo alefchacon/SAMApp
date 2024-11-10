@@ -19,16 +19,18 @@ function Checker({ children, fulfilled = false, hasError = true }) {
       >
         {fulfilled ? "check_circle" : "circle"}
       </span>
-      {children}
+      <p className="helper-text">{children}</p>
     </div>
   );
 }
 
 export default function PasswordValidator({
+  required,
   label = "Contraseña",
   password = "",
   passwordConfirmation,
   onChange,
+  onBlur,
   name = "name",
   passwordHasError = false,
   passwordConfirmationHasError = false,
@@ -53,20 +55,15 @@ export default function PasswordValidator({
   const passwordsMatch =
     password && passwordConfirmation && password === passwordConfirmation;
 
-  /*
-  useEffect(() => {
-    if (criteriaAreMet && !passwordsMatch) {
-      setFieldError(name, "fuck");
-    }
-  }, []);*/
-
   return (
     <div className="password-validator flex-col ">
       <TextField
+        required={required}
         isFormik
         name={name}
         value={password}
         type="password"
+        onBlur={onBlur}
         label={label}
         helperText={
           "Ingrese una contraseña que cumpla los siguientes criterios"
@@ -74,6 +71,7 @@ export default function PasswordValidator({
         onChange={onChange}
         hasError={passwordHasError}
         errorMessage={passwordErrorMessage}
+        onPaste={(e) => console.log(e)}
       />
       <br />
       <div>
@@ -116,6 +114,7 @@ export default function PasswordValidator({
       </div>
       <br />
       <TextField
+        required={required}
         name="passwordConfirmation"
         hasError={passwordConfirmationHasError}
         type="password"

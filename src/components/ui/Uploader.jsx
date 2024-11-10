@@ -64,7 +64,7 @@ export default function Uploader({
       }
     }
 
-    setFiles((prev) => [...prev, ...newFiles]);
+    setFiles((previousFiles) => [...previousFiles, ...newFiles]);
     const reader = new FileReader();
     reader.onload = function (event) {
       parseCSV(event.target.result);
@@ -121,9 +121,11 @@ export default function Uploader({
   }
 
   const handleRemoveFile = (indexToDelete = 0) => {
-    setFiles((prev) => prev.filter((_, index) => index !== indexToDelete));
-    setParsedFiles((prev) =>
-      prev.filter((_, index) => index !== indexToDelete)
+    setFiles((previousFiles) =>
+      previousFiles.filter((_, index) => index !== indexToDelete)
+    );
+    setParsedFiles((previousParsedFiles) =>
+      previousParsedFiles.filter((_, index) => index !== indexToDelete)
     );
   };
 

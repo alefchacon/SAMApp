@@ -20,12 +20,12 @@ export default function SpecieList({
   role = ROLE_TYPES.VISITOR,
   species,
   onSelectionChange,
+  selectedSpecieId = 0,
   onAdd,
   onEdit,
   onAddSpecimen,
   onFold = null,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [fold, setFold] = useState(false);
   const [filteredItems, handleFilterChange, filterText] =
     useTextFilter(species);
@@ -33,7 +33,6 @@ export default function SpecieList({
   const navigate = useNavigate();
 
   const handleSelection = (newSelectedIndex) => {
-    setSelectedIndex(newSelectedIndex);
     onSelectionChange(newSelectedIndex);
   };
 
@@ -51,7 +50,7 @@ export default function SpecieList({
       </Button>
       <Button
         iconType="upload"
-        onClick={() => navigate(ROUTES.MIGRAR)}
+        onClick={() => navigate(ROUTES.MIGRATE)}
         className="secondary"
       >
         Migrar colección
@@ -99,19 +98,15 @@ export default function SpecieList({
             </div>
           </div>
 
-          {species.length > 0 ? (
+          {species?.length > 0 ? (
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
-                <li key={index}>
-                  <div
-                    className={`selectable hoverable2  p-1rem ${
-                      selectedIndex === specie.id ? "selected" : ""
-                    }`}
-                    style={{
-                      position: "relative",
-                    }}
-                    onClick={() => handleSelection(specie.id)}
-                  >
+                <li
+                  key={index}
+                  style={{ position: "relative" }}
+                  className="hoverable2"
+                >
+                  {role === ROLE_TYPES.TECHNICAL_PERSON && (
                     <HoverableActions>
                       <Button
                         iconType="edit"
@@ -124,18 +119,13 @@ export default function SpecieList({
                         onClick={onAddSpecimen}
                       ></Button>
                     </HoverableActions>
-                    <p style={{ fontWeight: 500 }}>
-                      <i>{specie.epithet}</i>
-                    </p>
-                    <Taxonomy
-                      key={specie.id}
-                      specie={specie}
-                      center={false}
-                      clickableRank={false}
-                      showRankName={false}
-                      filterText={filterText}
-                    ></Taxonomy>
-                  </div>
+                  )}
+                  <Specie
+                    specie={specie}
+                    filterText={filterText}
+                    onClick={() => handleSelection(specie.id)}
+                    selected={specie.id === selectedSpecieId}
+                  ></Specie>
                 </li>
               ))}
             </ul>

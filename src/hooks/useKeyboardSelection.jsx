@@ -18,14 +18,14 @@ export default function useKeyboardSelection(
     switch (e.key) {
       case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex((prevIndex) =>
-          prevIndex > 0 ? prevIndex - 1 : items.length - 1
+        setSelectedIndex((previousIndex) =>
+          previousIndex > 0 ? previousIndex - 1 : items.length - 1
         );
         break;
       case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex((prevIndex) =>
-          prevIndex < items.length - 1 ? prevIndex + 1 : 0
+        setSelectedIndex((previousIndex) =>
+          previousIndex < items.length - 1 ? previousIndex + 1 : 0
         );
         break;
       case "Enter":

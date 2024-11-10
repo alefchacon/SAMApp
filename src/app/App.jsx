@@ -21,31 +21,26 @@ import { ROLE_TYPES } from "../stores/roleTypes";
 
 import Navbar from "../components/ui/Navbar";
 import { useStatus } from "../components/contexts/StatusContext";
-import { useAxiosInterceptors } from "../dataAccess/useAxiosInterceptors.jsx";
 // CSS
 import "./App.css";
 
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 import SignupForm from "./routes/app/SignupForm.jsx";
 import Profile from "./routes/app/Profile.jsx";
+import useSession from "../features/auth/businessLogic/useSession.jsx";
 
 function App() {
-  useAxiosInterceptors();
-  const location = useLocation();
   const [species, setSpecies] = useState([]);
   const [selectedSpecie, setSelectedSpecie] = useState();
-  const { profile } = useStatus();
-  const ROLE = profile?.role ?? ROLE_TYPES.VISITOR;
+  const { getProfile } = useSession();
+  const profile = getProfile();
+  const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
 
-  const {
-    pendingAccessRequests,
-    getPendingAccessRequests,
-    pendingAccessRequestCount,
-    getPendingAccessRequestCount,
-  } = useAccessRequests();
+  const { pendingAccessRequestCount, getPendingAccessRequestCount } =
+    useAccessRequests();
 
   useEffect(() => {
-    if (ROLE === ROLE_TYPES.TECHNICAL_PERSON) {
+    if (isTechnicalPerson) {
       getPendingAccessRequestCount();
     }
   }, []);
@@ -63,7 +58,10 @@ function App() {
 
   return (
     <>
-      <Navbar accessRequestCount={pendingAccessRequestCount}></Navbar>
+      <Navbar
+        profile={profile}
+        accessRequestCount={pendingAccessRequestCount}
+      ></Navbar>
       <main ref={mainDivRef}>
         {/*SPECIE AND SPECIMEN*/}
 
@@ -76,12 +74,19 @@ function App() {
               </Landing>
             }
           ></Route>
-          <Route path={"/solicitudes"} element={<AccessRequests />}></Route>
+          <Route
+            path={"/solicitudes"}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <AccessRequests />
+              </AuthGuard>
+            }
+          ></Route>
           <Route
             path={"/fichas"}
             element={
-              <AuthGuard>
-                <Photosheets role={ROLE} />
+              <AuthGuard profile={profile}>
+                <Photosheets isTechnicalPerson={isTechnicalPerson} />
               </AuthGuard>
             }
           ></Route>
@@ -90,19 +95,23 @@ function App() {
           <Route
             path={ROUTES.ADD_SPECIMEN}
             element={
-              <SpecimenAddForm
-                selectedSpecie={selectedSpecie}
-                onResetScroll={resetScroll}
-              ></SpecimenAddForm>
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <SpecimenAddForm
+                  selectedSpecie={selectedSpecie}
+                  onResetScroll={resetScroll}
+                ></SpecimenAddForm>
+              </AuthGuard>
             }
           ></Route>
           <Route
             path={`${ROUTES.EDIT_SPECIMEN}/:specimenId`}
             element={
-              <SpecimenEditForm
-                selectedSpecie={selectedSpecie}
-                onResetScroll={resetScroll}
-              ></SpecimenEditForm>
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <SpecimenEditForm
+                  selectedSpecie={selectedSpecie}
+                  onResetScroll={resetScroll}
+                ></SpecimenEditForm>
+              </AuthGuard>
             }
           ></Route>
 
@@ -111,17 +120,35 @@ function App() {
             element={
               <SpecieDashboard
                 onSpecieSelection={handleSelectedSpecieChange}
-                role={ROLE}
+                role={profile?.role}
               />
             }
           ></Route>
           <Route
-            path={ROUTES.SOLICITAR_ACCESO}
-            element={<AccessRequestForm />}
+            path={ROUTES.REQUEST_ACCESS}
+            element={
+              <AuthGuard profile={profile} visitorOnly>
+                <AccessRequestForm />
+              </AuthGuard>
+            }
           ></Route>
-          <Route path={ROUTES.PERSONAL} element={<Users />}></Route>
-          <Route path={ROUTES.MIGRAR} element={<Migrate />}></Route>
-          <Route path={ROUTES.ENTRAR} element={<SignupForm />}></Route>
+
+          <Route
+            path={ROUTES.PERSONAL}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <Users />
+              </AuthGuard>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.MIGRATE}
+            element={
+              <AuthGuard profile={profile} technicalPersonOnly>
+                <Migrate />
+              </AuthGuard>
+            }
+          ></Route>
           <Route
             path={ROUTES.PROFILE}
             element={<Profile profile={profile} />}

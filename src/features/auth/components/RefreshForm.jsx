@@ -1,20 +1,19 @@
 import Button from "../../../components/ui/Button";
-import refreshToken from "../businessLogic/refreshToken";
+//import refreshToken from "../businessLogic/refreshToken";
 
 import { useStatus } from "../../../components/contexts/StatusContext";
+import useAuth from "../businessLogic/useAuth";
+import useSession from "../businessLogic/useSession";
 
 export default function RefreshForm({ onLogOut }) {
-  const { logOutFront } = useStatus();
+  const { refreshToken } = useAuth();
+  const { deleteSession } = useSession();
 
-  const handleLogOut = () => {
-    logOutFront();
-    onLogOut();
-  };
   return (
     <div className="flex-col">
       <p>¿Necesita más tiempo?</p>
       <div className="button-row">
-        <Button className="secondary" iconType="logout" onClick={handleLogOut}>
+        <Button className="secondary" iconType="logout" onClick={deleteSession}>
           No, cierra la sesión
         </Button>{" "}
         <Button

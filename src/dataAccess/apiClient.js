@@ -1,15 +1,13 @@
 import axios from "axios";
 import { API_URL } from "../config/env";
-import { useSnackbar, SnackbarContext } from "../components/contexts/SnackbarContext";
-import { useModal, ModalContext } from "../components/contexts/ModalContext";
-import { useStatus } from "../components/contexts/StatusContext";
-import { useContext } from "react";
 import CREDENTIALS_KEYS from "../stores/credentialsKeys";
+const token = localStorage.getItem(CREDENTIALS_KEYS.TOKEN_ACCESS);
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": token ? `Bearer ${token}` : "",
   }
 });
 
@@ -27,6 +25,15 @@ const apiWrapper = {
   async post(url, data, config = {}) {
     try {
       const response = await api.post(url, data, config);
+      return response;
+    } catch (error) {
+      handleApiError(error);
+      throw error;
+    }
+  },
+  async put(url, data, config = {}) {
+    try {
+      const response = await api.put(url, data, config);
       return response;
     } catch (error) {
       handleApiError(error);

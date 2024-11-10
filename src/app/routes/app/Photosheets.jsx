@@ -18,10 +18,7 @@ import Footer from "../../../components/ui/Footer";
 
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
 
-export default function Photosheets({
-  role = ROLE_TYPES.VISITOR,
-  isTechnicalPerson = false,
-}) {
+export default function Photosheets({ isTechnicalPerson = false }) {
   const { showModal } = useModal();
 
   const [
@@ -130,7 +127,7 @@ export default function Photosheets({
           onChange={handleFilterChange}
           maxWidth={"50%"}
         ></TextField>
-        {role === ROLE_TYPES.TECHNICAL_PERSON && (
+        {isTechnicalPerson && (
           <Button onClick={showAddPhotosheetModal}>
             Agregar ficha fotográfica
           </Button>
@@ -146,7 +143,7 @@ export default function Photosheets({
             key={index}
             onDelete={handleDelete}
             onUpdate={showEditPhotosheetModal}
-            role={role}
+            role={isTechnicalPerson}
           />
         ))}
       </div>

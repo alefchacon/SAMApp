@@ -14,6 +14,8 @@ import PasswordValidator from "../../../features/auth/components/PasswordValidat
 import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
 import ROUTES from "../../../stores/routes.js";
 import { useNavigate } from "react-router-dom";
+import HttpStatus from "../../../stores/httpStatus.js";
+import flattenObject from "../../../utils/flattenObject.js";
 export default function AccessRequestForm() {
   const {
     pendingAccessRequests,
@@ -29,22 +31,40 @@ export default function AccessRequestForm() {
 
   const { showModal, closeModal } = useModal();
 
-  const handleSubmit = async (values, actions) => {
-    const response = await addUser(values, token);
-    if (response.status === 201) {
-      handleShowModal();
-    }
+  const extractNestedKeys = (nestedObject, parentKey = "", keysArray = []) => {
+    for (let key in nestedObject) {
+      if (nestedObject.hasOwnProperty(key)) {
+        const newKey = parentKey ? `${parentKey}.${key}` : key; // Create a dot-separated key
 
+        keysArray.push(newKey); // Add the current key to the keys array
+
+        if (
+          typeof nestedObject[key] === "object" &&
+          nestedObject[key] !== null
+        ) {
+          extractNestedKeys(nestedObject[key], newKey, keysArray); // Recursively call for nested objects
+        }
+      }
+    }
+    return keysArray;
+  };
+
+  const handleSubmit = async (values, actions) => {
+    const response = await addAccessRequest(values);
+    if (response.status === HttpStatus.CREATED) {
+      handleShowModal(values);
+    }
     actions.resetForm();
   };
 
-  const handleShowModal = () => {
+  const handleShowModal = (values) => {
     showModal(
       "Solicitud enviada",
       <div>
         <p>
-          Recibirá una respuesta a su correo, <b>{"values.email"}</b>,
-          confirmando su acceso.
+          Su solicitud será revisada por la administración de la biocolección.
+          Recibirá una respuesta a su correo, <b>{values.email}</b>, confirmando
+          su acceso.
         </p>
         <div className="button-row">
           <Link to={ROUTES.COLLECTION}>
@@ -275,7 +295,7 @@ export default function AccessRequestForm() {
               </div>
 
               <div className="button-row">
-                <Button iconType="send" onClick={handleShowModal}>
+                <Button iconType="send" type="submit">
                   Enviar solicitud
                 </Button>
               </div>

@@ -6,6 +6,7 @@ import useApi from "../../../dataAccess/useApi";
 
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
+import HttpStatus from "../../../stores/httpStatus";
 
 export default function usePhotosheets() {
   const [photosheets, setPhotosheets] = useState([]);
@@ -49,13 +50,13 @@ export default function usePhotosheets() {
         "Content-Type": "multipart/form-data",
       },
     });
-    if (response.request.status === 201) {
+    if (response.request.status === HttpStatus.CREATED) {
       const newPhotosheet = {
         id: response.data.data.id,
         description: photosheet.description,
         sheet: URL.createObjectURL(photosheet.sheet),
       };
-      setPhotosheets((prev) => [newPhotosheet, ...prev]);
+      setPhotosheets((previous) => [newPhotosheet, ...previous]);
     }
   };
 
@@ -81,14 +82,14 @@ export default function usePhotosheets() {
       }
     );
 
-    if (response.request.status === 200) {
+    if (response.request.status === HttpStatus.OK) {
       const updatedPhotosheet = {
         id: photosheet.id,
         description: photosheet.description,
         sheet: URL.createObjectURL(photosheet.sheet),
       };
-      setPhotosheets((prev) =>
-        prev.map((photosheet) =>
+      setPhotosheets((previous) =>
+        previous.map((photosheet) =>
           photosheet.id === updatedPhotosheet.id
             ? updatedPhotosheet
             : photosheet
@@ -121,9 +122,9 @@ export default function usePhotosheets() {
     const response = await apiWrapper.delete(
       PHOTOSHEETS_URL.concat(photosheetId)
     );
-    if (response.request.status === 204) {
-      setPhotosheets((prev) =>
-        prev.filter((photosheet) => photosheet.id !== photosheetId)
+    if (response.request.status === HttpStatus.NO_CONTENT) {
+      setPhotosheets((previous) =>
+        previous.filter((photosheet) => photosheet.id !== photosheetId)
       );
       showSnackbar("La ficha fotográfica se ha eliminado", false, "check");
     }

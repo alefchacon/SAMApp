@@ -6,6 +6,7 @@ import { passwordRegex } from '../../../validation/regexesPassword';
 import { alphanumericSchema } from '../../../validation/formikSchemas/alphanumericSchema';
 import { orcidSchema } from '../../../validation/formikSchemas/orcidSchema';
 import { emailSchema } from '../../../validation/formikSchemas/emailSchema';
+import { passwordSchema } from './passwordSchema';
 
 export const academicSchema = yup.object().shape({
   orcid: orcidSchema.clone().required(messages.required),
@@ -23,9 +24,12 @@ export const academicSchema = yup.object().shape({
   degree: onlyWordsSchema.clone().required(messages.required),
 
   username: yup.string().required(messages.required),
-  password: yup.string().matches(passwordRegex, messages.passwordPolicy),
-  passwordConfirmation: yup.string()
-    .oneOf([yup.ref('password'), null], messages.matchPasswords)
-    .required(messages.required),
+  ...passwordSchema.fields,
+/*
+password: yup.string().matches(passwordRegex, messages.passwordPolicy),
+passwordConfirmation: yup.string()
+.oneOf([yup.ref('password'), null], messages.matchPasswords)
+.required(messages.required),
+*/
 });
 
