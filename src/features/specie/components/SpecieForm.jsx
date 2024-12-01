@@ -27,7 +27,7 @@ export default function SpecieForm({
     actions.resetForm();
     fetchTaxonomyWanks();
   };
-
+  
   const { getTaxonomyRanks } = useSpecie();
 
   const [isReady, setIsReady] = useState(false);
@@ -52,7 +52,7 @@ export default function SpecieForm({
   }, []);
 
   return (
-    <div className="fullwidth">
+    <div style={{width: "400px"}}>
       {isReady && (
         <Formik
           validationSchema={specieSchema}
@@ -69,6 +69,7 @@ export default function SpecieForm({
             handleBlur,
           }) => (
             <Form className="input-group" action="" autoComplete="off">
+            
               <Autocomplete
                 required
                 id="orden"

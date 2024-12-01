@@ -15,7 +15,6 @@ export default function LocationForm({
     <div>
       <div className="input-group">
         <h3>Coordenadas cartesianas</h3>
-        <div className="grid-2column">
           <TextField
             label={"UTM X"}
             id="location.coordinates_cartesian_plane_x"
@@ -48,8 +47,7 @@ export default function LocationForm({
             isFormik
             type="number"
           ></TextField>
-        </div>
-        <div className="grid-2column">
+
           <TextField
             label={"Región UTM"}
             id="location.utm_region"
@@ -65,11 +63,9 @@ export default function LocationForm({
             required
             isFormik
           ></TextField>
-        </div>
       </div>
       <div className="input-group">
         <h3>Coordenadas geográficas</h3>
-        <div className="grid-2column">
           <TextField
             label={"Latitud (LN)"}
             id="location.geographical_coordinates_y"
@@ -102,11 +98,9 @@ export default function LocationForm({
             isFormik
             type="number"
           ></TextField>
-        </div>
       </div>
       <div className="input-group">
         <h3>Elevación</h3>
-        <div className="grid-2column">
           <TextField
             label={"MSNM Google"}
             id="location.msnm_google"
@@ -139,11 +133,9 @@ export default function LocationForm({
             required
             isFormik
           ></TextField>
-        </div>
       </div>
       <div className="input-group">
         <h3>Región</h3>
-        <div className="grid-3column">
           <TextField
             label={"País"}
             id="location.country"
@@ -218,7 +210,6 @@ export default function LocationForm({
             maxLength={100}
             isFormik
           ></TextField>
-        </div>
       </div>
       <div className="input-group">
         <h3>Instituto</h3>
@@ -237,37 +228,35 @@ export default function LocationForm({
           required
           isFormik
         ></TextField>
-        <div className="grid-2column">
-          <TextField
-            id="location.institute_code"
-            name="location.institute_code"
-            onChange={handleChange}
-            onBlur={onBlur}
-            value={values.location.institute_code}
-            errorMessage={errors.location?.institute_code}
-            hasError={Boolean(
-              errors.location?.institute_code &&
-                touched.location?.institute_code
-            )}
-            label={"Código del instituto"}
-            maxLength={100}
-            required
-            isFormik
-          ></TextField>
-          <TextField
-            label={"Código de la colección"}
-            required
-            isFormik
-            name="colection_code"
-            value={values.colection_code}
-            onChange={handleChange}
-            hasError={errors.colection_code && touched.colection_code}
-            errorMessage={errors.colection_code}
-            maxWidth={inputWidth}
-            onBlur={onBlur}
-            maxLength={20}
-          ></TextField>
-        </div>
+        <TextField
+          id="location.institute_code"
+          name="location.institute_code"
+          onChange={handleChange}
+          onBlur={onBlur}
+          value={values.location.institute_code}
+          errorMessage={errors.location?.institute_code}
+          hasError={Boolean(
+            errors.location?.institute_code &&
+              touched.location?.institute_code
+          )}
+          label={"Código del instituto"}
+          maxLength={100}
+          required
+          isFormik
+        ></TextField>
+        <TextField
+          label={"Código de la colección"}
+          required
+          isFormik
+          name="colection_code"
+          value={values.colection_code}
+          onChange={handleChange}
+          hasError={errors.colection_code && touched.colection_code}
+          errorMessage={errors.colection_code}
+          maxWidth={inputWidth}
+          onBlur={onBlur}
+          maxLength={20}
+        ></TextField>
       </div>
     </div>
   );

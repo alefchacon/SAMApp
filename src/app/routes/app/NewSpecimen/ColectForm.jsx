@@ -80,7 +80,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
     <div className="">
       <div className="input-group">
         <h3>Colecta</h3>
-        <div className="grid-2column">
           <TextField
             onBlur={onBlur}
             required
@@ -110,7 +109,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
             min="00:00"
             max="23:59"
           ></TextField>
-        </div>
         <RadioList
           required
           onBlur={onBlur}

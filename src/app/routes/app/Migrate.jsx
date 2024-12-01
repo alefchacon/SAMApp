@@ -105,10 +105,52 @@ export default function Migrate() {
               <br />
               <h2>Celdas vacías</h2>
               <p>
-                Varias columnas requieren un valor. El sistema asignará valores
-                por defecto a algunas columnas, otras requieren que usted las
-                asigne:
+                Varias columnas requieren un valor. Si estas columnas están vacías 
+                a la hora de subirlas, el sistema asignará el siguiente valor por defecto:
               </p>
+
+              <table>
+  <caption>
+    Front-end web developer course 2021
+  </caption>
+  <thead>
+    <tr>
+      <th scope="col">Person</th>
+      <th scope="col">Most interest in</th>
+      <th scope="col">Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Chris</th>
+      <td>HTML tables</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th scope="row">Dennis</th>
+      <td>Web accessibility</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th scope="row">Sarah</th>
+      <td>JavaScript frameworks</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th scope="row">Karen</th>
+      <td>Web performance</td>
+      <td>36</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Average age</th>
+      <td>33</td>
+    </tr>
+  </tfoot>
+</table>
+
+
               <ul>
                 <li>SEXO / sex: ND</li>
                 <li>N° EMB / number_embryos: 0</li>

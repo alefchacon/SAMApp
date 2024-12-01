@@ -116,7 +116,7 @@ export default function ContributorAutocomplete({
             {helperText}
           </div>
         </div>
-
+<br></br>
         <div
           className="flex-row align-items-center"
           style={{

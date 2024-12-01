@@ -120,8 +120,9 @@ export default function usePhotosheets() {
   const deletePhotosheet = async (photosheetId = 0) => {
     closeModal();
     const response = await apiWrapper.delete(
-      PHOTOSHEETS_URL.concat(photosheetId)
+      `${PHOTOSHEETS_URL}${photosheetId}/`
     );
+    console.log(response)
     if (response.request.status === HttpStatus.NO_CONTENT) {
       setPhotosheets((previous) =>
         previous.filter((photosheet) => photosheet.id !== photosheetId)

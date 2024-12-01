@@ -20,15 +20,14 @@ export default function LogInForm({ onSubmit }) {
   };
 
   return (
-    <div className="log-in-form flex-col" label="Entrar">
-      <div className="flex-col p-2rem gap-1rem">
+    
         <Formik
           initialValues={{ username: "asdf", password: "pass" }}
           onSubmit={handleSubmit}
           validationSchema={loginSchema}
         >
           {({ values, errors, touched, handleChange, handleBlur }) => (
-            <Form autoComplete="off">
+            <Form autoComplete="off" >
               <TextField
                 name="username"
                 label={"Nombre de usuario"}
@@ -82,7 +81,5 @@ export default function LogInForm({ onSubmit }) {
             </Form>
           )}
         </Formik>
-      </div>
-    </div>
   );
 }

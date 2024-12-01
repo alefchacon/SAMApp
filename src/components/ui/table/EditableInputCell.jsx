@@ -26,11 +26,21 @@ export default function EditableInputCell({
   const divRef = useRef(null);
   const [updated, setUpdated] = useState(false);
 
+  //-------
   const handleClickOutside = (event) => {
     if (divRef.current && !divRef.current.contains(event.target)) {
       setEditing(false);
     }
   };
+
+  if (editing){
+    document.body.classList.remove("no-select");
+  }
+
+  const enableEditing = () => {
+    document.body.classList.add("no-select");
+    setEditing(true);
+  }
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,13 +48,6 @@ export default function EditableInputCell({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  function UpdateListener({ onUpdate }) {
-    const { values } = useFormikContext();
-    useEffect(() => {
-      onUpdate(values[column.id] !== initialValue);
-    });
-  }
 
   const handleSubmit = (values) => {
     try {
@@ -57,6 +60,15 @@ export default function EditableInputCell({
       setEditing(false);
     }
   };
+
+  //----
+
+  function UpdateListener({ onUpdate }) {
+    const { values } = useFormikContext();
+    useEffect(() => {
+      onUpdate(values[column.id] !== initialValue);
+    });
+  }
 
   if (editing) {
     return (
@@ -75,8 +87,9 @@ export default function EditableInputCell({
         }) => (
           <Form
             ref={divRef}
-            className="flex-row align-items-center w-100"
+            className="flex-row align-items-center"
             autoComplete="off"
+            style={{flex: 1, minWidth: "0px"}}
           >
             <TextField
               id={column.id}
@@ -110,7 +123,7 @@ export default function EditableInputCell({
   }
 
   return (
-    <StaticCell onDoubleClick={() => setEditing(true)}>
+    <StaticCell onDoubleClick={enableEditing}>
       {initialValue}
     </StaticCell>
   );

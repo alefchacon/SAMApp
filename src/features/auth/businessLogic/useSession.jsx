@@ -68,7 +68,7 @@ export default function useSession() {
   });
 
   const userIsLoggedIn =
-    Boolean(getAccessToken()) && Boolean(getRefreshToken());
+    Boolean(getAccessToken()) || Boolean(getRefreshToken());
 
   return {
     deleteSession,

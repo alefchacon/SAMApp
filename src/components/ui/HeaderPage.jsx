@@ -17,7 +17,7 @@ export default function HeaderPage({
       }`}
       style={{ backgroundColor: "red" }}
     >
-      <div className={`flex-col`} style={{ padding: "1rem 0 0 0" }}>
+      <div className={`flex-col`} style={{ padding: "0rem 0 0 0" }}>
         <h1>{title}</h1>
         {children}
       </div>

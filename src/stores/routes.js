@@ -7,7 +7,7 @@ const ROUTES = Object.freeze({
   PHOTOSHEETS: "/fichas",
   SIGN_UP: "/registrarse",
   PERSONAL: "/personal",
-  ADD_SPECIMEN: "/coleccion/agregar-especimen",
+  ADD_SPECIMEN: "/agregar-especimen",
   EDIT_SPECIMEN: "/coleccion/editar-especimen",
   MIGRATE: "/migrar",
   PROFILE: "/perfil"

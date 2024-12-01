@@ -11,6 +11,7 @@ export default function Photosheet({
   isTechnicalPerson = false,
   onDelete,
   onUpdate,
+  children
 }) {
   const sheetURL = photosheet.sheet;
 
@@ -58,19 +59,14 @@ export default function Photosheet({
       >
         <Button
           className="icon-only color-white"
-          iconType="open_in_full"
-        ></Button>
-
-        <Button
-          className="icon-only color-white"
           iconType="download"
           onClick={handleDownload}
         ></Button>
         {isTechnicalPerson && technicalPersonButtons}
       </div>
       <img className="photosheet" src={sheetURL} alt={photosheet.description} />
-      <div className="photosheet-description bg-black-transparent color-white w-100 text-wrap position-absolute">
-        <p className="p-1rem ">{photosheet.description}</p>
+      <div className="photosheet-description bg-black-transparent color-white w-100 text-wrap position-absolute p-05rem">
+        {children}
       </div>
     </div>
   );

@@ -27,7 +27,9 @@ export default function ResizableDiv({
 
   const handleMouseMove = useCallback(
     (e) => {
-      if (!isResizing) return;
+      if (!isResizing) {
+        return
+      };
       document.body.classList.add("no-select");
       const { movementX, movementY } = e;
 

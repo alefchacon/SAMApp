@@ -70,8 +70,8 @@ export default function AccessRequest({
           ></InfoItem>
         </a>
 
-        <a href={`mailto:${accessRequest.email}`}>
-          <InfoItem label={accessRequest.email} iconType={"email"}></InfoItem>
+        <a href={`mailto:${accessRequest.academic.user.email}`}>
+          <InfoItem label={accessRequest.academic.user.email} iconType={"email"}></InfoItem>
         </a>
         <InfoItem
           fullheight

@@ -256,7 +256,7 @@ export default function AccessRequestForm() {
                   onChange={handleChange}
                   hasError={errors.degree && touched.degree}
                   errorMessage={errors.degree}
-                  label={"Licenciatura´, título o grado académico"}
+                  label={"Licenciatura, título o grado académico"}
                   maxLength={100}
                 ></TextField>
               </div>

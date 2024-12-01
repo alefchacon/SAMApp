@@ -166,16 +166,6 @@ export default function SpecieDashboard({
                   yLabel="Especímenes"
                   xLabel="Meses"
                 />
-                <Multigraph
-                  graphTitle="Especímenes recolectados por mes"
-                  specimens={specimens}
-                  attributeToGraph={{
-                    name: "colection_date",
-                    type: DATE_TYPES.MONTH,
-                  }}
-                  yLabel="Especímenes"
-                  xLabel="Meses"
-                />
               </div>
             </div>
           </Tabs>

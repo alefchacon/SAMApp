@@ -66,7 +66,9 @@ INSERT INTO public.species_specie (scientific_name, class_specie, orden, family,
 INSERT INTO species_specimen (catalog_id, status, length_total, length_ear, length_paw, length_tail, sex, weight, number_embryos, colection_code, colection_date, hour, comment, specie_id, class_age, preparation_date) 
 	VALUES ('Desmodus rotundus mirinus','Mammalia','Chiroptera','Phyllostomeidae','Desmodus','rotundus','mirinus');
 
+INSERT INTO auth_user (password, father_last_name,mother_last_name, state, major, city, college, position, degree, user_id) VALUES ('Karla', 'Carrión', 'Hernández', 'Veracruz', 'Biología', 'Xalapa', 'Universidad Veracruzana', 'Jefa de Carrera', 'Maestría de etc etc', 4);
 INSERT INTO user_academic (names, father_last_name,mother_last_name, state, major, city, college, position, degree, user_id) VALUES ('Karla', 'Carrión', 'Hernández', 'Veracruz', 'Biología', 'Xalapa', 'Universidad Veracruzana', 'Jefa de Carrera', 'Maestría de etc etc', 4);
+INSERT INTO user_technicalperson (fullname, position, nomination, user_id) VALUES ('Alejandro Chacon', 'Desarrollador', 'idk', 1);
 
 psql -U postgres
 

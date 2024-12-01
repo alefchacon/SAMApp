@@ -8,21 +8,8 @@ import {
   symbolRegex,
 } from "../../../validation/regexesPassword";
 import { useState, useEffect } from "react";
+import Checker from "./Checker";
 
-function Checker({ children, fulfilled = false, hasError = true }) {
-  return (
-    <div className="flex-row gap-1rem">
-      <span
-        className={`material-symbols-outlined ${
-          fulfilled ? "color-uv-green" : "color-lightgray"
-        } ${hasError && !fulfilled ? "color-error" : "color-lightgray"}`}
-      >
-        {fulfilled ? "check_circle" : "circle"}
-      </span>
-      <p className="helper-text">{children}</p>
-    </div>
-  );
-}
 
 export default function PasswordValidator({
   required,
@@ -76,35 +63,35 @@ export default function PasswordValidator({
       <br />
       <div>
         <Checker
-          className="length-checker"
+          id="length-checker"
           fulfilled={hasMinLength}
           hasError={passwordHasError}
         >
           Al menos 8 caracteres
         </Checker>
         <Checker
-          className="case-checker"
+          id="uppercase-checker"
           fulfilled={hasUpperCase}
           hasError={passwordHasError}
         >
           Mayúsculas
         </Checker>
         <Checker
-          className="case-checker"
+          id="lowercase-checker"
           fulfilled={hasLowerCase}
           hasError={passwordHasError}
         >
           Minúsculas
         </Checker>
         <Checker
-          className="number-checker"
+          id="number-checker"
           fulfilled={hasNumber}
           hasError={passwordHasError}
         >
           Al menos un número
         </Checker>
         <Checker
-          className="symbol-checker"
+          id="symbol-checker"
           fulfilled={hasSymbol}
           hasError={passwordHasError}
         >
@@ -124,7 +111,7 @@ export default function PasswordValidator({
       />
       <br />
       <Checker
-        className="match-checker"
+        id="match-checker"
         fulfilled={passwordsMatch}
         hasError={passwordConfirmationHasError}
       >

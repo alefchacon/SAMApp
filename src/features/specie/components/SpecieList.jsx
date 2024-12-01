@@ -1,6 +1,6 @@
 // LIBRARIES
 import { useState } from "react";
-import Specie from "./Specie";
+import CardSpecie from "./CardSpecie";
 
 import Button from "../../../components/ui/Button";
 import HoverableActions from "../../../components/ui/HoverableActions";
@@ -9,7 +9,7 @@ import TextField from "../../../components/ui/TextField";
 import ResizableDiv from "../../../components/ui/ResizableDiv";
 import Taxonomy from "./Taxonomy";
 import { useNavigate } from "react-router-dom";
-
+import ListItem from "../../../components/ui/ListItem";
 import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
@@ -101,11 +101,9 @@ export default function SpecieList({
           {species?.length > 0 ? (
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
-                <li
-                  key={index}
-                  style={{ position: "relative" }}
-                  className="hoverable2"
-                >
+
+                <ListItem selected={specie.id === selectedSpecieId} >
+
                   {role === ROLE_TYPES.TECHNICAL_PERSON && (
                     <HoverableActions>
                       <Button
@@ -120,13 +118,13 @@ export default function SpecieList({
                       ></Button>
                     </HoverableActions>
                   )}
-                  <Specie
+                  <CardSpecie
                     specie={specie}
                     filterText={filterText}
                     onClick={() => handleSelection(specie.id)}
-                    selected={specie.id === selectedSpecieId}
-                  ></Specie>
-                </li>
+                    
+                  ></CardSpecie>
+                </ListItem>
               ))}
             </ul>
           ) : (

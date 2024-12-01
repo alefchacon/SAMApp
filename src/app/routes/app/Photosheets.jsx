@@ -2,18 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
 import HeaderPage from "../../../components/ui/HeaderPage";
-import Uploader from "../../../components/ui/Uploader";
 import UploaderImage from "../../../components/ui/UploaderImage";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
-
 import { useModal } from "../../../components/contexts/ModalContext";
-import { ROLE_TYPES } from "../../../stores/roleTypes";
 import usePhotosheets from "../../../features/photosheets/businessLogic/usePhotosheets";
-import { SERVER_URL } from "../../../config/env";
-import { FILE_TYPES_STRING } from "../../../stores/fileTypes";
 import useTextFilter from "../../../hooks/useTextFilter";
 import { Formik, Form } from "formik";
-
+import Highlight from "../../../components/ui/Highlight";
 import Footer from "../../../components/ui/Footer";
 
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
@@ -28,7 +23,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
     confirmDeletePhotosheet,
   ] = usePhotosheets();
 
-  const [filteredItems, handleFilterChange] = useTextFilter(photosheets);
+  const [filteredItems, handleFilterChange, filterText] = useTextFilter(photosheets);
 
   function PhotosheetForm({
     photosheet = {
@@ -119,7 +114,8 @@ export default function Photosheets({ isTechnicalPerson = false }) {
 
   return (
     <div className="flex-col w-100">
-      <div className="flex-row gap-1rem align-items-center justify-content-center p-2rem">
+    <HeaderPage title="Fichas fotográficas"></HeaderPage>
+      <div className="page-padding flex-row gap-1rem align-items-center justify-content-center p-1rem">
         {" "}
         <TextField
           iconType={"search"}
@@ -133,19 +129,22 @@ export default function Photosheets({ isTechnicalPerson = false }) {
           </Button>
         )}
       </div>
-      <div
-        className="photosheet-gallery h-100 p-2rem"
-        style={{ gap: "0.2rem" }}
-      >
-        {filteredItems.map((photosheet, index) => (
-          <Photosheet
-            photosheet={photosheet}
-            key={index}
-            onDelete={handleDelete}
-            onUpdate={showEditPhotosheetModal}
-            role={isTechnicalPerson}
-          />
-        ))}
+      <div className="h-100">
+        <div
+          className="photosheet-gallery p-2rem page-padding"
+          style={{ gap: "0.2rem"}}
+        >
+          
+          {filteredItems.map((photosheet, index) => (
+            <Photosheet
+              photosheet={photosheet}
+              key={index}
+              onDelete={handleDelete}
+              onUpdate={showEditPhotosheetModal}
+              isTechnicalPerson={isTechnicalPerson}
+            ><Highlight text={photosheet.description} highlight={filterText}></Highlight></Photosheet>
+          ))}
+        </div>
       </div>
       <Footer></Footer>
     </div>

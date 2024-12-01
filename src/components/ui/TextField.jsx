@@ -51,13 +51,6 @@ const TextField = forwardRef(
       return hasError ? "hasError" : "";
     };
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Enter" && onEnter) {
-        onEnter();
-        return;
-      }
-    };
-
     return (
       <div
         className={`text-field ${getErrorClassName()} w-100 justify-content-center`}
@@ -121,7 +114,7 @@ const TextField = forwardRef(
               {customIcon}
             </span>
           )}
-          {isFormik && type === "text" ? (
+          {isFormik? (
             <>
               <Field
                 id={id}
@@ -141,9 +134,10 @@ const TextField = forwardRef(
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChange={onChange}
-                defaultValue={defaultValue}
+                
                 step={step}
                 onPaste={onPaste}
+                innerRef={ref}
               ></Field>
             </>
           ) : (
@@ -174,6 +168,8 @@ const TextField = forwardRef(
 
         {hasError && (
           <div
+            role="alert"
+            aria-live="assertive"
             className={`error-text`}
             htmlFor={`${id}`}
             style={{ textWrap: "wrap" }}

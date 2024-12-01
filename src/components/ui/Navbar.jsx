@@ -22,11 +22,6 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
   const NAV_ITEMS = [
     {
       route: ROUTES.LANDING,
-      label: "Inicio",
-      iconType: "home",
-    },
-    {
-      route: ROUTES.COLLECTION,
       label: "Colección",
       iconType: "pets",
     },

@@ -1,7 +1,7 @@
 import Taxonomy from "./Taxonomy";
 import Highlight from "../../../components/ui/Highlight";
 import { filter } from "lodash";
-export default function Specie({
+export default function CardSpecie({
   specie = {
     id: 0,
     scientific_name: "Nombre de la especie",
@@ -19,7 +19,7 @@ export default function Specie({
 }) {
   return (
     <div
-      className={`selectable p-1rem  ${selected ? "selected" : ""}`}
+      
       onClick={onClick}
     >
       <p style={{ fontWeight: 500 }}>

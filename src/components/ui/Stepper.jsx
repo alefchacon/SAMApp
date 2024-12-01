@@ -10,9 +10,9 @@ export default function Stepper({
   onStepChange = null,
   onResetScroll,
   endButtonLabel = "Agregar especímen",
+  onEndButtonClick,
   hasError,
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
@@ -29,6 +29,7 @@ export default function Stepper({
         <Button
           value={children[index + -1]?.props.id}
           className="secondary"
+          type="button"
           iconType="chevron_left"
           onClick={handleSelectedTabChange}
         >
@@ -39,6 +40,7 @@ export default function Stepper({
       {index < children.length - 1 ? (
         <Button
           value={children[index + 1]?.props.id}
+          type="button"
           className="secondary"
           iconType="chevron_right"
           onClick={handleSelectedTabChange}
@@ -46,7 +48,8 @@ export default function Stepper({
           Continuar
         </Button>
       ) : (
-        <Button type="submit">{endButtonLabel}</Button>
+        //<div>asdf</div>
+        <Button type="button" onClick={onEndButtonClick}>{endButtonLabel}</Button>
       )}
     </div>
   );
@@ -72,7 +75,7 @@ export default function Stepper({
             key={index}
             style={{
               flex: 1,
-              justifyContent: "space-between",
+              justifyContent: "space-evenly",
             }}
           >
             <div

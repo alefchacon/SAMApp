@@ -25,6 +25,7 @@ export default function useAuth() {
   });
 
   const logIn = async (username = "", password = "") => {
+
     const body = {
       username: username,
       password: password,
@@ -33,8 +34,6 @@ export default function useAuth() {
     const response = await apiWrapper.post(LOGIN_URL, body, {
       getError: false,
     });
-
-    console.log(response);
 
     if (response?.status === HttpStatus.OK) {
       storeSession(response?.data);

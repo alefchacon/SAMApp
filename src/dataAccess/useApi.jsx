@@ -54,7 +54,7 @@ export default function useApi() {
       },
 
       async post(url, data, config = {}) {
-        console.log(token);
+        
         setLoading(true);
         try {
           const response = await api.post(url, data, config);
@@ -80,6 +80,18 @@ export default function useApi() {
         setLoading(true);
         try {
           const response = await api.put(url, data, config);
+          showSnackbar(response.data.message);
+          return response;
+        } catch (error) {
+          handleError(error);
+        } finally {
+          setLoading(false);
+        }
+      },
+      async delete(url, data, config = {}) {
+        setLoading(true);
+        try {
+          const response = await api.delete(url, data, config);
           showSnackbar(response.data.message);
           return response;
         } catch (error) {
@@ -149,20 +161,26 @@ export default function useApi() {
   }
 
   function handleUnauthorized() {
-    const useCanRefresh =
-      getRefreshToken() !== null && getRefreshToken() !== "undefined";
 
-    if (userIsLoggedIn && useCanRefresh) {
+    console.log(userIsLoggedIn)
+
+    if (!userIsLoggedIn){
+      return;
+    }
+
+    const userCanRefresh = Boolean(getRefreshToken())
+
+    if (userCanRefresh) {
       deleteAccessToken();
       showModal(
         "La sesión ha expirado",
         <RefreshForm onLogOut={closeModal} />,
         false
       );
-      return;
+    } else {
+      deleteSession();
     }
 
-    deleteSession();
   }
 
   return { apiWrapper };

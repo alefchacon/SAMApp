@@ -45,7 +45,7 @@ export default function MorphometricMeasuresForm({
         hasError={errors.class_age && touched.class_age}
       />
 
-      <div className="grid-3column">
+      <div className="input-group">
         <TextField
           label={"Largo total"}
           type="number"
@@ -99,7 +99,6 @@ export default function MorphometricMeasuresForm({
           onChange={handleChange}
           hasError={Boolean(errors.length_ear)}
           errorMessage={errors.length_ear}
-          maxWidth={inputWidth}
           step={0.001}
           min={0}
           max={99.999}
@@ -115,7 +114,6 @@ export default function MorphometricMeasuresForm({
           onChange={handleChange}
           hasError={Boolean(errors.weight)}
           errorMessage={errors.weight}
-          maxWidth={inputWidth}
           step={0.001}
           min={0}
           max={99.999}
@@ -133,7 +131,6 @@ export default function MorphometricMeasuresForm({
           hasError={Boolean(errors.number_embryos && touched.number_embryos)}
           errorMessage={errors.number_embryos}
           min={0}
-          maxWidth={inputWidth}
           defaultValue={0}
         ></TextField>
       </div>

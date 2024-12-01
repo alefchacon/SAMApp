@@ -27,7 +27,9 @@ export default function Autocomplete({
   const textFieldRef = useRef();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(items, 0);
+  
   const handleOptionSelect = (option) => {
+    console.log(textFieldRef)
     textFieldRef.current.value = option;
     setFieldValue(name, option);
     setIsOpen(false);
@@ -68,6 +70,7 @@ export default function Autocomplete({
   return (
     <div className="dropdown" ref={dropdownRef}>
       <TextField
+      isFormik  
         label={label}
         placeholder={placeholder}
         required={required}
@@ -80,6 +83,7 @@ export default function Autocomplete({
         onChange={handleChange}
         onFocus={toggleDropdown}
         onKeydown={handleKeyDown}
+        value={value}
         onBlur={onBlur}
         ref={textFieldRef}
         hasError={hasError}

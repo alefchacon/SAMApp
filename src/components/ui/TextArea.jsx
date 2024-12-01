@@ -131,12 +131,15 @@ export default function TextArea({
 
       {hasError && (
         <div
-          className={`sam-text-field-error-text`}
+          role="alert"
+          aria-live="assertive"
+          className={`error-text`}
           htmlFor={`${id}`}
+          style={{ textWrap: "wrap" }}
           id={`${id}-error-message`}
         >
-          {errorMessage}
-        </div>
+            {errorMessage}
+          </div>
       )}
     </div>
   );
