@@ -14,6 +14,7 @@ import useApi from "../../../dataAccess/useApi";
 import HttpStatus from "../../../stores/httpStatus";
 import useSession from "../../auth/businessLogic/useSession";
 import flattenObject from "../../../utils/flattenObject";
+import SPECIMEN_KEYS from "../../../stores/specimenKeys";
 
 export const useSpecimens = (specie) => {
   const [specimens, setSpecimens] = useState([]);
@@ -50,7 +51,6 @@ export const useSpecimens = (specie) => {
           specimen.specie = specie;
           return specimen;
         });
-
         setSpecimens(specimens);
       });
     }
@@ -61,7 +61,7 @@ export const useSpecimens = (specie) => {
     return response;
   });
 
-  const postSpecimen = async (newSpecimen = {}, specieId = 0) => {
+  const addSpecimen = async (newSpecimen = {}, specieId = 0) => {
     newSpecimen.specie = specieId;
 
     const response = await apiWrapper.post(
@@ -81,20 +81,52 @@ export const useSpecimens = (specie) => {
       setSpecimens(newSpecimens);
     }
   });
-
+  
+  const getSpecimensForCSV = () => {
+    const cleanSpecimens = specimens.map(specimen => {
+      specimen.colector_code = specimen.colector.code;
+      specimen.colector_name = specimen.colector.name;
+      specimen.preparator_code = specimen.preparator.code;
+      specimen.preparator_name = specimen.preparator.name;
+      delete specimen.colector;
+      delete specimen.preparator;
+      delete specimen.specie;
+      delete specimen.id;
+      delete specimen.location.id;
+      delete specimen.location.specimen;
+      return specimen;
+    });
+    return cleanSpecimens;
+  }
   const toCSV = async () => {
-    const keys = Object.keys(flattenObject(specimens[0]));
+    
+    const cleanSpecimens = getSpecimensForCSV()
 
+    const keys = Object.keys(flattenObject(cleanSpecimens[0], "", {}, false));
+    const translatedKeys = keys.map(key => SPECIMEN_KEYS[key])    
+    
     const csvRows = [];
-
-    csvRows.push(keys.join(","));
-
-    specimens.forEach((object) => {
-      const values = keys.map((key) => flattenObject(object)[key]);
+    csvRows.push(translatedKeys.join(","));
+    
+    cleanSpecimens.forEach((specimen) => {
+      const values = keys.map((key) => {
+        let value = flattenObject(specimen)[key];
+ 
+        // Some user inputs can include commas. Given that CSVs
+        // use commas as delimiters, these user commas can negatively
+        // impact the way the CSV is rendered, so we swap them out 
+        // for another character: 
+        
+        if (typeof value === "string"){
+          value = value.replace(/,/, "; ")
+        }
+        return value ?? " ";
+      });
       csvRows.push(values.join(","));
     });
 
     return csvRows.join("\n");
+    
   };
 
   const downloadSpecimens = useCallback(() => {
@@ -112,7 +144,7 @@ export const useSpecimens = (specie) => {
   return {
     specimens,
     getSpecimen,
-    postSpecimen,
+    addSpecimen,
     deleteSpecimen,
     downloadSpecimens,
   };

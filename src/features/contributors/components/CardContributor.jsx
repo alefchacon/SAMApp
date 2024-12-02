@@ -10,14 +10,12 @@ export default function CardContributor({
 }) {
   return (
     <div
-      style={{ maxWidth: "fit-content" }}
       id={`contributor-${index}`}
       className="contributor flex-row align-items-center gap-1rem  "
     >
       <p
         id={`contributor-code-${index}`}
         className="contributor-code"
-        style={{ letterSpacing: "1px" }}
       >
         <b>
           <Highlight text={contributor.code} highlight={filterText}></Highlight>

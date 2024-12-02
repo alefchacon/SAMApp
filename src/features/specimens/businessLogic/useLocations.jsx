@@ -10,7 +10,7 @@ export const useLocations = (specieId = 0) => {
   const { apiWrapper } = useApi();
 
   const getLocations = async () => {};
-  const postLocation = useCallback(async (location = {}, specimenId = 0) => {
+  const addLocation = useCallback(async (location = {}, specimenId = 0) => {
     const body = {
       coordinates_cartesian_plane_x: location.coordinates_cartesian_plane_x, //
       coordinates_cartesian_plane_y: location.coordinates_cartesian_plane_y, //
@@ -32,5 +32,5 @@ export const useLocations = (specieId = 0) => {
     return response;
   });
 
-  return { locations, getLocations, postLocation };
+  return { locations, getLocations, addLocation };
 };

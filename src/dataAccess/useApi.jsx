@@ -161,9 +161,6 @@ export default function useApi() {
   }
 
   function handleUnauthorized() {
-
-    console.log(userIsLoggedIn)
-
     if (!userIsLoggedIn){
       return;
     }

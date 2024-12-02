@@ -66,54 +66,15 @@ export default function TextArea({
 
       <div
         style={{
-          display: "flex",
-          position: "relative",
           maxWidth: maxWidth ?? undefined,
-          height: "200px",
         }}
-        className="flex-row align-items-center"
+        className="flex-row align-items-center position-relative"
       >
-        {iconType && (
-          <span
-            className="material-symbols-outlined p-1rem"
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {iconType}
-          </span>
-        )}
-        {customIcon && (
-          <span
-            className="material-symbols-outlined p-1rem"
-            style={{ position: "fixed" }}
-          >
-            {customIcon}
-          </span>
-        )}
-
-        <span
-          className="character-counter caption"
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-            margin: "0 10px",
-          }}
-        >
-          {value.length} / {maxLength}
-        </span>
-
         <textarea
           id={id}
           value={value}
           name={name}
           type={type}
-          style={{ flex: 2, minHeight: "100%" }}
           className={`input ${className} ${getErrorClassName()} ${
             fullwidth && "w-100"
           } ${fullwidth && "h-100"} ${
@@ -133,9 +94,8 @@ export default function TextArea({
         <div
           role="alert"
           aria-live="assertive"
-          className={`error-text`}
+          className={`error-text text-wrap`}
           htmlFor={`${id}`}
-          style={{ textWrap: "wrap" }}
           id={`${id}-error-message`}
         >
             {errorMessage}

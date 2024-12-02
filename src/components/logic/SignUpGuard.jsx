@@ -23,7 +23,6 @@ export default function SignUpGuard({ children }) {
     ROUTES.REGISTRARSE
   );
 
-  console.log(tokenIsValid);
   if (isTryingToSeeSignUpForm && tokenIsValid === false) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }

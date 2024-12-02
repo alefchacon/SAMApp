@@ -68,10 +68,8 @@ export default function ResizableDiv({
 
   return (
     <div
-      className={`${className}`}
+      className={`resizable-div ${className}`}
       style={{
-        overflow: "auto",
-        position: "relative",
         width: hide ? "fit-content" : `${size.width}px`,
         height: resizeVertical
           ? `${size.height}px`
@@ -107,51 +105,6 @@ export default function ResizableDiv({
           cursor: "e-resize",
         }}
         onMouseDown={handleMouseDown("e")}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "5px",
-          height: "5px",
-          cursor: "nw-resize",
-        }}
-        onMouseDown={handleMouseDown("nw")}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: "5px",
-          height: "5px",
-          cursor: "ne-resize",
-        }}
-        onMouseDown={handleMouseDown("ne")}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "5px",
-          height: "5px",
-          cursor: "sw-resize",
-        }}
-        onMouseDown={handleMouseDown("sw")}
-      />
-      <div
-        style={{
-          position: "absolute",
-
-          bottom: 0,
-          right: 0,
-          width: "5px",
-          height: "5px",
-          cursor: "se-resize",
-        }}
-        onMouseDown={handleMouseDown("se")}
       />
       {children}
     </div>

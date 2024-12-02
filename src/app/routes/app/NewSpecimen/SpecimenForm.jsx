@@ -1,7 +1,7 @@
 // LIBRARIES
 import { useState } from "react";
 
-import HeaderPage from "../../../../components/ui/HeaderPage";
+import Header from "../../../../components/ui/Header";
 import Button from "../../../../components/ui/Button";
 // FORMS
 import LocationForm from "../../../../features/specimens/newSpecimen/LocationForm";
@@ -27,24 +27,23 @@ import SpecimenFormik from "../../../../features/specimens/domain/specimenFormik
 import HttpStatus from "../../../../stores/httpStatus";
 
 export default function SpecimenForm({ onResetScroll }) {
-  const { postSpecimen } = useSpecimens();
-  const { postLocation } = useLocations();
-  const { postContributorSpecimen } = useContributorsAndRoles();
+  const { addSpecimen } = useSpecimens();
+  const { addLocation } = useLocations();
+  const { addContributorSpecimen } = useContributorsAndRoles();
 
   const location = useLocation();
   const selectedSpecie = location.state.specie;
 
 
   const handleSubmit = async (values) => {
-    console.log("submitting")
-    const responseSpecimen = await postSpecimen(values, selectedSpecie.id);
+    const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
 
     if (!responseSpecimen.status === HttpStatus.CREATED) {
       return;
     }
 
     const newSpecimenId = responseSpecimen.data.specimen_id;
-    const responseLocation = await postLocation(values.location, newSpecimenId);
+    const responseLocation = await addLocation(values.location, newSpecimenId);
 
     if (!responseLocation.status === HttpStatus.CREATED) {
       return;
@@ -55,7 +54,7 @@ export default function SpecimenForm({ onResetScroll }) {
       specimen: newSpecimenId,
       contributor_role: CONTRIBUTOR_ROLES.COLECTOR,
     };
-    const colectorResponse = await postContributorSpecimen(colectorSpecimen);
+    const colectorResponse = await addContributorSpecimen(colectorSpecimen);
     if (!colectorResponse.status === HttpStatus.OK) {
       return;
     }
@@ -65,7 +64,7 @@ export default function SpecimenForm({ onResetScroll }) {
       specimen: newSpecimenId,
       contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
     };
-    const preparatorResponse = await postContributorSpecimen(
+    const preparatorResponse = await addContributorSpecimen(
       preparatorSpecimen
     );
     if (!preparatorResponse.status === HttpStatus.OK) {

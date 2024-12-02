@@ -32,7 +32,7 @@ export const useSpecie = (specieId = 0) => {
       });
   });
 
-  const postSpecie = useCallback(async (newSpecie) => {
+  const addSpecie = useCallback(async (newSpecie) => {
     const response = await apiWrapper.post(
       `${SPECIE_URL}/`,
       new Specie(newSpecie)
@@ -92,7 +92,7 @@ export const useSpecie = (specieId = 0) => {
   return {
     species,
     getSpecies,
-    postSpecie,
+    addSpecie,
     updateSpecie,
     selectedSpecieDefault,
     migrateColection,

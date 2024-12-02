@@ -1,11 +1,25 @@
-export default function Header({ children, header = "header" }) {
+import { Link, useLocation } from "react-router-dom";
+
+export default function Header({
+  children,
+  title = "Título",
+  subtitle = null,
+  centerText = false,
+  padding = true,
+}) {
+  const location = useLocation();
+
   return (
-    <div className={``}>
-      <br />
-      <div className={"flex-col gap-1rem"}>
-        <h1>{header}</h1>
+    <div
+      className={`header bg-gradient p-1rem flex-col ${
+        padding ? "page-padding" : "p-2rem"
+      }`}
+    >
+      <div className={`flex-col`}>
+        <h1>{title}</h1>
         {children}
       </div>
+      {subtitle && <p>{subtitle}</p>}
     </div>
   );
 }

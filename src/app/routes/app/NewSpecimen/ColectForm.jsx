@@ -21,7 +21,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
   const { values, errors, touched, onBlur, handleChange, setFieldValue } =
     useFormikContext();
 
-  const { contributors, getContributors, postContributor } =
+  const { contributors, getContributors, addContributor } =
     useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
 
@@ -32,7 +32,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
   const handleShowAddContributorModal = () => {
     showModal(
       "Agregar colaborador",
-      <ContributorForm onSubmit={postContributor} />
+      <ContributorForm onSubmit={addContributor} />
     );
   };
 

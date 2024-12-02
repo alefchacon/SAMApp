@@ -58,7 +58,6 @@ export default function PasswordValidator({
         onChange={onChange}
         hasError={passwordHasError}
         errorMessage={passwordErrorMessage}
-        onPaste={(e) => console.log(e)}
       />
       <br />
       <div>

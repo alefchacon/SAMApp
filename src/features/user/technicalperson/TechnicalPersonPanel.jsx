@@ -7,8 +7,7 @@ export default function TechnicalPersonPanel() {
   const OptionWrapper = ({ children }) => {
     return (
       <li
-        className="selectable p-1rem rounded-20 hoverable2"
-        style={{ position: "relative" }}
+        className="selectable p-1rem rounded-20 hoverable2 position-relative"
       >
         {children}
       </li>

@@ -5,7 +5,7 @@ import Card from "../../../components/ui/Card.jsx";
 import Footer from "../../../components/ui/Footer.jsx";
 import TextField from "../../../components/ui/TextField";
 import TextArea from "../../../components/ui/TextArea.jsx";
-import HeaderPage from "../../../components/ui/HeaderPage";
+import Header from "../../../components/ui/Header.jsx";
 import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests.jsx";
 import { accessRequestSchema } from "../../../features/access/formikSchemas/accessRequestSchema.js";
@@ -119,12 +119,12 @@ export default function AccessRequestForm() {
         handleBlur,
       }) => (
         <div className="form flex-col w-100">
-          <HeaderPage
+          <Header
             title="Solicitar acceso a la colección"
             subtitle={
               "Si desea consultar información más detallada de la colección mastozoológica del Instituto de Investigaciónes Biológicas de la Universidad Veracruzana, por favor llene el siguiente formulario y nos pondremos en contacto con usted. Todos los campos son obligatorios."
             }
-          ></HeaderPage>
+          ></Header>
 
           <Form
             className="flex-col page-padding flex-grow-1"

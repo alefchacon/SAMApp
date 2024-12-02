@@ -118,25 +118,14 @@ export default function ContributorAutocomplete({
         </div>
 <br></br>
         <div
-          className="flex-row align-items-center"
-          style={{
-            position: "relative",
-            display: "inline-block",
-            borderRadius: "10px",
-            height: "60px",
-
-            gap: "1rem",
-            minWidth: "fit-content",
-            width: "100%",
-          }}
+          className=" display-inline-block flex-row align-items-center w-100 g-1rem position-relative min-w-fit-content"
         >
           <input
             ref={textFieldRef}
             type="text"
             name={name}
-            className="w-100 h-100 input"
+            className="w-100 h-100 input flex-grow-1"
             style={{
-              flex: 1,
               paddingLeft: `${paddingLeft}px`,
             }}
             maxLength={maxLength}
@@ -149,12 +138,7 @@ export default function ContributorAutocomplete({
 
           <span
             ref={iconRef}
-            style={{
-              position: "absolute",
-              transform: "translateY(-50%)",
-              left: "10px",
-              top: "50%",
-            }}
+            className="contributor-autocomplete"
           >
             {selectedContributor && (
               <Chip>

@@ -11,8 +11,7 @@ export default function Taxonomy({
 }) {
   const delimiter = (
     <span
-      className="material-symbols-outlined flex-row align-items-center font-size-1rem"
-      style={{ color: "inherit" }}
+      className="material-symbols-outlined flex-row align-items-center font-size-1rem color-inherit"
     >
       chevron_right
     </span>
@@ -31,19 +30,19 @@ export default function Taxonomy({
         <div className="flex-col">
           {showRankName && (
             <p
-              className="rank"
-              style={{ fontSize: "0.8rem", marginBottom: "-6px" }}
+              className="rank font-size-09rem"
+
             >
               {rankName}
             </p>
           )}
 
           {clickableRank ? (
-            <Link style={{ fontSize: "0.9rem", color: "inherit" }}>
+            <Link className="font-size-09rem color-inherit">
               <Highlight text={rank} highlight={filterText}></Highlight>
             </Link>
           ) : (
-            <div style={{ fontSize: "0.9rem" }}>
+            <div className="font-size-09rem">
               <Highlight text={rank} highlight={filterText}></Highlight>
             </div>
           )}
@@ -57,10 +56,8 @@ export default function Taxonomy({
 
   return (
     <div
-      className={`taxonomy flex-row gap-05rem ${
-        center ? "justify-content-center" : "justify-content-start"
-      }`}
-      style={{ fontSize: "inherit" }}
+      className={`taxonomy flex-row gap-05rem font-size-inherit 
+        ${center ? "justify-content-center" : "justify-content-start"}`}
     >
       <Rank
         showRankName={showRankName}

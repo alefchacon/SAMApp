@@ -22,7 +22,7 @@ export default function CardSpecie({
       
       onClick={onClick}
     >
-      <p style={{ fontWeight: 500 }}>
+      <p className="font-weight-500">
         {" "}
         <i>
           <Highlight text={specie.epithet} highlight={filterText}></Highlight>

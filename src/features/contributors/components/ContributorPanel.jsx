@@ -10,7 +10,7 @@ import TextField from "../../../components/ui/TextField";
 import useTextFilter from "../../../hooks/useTextFilter";
 import ListItem from "../../../components/ui/ListItem";
 export default function ContributorPanel() {
-  const { contributors, getContributors, postContributor, updateContributor } =
+  const { contributors, getContributors, addContributor, updateContributor } =
     useContributorsAndRoles();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
@@ -22,7 +22,7 @@ export default function ContributorPanel() {
   const handleShowContributorModal = () => {
     showModal(
       "Agregar colaborador",
-      <ContributorForm onSubmit={postContributor} />
+      <ContributorForm onSubmit={addContributor} />
     );
   };
   const handleEditContributorModal = (contributor) => {

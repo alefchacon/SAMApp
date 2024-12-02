@@ -57,11 +57,10 @@ const TextField = forwardRef(
       >
         {label && (
           <div className="sam-text-field-info">
-            <div className="form-label" style={{ paddingBottom: "0.5rem" }}>
+            <div className="form-label">
               <label
                 htmlFor={`${id}`}
-                className="input-label flex-row gap-05rem"
-                style={{ cursor: "pointer", flexWrap: "wrap" }}
+                className="input-label flex-row gap-05rem flex-wrap-wrap"
               >
                 {label}
                 {required && (
@@ -84,32 +83,20 @@ const TextField = forwardRef(
 
         <div
           style={{
-            height: "40px",
-
-            display: "flex",
-            position: "relative",
             maxWidth: maxWidth ?? undefined,
           }}
-          className="flex-row align-items-center"
+          className="flex-row align-items-center position-relative"
         >
           {iconType && (
             <span
-              className="material-symbols-outlined p-1rem"
-              style={{
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                display: "flex",
-                alignItems: "center",
-              }}
+              className="material-symbols-outlined p-1rem position-absolute top-0 bottom-0 flex-row align-items-center"
             >
               {iconType}
             </span>
           )}
           {customIcon && (
             <span
-              className="material-symbols-outlined p-1rem"
-              style={{ position: "fixed" }}
+              className="material-symbols-outlined p-1rem position-fixed"
             >
               {customIcon}
             </span>
@@ -172,7 +159,6 @@ const TextField = forwardRef(
             aria-live="assertive"
             className={`error-text`}
             htmlFor={`${id}`}
-            style={{ textWrap: "wrap" }}
             id={`${id}-error-message`}
           >
             {errorMessage}

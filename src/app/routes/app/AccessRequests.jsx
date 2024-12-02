@@ -3,9 +3,9 @@ import Button from "../../../components/ui/Button";
 import { useModal } from "../../../components/contexts/ModalContext";
 import AccessRequest from "../../../features/access/components/AccessRequest";
 import Card from "../../../components/ui/Card";
-import HeaderPage from "../../../components/ui/HeaderPage";
+import Header from "../../../components/ui/Header";
 import Footer from "../../../components/ui/Footer";
-
+import Page from "../../../components/ui/Page";
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests";
 
 import NoResults from "../../../components/ui/NoResults";
@@ -55,18 +55,7 @@ export default function AccessRequests() {
   };
 
   return (
-    <div
-      className="flex-col w-100"
-      style={{
-        overflowY: "scroll",
-      }}
-    >
-      <HeaderPage title="Solicitudes de acceso"></HeaderPage>
-      <div
-        className="flex-col h-fit-content gap-1rem page-padding h-100"
-        style={{ flexGrow: 1 }}
-      >
-        <br />
+    <Page title={"Solicitudes de acceso"} disableShadow>
         {pendingAccessRequests.length > 0 ? (
           pendingAccessRequests.map((accessRequest, index) => (
             <Card className={"p-2rem"}>
@@ -97,8 +86,6 @@ export default function AccessRequests() {
         ) : (
           <NoResults />
         )}
-      </div>
-      <Footer></Footer>
-    </div>
+    </Page>
   );
 }

@@ -1,10 +1,8 @@
 import Button from "./Button";
-import Tooltip from "./Tooltip";
 
 export default function ButtonIcon({
   white,
   iconType,
-  tooltip,
   onClick,
   type,
   isDisabled,

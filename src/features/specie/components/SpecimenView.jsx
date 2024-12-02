@@ -39,34 +39,12 @@ export default function SpecimenView({
   const [specimens, setSpecimens] = useSpecimens(specie.id);
   //const [specimens, setSpecimens] = useState([]);
 
-  //console.log(specie);
-
-  /*
-  useEffect(() => {
-    async function fetchData() {
-      const max = 100;
-      const min = 50;
-
-      const newSpecimens = await mockGetSpecimens(
-        Math.floor(Math.random() * (max - min + 1) + min)
-      );
-
-      //const newSpecimens = (await getSpecimens(role, specie.id)).data;
-      setSpecimens(newSpecimens);
-    }
-    //fetchData();
-  }, [specie]);
-  */
-
   const especimenesRef = useRef(null);
 
   function AddSpecimenButton() {
     return (
       <Button
         variant={"primary"}
-        onClick={async () => {
-          console.log(await getSpecimens(role, specie.id));
-        }}
       >
         Agregar espécimen
       </Button>
@@ -79,8 +57,7 @@ export default function SpecimenView({
         {ROLE_TYPES.validate(role) && (
           <div
             label={"Especímenes"}
-            className="specimens flex-col h-100"
-            style={{ overflow: "auto" }}
+            className="specimens flex-col h-100 overflow-auto"
           >
             <div className="specimens-controls p-1rem gap-1rem flex-row align-items-center">
               <TextField

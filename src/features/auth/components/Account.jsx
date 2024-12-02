@@ -48,7 +48,7 @@ export default function Account({
     <>
       <div className="flex-row align-items-center gap-1rem">
         <Link to={"/solicitudes"}>
-          <div style={{ position: "relative" }}>
+          <div className="position-relative">
             {accessRequestCount > 0 && <Badge>{accessRequestCount}</Badge>}
             <Button
               iconType="notifications"
@@ -59,7 +59,7 @@ export default function Account({
         <Dropdown
           header={
             <div>
-              <p>@{profile.username}</p>
+              <p className="font-weight-600">@{profile.username}</p>
             </div>
           }
         >

@@ -18,7 +18,7 @@ export default function useContributorsAndRoles() {
     setContributors(contributorModels);
   });
 
-  const postContributor = useCallback(
+  const addContributor = useCallback(
     async (newContributor = { name: "", code: "" }) => {
       const body = {
         name: newContributor.name,
@@ -41,7 +41,6 @@ export default function useContributorsAndRoles() {
   );
   const updateContributor = useCallback(
     async (contributorToUpdate = new Contributor()) => {
-      console.log(contributorToUpdate);
 
       const response = await apiWrapper.put(
         `${CONTRIBUTORS_URL}/${contributorToUpdate.id}/`,
@@ -63,7 +62,7 @@ export default function useContributorsAndRoles() {
     }
   );
 
-  const postContributorSpecimen = useCallback(
+  const addContributorSpecimen = useCallback(
     async (
       newContributorSpecimen = {
         specimen: 0,
@@ -97,8 +96,8 @@ export default function useContributorsAndRoles() {
   return {
     contributors,
     getContributors,
-    postContributor,
-    postContributorSpecimen,
+    addContributor,
+    addContributorSpecimen,
     updateContributorSpecimen,
     updateContributor,
     /*

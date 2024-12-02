@@ -29,7 +29,6 @@ export default function Autocomplete({
     useTextFilter(items, 0);
   
   const handleOptionSelect = (option) => {
-    console.log(textFieldRef)
     textFieldRef.current.value = option;
     setFieldValue(name, option);
     setIsOpen(false);

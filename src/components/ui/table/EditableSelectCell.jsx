@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import StaticCell from "./StaticCell,";
+import useSession from "../../../features/auth/businessLogic/useSession";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
+
 export default function EditableSelectCell({
   path,
   initialValue,
@@ -10,9 +13,13 @@ export default function EditableSelectCell({
   databaseTableId,
   children,
   onEditing,
+  editable = false
 }) {
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
+  const { getProfile } = useSession();
+  const profile = getProfile();
+  const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
 
   const handleClickOutside = (event) => {
     if (divRef.current && !divRef.current.contains(event.target)) {
@@ -62,6 +69,10 @@ export default function EditableSelectCell({
   }
 
   const enableEditing = () => {
+    if (!isTechnicalPerson){
+      return;
+    }
+
     setEditing(true);
     if (onEditing) {
       onEditing();

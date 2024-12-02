@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
-import HeaderPage from "../../../components/ui/HeaderPage";
+import Header from "../../../components/ui/Header";
 import UploaderImage from "../../../components/ui/UploaderImage";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -114,7 +114,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
 
   return (
     <div className="flex-col w-100">
-    <HeaderPage title="Fichas fotográficas"></HeaderPage>
+    <Header title="Fichas fotográficas"></Header>
       <div className="page-padding flex-row gap-1rem align-items-center justify-content-center p-1rem">
         {" "}
         <TextField
@@ -132,7 +132,6 @@ export default function Photosheets({ isTechnicalPerson = false }) {
       <div className="h-100">
         <div
           className="photosheet-gallery p-2rem page-padding"
-          style={{ gap: "0.2rem"}}
         >
           
           {filteredItems.map((photosheet, index) => (

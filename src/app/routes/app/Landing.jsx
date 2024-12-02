@@ -18,7 +18,6 @@ function SearchBanner({ children }) {
 }
 
 export default function Landing({ species, children }) {
-  console.log(species);
   return (
     <div className="landing flex-col w-100 color-white">
       <SearchBanner>

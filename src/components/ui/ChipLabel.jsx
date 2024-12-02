@@ -7,23 +7,16 @@ export default function ChipLabel({
 }) {
   return (
     <span
-      className="required flex-row align-items-center gap-05rem"
+      className="required font-size-08rem flex-row align-items-center gap-05rem min-w-fit-content h-fit-content"
       style={{
         color: color,
-        fontSize: "14px",
         backgroundColor: backgroundColor,
-
         padding: "0  0.5rem",
-        borderRadius: "3px",
-        width: width,
-        minWidth: "fit-content",
-        height: "fit-content",
       }}
     >
       {iconType && (
         <span
-          className="material-symbols-outlined"
-          style={{ fontSize: "20px" }}
+          className="material-symbols-outlined font-size-1rem"
         >
           {iconType}
         </span>

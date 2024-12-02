@@ -8,11 +8,7 @@ export default function Highlight({ text, highlight }) {
         part.toLowerCase() === highlight.toLowerCase() ? (
           <span
             key={index}
-            style={{
-              backgroundColor: "yellow",
-              borderRadius: "5px",
-              border: "1px solid orange",
-            }}
+            className="highlight"
           >
             {part}
           </span>

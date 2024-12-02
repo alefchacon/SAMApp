@@ -48,14 +48,9 @@ export default function Photosheet({
   return (
     <div
       className="photosheet-wrapper flex-row selectable position-relative align-items-end hoverable2"
-      style={{
-        overflow: "hidden",
-        maxHeight: "200px",
-      }}
     >
       <div
-        className="flex-row justify-content-right position-absolute top-0 w-100 show-on-hover bg-black-transparent show-on-hover"
-        style={{ display: "none" }}
+        className="flex-row justify-content-right position-absolute top-0 w-100 show-on-hover bg-black-transparent display-none"
       >
         <Button
           className="icon-only color-white"

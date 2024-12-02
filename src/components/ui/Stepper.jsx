@@ -9,14 +9,13 @@ export default function Stepper({
   selectedStepId = null,
   onStepChange = null,
   onResetScroll,
-  endButtonLabel = "Agregar especímen",
+  endButtonLabel = "Agregar espmen",
   onEndButtonClick,
   hasError,
 }) {
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
-    console.log(newSelectedIndex);
     if (onResetScroll) {
       onResetScroll();
     }
@@ -58,25 +57,15 @@ export default function Stepper({
   const currentIndex = children.indexOf(currentChild);
 
   return (
-    <div className="stepper-wrapper bg-white" style={{ flexWrap: "wrap" }}>
+    <div className="stepper-wrapper flex-wrap-wrap">
       <ul
-        className={`stepper flex-row align-items-center bg-white unstyled`}
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          borderRadius: "10px",
-          padding: "10px 20px",
-        }}
+        className={`stepper flex-row align-items-center bg-white unstyled position-sticky top-0 z-index-5`}
       >
         {children.map((tab, index) => (
           <div
-            className="step-wrapper flex-row align-items-center"
+            className="step-wrapper flex-row align-items-center justify-content-space-evenly flex-grow-1"
             key={index}
-            style={{
-              flex: 1,
-              justifyContent: "space-evenly",
-            }}
+
           >
             <div
               key={index}
@@ -87,7 +76,6 @@ export default function Stepper({
                 className={`stepper-circle ${
                   selectedId === tab.props.id ? "selected" : ""
                 }`}
-                style={{ position: "relative" }}
               >
                 {index + 1}
               </div>
@@ -99,7 +87,6 @@ export default function Stepper({
             {index < children.length - 1 && (
               <span
                 className="material-symbols-outlined"
-                style={{ fontSize: "1.4rem" }}
               >
                 chevron_right
               </span>

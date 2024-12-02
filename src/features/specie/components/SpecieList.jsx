@@ -68,7 +68,7 @@ export default function SpecieList({
       {fold ? (
         <Button
           iconType="dock_to_right"
-          className="icon-only secondary m-1rem"
+          className="icon-only m-1rem color-white"
           onClick={toggleFold}
         >
           Ver especies
@@ -76,14 +76,13 @@ export default function SpecieList({
       ) : (
         <div className={` ${fold && "fold"} flex-col h-100`}>
           <div
-            className="p-1rem flex-row justify-content-space-between align-items-center bg-gradient"
-            style={{ fontWeight: 600 }}
+            className="p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient"
           >
             <div></div>
             <p>Especies</p>
             <Button
               iconType="close"
-              className="icon-only secondary"
+              className="icon-only color-white"
               onClick={toggleFold}
             ></Button>
           </div>
@@ -102,7 +101,7 @@ export default function SpecieList({
             <ul role="list" className="specie-list-items unstyled">
               {filteredItems.map((specie, index) => (
 
-                <ListItem selected={specie.id === selectedSpecieId} >
+                <ListItem key={index} selected={specie.id === selectedSpecieId} >
 
                   {role === ROLE_TYPES.TECHNICAL_PERSON && (
                     <HoverableActions>

@@ -26,14 +26,13 @@ export default function RadioList({
     >
       <legend
         className="input-label flex-row gap-05rem"
-        style={{ paddingBottom: "0.5rem" }}
       >
         {label}
         {required && <ChipLabel iconType={"check"}>Requerido</ChipLabel>}
       </legend>
 
       {options.map((option, index) => (
-        <div key={index} className="option selectable rounded-20">
+        <div key={index} className="option selectable rounded-5">
           <input
             type="radio"
             id={`${name}Choice${index}`}
@@ -43,7 +42,7 @@ export default function RadioList({
           />
           <label
             htmlFor={`${name}Choice${index}`}
-            style={{ cursor: "pointer" }}
+            className="cursor-pointer"
           >
             {option.label}
           </label>

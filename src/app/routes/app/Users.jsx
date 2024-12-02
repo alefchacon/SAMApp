@@ -16,7 +16,7 @@ import TehnicalPersonForm from "../../../features/user/technicalperson/Technical
 
 export default function Users() {
   const { technicalPersons, getTechnicalPersons } = useUsers();
-  const { contributors, getContributors, postContributor } =
+  const { contributors, getContributors, addContributor } =
     useContributorsAndRoles();
   const { showModal } = useModal();
   useEffect(() => {
@@ -28,14 +28,13 @@ export default function Users() {
     showModal("Agregar técnico", <TehnicalPersonForm />);
   };
   const handleShowContributorModal = () => {
-    showModal("Colaborador", <ContributorForm onSubmit={postContributor} />);
+    showModal("Colaborador", <ContributorForm onSubmit={addContributor} />);
   };
 
   const OptionWrapper = ({ children }) => {
     return (
       <li
-        className="selectable p-1rem rounded-20 hoverable2"
-        style={{ position: "relative" }}
+        className="selectable p-1rem rounded-20 hoverable2 position-relative"
       >
         {children}
       </li>

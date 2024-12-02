@@ -14,7 +14,6 @@ export default function Migrate() {
   const { showModal } = useModal();
 
   const handleSubmit = async () => {
-    console.log(colection);
     const errors = await migrateColection(colection);
     if (errors) {
       showModal(
@@ -50,6 +49,7 @@ export default function Migrate() {
           <Stepper
             selectedStepId={"colaboradores"}
             endButtonLabel="Migrar biocolección"
+            onEndButtonClick={handleSubmit}
           >
             <div label={"Colaboradores"} id="colaboradores" className="p-2rem">
               Antes de comenzar, se recomienda que ya estén registrados en el
@@ -58,8 +58,7 @@ export default function Migrate() {
               <br />
               <br />
               Este paso es opcional: el sistema registrará todos los códigos que
-              estén en el archivo y que aún no se hayan registrado, pero sólo se
-              registrará el código; el nombre lo tendrá que asignar usted
+              estén en el archivo y que aún no se hayan registrado, pero el nombre lo tendrá que asignar usted
               después en la sección Personal.
               <ContributorPanel></ContributorPanel>
             </div>

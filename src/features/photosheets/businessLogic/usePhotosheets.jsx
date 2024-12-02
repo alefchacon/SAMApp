@@ -122,7 +122,6 @@ export default function usePhotosheets() {
     const response = await apiWrapper.delete(
       `${PHOTOSHEETS_URL}${photosheetId}/`
     );
-    console.log(response)
     if (response.request.status === HttpStatus.NO_CONTENT) {
       setPhotosheets((previous) =>
         previous.filter((photosheet) => photosheet.id !== photosheetId)

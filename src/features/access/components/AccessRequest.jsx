@@ -31,14 +31,10 @@ export default function AccessRequest({
   };
 
   return (
-    <div className="access-request flex-col" style={{ maxHeight: "600px" }}>
+    <div className="access-request flex-col max-h-600">
       <div
-        className="flex-col gap-05rem"
-        style={{
-          height: "100%",
-          flex: 1,
-          overflow: "hidden",
-        }}
+        className="flex-col gap-05rem h-100 overflow-hidden flex-grow-1"
+
       >
         <div className="flex-row gap-1rem align-items-center">
           <InfoItem
@@ -61,7 +57,7 @@ export default function AccessRequest({
         </div>
         <a
           href={`https://orcid.org/${accessRequest.orcid}`}
-          style={{ fontWeight: 600 }}
+          className="font-weight-600"
           target="_blank"
         >
           <InfoItem

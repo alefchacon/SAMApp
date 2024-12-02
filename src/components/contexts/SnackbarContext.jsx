@@ -37,7 +37,6 @@ export function SnackbarProvider({ children }) {
           ))}
         </div>
       );
-      console.log(asdf);
     }
 
     setSnackbarContent(asdf);

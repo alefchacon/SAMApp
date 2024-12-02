@@ -1,14 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import ButtonIcon from "../ButtonIcon";
-import Tooltip from "../Tooltip";
 import TextField from "../TextField";
 import { Formik, Form, useFormikContext } from "formik";
 import { getPartialSchema } from "../../../validation/formikSchemas/schemaUtils";
-import { locationSchema } from "../../../features/specimens/formikSchemas/locationSchema";
-import Dropdown from "../Dropdown";
 import StaticCell from "./StaticCell,";
-
+import useSession from "../../../features/auth/businessLogic/useSession";
+import { ROLE_TYPES } from "../../../stores/roleTypes";
 export default function EditableInputCell({
   domainObject,
   path,
@@ -21,11 +19,14 @@ export default function EditableInputCell({
   validationSchema,
   type = "text",
   max,
+  editable = false
 }) {
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
   const [updated, setUpdated] = useState(false);
-
+  const { getProfile } = useSession();
+  const profile = getProfile();
+  const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
   //-------
   const handleClickOutside = (event) => {
     if (divRef.current && !divRef.current.contains(event.target)) {
@@ -38,6 +39,10 @@ export default function EditableInputCell({
   }
 
   const enableEditing = () => {
+    if (!isTechnicalPerson){
+      return;
+    }
+
     document.body.classList.add("no-select");
     setEditing(true);
   }
@@ -87,9 +92,9 @@ export default function EditableInputCell({
         }) => (
           <Form
             ref={divRef}
-            className="flex-row align-items-center"
+            className="flex-row align-items-center flex-grow-1 minw-0"
             autoComplete="off"
-            style={{flex: 1, minWidth: "0px"}}
+            
           >
             <TextField
               id={column.id}

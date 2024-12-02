@@ -30,7 +30,6 @@ export default function Button({
     >
       <span
         className={`material-symbols-outlined`}
-        style={{ fontSize: "1.3rem" }}
       >
         {iconType}
       </span>

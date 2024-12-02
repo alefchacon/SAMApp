@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
 
-import Table from "../../../components/ui/table/Table";
+import EditableTable from "../../../components/ui/table/EditableTable";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 import Button from "../../../components/ui/Button";
 import Tabs from "../../../components/ui/Tabs";
@@ -16,7 +16,7 @@ import { useSpecimens } from "../../../features/specimens/businessLogic/useSpeci
 import { useSpecie } from "../../../features/specie/businessLogic/useSpecie";
 
 import DATE_TYPES from "../../../features/graphing/stores/dateTypes";
-import HeaderPage from "../../../components/ui/HeaderPage";
+import Header from "../../../components/ui/Header";
 import NoResults from "../../../components/ui/NoResults";
 import ChipLabel from "../../../components/ui/ChipLabel";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function SpecieDashboard({
   const {
     species,
     getSpecies,
-    postSpecie,
+    addSpecie,
     updateSpecie,
     migrateColection,
     selectedSpecieDefault,
@@ -93,7 +93,7 @@ export default function SpecieDashboard({
   }
 
   const showSpecieAddModal = () =>
-    showModal("Agregar especie", <SpecieForm onSubmit={postSpecie} />);
+    showModal("Agregar especie", <SpecieForm onSubmit={addSpecie} />);
 
   const showSpecieUpdateModal = (specie) => {
     showModal(
@@ -109,7 +109,7 @@ export default function SpecieDashboard({
   function SpecieView() {
     return (
       <>
-        <HeaderPage
+        <Header
           centerText={false}
           title={<i>{selectedSpecie?.epithet}</i>}
           padding={false}
@@ -122,7 +122,7 @@ export default function SpecieDashboard({
               <AddSpecimenButton />
             </>
           )}
-        </HeaderPage>
+        </Header>
 
         {specimens?.length > 0 ? (
           <Tabs className={`divider`}>
@@ -134,14 +134,14 @@ export default function SpecieDashboard({
                   </div>
                 }
                 id={SPECIMENS_TAB_ID}
-                className={`specimens flex-col h-100`}
-                style={{ overflow: "auto" }}
+                className={`specimens flex-col h-100 overflow-auto`}
               >
-                <Table
+                <EditableTable
+                  isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
                   data={specimens}
                   onEdit={handleEditSpecimen}
                   defaultColumns={editableSpecimenColumns}
-                ></Table>
+                ></EditableTable>
               </div>
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>

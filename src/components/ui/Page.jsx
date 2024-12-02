@@ -1,20 +1,20 @@
 import Card from "./Card.jsx";
 import Footer from "./Footer.jsx";
-import HeaderPage from "./HeaderPage.jsx";
-export default function Page({ children, title, subtitle }) {
+import Header from "./Header.jsx";
+export default function Page({ children, title, subtitle, disableShadow }) {
   return (
-    <div className="flex-col" style={{ flexGrow: 1 }}>
-      <HeaderPage title={title} subtitle={subtitle}></HeaderPage>
+    <div className="flex-col flex-grow-1">
+      <Header title={title} subtitle={subtitle}></Header>
       <div
-        className="flex-col page-padding"
+        className="flex-col page-padding flex-grow-1"
         autoComplete="off"
-        style={{
-          flexGrow: 1,
-        }}
       >
         <br />
         <br />
-        <Card className={"flex-col gap-2rem p-2rem"}>{children}</Card>
+        {disableShadow 
+          ? <div className={"flex-col gap-2rem p-2rem"}>{children}</div> 
+          : <Card className={"flex-col gap-2rem p-2rem"}>{children}</Card>
+        }
       </div>
       <br />
       <br />

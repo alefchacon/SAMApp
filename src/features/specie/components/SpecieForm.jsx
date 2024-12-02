@@ -52,7 +52,7 @@ export default function SpecieForm({
   }, []);
 
   return (
-    <div style={{width: "400px"}}>
+    <div>
       {isReady && (
         <Formik
           validationSchema={specieSchema}

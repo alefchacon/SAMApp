@@ -26,10 +26,9 @@ export default function Dropdown({ header, children, className }) {
   return (
     <div className="flex-col position-relative">
       <div
-        className={`${className} dropdown flex-row selectable justify-content-start gap-05rem`}
+        className={`${className} dropdown flex-row selectable justify-content-start gap-05rem position-relative`}
         onClick={toggleDropdown}
         ref={dropdownRef}
-        style={{ position: "relative" }}
       >
         {header}
         <span className="material-symbols-outlined">arrow_drop_down</span>

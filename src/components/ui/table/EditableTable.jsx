@@ -10,66 +10,16 @@ import {
 
 // COMPONENTS
 import Button from "../Button";
-import { useNavigate } from "react-router-dom";
-import { useModal } from "../../contexts/ModalContext";
 import "../../../app/App.css";
-import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import ButtonIcon from "../ButtonIcon";
+import TableRow from "./TableRow";
 
-function TableRow({ rowData, onEdit }) {
-  const navigate = useNavigate();
-  const { showModal, closeModal } = useModal();
-  const { deleteSpecimen } = useSpecimens();
-  const handleConfirmDelete = () => {
-    const body = (
-      <div className="flex-col">
-        <p>
-          ¿Está seguro de eliminar al espécimen? Esta acción no puede
-          deshacerse.
-        </p>
-        <div className="button-row">
-          <Button onClick={closeModal} className="secondary" iconType="close">
-            Cancelar
-          </Button>
-          <Button
-            onClick={() => deleteSpecimen(rowData.original.id)}
-            className="primary danger"
-            iconType="delete"
-          >
-            Eliminar especímen
-          </Button>
-        </div>
-      </div>
-    );
-
-    showModal("Eliminar espécimen", body);
-  };
-
-  return (
-    <tr
-      key={rowData.id}
-      className="tr selectable"
-      style={{ position: "relative", overflow: "hidden" }}
-    >
-      {rowData.getVisibleCells().map((cell) => (
-        <td
-          className="td hoverable2"
-          key={cell.id}
-          {...{
-            style: {
-              width: cell.column.getSize(),
-              position: "relative",
-            },
-          }}
-        >
-          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </td>
-      ))}
-    </tr>
-  );
-}
-
-export default function Table({ data, onEdit, defaultColumns }) {
+export default function EditableTable({ 
+  data, 
+  onEdit, 
+  defaultColumns, 
+  isTechnicalPerson = false
+}) {
   const [columns, setColumns] = useState(() => [...defaultColumns]);
   const [columnResizeMode, setColumnResizeMode] = useState("onChange");
   const [columnResizeDirection, setColumnResizeDirection] = useState("ltr");
@@ -148,7 +98,7 @@ export default function Table({ data, onEdit, defaultColumns }) {
     const toggleFiltering = () => setFiltering(!filtering);
 
     return (
-      <th
+      <div
         className="th selectable"
         key={header.id}
         {...{
@@ -199,7 +149,7 @@ export default function Table({ data, onEdit, defaultColumns }) {
           ></ButtonIcon>
           <ButtonIcon iconType={"swap_vert"} tooltip={"Ordenar"}></ButtonIcon>
         </div>
-      </th>
+      </div>
     );
   }
 
@@ -256,32 +206,33 @@ export default function Table({ data, onEdit, defaultColumns }) {
       </div>
       <div
         className="table-wrapper"
-        style={{ overflowX: "scroll", height: "100%" }}
       >
-        <table
+        <div
+          className="table"
           {...{
             style: {
               //width: table.getCenterTotalSize(),
               height: "100%",
+              width: isTechnicalPerson ? "" : "100%"
             },
           }}
         >
-          <thead>
+          <div className="thead">
             {table.getHeaderGroups().map((headerGroup) => (
               <div className="tr" key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHeader table={table} header={header} />
+                {headerGroup.headers.map((header, index) => (
+                  <TableHeader table={table} header={header} key={index} />
                 ))}
               </div>
             ))}
-          </thead>
+          </div>
 
-          <tbody style={{ overflow: "hidden" }}>
+          <div className="tbody">
             {table.getRowModel().rows.map((row, index) => (
               <TableRow key={index} rowData={row} onEdit={onEdit} />
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </>
   );

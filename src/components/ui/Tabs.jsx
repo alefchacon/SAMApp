@@ -41,15 +41,9 @@ export default function Tabs({
         className={`tab-bar divider flex-rowalign-content-center  ${
           center ? "justify-content-center" : "justify-content-space-between"
         }`}
-        style={{ padding: "0 1rem" }}
       >
         <ul
           className={`tab-group flex-row ${className} justify-content-start align-items-center unstyled`}
-          style={{
-            position: "sticky",
-            top: 0,
-            zIndex: 5,
-          }}
         >
           {children.map((tab, index) => (
             <li

@@ -16,7 +16,6 @@ export default function ContributorForm({
   contributor = new Contributor(),
 }) {
   const handleSubmit = async (values, actions) => {
-    console.log(values);
     const response = await onSubmit(values);
 
     if (response.status === HttpStatus.CREATED) {

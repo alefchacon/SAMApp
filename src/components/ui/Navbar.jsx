@@ -5,14 +5,11 @@ import InfoItem from "./InfoItem";
 import Account from "../../features/auth/components/Account";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
-import TextField from "./TextField";
 
 import ROUTES from "../../stores/routes";
 
 import { useStatus } from "../contexts/StatusContext";
 
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
 import { ROLE_TYPES } from "../../stores/roleTypes";
 export default function Navbar({ accessRequestCount = 0, profile }) {
   const { loading } = useStatus();
@@ -29,18 +26,11 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
 
   return (
     <nav
-      className="flex-row bg-gradient "
-      style={{
-        minHeight: "60px",
-        position: "relative",
-        padding: "0 1rem",
-        backgroundColor: "transparent",
-      }}
+      className="flex-row bg-gradient position-relative"
     >
       <div className="flex-row align-items-center gap-2rem h-100">
         <div
-          className="left-side flex-row align-items-center hide-if-mobile h-100 gap-2rem"
-          style={{ flex: 1 }}
+          className="left-side flex-row align-items-center hide-if-mobile h-100 gap-2rem flex-grow-1"
         >
           {NAV_ITEMS.map((navItem, index) => (
             <Link
@@ -94,7 +84,7 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
         </div>
       </div>
       <span></span>
-      <div style={{ flex: 1 }}></div>
+      <div className="flex-grow-1"></div>
       <div className="right-side flex-row gap-1rem h-100">
         <div className="hide-if-mobile flex-row gap-1rem align-items-center">
           <Account accessRequestCount={accessRequestCount}></Account>

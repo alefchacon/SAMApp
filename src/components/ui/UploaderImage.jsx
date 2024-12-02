@@ -57,7 +57,6 @@ export default function UploaderImage({
       );
       if (!fileTypeIsValid) {
         setIsParsing(false);
-        console.log("NOPE!!!");
         return;
       }
     }
@@ -65,7 +64,6 @@ export default function UploaderImage({
     setFiles((previousFiles) => [...previousFiles, ...newFiles]);
     setIsParsing(false);
 
-    console.log("on upload");
     onUpload(newFiles[0]);
   };
 
@@ -83,8 +81,7 @@ export default function UploaderImage({
         htmlFor={id}
         className={`${
           isDragging && "selected"
-        } flex-col justify-content-center align-items-center selectable rounded-20 caption img-container`}
-        style={{ overflow: "hidden", position: "relative" }}
+        } flex-col justify-content-center align-items-center selectable rounded-5 caption img-container position-relative overflow-hidden`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDropFile}
@@ -95,12 +92,10 @@ export default function UploaderImage({
             src={imgURLToUse}
             alt="asdf"
             className="photosheet"
-            style={{ height: "450px" }}
           />
         ) : (
           <span
-            style={{ fontSize: "6vw" }}
-            className="material-symbols-outlined p-1rem"
+            className="material-symbols-outlined p-1rem font-size-4rem"
           >
             upload
           </span>
@@ -120,7 +115,7 @@ export default function UploaderImage({
       </div>
 
       <input
-        style={{ opacity: 0, position: "absolute", zIndex: -1 }}
+        className="hidden-input"
         type="file"
         id={id}
         accept={FILE_TYPES_STRING.IMG}
