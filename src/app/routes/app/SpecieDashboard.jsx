@@ -22,6 +22,7 @@ import ChipLabel from "../../../components/ui/ChipLabel";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../stores/routes";
 import editableSpecimenColumns from "../../../features/specimens/editableSpecimenColumns";
+import Map from "../../../features/mapping/components/Map";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
@@ -145,6 +146,11 @@ export default function SpecieDashboard({
               </div>
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>
+
+              <div style={{height: "300px", width: "100%", overflow: "hidden"}}>
+                <Map specimens={specimens} role={role}></Map>
+              </div>
+
               <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
                 <Multigraph
                   graphTitle="Especímenes recolectados por mes"

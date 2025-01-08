@@ -3,7 +3,32 @@ import moment from "moment";
 export const getOrDefaultString = (value) => Boolean(value) ? value : "ND"; 
 export const getOrDefaultNumber = (value) => Boolean(value) ? value : 0.0; 
 export const getOrDefaultBoolean = (value) => Boolean(value) ? value : "True"; // "True" as that is what the Python/Django API expects.
-export const getOrDefaultDate = (preferredDate, defaultDate) => {
-  let date = Boolean(preferredDate) ? preferredDate : defaultDate;
-  return date;
+export const getOrDefaultDate = (
+  data = {year: 1999, month: 1, day: 1}, 
+  defaultDate = moment().format("YYYY-MM-DD")
+) => {
+
+  const dateKeys = ["year", "month", "day"];
+  
+  const dataHasDateKeys = dateKeys.every(dateKey => data.hasOwnProperty(dateKey))
+
+  if (!dataHasDateKeys){
+    return defaultDate;
+  }
+
+  const allDateKeysAreNumbers = dateKeys.every(dateKey => Boolean(Number(data[dateKey])))
+
+  if (!allDateKeysAreNumbers){
+    return defaultDate;
+  }
+
+  const parsedDate = moment()
+    .year(Number(data.year))
+    // months are zero indexed. 
+    // december is 11 instead of 12
+    .month(Number(data.month) - 1)
+    .date(Number(data.day))
+
+  
+  return parsedDate.format("YYYY-MM-DD");
 }
