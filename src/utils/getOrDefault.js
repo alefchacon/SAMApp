@@ -1,8 +1,8 @@
-import moment from "moment";
+import { date } from "yup";
+import moment from 'moment';
+export const getOrDefaultString = (value) => Boolean(value?.trim()) ? value : "ND"; 
+export const getOrDefaultNumber = (value) => parseInt(value, 10) || 0;
 
-export const getOrDefaultString = (value) => Boolean(value) ? value : "ND"; 
-export const getOrDefaultNumber = (value) => Boolean(value) ? value : 0.0; 
-export const getOrDefaultBoolean = (value) => Boolean(value) ? value : "True"; // "True" as that is what the Python/Django API expects.
 export const getOrDefaultDate = (
   data = {year: 1999, month: 1, day: 1}, 
   defaultDate = moment().format("YYYY-MM-DD")

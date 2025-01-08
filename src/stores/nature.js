@@ -1,5 +1,5 @@
 const NATURE = Object.freeze({
-  PC: "P/C",
+  PC: "PC",
   EA: "E/A",
   SE: "SE",
   EP: "EP",
@@ -8,6 +8,7 @@ const NATURE = Object.freeze({
   CA: "CA",
   SC: "SC",
   SP: "SP",
+  ND: "ND"
 });
 
 export default NATURE;

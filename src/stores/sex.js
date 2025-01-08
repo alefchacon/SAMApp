@@ -1,7 +1,7 @@
 const SEX = Object.freeze({
   MALE: "M",
   FEMALE: "H",
-  ND: "ND"
+  ND: "N"
 });
 
 export default SEX;
