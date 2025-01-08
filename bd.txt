@@ -82,3 +82,8 @@ psql -h localhost -d mammalogy_colection -U admin_mammalogy_colection -p 5432
 SELECT mammalogy_colection
 FROM information_schema.schemata;
 
+DELETE FROM species_location;
+DELETE FROM species_contributorspecimen;
+DELETE FROM species_contributor;
+DELETE FROM species_specimen;
+DELETE FROM species_specie;

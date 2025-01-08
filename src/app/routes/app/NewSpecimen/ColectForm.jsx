@@ -77,7 +77,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
   };
 
   return (
-    <div className="">
+    <div className="form-section">
       <div className="input-group">
         <h3>Colecta</h3>
           <TextField

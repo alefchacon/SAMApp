@@ -12,7 +12,7 @@ export default function LocationForm({
   inputWidth = "",
 }) {
   return (
-    <div>
+    <div className="form-section">
       <div className="input-group">
         <h3>Coordenadas cartesianas</h3>
           <TextField

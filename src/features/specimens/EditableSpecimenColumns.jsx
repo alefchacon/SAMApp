@@ -449,6 +449,7 @@ const editableSpecimenColumns = [
         <option value={NATURE.CA}>CA (Cráneo y piel en alcohol)</option>
         <option value={NATURE.SC}>SC (Sólo cráneo)</option>
         <option value={NATURE.SP}>SP (Sólo piel)</option>
+        <option value={NATURE.ND}>ND (No definido)</option>
       </EditableSelectCell>
     ),
   }),

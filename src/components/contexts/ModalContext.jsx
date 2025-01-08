@@ -11,18 +11,12 @@ export function useModal() {
 export function ModalProvider({ children }) {
   const [open, setOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
-  const [handleUndo, setHandleUndo] = useState(null);
   const [modalContent, setModalContent] = useState(null);
   const [dismissable, setDismissable] = useState(true);
   const [width, setWidth] = useState(null);
   const [maxHeight, setMaxHeight] = useState(null);
 
   const showModal = (title, content, dismissable, width, maxHeight) => {
-    /*
-    setMessage(message);
-    setContent(content);
-    setHandleUndo(() => onUndo);
-    */
     setDismissable(dismissable);
     setModalContent(content);
     setModalTitle(title);
@@ -35,10 +29,6 @@ export function ModalProvider({ children }) {
     if (reason === "clickaway") {
       return;
     }
-    /*
-    setMessage("");
-    setContent(null);
-    */
     setOpen(false);
   };
 

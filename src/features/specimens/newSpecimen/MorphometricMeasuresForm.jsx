@@ -23,7 +23,6 @@ export default function MorphometricMeasuresForm({
         name="sex"
         onChange={handleChange}
         errorMessage={errors.sex}
-        maxWidth={inputWidth}
         hasError={errors.sex && touched.sex}
       />
       <RadioList
@@ -41,7 +40,6 @@ export default function MorphometricMeasuresForm({
         name="class_age"
         onChange={handleChange}
         errorMessage={errors.class_age}
-        maxWidth={inputWidth}
         hasError={errors.class_age && touched.class_age}
       />
 

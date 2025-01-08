@@ -1,7 +1,8 @@
 //LIBRARIES
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import "moment/dist/locale/es-mx";
+import moment from "moment";
 // FEATURES
 import SpecieDashboard from "./routes/app/SpecieDashboard";
 import SpecimenForm from "./routes/app/NewSpecimen/SpecimenForm.jsx";
@@ -25,7 +26,8 @@ import Profile from "./routes/app/Profile.jsx";
 import useSession from "../features/auth/businessLogic/useSession.jsx";
 
 function App() {
-  const [species, setSpecies] = useState([]);
+  moment.locale("es-mx");
+
   const [selectedSpecie, setSelectedSpecie] = useState();
   const { getProfile } = useSession();
   const profile = getProfile();

@@ -1,9 +1,6 @@
 import { useState, useCallback } from "react";
-import { useStatus } from "../../../components/contexts/StatusContext";
 import useApi from "../../../dataAccess/useApi";
 import LOCATIONS_URL from "./urls/locationURL";
-
-import { ROLE_TYPES } from "../../../stores/roleTypes";
 
 export const useLocations = (specieId = 0) => {
   const [locations, setLocations] = useState([]);

@@ -15,7 +15,7 @@ export default function RadioList({
   onBlur,
   value,
 }) {
-  const errorClass = errorMessage ? "hasError" : "";
+  const errorClass = hasError ? "hasError" : "";
   return (
     <fieldset
       name={name}
