@@ -64,7 +64,6 @@ export default function EditableInputCell({
     setEditing(false);  
   };
 
-
   const nonFormikValues = () => {
     return {
       [column.id]: inputRef.current.value

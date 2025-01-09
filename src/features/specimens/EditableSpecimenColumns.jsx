@@ -357,7 +357,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`colection_code`}
         initialValue={info.getValue() || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={updateSpecimen}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
