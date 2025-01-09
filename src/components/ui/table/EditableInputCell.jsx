@@ -7,6 +7,10 @@ import { getPartialSchema } from "../../../validation/formikSchemas/schemaUtils"
 import StaticCell from "./StaticCell,";
 import useSession from "../../../features/auth/businessLogic/useSession";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
+
+
+
+
 export default function EditableInputCell({
   domainObject,
   path,
@@ -24,19 +28,10 @@ export default function EditableInputCell({
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
   const inputRef = useRef(null);
+  const formikRef = useRef(null);
   const { getProfile } = useSession();
   const profile = getProfile();
   const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
-  //-------
-  const handleClickOutside = (event) => {
-    if (divRef.current && !divRef.current.contains(event.target)) {
-      const values = {
-        [column.id]: inputRef.current.value
-      }
-      handleSubmit(values)
-      setEditing(false);
-    }
-  };
 
   if (editing){
     document.body.classList.remove("no-select");
@@ -52,23 +47,46 @@ export default function EditableInputCell({
   }
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleSubmitByClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleSubmitByClickOutside);
     };
   }, []);
 
-  const handleSubmit = (values) => {
-    try {
-      table?.options.meta?.updateData(row.index, path, values[column.id]);
-      values.id = databaseTableId;
-      onUpdate(values);
-    } catch (error) {
-      //
-    } finally {
-      setEditing(false);
+  const handleSubmit = async (values) => {
+    const errors = await formikRef.current.validateForm();
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+    table?.options.meta?.updateData(row.index, path, values[column.id]);
+    values.id = databaseTableId;
+    onUpdate(values);
+    setEditing(false);  
+  };
+
+
+  const nonFormikValues = () => {
+    return {
+      [column.id]: inputRef.current.value
+    }
+  }
+  
+  const handleSubmitByClickOutside = (event) => {
+    if (divRef.current && !divRef.current.contains(event.target)) {
+      handleSubmit(nonFormikValues())
     }
   };
+  
+  const handleKeydown = (event) => {
+    if (event.code === "Escape"){
+      setEditing(false);
+      return;
+    }
+    if (event.code === "Enter"){
+      handleSubmit(nonFormikValues())
+      return;
+    }
+  }
 
   if (editing) {
     return (
@@ -76,6 +94,7 @@ export default function EditableInputCell({
         initialValues={{ [column.id]: initialValue }}
         validationSchema={getPartialSchema(validationSchema, [column.id])}
         onSubmit={handleSubmit}
+        innerRef={formikRef}
       >
         {({
           values,
@@ -104,7 +123,7 @@ export default function EditableInputCell({
               isFormik
               max={max}
               ref={inputRef}
-              onKeyDown={(e) => console.log("e")}
+              onKeydown={handleKeydown}
             />
           </Form>
         )}

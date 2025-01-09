@@ -59,6 +59,7 @@ const editableSpecimenColumns = [
 
     cell: (info) => (
       <EditableInputCell
+        type="number"
         path={`location.coordinates_cartesian_plane_x`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_x}
         onUpdate={updateLocation}
@@ -75,6 +76,7 @@ const editableSpecimenColumns = [
     header: () => "UTM Y",
     cell: (info) => (
       <EditableInputCell
+        type="number"
         path={`location.coordinates_cartesian_plane_y`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_y}
         onUpdate={updateLocation}
@@ -137,6 +139,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -153,6 +156,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -169,6 +173,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -185,6 +190,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -199,9 +205,9 @@ const editableSpecimenColumns = [
   columnHelper.accessor("weight", {
     header: () => "Peso",
     footer: (info) => info.column.id,
-    //cell: (info) => info.getValue(),
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -218,6 +224,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
@@ -396,6 +403,7 @@ const editableSpecimenColumns = [
     header: () => "Altitud",
     cell: (info) => (
       <EditableInputCell
+        type="number"
         path={`location.altitude`}
         initialValue={info.getValue()?.altitude || "N/A"}
         onUpdate={updateLocation}
@@ -504,6 +512,7 @@ const editableSpecimenColumns = [
     footer: (info) => info.column.id,
     cell: (info) => (
       <EditableInputCell
+        type="number"
         initialValue={info.getValue()}
         onUpdate={updateSpecimen}
         databaseTableId={info.row.original.id}
