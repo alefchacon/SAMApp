@@ -13,8 +13,6 @@ export function useSnackbar() {
 
 export function SnackbarProvider({ children }) {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [handleUndo, setHandleUndo] = useState(null);
   const [isError, setIsError] = useState(false);
   const [iconType, setIconType] = useState(null);
   const [snackbarContent, setSnackbarContent] = useState();
@@ -50,10 +48,6 @@ export function SnackbarProvider({ children }) {
     if (reason === "clickaway") {
       return;
     }
-    /*
-    setMessage("");
-    setContent(null);
-    */
     setOpen(false);
   };
 

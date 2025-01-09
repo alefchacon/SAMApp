@@ -24,10 +24,11 @@ import "./App.css";
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 import Profile from "./routes/app/Profile.jsx";
 import useSession from "../features/auth/businessLogic/useSession.jsx";
+import { useAxiosInterceptors } from "../dataAccess/useAxiosInterceptor.jsx";
 
 function App() {
   moment.locale("es-mx");
-
+  //useAxiosInterceptors();
   const [selectedSpecie, setSelectedSpecie] = useState();
   const { getProfile } = useSession();
   const profile = getProfile();

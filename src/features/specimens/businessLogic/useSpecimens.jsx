@@ -141,11 +141,22 @@ export const useSpecimens = (specie) => {
     });
   });
 
+  const updateSpecimen = async (updatedSpecimen) => {
+    const body = updatedSpecimen;
+    const response = await apiWrapper.put(
+      `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
+      body
+    );
+    return response;
+  };
+  
+
   return {
     specimens,
     getSpecimen,
     addSpecimen,
     deleteSpecimen,
     downloadSpecimens,
+    updateSpecimen
   };
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 
 import SpecieList from "../../../features/specie/components/SpecieList";
 
@@ -107,6 +107,16 @@ export default function SpecieDashboard({
     setSelectedSpecieId(newSelectedIndex);
   };
 
+  const memoizedTable =  useMemo(() => (
+    <EditableTable
+    isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
+    data={specimens}
+    onEdit={handleEditSpecimen}
+    defaultColumns={editableSpecimenColumns}
+  ></EditableTable>
+  ))
+              
+
   function SpecieView() {
     return (
       <>
@@ -137,12 +147,7 @@ export default function SpecieDashboard({
                 id={SPECIMENS_TAB_ID}
                 className={`specimens flex-col h-100 overflow-auto`}
               >
-                <EditableTable
-                  isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
-                  data={specimens}
-                  onEdit={handleEditSpecimen}
-                  defaultColumns={editableSpecimenColumns}
-                ></EditableTable>
+                {memoizedTable}
               </div>
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>

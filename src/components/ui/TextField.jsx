@@ -121,7 +121,6 @@ const TextField = forwardRef(
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onChange={onChange}
-                
                 step={step}
                 onPaste={onPaste}
                 innerRef={ref}

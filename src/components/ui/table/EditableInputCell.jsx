@@ -23,13 +23,17 @@ export default function EditableInputCell({
 }) {
   const [editing, setEditing] = useState(false);
   const divRef = useRef(null);
-  const [updated, setUpdated] = useState(false);
+  const inputRef = useRef(null);
   const { getProfile } = useSession();
   const profile = getProfile();
   const isTechnicalPerson = profile.role === ROLE_TYPES.TECHNICAL_PERSON;
   //-------
   const handleClickOutside = (event) => {
     if (divRef.current && !divRef.current.contains(event.target)) {
+      const values = {
+        [column.id]: inputRef.current.value
+      }
+      handleSubmit(values)
       setEditing(false);
     }
   };
@@ -66,15 +70,6 @@ export default function EditableInputCell({
     }
   };
 
-  //----
-
-  function UpdateListener({ onUpdate }) {
-    const { values } = useFormikContext();
-    useEffect(() => {
-      onUpdate(values[column.id] !== initialValue);
-    });
-  }
-
   if (editing) {
     return (
       <Formik
@@ -108,19 +103,9 @@ export default function EditableInputCell({
               type={type}
               isFormik
               max={max}
+              ref={inputRef}
+              onKeyDown={(e) => console.log("e")}
             />
-            <ButtonIcon
-              iconType={"close"}
-              tooltip={"Cancelar"}
-              onClick={() => setEditing(false)}
-            ></ButtonIcon>
-            <ButtonIcon
-              isDisabled={!updated}
-              iconType={"check"}
-              tooltip={"Guardar"}
-              type={"submit"}
-            ></ButtonIcon>
-            <UpdateListener onUpdate={setUpdated}></UpdateListener>
           </Form>
         )}
       </Formik>
