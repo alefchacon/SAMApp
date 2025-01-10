@@ -77,15 +77,17 @@ export default function useApi() {
         }
       },
       async put(url, data, config = {}) {
-        setLoading(true);
+        //setLoading(true);
         try {
           const response = await api.put(url, data, config);
-          showSnackbar(response.data.message);
+          if (!config.noConfirmation){
+            showSnackbar(response.data.message);
+          }
           return response;
         } catch (error) {
           handleError(error);
         } finally {
-          setLoading(false);
+          //setLoading(false);
         }
       },
       async delete(url, data, config = {}) {

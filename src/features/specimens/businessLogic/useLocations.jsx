@@ -29,5 +29,18 @@ export const useLocations = (specieId = 0) => {
     return response;
   });
 
-  return { locations, getLocations, addLocation };
+  const updateLocation = useCallback(async (updatedLocation) => {
+    const body = updatedLocation;
+    const config = {
+      noConfirmation: true,
+    }
+    const response = await apiWrapper.put(
+      `${LOCATIONS_URL}/${updatedLocation.id}/`,
+      body,
+      config
+    );
+    return response;
+  });
+
+  return { locations, getLocations, addLocation, updateLocation };
 };

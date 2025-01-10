@@ -5,7 +5,7 @@ import InfoItem from "./InfoItem";
 import Account from "../../features/auth/components/Account";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
-
+import Searchbar from "./Searchbar";
 import ROUTES from "../../stores/routes";
 
 import { useStatus } from "../contexts/StatusContext";
@@ -19,6 +19,11 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
   const NAV_ITEMS = [
     {
       route: ROUTES.LANDING,
+      label: "Inicio",
+      iconType: "home",
+    },
+    {
+      route: ROUTES.COLLECTION,
       label: "Colección",
       iconType: "pets",
     },
@@ -85,7 +90,8 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
       </div>
       <span></span>
       <div className="flex-grow-1"></div>
-      <div className="right-side flex-row gap-1rem h-100">
+      <div className="right-side flex-row gap-1rem h-100 align-items-center">
+        <Searchbar></Searchbar>
         <div className="hide-if-mobile flex-row gap-1rem align-items-center">
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>

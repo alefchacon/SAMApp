@@ -12,6 +12,7 @@ import ROUTES from "../stores/routes";
 import AccessRequestForm from "./routes/app/AccessRequestForm";
 import Users from "./routes/app/Users.jsx";
 import Migrate from "./routes/app/Migrate.jsx";
+import Search from "./routes/app/Search.jsx";
 
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
@@ -24,11 +25,10 @@ import "./App.css";
 import useAccessRequests from "../features/access/businessLogic/useAccessRequests.jsx";
 import Profile from "./routes/app/Profile.jsx";
 import useSession from "../features/auth/businessLogic/useSession.jsx";
-import { useAxiosInterceptors } from "../dataAccess/useAxiosInterceptor.jsx";
+import Landing from "./routes/app/Landing.jsx";
 
 function App() {
   moment.locale("es-mx");
-  //useAxiosInterceptors();
   const [selectedSpecie, setSelectedSpecie] = useState();
   const { getProfile } = useSession();
   const profile = getProfile();
@@ -96,7 +96,28 @@ function App() {
           ></Route>
 
           <Route
-            path={`/`}
+            path={ROUTES.LANDING}
+            element={
+              <Landing/>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.SEARCH}
+            element={
+              <Search/>
+            }
+          ></Route>
+          <Route
+            path={`${ROUTES.COLLECTION}/:specieId`}
+            element={
+              <SpecieDashboard
+                onSpecieSelection={handleSelectedSpecieChange}
+                role={profile?.role}
+              />
+            }
+          ></Route>
+          <Route
+            path={ROUTES.COLLECTION}
             element={
               <SpecieDashboard
                 onSpecieSelection={handleSelectedSpecieChange}

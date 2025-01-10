@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../stores/routes";
 import editableSpecimenColumns from "../../../features/specimens/editableSpecimenColumns";
 import Map from "../../../features/mapping/components/Map";
+import { useParams } from "react-router-dom";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
@@ -40,9 +41,12 @@ export default function SpecieDashboard({
     selectedSpecieDefault,
     downloadMigrationFormat,
   } = useSpecie();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const {specieId} = useParams();
+
+
   const [selectedSpecieId, setSelectedSpecieId] = useState(
-    selectedSpecieDefault?.id ?? 0
+    Number(specieId) ?? 0
   );
   const selectedSpecie = useMemo(
     () =>
@@ -51,6 +55,7 @@ export default function SpecieDashboard({
   );
 
   useEffect(() => {
+    navigate(`${ROUTES.COLLECTION}/${selectedSpecie?.id}`)
     onSpecieSelection(selectedSpecie);
   }, [selectedSpecie]);
 
@@ -152,7 +157,7 @@ export default function SpecieDashboard({
             )}
             <div label={"Métricas"} id={METRICS_TAB_ID}>
 
-              <div style={{height: "300px", width: "100%", overflow: "hidden"}}>
+              <div style={{width: "100%", overflow: "hidden"}}>
                 <Map specimens={specimens} role={role}></Map>
               </div>
 

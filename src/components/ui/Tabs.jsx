@@ -35,15 +35,17 @@ export default function Tabs({
   }
   preventConditionalTabCrash();
 
+  const alignment = center 
+    ? "page-padding"
+    : ""
+
   return (
     <div className="tab-content flex-col">
       <div
-        className={`tab-bar divider flex-rowalign-content-center  ${
-          center ? "justify-content-center" : "justify-content-space-between"
-        }`}
+        className={`tab-bar divider flex-rowalign-content-center`}
       >
         <ul
-          className={`tab-group flex-row ${className} justify-content-start align-items-center unstyled`}
+          className={`tab-group flex-row ${className} ${alignment} align-items-center unstyled`}
         >
           {children.map((tab, index) => (
             <li
@@ -62,7 +64,7 @@ export default function Tabs({
         </div>
       </div>
 
-      <div className={`${children[selectedIndex].props.className} tab-panel`}>
+      <div className={`${children[selectedIndex]?.props?.className} tab-panel`}>
         {children[selectedIndex]}
       </div>
     </div>

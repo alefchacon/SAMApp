@@ -143,9 +143,13 @@ export const useSpecimens = (specie) => {
 
   const updateSpecimen = async (updatedSpecimen) => {
     const body = updatedSpecimen;
+    const config = {
+      noConfirmation: true,
+    }
     const response = await apiWrapper.put(
       `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
-      body
+      body,
+      config
     );
     return response;
   };

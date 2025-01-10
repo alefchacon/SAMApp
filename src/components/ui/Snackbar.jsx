@@ -1,7 +1,5 @@
 //LIBRARIES
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-//CUSTOM COMPONENTS
 import Button from "./Button";
 
 export default function Snackbar({

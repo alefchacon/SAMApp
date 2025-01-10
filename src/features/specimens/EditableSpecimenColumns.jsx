@@ -1,10 +1,10 @@
 import EditableInputCell from "../../components/ui/table/EditableInputCell";
 import EditableSelectCell from "../../components/ui/table/EditableSelectCell";
 import EditableContributorCell from "../contributors/components/EditableContributorCell";
-import updateLocation from "./businessLogic/updateLocation";
-import updateSpecimen from "./businessLogic/updateSpecimen";
 import { createColumnHelper } from "@tanstack/react-table";
-
+import { useSpecimens } from "./businessLogic/useSpecimens";
+import { useLocations } from "./businessLogic/useLocations";
+import useContributorsAndRoles from "../contributors/businessLogic/useContributorsAndRoles";
 const columnHelper = createColumnHelper();
 import { specimenSchema } from "./formikSchemas/specimenSchema";
 import { locationSchema } from "./formikSchemas/locationSchema";
@@ -28,7 +28,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.geographical_coordinates_x`}
         initialValue={info.getValue()?.geographical_coordinates_x}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -44,7 +44,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.geographical_coordinates_y`}
         initialValue={info.getValue()?.geographical_coordinates_y}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -62,7 +62,7 @@ const editableSpecimenColumns = [
         type="number"
         path={`location.coordinates_cartesian_plane_x`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_x}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -79,7 +79,7 @@ const editableSpecimenColumns = [
         type="number"
         path={`location.coordinates_cartesian_plane_y`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_y}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -95,7 +95,7 @@ const editableSpecimenColumns = [
       <EditableSelectCell
         initialValue={info.getValue()}
         type="select"
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"sex"}
         validationSchema={specimenSchema}
@@ -117,7 +117,7 @@ const editableSpecimenColumns = [
       <EditableSelectCell
         initialValue={info.getValue()}
         type="select"
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"class_age"}
         validationSchema={specimenSchema}
@@ -141,7 +141,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"length_total"}
         validationSchema={specimenSchema}
@@ -158,7 +158,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"length_tail"}
         validationSchema={specimenSchema}
@@ -175,7 +175,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"length_paw"}
         validationSchema={specimenSchema}
@@ -192,7 +192,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"length_ear"}
         validationSchema={specimenSchema}
@@ -209,7 +209,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"weight"}
         validationSchema={specimenSchema}
@@ -226,7 +226,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"number_embryos"}
         validationSchema={specimenSchema}
@@ -243,7 +243,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.country`}
         initialValue={info.getValue()?.country || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -259,7 +259,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.state`}
         initialValue={info.getValue()?.state || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -275,7 +275,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.municipality`}
         initialValue={info.getValue()?.municipality || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -291,7 +291,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.specific_location`}
         initialValue={info.getValue()?.specific_location || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -307,7 +307,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.kilometer`}
         initialValue={info.getValue()?.kilometer || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -324,7 +324,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.institute`}
         initialValue={info.getValue()?.institute || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -340,7 +340,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`location.institute_code`}
         initialValue={info.getValue()?.institute_code || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -357,7 +357,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         path={`colection_code`}
         initialValue={info.getValue() || "N/A"}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -371,9 +371,10 @@ const editableSpecimenColumns = [
     header: () => "UTM",
     cell: (info) => (
       <EditableInputCell
+        maxLength={4}
         path={`location.utm_region`}
         initialValue={info.getValue()?.utm_region || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -387,9 +388,10 @@ const editableSpecimenColumns = [
     header: () => "MSNM Google",
     cell: (info) => (
       <EditableInputCell
+        type="number"
         path={`location.msnm_google`}
         initialValue={info.getValue()?.msnm_google || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -406,7 +408,7 @@ const editableSpecimenColumns = [
         type="number"
         path={`location.altitude`}
         initialValue={info.getValue()?.altitude || "N/A"}
-        onUpdate={updateLocation}
+        onUpdate={useLocations().updateLocation}
         databaseTableId={info.row.original.location.id}
         table={info.table}
         row={info.row}
@@ -422,7 +424,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="date"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"colection_date"}
         max={moment().format("YYYY-MM-DD")}
@@ -439,7 +441,7 @@ const editableSpecimenColumns = [
     cell: (info) => (
       <EditableSelectCell
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"nature"}
         validationSchema={specimenSchema}
@@ -471,7 +473,7 @@ const editableSpecimenColumns = [
         row={info.row}
         column={info.column}
         table={info.table}
-        onUpdate={updateContributorSpecimen}
+        onUpdate={useContributorsAndRoles().updateContributorSpecimen}
         roleId={CONTRIBUTOR_ROLES.COLECTOR}
         databaseTableId={info.row.original.colector.id}
       />
@@ -494,7 +496,7 @@ const editableSpecimenColumns = [
         row={info.row}
         column={info.column}
         table={info.table}
-        onUpdate={updateContributorSpecimen}
+        onUpdate={useContributorsAndRoles().updateContributorSpecimen}
         roleId={CONTRIBUTOR_ROLES.COLECTOR}
         databaseTableId={info.row.original.colector.id}
       />
@@ -514,7 +516,7 @@ const editableSpecimenColumns = [
       <EditableInputCell
         type="number"
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"colection_number"}
         validationSchema={specimenSchema}
@@ -531,7 +533,7 @@ const editableSpecimenColumns = [
     cell: (info) => (
       <EditableInputCell
         initialValue={info.getValue()}
-        onUpdate={updateSpecimen}
+        onUpdate={useSpecimens().updateSpecimen}
         databaseTableId={info.row.original.id}
         path={"comment"}
         validationSchema={specimenSchema}

@@ -30,8 +30,7 @@ export default function Taxonomy({
         <div className="flex-col">
           {showRankName && (
             <p
-              className="rank font-size-09rem"
-
+              className="rank font-size-08rem opacity-05"
             >
               {rankName}
             </p>

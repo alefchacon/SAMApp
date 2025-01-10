@@ -83,6 +83,7 @@ export default function useContributorsAndRoles() {
     }
   );
 
+  /*
   const updateContributorSpecimen = useCallback(
     async (updatedContributorSpecimen) => {
       const response = await apiWrapper.put(
@@ -92,6 +93,24 @@ export default function useContributorsAndRoles() {
       return response;
     }
   );
+  */
+
+  const updateContributorSpecimen = async (contributorSpecimen) => {
+    const data = {
+      "id": contributorSpecimen.id,
+      "contributor": contributorSpecimen.contributor_id,
+      "contributor_role": contributorSpecimen.contributor_role_id,
+    }
+    const config = {
+      noConfirmation: true,
+    }
+    await apiWrapper.put(
+      `${CONTRIBUTORS_SPECIMEN_URL}/${data.id}/`, 
+      data,
+      config
+    );
+  }
+  
 
   return {
     contributors,

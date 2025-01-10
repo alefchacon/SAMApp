@@ -23,6 +23,7 @@ export default function EditableInputCell({
   validationSchema,
   type = "text",
   max,
+  maxLength,
   editable = false
 }) {
   const [editing, setEditing] = useState(false);
@@ -54,13 +55,19 @@ export default function EditableInputCell({
   }, []);
 
   const handleSubmit = async (values) => {
+    
     const errors = await formikRef.current.validateForm();
     if (Object.keys(errors).length > 0) {
       return;
     }
-    table?.options.meta?.updateData(row.index, path, values[column.id]);
-    values.id = databaseTableId;
-    onUpdate(values);
+      
+     values.id = databaseTableId;
+    try{
+       onUpdate(values);
+       table?.options.meta?.updateData(row.index, path, values[column.id]);
+    } catch (error){
+      //
+    }
     setEditing(false);  
   };
 
@@ -121,6 +128,7 @@ export default function EditableInputCell({
               type={type}
               isFormik
               max={max}
+              maxLength={maxLength}
               ref={inputRef}
               onKeydown={handleKeydown}
             />

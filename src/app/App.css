@@ -186,7 +186,6 @@ table{
   border-radius: 20px;
 }
 .rounded-5{
-  
   border-radius: 5px;
 }
 
@@ -351,7 +350,7 @@ fieldset{
   color: black;
   background-color: white;
 }
-.sam-button.secondary-white{
+.secondary-white{
   color: white;
   background-color: transparent;
   box-shadow: 0 0 1px 1px white;
@@ -1195,6 +1194,10 @@ hr{
   z-index: 5;
 }
 
+.opacity-05{
+  opacity: 0.5;
+}
+
 .w-100{
   width: 100%;
 }
@@ -1231,8 +1234,8 @@ hr{
   display: flex;
   flex-direction: column;
   background-color: blue;
-  padding: 15% 20% 10rem 20%;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.33);
+  padding: 15% 20% 2rem 20%;
+  height: 50%;
 }
 
 .nav-input::placeholder{
@@ -1268,12 +1271,12 @@ nav{
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 70px;
+  height: 50px;
   padding: 0 1rem;
 }
 
 .page-padding {
-  padding-left: clamp(10%, 25%, 60%) !important;
+  padding-left: clamp(10%, 20%, 50%) !important;
   padding-right: clamp(10%, 25%, 50%) !important;
 }
 
@@ -1348,13 +1351,13 @@ nav{
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 200;
   margin: 0;
-  font-size: clamp(0.8rem, 1vw + 0.8rem, 3rem);
-  line-height: clamp(0.5rem, 1vw + 0.8rem, 1.8rem);
+  font-size: clamp(0.8rem, 1vw + 0.1rem, 2rem);
+  line-height: clamp(0.5rem, 1vw + 0.6rem, 1.8rem);
 }
 
 .landing-tag{
-  font-size: clamp(1.8rem, 2vw + 1rem, 5rem);
-  line-height: clamp(1.5rem, 2vw + 1rem, 3rem);
+  font-size: clamp(1.8rem, 2vw + 0.5rem, 5rem);
+  line-height: clamp(1.5rem, 2vw + 0.5rem, 3rem);
   margin: 0;
 }
 
