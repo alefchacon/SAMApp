@@ -48,7 +48,7 @@ export default function Migrate() {
         <Form>
           <Stepper
             selectedStepId={"colaboradores"}
-            endButtonLabel="Migrar biocolección"
+            endButtonLabel="Migrar colección"
             onEndButtonClick={handleSubmit}
           >
             <div label={"Colaboradores"} id="colaboradores" className="p-2rem">

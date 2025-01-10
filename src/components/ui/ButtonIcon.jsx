@@ -6,11 +6,12 @@ export default function ButtonIcon({
   onClick,
   type,
   isDisabled,
+  className = ""
 }) {
   return (
     <Button
       isDisabled={isDisabled}
-      className={`icon-only ${white ? "color-white" : ""}`}
+      className={`${className} icon-only ${white ? "color-white" : ""}`}
       iconType={iconType}
       onClick={onClick}
       type={type}

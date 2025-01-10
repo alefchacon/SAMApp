@@ -38,7 +38,7 @@
   --disabled: rgba(232, 236, 237, 0.63);
   
 
-  --dark: rgba(0, 0, 0, 0.7);
+  --dark: #356c5e;
 
   background-color: var(--uv-gray);
   --gradient: linear-gradient(90deg, rgba(48,154,109,1) 0%, rgba(40,173,86,1) 100%);
@@ -50,7 +50,7 @@ h3{
 
 .bg-gradient{
   color: white;
- background-image: var(--gradient);
+ background-image: var(--gradient) !important;
 }
 
 .gradient-text {
@@ -293,16 +293,6 @@ fieldset{
   flex-grow: 1;
 }
 
-.test1{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: red;
-  flex-wrap: wrap;
-  overflow-wrap: normal;
-}
-
-
 .letter-spacing-0{
   letter-spacing: 0;
 }
@@ -347,7 +337,7 @@ fieldset{
   background-color: var(--error);
 }
 .sam-button.primary-white{
-  color: black;
+  color: var(--dark);
   background-color: white;
 }
 .secondary-white{
@@ -1233,9 +1223,18 @@ hr{
 .landing-search{
   display: flex;
   flex-direction: column;
-  background-color: blue;
   padding: 15% 20% 2rem 20%;
   height: 50%;
+}
+
+.shrink {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease
+}
+
+.grow {
+  height: 260px;
 }
 
 .nav-input::placeholder{
@@ -1270,9 +1269,16 @@ nav{
   z-index: 20;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  height: 50px;
-  padding: 0 1rem;
+  height: fit-content;
+  padding: 0.5rem 2rem;
+}
+
+.main-title-uv{
+  display: flex;
+  justify-content: end;
+  background-color: #48886f;
+  color: white;
+  padding: 0 2rem;
 }
 
 .page-padding {
@@ -1535,7 +1541,6 @@ nav{
 
   .landing-search{
     padding: 5%;
-    min-height: 80%;
     justify-content: center;
   }
 

@@ -43,7 +43,7 @@ export default function Landing({ species, children }) {
               </div>
             <div>
               <h2 className="landing-system-name">
-                Biocolección de mamíferos del
+                Colección de mamíferos del
                 Instituto de Investigaciones Biológicas
                 <br />
                 de la Universidad Veracruzana
@@ -66,15 +66,14 @@ export default function Landing({ species, children }) {
           className="page-padding p-2rem gap-2rem"
         >
           <h2>
-            Sobre la biocolección de mamíferos
+            Sobre la colección de mamíferos
           </h2>
           <p>
-          La colección de mamíferos es proveer un espacio de custodia 
-          de ejemplares de los mamíferos silvestres del estado de Veracruz. Con el fin de documentar 
-          su diversidad, distribución, abundancia, información científica y empírica generada que 
-          promueva los estudios de sistemática biológica como aquellos de índole ecológica. 
-          Permitiendo la conservación y manejo de los mamíferos silvestres y de sus sistemas 
-          ecológicos.
+            La colección de mamíferos provee un espacio de custodia 
+            de ejemplares de los mamíferos silvestres del estado de Veracruz, con el fin de documentar 
+            su diversidad, distribución, abundancia, información científica y empírica generada que 
+            promueva los estudios de sistemática biológica como aquellos de índole ecológica, y permitiendo la conservación y manejo de los mamíferos silvestres y de sus sistemas 
+            ecológicos.
           <br/>
           <br/>
           <div className="flex-row gap-1rem">
@@ -85,7 +84,7 @@ export default function Landing({ species, children }) {
             iconType="pets"
             onClick={() => navigate(ROUTES.COLLECTION)}
           >
-            Ver biocolección
+            Ver colección
           </Button>
           </div>
           </p>
