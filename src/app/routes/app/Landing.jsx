@@ -28,25 +28,29 @@ export default function Landing({ species, children }) {
       <div className="flex-col h-100">
         <SearchBanner>
           <div className="flex-row gap-1rem">
-            <img 
-              style={{
-                height: '17vh',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-              src={"src/assets/images/LOGO_LAB.png"}
-              alt="Logo del Laboratorio de Vertebrados" />
+              <div className="circle-container">
+                  <div className="circle"></div>
+                  <img 
+                    className="overlay-image" 
+                    style={{
+                      height: '17vh',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}
+                    src={"src/assets/images/LOGO_LAB.png"}
+                    alt="Logo del Laboratorio de Vertebrados" 
+                  />
+              </div>
             <div>
-
-            <h2 className="landing-system-name">
-              Biocolección de mamíferos del
-              Instituto de Investigaciones Biológicas
-              <br />
-              de la Universidad Veracruzana
-            </h2>
-            <h1 className="landing-tag">
-              Acceso abierto a los mamíferos veracruzanos
-            </h1>
+              <h2 className="landing-system-name">
+                Biocolección de mamíferos del
+                Instituto de Investigaciones Biológicas
+                <br />
+                de la Universidad Veracruzana
+              </h2>
+              <h1 className="landing-tag">
+                Acceso abierto a los mamíferos veracruzanos
+              </h1>
             </div>
           </div>
           <br/>

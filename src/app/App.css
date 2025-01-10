@@ -1355,6 +1355,33 @@ nav{
   line-height: clamp(0.5rem, 1vw + 0.6rem, 1.8rem);
 }
 
+.circle-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%; 
+  background-color: white;
+  position: relative;
+}
+
+.overlay-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
 .landing-tag{
   font-size: clamp(1.8rem, 2vw + 0.5rem, 5rem);
   line-height: clamp(1.5rem, 2vw + 0.5rem, 3rem);
