@@ -115,7 +115,7 @@ export default function LineGraph({ initialData = testData }) {
 
   return (
     <div
-      className="highlight-bar-charts user-select-none flex-col w-100 align-items-end justify-content-right"
+      className="highlight-bar-chart user-select-none flex-col w-100 align-items-end justify-content-right"
     >
       <div className="p-1rem">
         <Button className="secondary" iconType="zoom_out" onClick={zoomOut}>

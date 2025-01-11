@@ -25,14 +25,13 @@ export default function Searchbar(){
 
     return (
         <form className="flex-col justify-content-center gap-1rem shadow-all"  onSubmit={handleSubmit}>
-            <div className="rounded-5 bg-white flex-row gap-1rem align-items-center" style={{height: "40px", padding: "0 10px"}}>
+            <div className="rounded-5 bg-white flex-row gap-1rem align-items-center">
                 <input 
-                    style={{backgroundColor: "transparent", border: "none"}} 
-                    className="h-100 w-100" 
+                    className="h-100 w-100 bg-transparent unstyled" 
                     value={query} 
                     onChange={handleChange}
                     placeholder="Buscar especies por nombre, género, familia u órden"
-                    >
+                >
                     
                 </input>
                 <ButtonIcon type={"submit"} iconType={"search"}></ButtonIcon>

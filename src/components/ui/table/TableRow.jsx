@@ -17,7 +17,7 @@ export default function TableRow({ rowData }) {
     >
       {rowData.getVisibleCells().map((cell) => (
         <div
-          className="td hoverable2"
+          className="td position-relative"
           key={cell.id}
           {...{
             style: {

@@ -39,7 +39,7 @@ export default function SpecimenView({
   const [specimens, setSpecimens] = useSpecimens(specie.id);
   //const [specimens, setSpecimens] = useState([]);
 
-  const especimenesRef = useRef(null);
+  const specimensRef = useRef(null);
 
   function AddSpecimenButton() {
     return (
@@ -111,7 +111,7 @@ export default function SpecimenView({
   }
 
   return (
-    <div className="specie-view w-100" ref={especimenesRef}>
+    <div className="specie-view w-100" ref={specimensRef}>
       {children}
       {specimens.length > 0 ? (
         <SpecimenTabs></SpecimenTabs>

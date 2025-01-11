@@ -55,7 +55,7 @@ export default function Taxonomy({
 
   return (
     <div
-      className={`taxonomy flex-row gap-05rem font-size-inherit 
+      className={`taxonomy flex-row flex-wrap-wrap gap-05rem font-size-inherit 
         ${center ? "justify-content-center" : "justify-content-start"}`}
     >
       <Rank

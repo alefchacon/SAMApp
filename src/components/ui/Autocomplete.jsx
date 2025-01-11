@@ -67,7 +67,7 @@ export default function Autocomplete({
   };
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className="dropdown position-relative" ref={dropdownRef}>
       <TextField
       isFormik  
         label={label}

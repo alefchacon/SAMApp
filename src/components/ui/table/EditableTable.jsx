@@ -205,7 +205,7 @@ export default function EditableTable({
         </div>
       </div>
       <div
-        className="table-wrapper"
+        className="table-wrapper h-100"
       >
         <div
           className="table"

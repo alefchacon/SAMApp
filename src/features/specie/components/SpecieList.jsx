@@ -98,7 +98,7 @@ export default function SpecieList({
           </div>
 
           {species?.length > 0 ? (
-            <ul role="list" className="specie-list-items unstyled">
+            <ul role="list" className="specie-list-items flex-col overflow-auto h-100 flex-grow-1 unstyled">
               {filteredItems.map((specie, index) => (
 
                 <ListItem key={index} selected={specie.id === selectedSpecieId} >

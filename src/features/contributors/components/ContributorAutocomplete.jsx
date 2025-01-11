@@ -95,7 +95,7 @@ export default function ContributorAutocomplete({
   }, [selectedContributor]);
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className="dropdown position-relative" ref={dropdownRef}>
       <div className={`${getErrorClassName()}`}>
         <div className="flex-col">
           {label && (
@@ -110,7 +110,7 @@ export default function ContributorAutocomplete({
           )}
           <div
             htmlFor={`${id}`}
-            className={`sam-text-field-helper-text`}
+            className={`helper-text`}
             id={`${id}-helper-text`}
           >
             {helperText}
@@ -138,7 +138,7 @@ export default function ContributorAutocomplete({
 
           <span
             ref={iconRef}
-            className="contributor-autocomplete"
+            className="contributor-autocomplete position-absolute"
           >
             {selectedContributor && (
               <Chip>

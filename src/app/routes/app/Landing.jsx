@@ -28,13 +28,13 @@ export default function Landing({ species, children }) {
   const navigate = useNavigate();
 
   return (
-      <div className="flex-col h-100">
+      <div>
         <SearchBanner>
-          <div className="flex-row gap-1rem">
-              <div className="circle-container">
-                  <div className="circle"></div>
+          <div className="flex-row gap-1rem align-items-center margin-0">
+              <div className="logo-container position-relative flex-row justify-content-center align-items-center">
+                  <div className="logo-bg bg-white position-relative"></div>
                   <img 
-                    className="overlay-image" 
+                    className="logo position-absolute" 
                     style={{
                       height: '17vh',
                       backgroundSize: 'cover',

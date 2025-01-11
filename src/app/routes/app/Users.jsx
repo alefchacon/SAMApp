@@ -27,19 +27,6 @@ export default function Users() {
   const handleShowTechnicalPersonModal = () => {
     showModal("Agregar técnico", <TehnicalPersonForm />);
   };
-  const handleShowContributorModal = () => {
-    showModal("Colaborador", <ContributorForm onSubmit={addContributor} />);
-  };
-
-  const OptionWrapper = ({ children }) => {
-    return (
-      <li
-        className="selectable p-1rem rounded-20 hoverable2 position-relative"
-      >
-        {children}
-      </li>
-    );
-  };
 
   const technicalPersonTab = (
     <>

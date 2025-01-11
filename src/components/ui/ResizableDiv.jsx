@@ -68,7 +68,7 @@ export default function ResizableDiv({
 
   return (
     <div
-      className={`resizable-div flex-row ${className}`}
+      className={`resizable-div position-relative overflow-auto flex-row ${className}`}
       style={{
         width: hide ? "fit-content" : `${size.width}px`,
         height: resizeVertical

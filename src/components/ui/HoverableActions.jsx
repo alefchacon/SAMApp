@@ -5,7 +5,7 @@ export default function HoverableActions({ children, position = "absolute" }) {
 
     >
       <div
-        className="bg-black-transparent rounded shadow-down flex-row"
+        className="bg-black-transparent rounded-5 shadow-all flex-row"
       >
         {children}
       </div>

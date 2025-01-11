@@ -59,7 +59,10 @@ function App() {
         profile={profile}
         accessRequestCount={pendingAccessRequestCount}
       ></Navbar>
-      <main ref={mainDivRef}>
+      <main  
+        ref={mainDivRef}
+        className="flex-row h-100 overflow-auto"
+      >
         {/*SPECIE AND SPECIMEN*/}
 
         <Routes>

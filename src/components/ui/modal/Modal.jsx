@@ -12,7 +12,7 @@ export default function Modal({
   return (
     <div className={`modal-background  ${open ? "visible" : "invisible"}`}>
       <div
-        className="modal-content rounded-5 box-shadow"
+        className="modal-content rounded-5 shadow-all"
         style={{ width: width, maxHeight: maxHeight }}
       >
         <div className="modal-header p-1rem flex-row justify-content-space-between">

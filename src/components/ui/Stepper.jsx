@@ -65,7 +65,7 @@ export default function Stepper({
           >
             <div
               key={index}
-              className={` step selectable rounded `}
+              className={` step selectable rounded-5 `}
               onClick={() => handleSelectedTabChange(tab.props.id)}
             >
               <div

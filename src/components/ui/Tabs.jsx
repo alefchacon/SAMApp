@@ -40,7 +40,7 @@ export default function Tabs({
     : ""
 
   return (
-    <div className="tab-content flex-col">
+    <div className="tab-content flex-grow-1 overflow-auto h-100 flex-col">
       <div
         className={`tab-bar divider flex-rowalign-content-center`}
       >
@@ -50,7 +50,7 @@ export default function Tabs({
           {children.map((tab, index) => (
             <li
               key={index}
-              className={`tab selectable ${
+              className={`tab selectable p-1rem flex-row justify-content-center ${
                 selectedIndex === index ? "selected-tab" : ""
               }`}
               onClick={() => handleSelectedTabChange(index)}
