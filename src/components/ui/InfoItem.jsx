@@ -5,7 +5,9 @@ export default function InfoItem({ label, iconType, fullheight = false }) {
       className="info-item flex-row gap-1rem "
     >
       <span className="material-symbols-outlined">{iconType}</span>{" "}
-      <p className={`label ${fullheight ? "" : "ellipsis"}`}>{label}</p>
+      {label &&
+        <p className={`label ${fullheight ? "" : "ellipsis"}`}>{label}</p>
+      }
     </div>
   );
 }

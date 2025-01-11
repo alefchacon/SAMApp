@@ -61,7 +61,7 @@ export default function SpecieList({
   return (
     <ResizableDiv
       className={`specie-list ${
-        fold ? "position-absolute" : "position-relative shadow-right"
+        fold ? "position-absolute" : "position-relative"
       }`}
       hide={fold}
     >
@@ -74,9 +74,9 @@ export default function SpecieList({
           Ver especies
         </Button>
       ) : (
-        <div className={` ${fold && "fold"} flex-col h-100`}>
+        <div className={` ${fold && "fold"} flex-col h-100 w-100`}>
           <div
-            className="p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient"
+            className="specie-list p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient"
           >
             <div></div>
             <p>Especies</p>

@@ -5,13 +5,10 @@ import Badge from "./Badge";
 
 export default function Stepper({
   children,
-  className,
   selectedStepId = null,
-  onStepChange = null,
   onResetScroll,
   endButtonLabel = "Agregar espmen",
   onEndButtonClick,
-  hasError,
 }) {
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
@@ -59,13 +56,12 @@ export default function Stepper({
   return (
     <div className="stepper-wrapper flex-wrap-wrap">
       <ul
-        className={`stepper flex-row align-items-center bg-white unstyled position-sticky top-0 z-index-5`}
+        className={`stepper flex-row bg-white unstyled position-sticky top-0 z-index-5`}
       >
         {children.map((tab, index) => (
           <div
             className="step-wrapper flex-row align-items-center justify-content-space-evenly flex-grow-1"
             key={index}
-
           >
             <div
               key={index}

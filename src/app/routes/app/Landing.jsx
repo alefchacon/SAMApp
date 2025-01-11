@@ -4,17 +4,20 @@ import Footer from "../../../components/ui/Footer";
 import Button from "../../../components/ui/Button";
 import ROUTES from "../../../stores/routes";
 function SearchBanner({ children }) {  
+  const imageUrl = `src/assets/images/${Math.floor(Math.random() * 6)}.webp`;
+
+
   return (
     <div
       style={{
-        //backgroundImage: `url(${imageUrl})`,
+        backgroundImage: `url(${imageUrl})`,
         backgroundAttachment: "fixed",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundColor: "bg-gradient"
       }}
-      className="landing-search bg-gradient color-white"
+      className="landing-search color-white"
     >
       {children}
     </div>
@@ -72,7 +75,7 @@ export default function Landing({ species, children }) {
             La colección de mamíferos provee un espacio de custodia 
             de ejemplares de los mamíferos silvestres del estado de Veracruz, con el fin de documentar 
             su diversidad, distribución, abundancia, información científica y empírica generada que 
-            promueva los estudios de sistemática biológica como aquellos de índole ecológica, y permitiendo la conservación y manejo de los mamíferos silvestres y de sus sistemas 
+            promueva los estudios de sistemática biológica como aquellos de índole ecológica, permitiendo así la conservación y manejo de los mamíferos silvestres y de sus sistemas 
             ecológicos.
           <br/>
           <br/>

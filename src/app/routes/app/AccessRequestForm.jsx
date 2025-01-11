@@ -1,53 +1,26 @@
 import Button from "../../../components/ui/Button";
 import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import { Formik, Form } from "formik";
-import Card from "../../../components/ui/Card.jsx";
-import Footer from "../../../components/ui/Footer.jsx";
 import TextField from "../../../components/ui/TextField";
 import TextArea from "../../../components/ui/TextArea.jsx";
-import Header from "../../../components/ui/Header.jsx";
 import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests.jsx";
-import { accessRequestSchema } from "../../../features/access/formikSchemas/accessRequestSchema.js";
 import { Link } from "react-router-dom";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
 import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
 import ROUTES from "../../../stores/routes.js";
 import { useNavigate } from "react-router-dom";
 import HttpStatus from "../../../stores/httpStatus.js";
-import flattenObject from "../../../utils/flattenObject.js";
+import Page from "../../../components/ui/Page.jsx";
+
 export default function AccessRequestForm() {
   const {
-    pendingAccessRequests,
-    getPendingAccessRequests,
-    pendingAccessRequestCount,
-    getPendingAccessRequestCount,
-    approveAccessRequest,
-    rejectAccessRequest,
     addAccessRequest,
   } = useAccessRequests();
 
   const navigate = useNavigate();
 
   const { showModal, closeModal } = useModal();
-
-  const extractNestedKeys = (nestedObject, parentKey = "", keysArray = []) => {
-    for (let key in nestedObject) {
-      if (nestedObject.hasOwnProperty(key)) {
-        const newKey = parentKey ? `${parentKey}.${key}` : key; // Create a dot-separated key
-
-        keysArray.push(newKey); // Add the current key to the keys array
-
-        if (
-          typeof nestedObject[key] === "object" &&
-          nestedObject[key] !== null
-        ) {
-          extractNestedKeys(nestedObject[key], newKey, keysArray); // Recursively call for nested objects
-        }
-      }
-    }
-    return keysArray;
-  };
 
   const handleSubmit = async (values, actions) => {
     const response = await addAccessRequest(values);
@@ -83,6 +56,12 @@ export default function AccessRequestForm() {
   };
 
   return (
+    <Page
+      title={"Solicitar acceso"}
+      subtitle={
+        "Si desea consultar información más detallada de la colección mastozoológica del Instituto de Investigaciónes Biológicas de la Universidad Veracruzana, por favor llene el siguiente formulario y nos pondremos en contacto con usted. Todos los campos son obligatorios."
+      }
+    >
     <Formik
       validationSchema={academicSchema}
       onSubmit={handleSubmit}
@@ -112,28 +91,15 @@ export default function AccessRequestForm() {
         values,
         errors,
         touched,
-        isValid,
-        dirty,
-        setFieldValue,
         handleChange,
         handleBlur,
       }) => (
-        <div className="form flex-col w-100">
-          <Header
-            title="Solicitar acceso a la colección"
-            subtitle={
-              "Si desea consultar información más detallada de la colección mastozoológica del Instituto de Investigaciónes Biológicas de la Universidad Veracruzana, por favor llene el siguiente formulario y nos pondremos en contacto con usted. Todos los campos son obligatorios."
-            }
-          ></Header>
 
           <Form
-            className="flex-col page-padding flex-grow-1"
+            className="flex-col flex-grow-1"
             autoComplete="off"
           >
-            <br />
-            <br />
-            <Card className={"flex-col gap-2rem p-2rem"}>
-              <div className="form-section flex-col gap-2rem">
+              <div className="input-group flex-col gap-2rem">
                 <h2>Sobre su investigación</h2>
                 <TextField
                   isFormik
@@ -175,8 +141,8 @@ export default function AccessRequestForm() {
                   maxLength={100}
                 ></TextField>
               </div>
-              <hr />
-              <div className="form-section flex-col gap-2rem">
+
+              <div className="input-group flex-col gap-2rem">
                 <h2>Sobre usted</h2>
 
                 <TextField
@@ -260,8 +226,8 @@ export default function AccessRequestForm() {
                   maxLength={100}
                 ></TextField>
               </div>
-              <hr />
-              <div className="form-section flex-col gap-2rem">
+
+              <div className="input-group flex-col gap-2rem">
                 <div>
                   <h2>Credenciales</h2>
                   <p>
@@ -299,11 +265,9 @@ export default function AccessRequestForm() {
                   Enviar solicitud
                 </Button>
               </div>
-            </Card>
           </Form>
-          <Footer></Footer>
-        </div>
       )}
     </Formik>
+    </Page>
   );
 }

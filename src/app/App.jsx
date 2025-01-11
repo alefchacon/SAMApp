@@ -17,8 +17,7 @@ import Search from "./routes/app/Search.jsx";
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
 import { ROLE_TYPES } from "../stores/roleTypes";
-
-import Navbar from "../components/ui/Navbar";
+import Navbar from "../components/ui/navbar/Navbar.jsx";
 // CSS
 import "./App.css";
 

@@ -77,9 +77,9 @@ export default function ContributorsForm({ inputWidth = "" }) {
   };
 
   return (
-    <div className="form-section">
+    <div>
       <div className="input-group">
-        <h3>Colecta</h3>
+        <h2>Colecta</h2>
           <TextField
             onBlur={onBlur}
             required
@@ -165,7 +165,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
         ></TextField>
       </div>
       <div className="input-group">
-        <h3>Preparación</h3>
+        <h2>Preparación</h2>
         <ContributorAutocomplete
           roleId={CONTRIBUTOR_ROLES.PREPARATOR}
           value={values.preparator}

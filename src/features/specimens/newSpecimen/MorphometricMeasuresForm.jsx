@@ -9,39 +9,41 @@ export default function MorphometricMeasuresForm({
   const { values, errors, touched, onBlur, handleChange } = useFormikContext();
 
   return (
-    <div className="form-section flex-col gap-2rem input-group">
-      <RadioList
-        value={values?.sex}
-        required
-        onBlur={onBlur}
-        label="Sexo"
-        options={[
-          { label: "Macho", value: "M" },
-          { label: "Hembra", value: "H" },
-          { label: "No identificado", value: "N" },
-        ]}
-        name="sex"
-        onChange={handleChange}
-        errorMessage={errors.sex}
-        hasError={errors.sex && touched.sex}
-      />
-      <RadioList
-        required
-        value={values?.class_age}
-        onBlur={onBlur}
-        label="Edad"
-        options={[
-          { label: "Juvenil", value: "Juvenil" },
-          { label: "Adulto", value: "Adulto" },
-          { label: "Subadulto", value: "Subadulto" },
-          { label: "Lactante", value: "Lactante" },
-          { label: "No definido", value: "No definido" },
-        ]}
-        name="class_age"
-        onChange={handleChange}
-        errorMessage={errors.class_age}
-        hasError={errors.class_age && touched.class_age}
-      />
+    <div className="flex-col gap-2rem">
+      <div className="input-group">
+        <RadioList
+          value={values?.sex}
+          required
+          onBlur={onBlur}
+          label="Sexo"
+          options={[
+            { label: "Macho", value: "M" },
+            { label: "Hembra", value: "H" },
+            { label: "No identificado", value: "N" },
+          ]}
+          name="sex"
+          onChange={handleChange}
+          errorMessage={errors.sex}
+          hasError={errors.sex && touched.sex}
+        />
+        <RadioList
+          required
+          value={values?.class_age}
+          onBlur={onBlur}
+          label="Edad"
+          options={[
+            { label: "Juvenil", value: "Juvenil" },
+            { label: "Adulto", value: "Adulto" },
+            { label: "Subadulto", value: "Subadulto" },
+            { label: "Lactante", value: "Lactante" },
+            { label: "No definido", value: "No definido" },
+          ]}
+          name="class_age"
+          onChange={handleChange}
+          errorMessage={errors.class_age}
+          hasError={errors.class_age && touched.class_age}
+        />
+      </div>
 
       <div className="input-group">
         <TextField
@@ -101,8 +103,6 @@ export default function MorphometricMeasuresForm({
           min={0}
           max={99.999}
         ></TextField>
-      </div>
-      <div className="grid-3column">
         <TextField
           isFormik
           label={"Peso"}
@@ -116,8 +116,6 @@ export default function MorphometricMeasuresForm({
           min={0}
           max={99.999}
         ></TextField>
-      </div>
-      <div className="grid-3column">
         <TextField
           onBlur={onBlur}
           label={"Número de embriones"}

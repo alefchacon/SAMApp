@@ -3,6 +3,7 @@ const ROUTES = Object.freeze({
   SIGN_IN: "/entrar",
   COLLECTION: "/coleccion",
   REQUEST_ACCESS: "solicitar-acceso",
+  REQUESTS: "/solicitudes",
   SEARCH: "buscar",
   PHOTOSHEETS: "/fichas",
   SIGN_UP: "/registrarse",

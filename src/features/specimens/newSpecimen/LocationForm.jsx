@@ -12,9 +12,9 @@ export default function LocationForm({
   inputWidth = "",
 }) {
   return (
-    <div className="form-section">
+    <div>
       <div className="input-group">
-        <h3>Coordenadas cartesianas</h3>
+        <h2>Coordenadas cartesianas</h2>
           <TextField
             label={"UTM X"}
             id="location.coordinates_cartesian_plane_x"
@@ -65,7 +65,7 @@ export default function LocationForm({
           ></TextField>
       </div>
       <div className="input-group">
-        <h3>Coordenadas geográficas</h3>
+        <h2>Coordenadas geográficas</h2>
           <TextField
             label={"Latitud (LN)"}
             id="location.geographical_coordinates_y"
@@ -100,7 +100,7 @@ export default function LocationForm({
           ></TextField>
       </div>
       <div className="input-group">
-        <h3>Elevación</h3>
+        <h2>Elevación</h2>
           <TextField
             label={"MSNM Google"}
             id="location.msnm_google"
@@ -135,7 +135,7 @@ export default function LocationForm({
           ></TextField>
       </div>
       <div className="input-group">
-        <h3>Región</h3>
+        <h2>Región</h2>
           <TextField
             label={"País"}
             id="location.country"
@@ -212,7 +212,7 @@ export default function LocationForm({
           ></TextField>
       </div>
       <div className="input-group">
-        <h3>Instituto</h3>
+        <h2>Instituto</h2>
         <TextField
           label={"Nombre del instituto"}
           id="location.institute"

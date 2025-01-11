@@ -24,9 +24,9 @@ export default function Dropdown({ header, children, className }) {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="flex-col position-relative">
+    <div className="flex-col position-relative h-100">
       <div
-        className={`${className} dropdown flex-row selectable gap-05rem position-relative`}
+        className={`${className} position-relative flex-row gap-05rem position-relative`}
         onClick={toggleDropdown}
         ref={dropdownRef}
       >

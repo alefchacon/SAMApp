@@ -68,7 +68,7 @@ export default function ResizableDiv({
 
   return (
     <div
-      className={`resizable-div ${className}`}
+      className={`resizable-div flex-row ${className}`}
       style={{
         width: hide ? "fit-content" : `${size.width}px`,
         height: resizeVertical
@@ -79,33 +79,20 @@ export default function ResizableDiv({
       }}
     >
       <div
-        className="resize-bar"
-        style={{
-          cursor: "n-resize",
-        }}
-        onMouseDown={handleMouseDown("n")}
-      />
-      <div
-        className="resize-bar"
-        style={{
-          cursor: "s-resize",
-        }}
-        onMouseDown={handleMouseDown("s")}
-      />
-      <div
-        className="resize-bar"
-        style={{
-          cursor: "w-resize",
-        }}
-        onMouseDown={handleMouseDown("w")}
-      />
-      <div
-        className="resize-bar"
+        className="resize-bar shadow-all flex-col justify-content-center align-items-center"
         style={{
           cursor: "e-resize",
         }}
         onMouseDown={handleMouseDown("e")}
-      />
+      >
+        <span
+          style={{
+            height: "100px",
+            width: "2px",
+            backgroundColor: "var(--dark)"
+          }}
+        ></span>
+      </div>
       {children}
     </div>
   );
