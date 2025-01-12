@@ -10,7 +10,7 @@ import useTextFilter from "../../../hooks/useTextFilter";
 import { Formik, Form } from "formik";
 import Highlight from "../../../components/ui/Highlight";
 import Footer from "../../../components/ui/Footer";
-
+import Page from "../../../components/ui/Page";
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
 
 export default function Photosheets({ isTechnicalPerson = false }) {
@@ -113,9 +113,8 @@ export default function Photosheets({ isTechnicalPerson = false }) {
   };
 
   return (
-    <div className="flex-col w-100">
-    <Header title="Fichas de fotocolecta"></Header>
-      <div className="page-padding flex-row gap-1rem align-items-center justify-content-center p-1rem">
+    <Page title={"Fichas de fotocolecta"} >
+        <div className="flex-row gap-1rem align-items-center justify-content-center p-1rem">
         {" "}
         <TextField
           iconType={"search"}
@@ -131,7 +130,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
       </div>
       <div className="h-100">
         <div
-          className="photosheet-gallery p-2rem page-padding"
+          className="photosheet-gallery flex-row flex-wrap-wrap justify-content-center"
         >
           
           {filteredItems.map((photosheet, index) => (
@@ -145,7 +144,6 @@ export default function Photosheets({ isTechnicalPerson = false }) {
           ))}
         </div>
       </div>
-      <Footer></Footer>
-    </div>
+    </Page>
   );
 }

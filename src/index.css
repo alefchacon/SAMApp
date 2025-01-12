@@ -1,13 +1,10 @@
 :root {
+  
   overflow: hidden;
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
 
   color-scheme: light dark;
-  color: rgba(51, 51, 51, 0.87);
-  background-color: #e0e2f7;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
