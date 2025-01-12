@@ -3,7 +3,7 @@
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
 
   color-scheme: light dark;
   color: rgba(51, 51, 51, 0.87);
@@ -15,8 +15,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 body {
   display: flex;
   margin: 0;
@@ -26,46 +24,89 @@ body {
   overflow: hidden;
 }
 
+nav{
+  z-index: 20;
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  padding: 0.5rem 2rem;
+}
 
+hr{
+  margin: 0;
+  border: 1px solid var(--uv-gray-darker);
+}
+
+h1{
+  font-size: clamp(1.5rem, 1vw + 1.5rem, 3rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 0;
+}
+
+h2{
+  margin: 0;
+}
+
+h3{
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+}
 
 p{
   margin: 0;
   padding: 0;
 }
 
+footer{
+  background-color: var(--dark);
+}
 
-
-
+table{
+  table-layout: auto;
+  table-layout: fixed; 
+  height: 100%;  
+}
 
 th{
-  /*
-  background-color: white;
-  */
   padding: 0px 20px;
   font-size: 0.8em;
 }
 
+select {
+  min-width: 100px;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--uv-gray);
+  color: #333;
+  font-size: inherit;
+  cursor: pointer;
+}
 
+form{
+  width: 100%;
+  min-width: 400px;
+}
 
-/*Scrollbar*/
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: inherit;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 20px;
   border: 2px olid inherit;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

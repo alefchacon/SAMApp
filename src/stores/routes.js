@@ -11,7 +11,10 @@ const ROUTES = Object.freeze({
   ADD_SPECIMEN: "/agregar-especimen",
   EDIT_SPECIMEN: "/coleccion/editar-especimen",
   MIGRATE: "/migrar",
-  PROFILE: "/perfil"
+  PROFILE: "/perfil",
+  ABOUT_COLLECTION: "/sobre-coleccion",
+  ABOUT_INSTITUTE: "/sobre-instituto",
+  ABOUT_SYSTEM: "/sobre-sistema"
 })
 
 export default ROUTES;

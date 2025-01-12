@@ -24,16 +24,16 @@ export default function Dropdown({ header, children, className }) {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="flex-col position-relative h-100">
+    <div className="flex-col position-relative">
       <div
-        className={`${className} position-relative flex-row gap-05rem position-relative`}
+        className={`${className} dropdown position-relative flex-row gap-05rem position-relative`}
         onClick={toggleDropdown}
         ref={dropdownRef}
       >
         {header}
         <span className="material-symbols-outlined">arrow_drop_down</span>
       </div>
-      {isOpen && <ul className="dropdown-menu unstyled">{children}</ul>}
+      {isOpen && <ul className="dropdown-menu unstyled shadow-all">{children}</ul>}
     </div>
   );
 }

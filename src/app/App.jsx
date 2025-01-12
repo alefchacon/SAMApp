@@ -13,7 +13,9 @@ import AccessRequestForm from "./routes/app/AccessRequestForm";
 import Users from "./routes/app/Users.jsx";
 import Migrate from "./routes/app/Migrate.jsx";
 import Search from "./routes/app/Search.jsx";
-
+import AboutCollection from "./routes/app/AboutCollection.jsx";
+import AboutInstitute from "./routes/app/AboutInstitute.jsx";
+import AboutSystem from "./routes/app/AboutSystem.jsx";
 // COMPONENTS
 import AuthGuard from "../components/logic/AuthGuard.jsx";
 import { ROLE_TYPES } from "../stores/roleTypes";
@@ -154,7 +156,29 @@ function App() {
           ></Route>
           <Route
             path={ROUTES.PROFILE}
-            element={<Profile profile={profile} />}
+            element={
+              <AuthGuard profile={profile}>
+                <Profile profile={profile}></Profile>
+              </AuthGuard>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.ABOUT_COLLECTION}
+            element={
+              <AboutCollection></AboutCollection>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.ABOUT_INSTITUTE}
+            element={
+              <AboutInstitute></AboutInstitute>
+            }
+          ></Route>
+          <Route
+            path={ROUTES.ABOUT_SYSTEM}
+            element={
+              <AboutSystem></AboutSystem>
+            }
           ></Route>
         </Routes>
       </main>

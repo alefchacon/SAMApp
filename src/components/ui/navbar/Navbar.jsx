@@ -42,7 +42,7 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
       {profile?.role !== ROLE_TYPES.VISITOR && (
         <NavLink 
           route={ROUTES.PHOTOSHEETS} 
-          label={"Fichas fotográficas"}
+          label={"Fichas de fotocolecta"}
           iconType={"image"}
           selected={pathname.includes(ROUTES.PHOTOSHEETS)}
         ></NavLink>
@@ -60,11 +60,14 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
       <Dropdown
         className={"nav-link selectable-dark h-100"}
         header={
-          <InfoItem label={"Acerca de..."} iconType={"help"}></InfoItem>
+          <InfoItem label={"Sobre"} iconType={"info"}></InfoItem>
         }
       >
-        <DropdownItem primary={"Instituto de Investigaciones Biológicas"} />
-        <DropdownItem primary={"Otra opción idk"} />
+        <div className="flex-col align-items-center">
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_INSTITUTE}>Instituto de Investigaciones Biológicas</Link>
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_COLLECTION}>Colección de Mamíferos</Link>
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_SYSTEM}>Sistema de Administración Mastozoológica</Link>
+        </div>
       </Dropdown>
     </>
   )

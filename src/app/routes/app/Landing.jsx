@@ -3,21 +3,17 @@ import Searchbar from "../../../components/ui/Searchbar";
 import Footer from "../../../components/ui/Footer";
 import Button from "../../../components/ui/Button";
 import ROUTES from "../../../stores/routes";
+import { Link } from "react-router-dom";
 function SearchBanner({ children }) {  
-  const imageUrl = `src/assets/images/${Math.floor(Math.random() * 6)}.webp`;
-
-
   return (
     <div
       style={{
-        backgroundImage: `url(${imageUrl})`,
         backgroundAttachment: "fixed",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundColor: "bg-gradient"
       }}
-      className="landing-search color-white"
+      className="landing-search bg-gradient flex-1 color-white justify-content-center"
     >
       {children}
     </div>
@@ -28,7 +24,7 @@ export default function Landing({ species, children }) {
   const navigate = useNavigate();
 
   return (
-      <div>
+      <div className="h-100 flex-col">
         <SearchBanner>
           <div className="flex-row gap-1rem align-items-center margin-0">
               <div className="logo-container position-relative flex-row justify-content-center align-items-center">
@@ -62,11 +58,7 @@ export default function Landing({ species, children }) {
         </SearchBanner>
         
         <div
-          style={{
-            height: "20rem"
-            
-          }}
-          className="page-padding p-2rem gap-2rem"
+          className="page-padding p-2rem gap-2rem flex-col"
         >
           <h2>
             Sobre la colección de mamíferos
@@ -79,18 +71,11 @@ export default function Landing({ species, children }) {
             ecológicos.
           <br/>
           <br/>
-          <div className="flex-row gap-1rem">
-
-          <Button>Leer más</Button>
-          <Button 
-            className="secondary" 
-            iconType="pets"
-            onClick={() => navigate(ROUTES.COLLECTION)}
-          >
-            Ver colección
-          </Button>
-          </div>
           </p>
+          <div className="flex-row gap-1rem">
+          <Link to={ROUTES.ABOUT_COLLECTION} className="sam-button primary">Leer más</Link>
+          <Link to={ROUTES.COLLECTION} className="sam-button secondary">Ver colección</Link>
+          </div>
         </div>
       <Footer></Footer>
       </div>

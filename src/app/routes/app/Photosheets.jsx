@@ -114,7 +114,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
 
   return (
     <div className="flex-col w-100">
-    <Header title="Fichas fotográficas"></Header>
+    <Header title="Fichas de fotocolecta"></Header>
       <div className="page-padding flex-row gap-1rem align-items-center justify-content-center p-1rem">
         {" "}
         <TextField
