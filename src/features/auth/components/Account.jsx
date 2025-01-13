@@ -46,8 +46,9 @@ export default function Account({
 
   return (
     <>
-      <div className="flex-row align-items-center gap-1rem">
+      <div className="flex-row align-items-center gap-1rem selectable-dark rounded-5 nav-link">
         <Dropdown
+          
           header={
             <div>
               <p className="font-weight-600">@{profile.username}</p>

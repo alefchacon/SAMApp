@@ -31,15 +31,14 @@ export default function AboutSystem(){
                 publicado en el 2020.
                 <br></br>
                 <br></br>
-                Karina Valdés Iglesias diseñó y programó la API que almacena los datos de la biocolección,4
+                Karina Valdés Iglesias diseñó y programó la API que almacena los datos de la biocolección,
                 incluyendo las fichas generadas por el programa de Cámara, en su trabajo recepcional "Sistema de Administración de colecciones
                 de biodiversidad: Colección de Mamíferos del IIB-UV", utilizando la Especificación de Requisitos de Vásquez. La API se desarrolló
                 en el 2023.
                 <br></br>
                 <br></br>
-                Alejandro Chacón Fernández construyó la aplicación web de SAM como parte de su servicio social en 2024,
-                para permitir el uso de la API construida por Valdés al público en general. Durante su servicio diseñó el aspecto visual del 
-                sistema, programó su funcionalidad, la desplegó en los servidores de la Universidad Veracruzana y dio mantenimiento al API de Valdés.
+                Alejandro Chacón Fernández diseñó y construyó la aplicación web de SAM como parte de su servicio social en 2024,
+                para permitir el uso de la API construida por Valdés al público en general.
             </p>
         </Page>
     )

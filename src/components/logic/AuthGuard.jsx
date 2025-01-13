@@ -12,7 +12,9 @@ export default function AuthGuard({
 
   const isAuthenticated = profile.role !== ROLE_TYPES.VISITOR;
 
-  if (visitorOnly && profile.role !== ROLE_TYPES.VISITOR) {
+  console.log(isAuthenticated)
+
+  if (visitorOnly && isAuthenticated) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
@@ -20,7 +22,7 @@ export default function AuthGuard({
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !visitorOnly) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 

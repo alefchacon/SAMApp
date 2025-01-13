@@ -104,7 +104,7 @@ export default function SpecieDashboard({
   const showSpecieUpdateModal = (specie) => {
     showModal(
       "Editar especie",
-      <SpecieForm specie={specie} onSubmit={updateSpecie} />
+      <SpecieForm specie={specie} onSubmit={updateSpecie} isUpdate/>
     );
   };
 

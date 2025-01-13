@@ -20,6 +20,7 @@ export default function SpecieForm({
     specie_specie: "",
     subspecie: "",
   },
+  isUpdate = false,
   open,
 }) {
   const submitSpecie = async (values, actions) => {
@@ -143,7 +144,7 @@ export default function SpecieForm({
                   label="Agregar especie"
                   isDisabled={false}
                 >
-                  Agregar especie
+                  {isUpdate ? "Editar" : "Agregar"} especie
                 </Button>
               </div>
             </Form>

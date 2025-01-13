@@ -506,7 +506,7 @@ label.hasError{
 }
 
 .icon-only:hover{
-  background-color: var(--uv-gray-darker);
+  background-color: var(--dark);
 }
 
 
@@ -739,7 +739,7 @@ input:focus, .input:focus{
 }
 
 .m-1rem{
-  margin: 1rem;
+  margin: 0 1rem;
 }
 .p-1rem{
   padding: 1rem;

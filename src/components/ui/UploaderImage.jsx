@@ -1,13 +1,9 @@
 import { useState } from "react";
-import Papa from "papaparse";
-import Button from "./Button";
 import Chip from "./ChipInput";
 
 import { FILE_TYPES_STRING } from "../../stores/fileTypes";
-import { useSnackbar } from "../contexts/SnackbarContext";
 import ProgressBar from "./ProgressBar";
-import { specieSchema } from "../../features/specie/formikSchemas/specieSchema";
-
+import { useSnackbar } from "../contexts/SnackbarContext";
 export default function UploaderImage({
   id = "upload",
   multiple = false,
@@ -17,10 +13,9 @@ export default function UploaderImage({
   onUpload,
 }) {
   const [files, setFiles] = useState([]);
-  const [parsedFiles, setParsedFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
-
+  const {showSnackbar} = useSnackbar();
   const imgURLToUse = files[0] ? URL.createObjectURL(files[0]) : imageURL;
 
   //const { showSnackbar } = useSnackbar();
@@ -57,6 +52,7 @@ export default function UploaderImage({
       );
       if (!fileTypeIsValid) {
         setIsParsing(false);
+        showSnackbar("Debe cargar una imágen", true)
         return;
       }
     }

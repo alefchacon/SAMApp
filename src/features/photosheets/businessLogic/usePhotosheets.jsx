@@ -50,7 +50,7 @@ export default function usePhotosheets() {
         "Content-Type": "multipart/form-data",
       },
     });
-    if (response.request.status === HttpStatus.CREATED) {
+    if (response?.request?.status === HttpStatus.CREATED) {
       const newPhotosheet = {
         id: response.data.data.id,
         description: photosheet.description,

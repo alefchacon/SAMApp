@@ -6,19 +6,16 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import { useEffect } from "react";
 import useUsers from "../../../features/user/businessLogic/useUsers";
 import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
-import CardContributor from "../../../features/contributors/components/CardContributor";
-import ContributorForm from "../../../features/contributors/components/ContributorForm";
 import ContributorPanel from "../../../features/contributors/components/ContributorPanel";
-import TechnicalPersonPanel from "../../../features/user/technicalperson/TechnicalPersonPanel";
 import ListItem from "../../../components/ui/ListItem";
 
 import TehnicalPersonForm from "../../../features/user/technicalperson/TechnicalPersonForm";
 
 export default function Users() {
-  const { technicalPersons, getTechnicalPersons } = useUsers();
+  const { technicalPersons, getTechnicalPersons, deleteTechnicalPerson } = useUsers();
   const { contributors, getContributors, addContributor } =
     useContributorsAndRoles();
-  const { showModal } = useModal();
+  const { showModal, closeModal } = useModal();
   useEffect(() => {
     getTechnicalPersons();
     getContributors();
@@ -27,6 +24,36 @@ export default function Users() {
   const handleShowTechnicalPersonModal = () => {
     showModal("Agregar técnico", <TehnicalPersonForm />);
   };
+
+  const handleDeleteTechnicalPerson = (technicalPersonId) => {
+    deleteTechnicalPerson(technicalPersonId)
+    closeModal();
+  }
+
+  const handleShowDeleteTechnicalPersonModal = (technicalPerson) => {
+    showModal("Eliminar técnico", <div>
+      ¿Está seguro de eliminar este técnico?
+      <ListItem>
+        <p>{technicalPerson.fullname}</p>
+        <p className="caption">{technicalPerson.position}</p>
+      </ListItem>
+      <div className="button-row">
+        <Button 
+          className="secondary" 
+          iconType="arrow_back"
+        >
+          No
+        </Button>
+        <Button 
+          className="danger" 
+          iconType="delete" 
+          onClick={() => handleDeleteTechnicalPerson(technicalPerson.id)}
+        >
+          Sí, elimínalo
+        </Button>
+      </div>
+    </div>)
+  }
 
   const technicalPersonTab = (
     <>
@@ -44,8 +71,9 @@ export default function Users() {
           <ListItem key={index}>
             <HoverableActions position="absolute">
               <Button
-                iconType="edit"
+                iconType="delete"
                 className="icon-only color-white"
+                onClick={() => handleShowDeleteTechnicalPersonModal(technicalPerson)}
               ></Button>
             </HoverableActions>
             <p>{technicalPerson.fullname}</p>
