@@ -7,7 +7,7 @@ export default function Stepper({
   children,
   selectedStepId = null,
   onResetScroll,
-  endButtonLabel = "Agregar espmen",
+  endButtonLabel = "Agregar espécimen",
   onEndButtonClick,
   invalidSteps = [],
 }) {

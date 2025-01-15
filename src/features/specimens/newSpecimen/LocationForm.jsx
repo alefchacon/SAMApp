@@ -1,16 +1,11 @@
 import TextField from "../../../components/ui/TextField";
+import { useFormikContext } from "formik";
 
 export default function LocationForm({
-  children,
-  initialValues,
-  handleChange,
-  errors = [],
-  values,
-  onBlur,
-  touched,
-  setFieldValue,
   inputWidth = "",
 }) {
+  const { values, errors, touched, onBlur, handleChange } = useFormikContext();
+
   return (
     <div>
       <div className="input-group">

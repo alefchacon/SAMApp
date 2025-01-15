@@ -141,14 +141,7 @@ export default function EditableTable({
             },
           }}
         />
-        <div className="header-buttons flex-row">
-          <ButtonIcon
-            iconType={"filter_alt"}
-            tooltip={"Filtrar"}
-            onClick={toggleFiltering}
-          ></ButtonIcon>
-          <ButtonIcon iconType={"swap_vert"} tooltip={"Ordenar"}></ButtonIcon>
-        </div>
+
       </div>
     );
   }

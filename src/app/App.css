@@ -602,6 +602,11 @@ input:focus, .input:focus{
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
+.modal-header > h2{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .modal-content{
   position: fixed;
   display: flex;

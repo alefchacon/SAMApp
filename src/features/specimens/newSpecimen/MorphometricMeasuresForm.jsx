@@ -3,7 +3,6 @@ import RadioList from "../../../components/ui/RadioList";
 import { Form } from "formik";
 import { useFormikContext } from "formik";
 export default function MorphometricMeasuresForm({
-  children,
   inputWidth = "",
 }) {
   const { values, errors, touched, onBlur, handleChange } = useFormikContext();
