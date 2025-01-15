@@ -66,10 +66,15 @@ export default function Autocomplete({
     handleFilterChange(e);
   };
 
+  const handleBlur = (event) => {
+    setIsOpen(false);
+    onBlur(event);
+  }
+
   return (
     <div className="dropdown position-relative" ref={dropdownRef}>
       <TextField
-      isFormik  
+        isFormik  
         label={label}
         placeholder={placeholder}
         required={required}
@@ -83,7 +88,7 @@ export default function Autocomplete({
         onFocus={toggleDropdown}
         onKeydown={handleKeyDown}
         value={value}
-        onBlur={onBlur}
+        onBlur={handleBlur}
         ref={textFieldRef}
         hasError={hasError}
         errorMessage={errorMessage}

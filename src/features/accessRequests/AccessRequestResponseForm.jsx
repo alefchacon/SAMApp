@@ -1,6 +1,6 @@
 import Button from "../../components/ui/Button";
 import AccessRequest from "./components/AccessRequest";
-export default function RequestAccessResponseForm({ accessRequest }) {
+export default function AccessRequestResponseForm({ accessRequest }) {
   return (
     <div className="flex-col">
       <AccessRequest

@@ -22,12 +22,12 @@ export default function CardSpecie({
       
       onClick={onClick}
     >
-      <p className="font-weight-500">
-        {" "}
+      <div className="font-weight-500">
+        
         <i>
           <Highlight text={specie.epithet} highlight={filterText}></Highlight>
         </i>
-      </p>
+      </div>
       <Taxonomy
         specie={specie}
         center={false}

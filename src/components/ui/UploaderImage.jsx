@@ -57,7 +57,7 @@ export default function UploaderImage({
       }
     }
 
-    setFiles((previousFiles) => [...previousFiles, ...newFiles]);
+    setFiles(newFiles);
     setIsParsing(false);
 
     onUpload(newFiles[0]);
@@ -86,7 +86,7 @@ export default function UploaderImage({
         {imgURLToUse ? (
           <img
             src={imgURLToUse}
-            alt="asdf"
+            alt="Imagen por subir"
             className="photosheet"
           />
         ) : (
@@ -102,6 +102,7 @@ export default function UploaderImage({
       <div className="file-list gap-05rem p-05rem grid">
         {files.map((file, index) => (
           <Chip
+            key={index}
             index={index}
             fileName={file.name}
             extension={file.name.split(".").pop()}

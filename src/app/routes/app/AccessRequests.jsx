@@ -1,21 +1,16 @@
 import { useEffect } from "react";
 import Button from "../../../components/ui/Button";
 import { useModal } from "../../../components/contexts/ModalContext";
-import AccessRequest from "../../../features/access/components/AccessRequest";
+import AccessRequest from "../../../features/accessRequests/components/AccessRequest";
 import Card from "../../../components/ui/Card";
-import Header from "../../../components/ui/Header";
-import Footer from "../../../components/ui/Footer";
 import Page from "../../../components/ui/Page";
-import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests";
-
+import useAccessRequests from "../../../features/accessRequests/businessLogic/useAccessRequests";
 import NoResults from "../../../components/ui/NoResults";
 
 export default function AccessRequests() {
   const {
     pendingAccessRequests,
     getPendingAccessRequests,
-    pendingAccessRequestCount,
-    getPendingAccessRequestCount,
     approveAccessRequest,
     rejectAccessRequest,
   } = useAccessRequests();
@@ -53,6 +48,8 @@ export default function AccessRequests() {
       </div>
     );
   };
+
+  console.log(pendingAccessRequests);
 
   return (
     <Page title={"Solicitudes de acceso"} disableShadow>

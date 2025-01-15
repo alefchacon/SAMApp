@@ -11,7 +11,6 @@ export default function Searchbar(){
     const location = useLocation();
     const handleSubmit = (event) => {
         event.preventDefault(); 
-        console.log(location.pathname.includes(ROUTES.SEARCH))
         if (location.pathname.includes(ROUTES.SEARCH)){
             setSearchParams({ q: query });
         } else {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import { apiWrapper } from "../../../dataAccess/apiClient";
+import useApi from "../../../dataAccess/useApi";
 import axios from "axios";
 
 import ChipLabel from "../../../components/ui/ChipLabel";
@@ -17,6 +17,7 @@ export default function Search() {
   const [speciesByFamily, setSpeciesByFamily] = useState([]);
   const [speciesByOrden, setSpeciesByOrden] = useState([]);
   const [searchParams] = useSearchParams();
+  const {apiWrapper} = useApi();
   const navigate = useNavigate();
   useEffect(() => {
     const query = searchParams.get("q");

@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from "react";
 
 import getContributors from "../businessLogic/getContributors";
 import StaticCell from "../../../components/ui/table/StaticCell,";
-import CONTRIBUTOR_ROLE_NAMES from "../../../stores/contributorRoleNames";
 export default function EditableContributorCell({
   path,
   initialValue,

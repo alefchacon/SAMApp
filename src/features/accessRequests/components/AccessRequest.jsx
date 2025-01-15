@@ -13,7 +13,7 @@ export default function AccessRequest({
   },
 }) {
   const { showModal } = useModal();
-
+console.log(accessRequest);
   const toggleAcademicModal = () => {
     showModal(
       "Información del académico",
@@ -29,6 +29,8 @@ export default function AccessRequest({
       </div>
     );
   };
+
+  console.log(accessRequest);
 
   return (
     <div className="access-request flex-col max-h-600">

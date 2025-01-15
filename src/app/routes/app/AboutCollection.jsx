@@ -25,15 +25,17 @@ export default function AboutCollection(){
                 Programa Nacional de Apoyo a la Educación Superior (PRONAES). Posteriormente, en 
                 enero de 1986, la Dirección General de Investigación Científica y Superación Académica 
                 (DGICSA) apoyó dos proyectos: 
-                <ol>
-                    <li>
-                        "Autoecología de la nutria Lontra longicaudis y posibilidades de domesticación"
-                    </li>
-                    <li>
-                        "Distribución y abundancia de los mamíferos de Santa 
-                        Martha Veracruz"
-                    </li>
-                </ol>
+            </p>
+            <ol>
+                <li>
+                    "Autoecología de la nutria Lontra longicaudis y posibilidades de domesticación"
+                </li>
+                <li>
+                    "Distribución y abundancia de los mamíferos de Santa 
+                    Martha Veracruz"
+                </li>
+            </ol>
+            <p>
                 Con estos proyectos se iniciaron las actividades que darían origen a la 
                 colección de mamíferos. Las primeras colectas de campo que se hicieron se depositaron 
                 dentro del acervo de la colección mastozoológica de la Universidad Autónoma 

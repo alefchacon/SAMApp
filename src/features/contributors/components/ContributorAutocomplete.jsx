@@ -124,7 +124,7 @@ export default function ContributorAutocomplete({
             ref={textFieldRef}
             type="text"
             name={name}
-            className="w-100 h-100 input flex-grow-1"
+            className={`w-100 h-100 input flex-grow-1 ${hasError ? "hasError" : ""}`}
             style={{
               paddingLeft: `${paddingLeft}px`,
             }}

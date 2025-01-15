@@ -8,6 +8,7 @@ import {
   REQUEST_APPROVE,
   REQUEST_REJECT,
 } from "../../../config/accessURL";
+import AccessRequest from "../domain/accessRequest";
 
 export default function useAccessRequests() {
   const { apiWrapper } = useApi();
@@ -18,7 +19,8 @@ export default function useAccessRequests() {
 
   const getPendingAccessRequests = useCallback(async () => {
     const response = await apiWrapper.get(REQUEST_PENDING);
-    setPendingAccessRequests(response.data);
+    console.log(response.data);
+    setPendingAccessRequests(response.data.map(request => new AccessRequest(request)));
   }, []);
 
   const getPendingAccessRequestCount = async () => {
@@ -41,27 +43,7 @@ export default function useAccessRequests() {
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
   const addAccessRequest = async (accessRequest = {}) => {
-    const body = {
-      orcid: accessRequest.orcid,
-      about: accessRequest.about,
-      academic: {
-        names: accessRequest.names,
-        father_last_name: accessRequest.father_last_name,
-        mother_last_name: accessRequest.mother_last_name,
-        state: accessRequest.state,
-        major: accessRequest.major,
-        city: accessRequest.city,
-        college: accessRequest.college,
-        position: accessRequest.position,
-        degree: accessRequest.degree,
-        user: {
-          username: accessRequest.username,
-          password: accessRequest.password,
-          email: accessRequest.email,
-        },
-      },
-    };
-    return await apiWrapper.post(ACCESS_REQUESTS_URL, body);
+    return await apiWrapper.post(ACCESS_REQUESTS_URL, accessRequest);
   };
 
   return {

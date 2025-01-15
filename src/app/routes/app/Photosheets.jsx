@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import {useRef } from "react";
 import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
-import Header from "../../../components/ui/Header";
 import UploaderImage from "../../../components/ui/UploaderImage";
 import Photosheet from "../../../features/photosheets/components/Photosheet";
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -9,7 +8,6 @@ import usePhotosheets from "../../../features/photosheets/businessLogic/usePhoto
 import useTextFilter from "../../../hooks/useTextFilter";
 import { Formik, Form } from "formik";
 import Highlight from "../../../components/ui/Highlight";
-import Footer from "../../../components/ui/Footer";
 import Page from "../../../components/ui/Page";
 import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
 
@@ -31,15 +29,15 @@ export default function Photosheets({ isTechnicalPerson = false }) {
       description: "",
       sheet: "",
     },
-    add = true,
+    isEdit = false,
   }) {
     const formikRef = useRef(null);
 
     const handleSubmit = async (values, actions) => {
-      if (add) {
-        await addPhotosheet(values);
-      } else {
+      if (isEdit) {
         await updatePhotosheet(values);
+      } else {
+        await addPhotosheet(values);
       }
       actions.resetForm();
     };
@@ -64,7 +62,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
             handleChange,
             handleBlur,
           }) => (
-            <Form className="flex-col" autoComplete="off">
+            <Form className="flex-col input-group" autoComplete="off">
               <UploaderImage
                 imageURL={photosheet.sheet}
                 onUpload={(sheet) => setFieldValue("sheet", sheet)}
@@ -87,7 +85,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
                     submitForm();
                   }}
                 >
-                  Agregar ficha fotográfica
+                  {isEdit ? "Editar" : "Agregar"} ficha de fotocolecta
                 </Button>
               </div>
             </Form>
@@ -98,7 +96,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
   }
 
   const showAddPhotosheetModal = () => {
-    showModal("Agregar ficha fotográfica", <PhotosheetForm />);
+    showModal("Agregar ficha de fotocolecta", <PhotosheetForm />);
   };
 
   const handleDelete = (id = 0) => {
@@ -108,7 +106,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
   const showEditPhotosheetModal = (photosheet) => {
     showModal(
       "Editar ficha fotográfica",
-      <PhotosheetForm photosheet={photosheet} add={false} />
+      <PhotosheetForm photosheet={photosheet} isEdit />
     );
   };
 

@@ -19,6 +19,7 @@ export default function PasswordValidator({
   onChange,
   onBlur,
   name = "name",
+  passwordConfirmationName = "passwordConfirmation",
   passwordHasError = false,
   passwordConfirmationHasError = false,
   setFieldError,
@@ -101,7 +102,7 @@ export default function PasswordValidator({
       <br />
       <TextField
         required={required}
-        name="passwordConfirmation"
+        name={passwordConfirmationName}
         hasError={passwordConfirmationHasError}
         type="password"
         label={"Confirme la contraseña"}

@@ -5,16 +5,16 @@ export default class SpecimenFormik {
     this.colection_code = data?.colection_code || "";
     this.catalog_id = data?.catalog_id || "ND";
     this.colection_date = data?.colection_date || "";
-    this.preparation_date = data?.preparation_date || null;
+    this.preparation_date = data?.preparation_date || undefined;
     this.hour = data?.hour || "";
     this.status = data?.status || "";
     this.nature = data?.nature || "";
-    this.sex = data?.sex || "";
     this.number_embryos = data?.number_embryos || 0;
     this.comment = data?.comment || "";
-    this.class_age = data?.class_age || "";
-
+    
     // Medidas morfométricas
+    this.sex = data?.sex || "";
+    this.class_age = data?.class_age || "";
     this.length_total = data?.length_total || "";
     this.length_ear = data?.length_ear || "";
     this.length_paw = data?.length_paw || "";

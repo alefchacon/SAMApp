@@ -7,6 +7,7 @@ import useApi from "../../../dataAccess/useApi";
 import Button from "../../../components/ui/Button";
 import { SERVER_URL } from "../../../config/env";
 import HttpStatus from "../../../stores/httpStatus";
+import Photosheet from "../domain/photosheet";
 
 export default function usePhotosheets() {
   const [photosheets, setPhotosheets] = useState([]);
@@ -17,10 +18,7 @@ export default function usePhotosheets() {
 
   useEffect(() => {
     getPhotosheets().then((response) => {
-      const newPhotosheets = response.data.map((photosheet) => {
-        photosheet.sheet = SERVER_URL.concat(photosheet.sheet);
-        return photosheet;
-      });
+      const newPhotosheets = response.data.map((photosheet) => new Photosheet(photosheet));
       newPhotosheets.sort(orderByIdDescending);
       setPhotosheets(newPhotosheets);
     });
@@ -50,12 +48,10 @@ export default function usePhotosheets() {
         "Content-Type": "multipart/form-data",
       },
     });
+    
     if (response?.request?.status === HttpStatus.CREATED) {
-      const newPhotosheet = {
-        id: response.data.data.id,
-        description: photosheet.description,
-        sheet: URL.createObjectURL(photosheet.sheet),
-      };
+      const newPhotosheet = new Photosheet(response?.data.data);
+      console.log(response.data)
       setPhotosheets((previous) => [newPhotosheet, ...previous]);
     }
   };
@@ -83,11 +79,7 @@ export default function usePhotosheets() {
     );
 
     if (response.request.status === HttpStatus.OK) {
-      const updatedPhotosheet = {
-        id: photosheet.id,
-        description: photosheet.description,
-        sheet: URL.createObjectURL(photosheet.sheet),
-      };
+      const updatedPhotosheet = new Photosheet(photosheet);
       setPhotosheets((previous) =>
         previous.map((photosheet) =>
           photosheet.id === updatedPhotosheet.id
@@ -101,7 +93,7 @@ export default function usePhotosheets() {
   const confirmDeletePhotosheet = async (photosheetId = 0) => {
     showModal(
       "Eliminar ficha fotográfica",
-      <div>
+      <div className="flex-col w-100">
         ¿Está seguro de eliminar la ficha fotográfica?
         <div className="button-row">
           <Button

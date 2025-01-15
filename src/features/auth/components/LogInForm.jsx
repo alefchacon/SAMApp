@@ -22,7 +22,7 @@ export default function LogInForm({ onSubmit }) {
   return (
     
         <Formik
-          initialValues={{ username: "asdf", password: "pass" }}
+          initialValues={{ username: "", password: "" }}
           onSubmit={handleSubmit}
           validationSchema={loginSchema}
         >

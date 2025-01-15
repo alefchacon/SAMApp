@@ -3,10 +3,13 @@ import Button from "../../../components/ui/Button";
 import { Formik, Form } from "formik";
 import { technicalPersonSchema } from "../formikSchemas/technicalPersonSchema";
 import useUsers from "../businessLogic/useUsers";
-export default function TehnicalPersonForm() {
+export default function TehnicalPersonForm({onSubmit}) {
   const {addTechnicalPerson} = useUsers();
   const handleSubmit = (values, actions) => {
-    addTechnicalPerson(values).then(() => actions.resetForm());
+    addTechnicalPerson(values).then(() => {
+      actions.resetForm()
+      onSubmit();
+    });
   }
 
   return (
@@ -44,8 +47,8 @@ export default function TehnicalPersonForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.user.first_name}
-            errorMessage={errors.first_name}
-            hasError={errors.first_name && touched.first_name}
+            errorMessage={errors.user?.first_name}
+            hasError={errors.user?.first_name && touched.user?.first_name}
             maxLength={50}
             isFormik
           ></TextField>
@@ -57,8 +60,8 @@ export default function TehnicalPersonForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.user.last_name}
-            errorMessage={errors.last_name}
-            hasError={errors.last_name && touched.last_name}
+            errorMessage={errors.user?.last_name}
+            hasError={errors.user?.last_name && touched.user?.last_name}
             maxLength={50}
             isFormik
           ></TextField>
@@ -86,8 +89,8 @@ export default function TehnicalPersonForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.user.email}
-            errorMessage={errors.email}
-            hasError={errors.email && touched.email}
+            errorMessage={errors.user?.email}
+            hasError={errors.user?.email && touched.user?.email}
             isFormik
             helperText="El sistema enviara un mensaje a la dirección que usted proporcione, incluyendo una contraseña provicional que permita al nuevo técnico iniciar sesión."
           ></TextField>

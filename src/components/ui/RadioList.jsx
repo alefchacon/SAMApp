@@ -38,7 +38,7 @@ export default function RadioList({
             id={`${name}Choice${index}`}
             name={name}
             value={option.value}
-            checked={option.value === value}
+            defaultChecked={option.value === value}
           />
           <label
             htmlFor={`${name}Choice${index}`}

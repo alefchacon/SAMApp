@@ -8,21 +8,25 @@ import useUsers from "../../../features/user/businessLogic/useUsers";
 import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
 import ContributorPanel from "../../../features/contributors/components/ContributorPanel";
 import ListItem from "../../../components/ui/ListItem";
-
-import TehnicalPersonForm from "../../../features/user/technicalperson/TechnicalPersonForm";
-
+import TehnicalPersonForm from "../../../features/user/components/TechnicalPersonForm";
+import useSession from "../../../features/auth/businessLogic/useSession";
+import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 export default function Users() {
   const { technicalPersons, getTechnicalPersons, deleteTechnicalPerson } = useUsers();
-  const { contributors, getContributors, addContributor } =
+  const { getContributors } =
     useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
+  const { showSnackbar } = useSnackbar(); 
   useEffect(() => {
     getTechnicalPersons();
     getContributors();
   }, []);
 
+  const {getProfile} = useSession();
+  const profile = getProfile();
+
   const handleShowTechnicalPersonModal = () => {
-    showModal("Agregar técnico", <TehnicalPersonForm />);
+    showModal("Agregar técnico", <TehnicalPersonForm onSubmit={closeModal}/>);
   };
 
   const handleDeleteTechnicalPerson = (technicalPersonId) => {
@@ -31,6 +35,11 @@ export default function Users() {
   }
 
   const handleShowDeleteTechnicalPersonModal = (technicalPerson) => {
+    if (technicalPerson.user.email === profile.email){
+      showSnackbar("No puede eliminarse a sí mismo", true)
+      return;
+    }
+
     showModal("Eliminar técnico", <div>
       ¿Está seguro de eliminar este técnico?
       <ListItem>
@@ -41,6 +50,7 @@ export default function Users() {
         <Button 
           className="secondary" 
           iconType="arrow_back"
+          onClick={closeModal}
         >
           No
         </Button>
@@ -53,7 +63,7 @@ export default function Users() {
         </Button>
       </div>
     </div>)
-  }
+  }  
 
   const technicalPersonTab = (
     <>
@@ -72,7 +82,7 @@ export default function Users() {
             <HoverableActions position="absolute">
               <Button
                 iconType="delete"
-                className="icon-only color-white"
+                className={`icon-only color-white ${profile.email === technicalPerson.user.email ? "disabled" : ""}`}
                 onClick={() => handleShowDeleteTechnicalPersonModal(technicalPerson)}
               ></Button>
             </HoverableActions>
@@ -97,5 +107,4 @@ export default function Users() {
     </Page>
   );
 
-  function asdf() {}
 }

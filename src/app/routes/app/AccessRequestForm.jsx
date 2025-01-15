@@ -4,15 +4,15 @@ import { Formik, Form } from "formik";
 import TextField from "../../../components/ui/TextField";
 import TextArea from "../../../components/ui/TextArea.jsx";
 import { useModal } from "../../../components/contexts/ModalContext.jsx";
-import useAccessRequests from "../../../features/access/businessLogic/useAccessRequests.jsx";
+import useAccessRequests from "../../../features/accessRequests/businessLogic/useAccessRequests.jsx";
 import { Link } from "react-router-dom";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
-import { academicSchema } from "../../../features/user/formikSchemas/academicSchema.js";
+import { academicSchema } from "../../../features/accessRequests/formikSchemas/accessRequestSchema.js";
 import ROUTES from "../../../stores/routes.js";
 import { useNavigate } from "react-router-dom";
 import HttpStatus from "../../../stores/httpStatus.js";
 import Page from "../../../components/ui/Page.jsx";
-
+import AccessRequest from "../../../features/accessRequests/domain/accessRequest.js";
 export default function AccessRequestForm() {
   const {
     addAccessRequest,
@@ -24,10 +24,10 @@ export default function AccessRequestForm() {
 
   const handleSubmit = async (values, actions) => {
     const response = await addAccessRequest(values);
-    if (response.status === HttpStatus.CREATED) {
+    if (response?.status === HttpStatus.CREATED) {
       handleShowModal(values);
+      actions.resetForm();
     }
-    actions.resetForm();
   };
 
   const handleShowModal = (values) => {
@@ -65,27 +65,7 @@ export default function AccessRequestForm() {
     <Formik
       validationSchema={academicSchema}
       onSubmit={handleSubmit}
-      initialValues={{
-        orcid: "",
-        about: "",
-        email: "",
-
-        names: "",
-        father_last_name: "",
-        mother_last_name: "",
-        state: "",
-        major: "NINGUNO", // ignored at stakeholder's request
-        city: "",
-        college: "",
-        position: "",
-        degree: "",
-
-        username: "",
-        password: "",
-
-        //FRONTEND ONLY:
-        passwordConfirmation: "",
-      }}
+      initialValues={new AccessRequest()}
     >
       {({
         values,
@@ -132,11 +112,11 @@ export default function AccessRequestForm() {
 
                 <TextField
                   isFormik
-                  name="email"
-                  value={values.email}
+                  name="academic.user.email"
+                  value={values.academic?.user?.email}
                   onChange={handleChange}
-                  hasError={errors.email && touched.email}
-                  errorMessage={errors.email}
+                  hasError={errors.academic?.user?.email && touched.academic?.user?.email}
+                  errorMessage={errors.academic?.user?.email}
                   label={"E-mail"}
                   maxLength={100}
                 ></TextField>
@@ -147,82 +127,82 @@ export default function AccessRequestForm() {
 
                 <TextField
                   isFormik
-                  name="names"
-                  value={values.names}
+                  name="academic.names"
+                  value={values.academic?.names}
                   onChange={handleChange}
-                  hasError={errors.names && touched.names}
-                  errorMessage={errors.names}
+                  hasError={errors.academic?.names && touched.academic?.names}
+                  errorMessage={errors.academic?.names}
                   label={"Nombre(s)"}
                   maxLength={100}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="father_last_name"
-                  value={values.father_last_name}
+                  name="academic.father_last_name"
+                  value={values.academic?.father_last_name}
                   onChange={handleChange}
-                  hasError={errors.father_last_name && touched.father_last_name}
-                  errorMessage={errors.father_last_name}
+                  hasError={errors.academic?.father_last_name && touched.academic?.father_last_name}
+                  errorMessage={errors.academic?.father_last_name}
                   label={"Apellido paterno"}
                   maxLength={50}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="mother_last_name"
-                  value={values.mother_last_name}
+                  name="academic.mother_last_name"
+                  value={values.academic?.mother_last_name}
                   onChange={handleChange}
-                  hasError={errors.mother_last_name && touched.mother_last_name}
-                  errorMessage={errors.mother_last_name}
+                  hasError={errors.academic?.mother_last_name && touched.academic?.mother_last_name}
+                  errorMessage={errors.academic?.mother_last_name}
                   label={"Apellido materno"}
                   maxLength={50}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="state"
-                  value={values.state}
+                  name="academic.state"
+                  value={values.academic?.state}
                   onChange={handleChange}
-                  hasError={errors.state && touched.state}
-                  errorMessage={errors.state}
+                  hasError={errors.academic?.state && touched.academic?.state}
+                  errorMessage={errors.academic?.state}
                   label={"Estado"}
                   maxLength={100}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="city"
-                  value={values.city}
+                  name="academic.city"
+                  value={values.academic?.city}
                   onChange={handleChange}
-                  hasError={errors.city && touched.city}
-                  errorMessage={errors.city}
+                  hasError={errors.academic?.city && touched.academic?.city}
+                  errorMessage={errors.academic?.city}
                   label={"Ciudad"}
                   maxLength={100}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="college"
-                  value={values.college}
+                  name="academic.college"
+                  value={values.academic?.college}
                   onChange={handleChange}
-                  hasError={errors.college && touched.college}
-                  errorMessage={errors.college}
+                  hasError={errors.academic?.college && touched.academic?.college}
+                  errorMessage={errors.academic?.college}
                   label={"Universidad"}
                   maxLength={100}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="position"
-                  value={values.position}
+                  name="academic.position"
+                  value={values.academic?.position}
                   onChange={handleChange}
-                  hasError={errors.position && touched.position}
-                  errorMessage={errors.position}
+                  hasError={errors.academic?.position && touched.academic?.position}
+                  errorMessage={errors.academic?.position}
                   label={"Posición / puesto"}
                   maxLength={100}
                 ></TextField>
                 <TextField
                   isFormik
-                  name="degree"
-                  value={values.degree}
+                  name="academic.degree"
+                  value={values.academic?.degree}
                   onChange={handleChange}
-                  hasError={errors.degree && touched.degree}
-                  errorMessage={errors.degree}
-                  label={"Licenciatura, título o grado académico"}
+                  hasError={errors.academic?.degree && touched.academic?.degree}
+                  errorMessage={errors.academic?.degree}
+                  label={"Grado académico"}
                   maxLength={100}
                 ></TextField>
               </div>
@@ -237,32 +217,36 @@ export default function AccessRequestForm() {
                 </div>
                 <TextField
                   isFormik
-                  name="username"
-                  value={values.username}
+                  name="academic.user.username"
+                  value={values.academic?.user?.username}
                   onChange={handleChange}
-                  hasError={errors.username && touched.username}
-                  errorMessage={errors.username}
+                  hasError={errors.academic?.user?.username && touched.academic?.user?.username}
+                  errorMessage={errors.user?.username}
                   label={"Nombre de usuario"}
                   maxLength={50}
                 ></TextField>
 
                 <PasswordValidator
-                  name="password"
-                  password={values.password}
-                  passwordConfirmation={values.passwordConfirmation}
+                  name="academic.user.password"
+                  passwordConfirmationName="academic.user.passwordConfirmation"
+                  password={values.academic?.user?.password}
+                  passwordConfirmation={values.academic?.user?.passwordConfirmation}
                   onChange={handleChange}
-                  passwordHasError={errors.password && touched.password}
+                  passwordHasError={errors.academic?.user?.password && touched.academic?.user?.password}
                   passwordConfirmationHasError={
-                    errors.passwordConfirmation && touched.passwordConfirmation
+                    errors.academic?.user?.passwordConfirmation && touched.academic?.user?.passwordConfirmation
                   }
-                  passwordConfirmationErrorMessage={errors.passwordConfirmation}
-                  passwordErrorMessage={errors.password}
+                  passwordConfirmationErrorMessage={errors.academic?.user?.passwordConfirmation}
+                  passwordErrorMessage={errors.academic?.user?.password}
                 ></PasswordValidator>
               </div>
 
               <div className="button-row">
                 <Button iconType="send" type="submit">
                   Enviar solicitud
+                </Button>
+                <Button iconType="send" onClick={() => console.log(values)}>
+                  print
                 </Button>
               </div>
           </Form>

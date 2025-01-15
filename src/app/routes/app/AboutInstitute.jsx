@@ -28,26 +28,26 @@ export default function AboutInstitute(){
                 Ciencia; Fisiología; Micro anatomía; Sistemática y Zoología.
             </p>
             <h2 className="margin-0">Objetivos del instituto</h2>
-            <p>
-                <ul>
-                    <li>
-                        Proponer y ejecutar proyectos específicos de investigación básica y aplicada en 
-                        algunas de las especies de mamíferos silvestres de Veracruz.
-                    </li>
-                    <li>
-                        Difundir y divulgar la investigación científica generada por los proyectos de 
-                        investigación.
-                    </li>
-                    <li>
-                        Utilizar o implementar las herramientas informáticas necesarias para facilitar la 
-                        obtención y manejo de información de vanguardia.
-                    </li>
-                    <li>
-                        Apoyar a la formación profesional de estudiantes en el campo de mastozoología y el 
-                        comportamiento de los mamíferos.
-                    </li>
-                </ul>
-            </p>
+            
+            <ul>
+                <li>
+                    Proponer y ejecutar proyectos específicos de investigación básica y aplicada en 
+                    algunas de las especies de mamíferos silvestres de Veracruz.
+                </li>
+                <li>
+                    Difundir y divulgar la investigación científica generada por los proyectos de 
+                    investigación.
+                </li>
+                <li>
+                    Utilizar o implementar las herramientas informáticas necesarias para facilitar la 
+                    obtención y manejo de información de vanguardia.
+                </li>
+                <li>
+                    Apoyar a la formación profesional de estudiantes en el campo de mastozoología y el 
+                    comportamiento de los mamíferos.
+                </li>
+            </ul>
+        
         </Page>
     )
 }

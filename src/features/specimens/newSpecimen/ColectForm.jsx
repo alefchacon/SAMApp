@@ -3,19 +3,19 @@ import { useEffect } from "react";
 import { Form, useFormikContext } from "formik";
 
 // CUSTOM COMPONENTS
-import TextField from "../../../../components/ui/TextField";
-import Button from "../../../../components/ui/Button";
-import ContributorForm from "../../../../features/contributors/components/ContributorForm";
-import ContributorAutocomplete from "../../../../features/contributors/components/ContributorAutocomplete";
+import TextField from "../../../components/ui/TextField";
+import Button from "../../../components/ui/Button";
+import ContributorForm from "../../contributors/components/ContributorForm";
+import ContributorAutocomplete from "../../contributors/components/ContributorAutocomplete";
 import moment from "moment";
-import { useModal } from "../../../../components/contexts/ModalContext";
-import RadioList from "../../../../components/ui/RadioList";
+import { useModal } from "../../../components/contexts/ModalContext";
+import RadioList from "../../../components/ui/RadioList";
 //VALIDATION SCHEMAS
-import TextArea from "../../../../components/ui/TextArea";
-import useContributorsAndRoles from "../../../../features/contributors/businessLogic/useContributorsAndRoles";
-import CONTRIBUTOR_ROLES from "../../../../stores/contributorRoles";
-import NATURE from "../../../../stores/nature";
-import CONTRIBUTOR_ROLE_NAMES from "../../../../stores/contributorRoleNames";
+import TextArea from "../../../components/ui/TextArea";
+import useContributorsAndRoles from "../../contributors/businessLogic/useContributorsAndRoles";
+import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
+import NATURE from "../../../stores/nature";
+import CONTRIBUTOR_ROLE_NAMES from "../../../stores/contributorRoleNames";
 
 export default function ContributorsForm({ inputWidth = "" }) {
   const { values, errors, touched, onBlur, handleChange, setFieldValue } =
@@ -165,6 +165,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
         ></TextField>
       </div>
       <div className="input-group">
+      
         <h2>Preparación</h2>
         <ContributorAutocomplete
           roleId={CONTRIBUTOR_ROLES.PREPARATOR}
@@ -186,9 +187,6 @@ export default function ContributorsForm({ inputWidth = "" }) {
           isFormik
           name="preparation_date"
           label={"Fecha de preparación"}
-          helperText={
-            "La fecha se reflejará con el formato YYYY-MM-DD en la base de datos."
-          }
           value={values.preparation_date}
           onChange={handleChange}
           hasError={Boolean(

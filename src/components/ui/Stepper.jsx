@@ -9,7 +9,9 @@ export default function Stepper({
   onResetScroll,
   endButtonLabel = "Agregar espmen",
   onEndButtonClick,
+  invalidSteps = [],
 }) {
+  console.log(invalidSteps)
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {
@@ -44,7 +46,6 @@ export default function Stepper({
           Continuar
         </Button>
       ) : (
-        //<div>asdf</div>
         <Button type="button" onClick={onEndButtonClick}>{endButtonLabel}</Button>
       )}
     </div>
@@ -73,11 +74,14 @@ export default function Stepper({
                   selectedId === tab.props.id ? "selected" : ""
                 }`}
               >
+                {invalidSteps.includes(tab.props.id) &&
+                  <Badge>!</Badge>
+                }
                 {index + 1}
               </div>
-              <p className={`${selectedId === tab.props.id ? "selected" : ""}`}>
+              <h3 className={`${selectedId === tab.props.id ? "selected" : ""}`}>
                 {tab.props.label}
-              </p>
+              </h3>
             </div>
 
             {index < children.length - 1 && (
@@ -90,7 +94,7 @@ export default function Stepper({
           </div>
         ))}
       </ul>
-
+      <br/>
       {children.find((child) => child.props.id === selectedId)}
       {buttonRow(currentIndex)}
     </div>

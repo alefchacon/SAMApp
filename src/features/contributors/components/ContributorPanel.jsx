@@ -70,5 +70,4 @@ export default function ContributorPanel() {
     </>
   );
 
-  function asdf() {}
 }

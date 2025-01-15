@@ -13,8 +13,12 @@ export default function useUsers() {
       .then((response) => setTechnicalPersons(response.data));
   });
 
-  const addTechnicalPerson = useCallback((technicalPerson) => {
-    return apiWrapper.post(TECHNICAL_PERSON_URL, technicalPerson);
+  const addTechnicalPerson = useCallback(async (technicalPerson) => {
+    const response = await apiWrapper.post(TECHNICAL_PERSON_URL, technicalPerson);
+    if (response.status === HttpStatus.CREATED){
+      const newTechnicalPerson = response.data.data;
+      setTechnicalPersons(prev => [...prev, newTechnicalPerson]);
+    }
   });
 
   const deleteTechnicalPerson = useCallback(async (technicalPersonId) => {

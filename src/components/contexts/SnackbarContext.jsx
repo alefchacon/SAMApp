@@ -21,12 +21,12 @@ export function SnackbarProvider({ children }) {
   const showSnackbar = (
     content = "This is a snackbar.",
     isError = false,
-    iconType = "check",
+    iconType = "check_circle",
     duration = 10000
   ) => {
-    let asdf = content;
+    let parsedContent = content;
     if (typeof content === "object" && content !== null) {
-      asdf = (
+      parsedContent = (
         <div>
           {Object.entries(content).map(([key, value]) => (
             <p>
@@ -37,7 +37,7 @@ export function SnackbarProvider({ children }) {
       );
     }
 
-    setSnackbarContent(asdf);
+    setSnackbarContent(parsedContent);
     setIsError(isError);
     setOpen(true);
     setIconType(iconType);

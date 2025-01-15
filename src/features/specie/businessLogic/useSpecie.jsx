@@ -14,7 +14,6 @@ import HttpStatus from "../../../stores/httpStatus";
 
 export const useSpecie = (specieId = 0) => {
   const [species, setSpecies] = useState([]);
-  const { profile } = useStatus();
   const download = useDownload();
 
   const { apiWrapper } = useApi();
@@ -43,12 +42,9 @@ export const useSpecie = (specieId = 0) => {
     }
   });
   const addSpecieLocal = async (newSpecie) => {
-    assignEpithet(newSpecie);
     setSpecies((previousSpecies) => [newSpecie, ...previousSpecies]);
   };
-  const assignEpithet = (specie) => {
-    specie.epithet = `${specie.gender} ${specie.specie_specie} ${specie.subspecie}`;
-  };
+  
   const updateSpecie = useCallback(async (newSpecie) => {
     const response = await apiWrapper.put(
       `${SPECIE_URL}/${newSpecie.id}/`,

@@ -12,8 +12,6 @@ export default function AuthGuard({
 
   const isAuthenticated = profile.role !== ROLE_TYPES.VISITOR;
 
-  console.log(isAuthenticated)
-
   if (visitorOnly && isAuthenticated) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }

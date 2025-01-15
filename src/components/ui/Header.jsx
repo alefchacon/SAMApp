@@ -19,7 +19,7 @@ export default function Header({
         <h1>{title}</h1>
         {children}
       </div>
-      {subtitle && <p>{subtitle}</p>}
+      {subtitle && subtitle}
     </div>
   );
 }
