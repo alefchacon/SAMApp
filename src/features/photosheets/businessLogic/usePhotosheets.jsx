@@ -51,7 +51,6 @@ export default function usePhotosheets() {
     
     if (response?.request?.status === HttpStatus.CREATED) {
       const newPhotosheet = new Photosheet(response?.data.data);
-      console.log(response.data)
       setPhotosheets((previous) => [newPhotosheet, ...previous]);
     }
   };

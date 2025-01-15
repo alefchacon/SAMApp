@@ -245,9 +245,7 @@ export default function AccessRequestForm() {
                 <Button iconType="send" type="submit">
                   Enviar solicitud
                 </Button>
-                <Button iconType="send" onClick={() => console.log(values)}>
-                  print
-                </Button>
+
               </div>
           </Form>
       )}

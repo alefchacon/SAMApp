@@ -1,7 +1,6 @@
 import InfoItem from "../../../components/ui/InfoItem";
 import { ORCIDIcon } from "../../../components/ui/ORCIDIcon";
 import Button from "../../../components/ui/Button";
-import LOREM_IPSUM from "../../../stores/loremIpsum";
 import { useModal } from "../../../components/contexts/ModalContext";
 
 export default function AccessRequest({
@@ -9,11 +8,10 @@ export default function AccessRequest({
   accessRequest = {
     orcid: "0000-0000-0000-0000",
     email: "email@email.com",
-    about: LOREM_IPSUM.LONG,
+    about: "about",
   },
 }) {
   const { showModal } = useModal();
-console.log(accessRequest);
   const toggleAcademicModal = () => {
     showModal(
       "Información del académico",
@@ -29,8 +27,6 @@ console.log(accessRequest);
       </div>
     );
   };
-
-  console.log(accessRequest);
 
   return (
     <div className="access-request flex-col max-h-600">

@@ -6,7 +6,7 @@ export default function InfoItem({ label, iconType, fullheight = false }) {
     >
       <span className="material-symbols-outlined">{iconType}</span>{" "}
       {label &&
-        <p className={`label ${fullheight ? "" : "ellipsis"}`}>{label}</p>
+        <div className={`label ${fullheight ? "" : "ellipsis"}`}>{label}</div>
       }
     </div>
   );

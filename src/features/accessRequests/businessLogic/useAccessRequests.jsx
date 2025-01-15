@@ -7,7 +7,7 @@ import {
   REQUEST_PENDING_COUNT,
   REQUEST_APPROVE,
   REQUEST_REJECT,
-} from "../../../config/accessURL";
+} from "./accessURL";
 import AccessRequest from "../domain/accessRequest";
 
 export default function useAccessRequests() {
@@ -19,7 +19,6 @@ export default function useAccessRequests() {
 
   const getPendingAccessRequests = useCallback(async () => {
     const response = await apiWrapper.get(REQUEST_PENDING);
-    console.log(response.data);
     setPendingAccessRequests(response.data.map(request => new AccessRequest(request)));
   }, []);
 

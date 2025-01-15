@@ -11,7 +11,6 @@ export default function Stepper({
   onEndButtonClick,
   invalidSteps = [],
 }) {
-  console.log(invalidSteps)
   const [selectedId, setSelectedId] = useState(selectedStepId);
 
   const handleSelectedTabChange = (newSelectedIndex) => {

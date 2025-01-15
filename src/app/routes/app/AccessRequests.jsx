@@ -49,15 +49,12 @@ export default function AccessRequests() {
     );
   };
 
-  console.log(pendingAccessRequests);
-
   return (
     <Page title={"Solicitudes de acceso"} disableShadow>
         {pendingAccessRequests.length > 0 ? (
           pendingAccessRequests.map((accessRequest, index) => (
-            <Card className={"p-2rem"}>
+            <Card className={"p-2rem"} key={index}>
               <AccessRequest
-                key={index}
                 accessRequest={accessRequest}
                 onPrimaryAction={showResponseModal}
               />
