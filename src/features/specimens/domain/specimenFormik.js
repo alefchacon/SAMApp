@@ -2,7 +2,7 @@ export default class SpecimenFormik {
   constructor(data = {}) {
     // Datos generales
     this.colection_number = data?.colection_number || "";
-    this.colection_code = data?.colection_code || "";
+    this.colection_code = data?.colection_code || "IIB-UV MAM";
     this.catalog_id = data?.catalog_id || "ND";
     this.colection_date = data?.colection_date || "";
     this.preparation_date = data?.preparation_date || undefined;
@@ -11,9 +11,11 @@ export default class SpecimenFormik {
     this.nature = data?.nature || "";
     this.number_embryos = data?.number_embryos || 0;
     this.comment = data?.comment || "";
+    this.reproductive_status = data?.reproductive_status || "";
     
     // Medidas morfométricas
     this.sex = data?.sex || "";
+    this.reproductive_status = data?.reproductive_status || "";
     this.class_age = data?.class_age || "";
     this.length_total = data?.length_total || "";
     this.length_ear = data?.length_ear || "";

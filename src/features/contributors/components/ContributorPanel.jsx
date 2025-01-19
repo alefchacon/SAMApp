@@ -21,13 +21,13 @@ export default function ContributorPanel() {
 
   const handleShowContributorModal = () => {
     showModal(
-      "Agregar colaborador",
+      "Agregar contribuidor",
       <ContributorForm onSubmit={addContributor} />
     );
   };
   const handleEditContributorModal = (contributor) => {
     showModal(
-      "Editar colaborador",
+      "Editar contribuidor",
       <ContributorForm onSubmit={updateContributor} contributor={contributor} />
     );
   };
@@ -37,11 +37,11 @@ export default function ContributorPanel() {
       <div className="flex-row gap-1rem align-items-center justify-content-center">
         <TextField
           iconType="search"
-          placeholder="Buscar colaboradores"
+          placeholder="Buscar contribuidores"
           onChange={handleFilterChange}
         ></TextField>
         <Button iconType="person_add" onClick={handleShowContributorModal}>
-          Agregar colaborador
+          Agregar contribuidor
         </Button>
       </div>
       <br />
@@ -64,7 +64,7 @@ export default function ContributorPanel() {
             </ListItem>
           ))
         ) : (
-          <NoResults itemName="colaboradores" />
+          <NoResults itemName="contribuidores" />
         )}
       </ul>
     </>

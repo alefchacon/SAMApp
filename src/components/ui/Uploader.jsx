@@ -25,8 +25,6 @@ export default function Uploader({
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
 
-  //const { showSnackbar } = useSnackbar();
-
   const handleDragOver = (event) => {
     event.preventDefault();
     setIsDragging(true);

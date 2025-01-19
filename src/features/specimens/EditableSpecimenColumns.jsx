@@ -14,6 +14,7 @@ import NATURE from "../../stores/nature";
 import moment from "moment";
 import CONTRIBUTOR_ROLES from "../../stores/contributorRoles";
 import updateContributorSpecimen from "../contributors/businessLogic/updateContributorSpecimen";
+import REPRODUCTIVE_STATUS from "../../stores/reproductiveStatus";
 
 const editableSpecimenColumns = [
   columnHelper.accessor("id", {
@@ -217,6 +218,31 @@ const editableSpecimenColumns = [
         row={info.row}
         column={info.column}
       />
+    ),
+  }),
+  columnHelper.accessor("reproductive_status", {
+    header: () => "Estado reproductivo",
+    footer: (info) => info.column.id,
+    cell: (info) => (
+      <EditableSelectCell
+        initialValue={info.getValue()}
+        type="select"
+        onUpdate={useSpecimens().updateSpecimen}
+        databaseTableId={info.row.original.id}
+        path={"reproductive_status"}
+        validationSchema={specimenSchema}
+        table={info.table}
+        row={info.row}
+        column={info.column}
+        options
+      >
+        <option value={REPRODUCTIVE_STATUS.ACTIVE}>{REPRODUCTIVE_STATUS.ACTIVE}</option>
+        <option value={REPRODUCTIVE_STATUS.INACTIVE}>{REPRODUCTIVE_STATUS.INACTIVE}</option>
+        <option value={REPRODUCTIVE_STATUS.LACTANT}>{REPRODUCTIVE_STATUS.LACTANT}</option>
+        <option value={REPRODUCTIVE_STATUS.POSTLACTANT}>{REPRODUCTIVE_STATUS.POSTLACTANT}</option>
+        <option value={REPRODUCTIVE_STATUS.TE}>{`${REPRODUCTIVE_STATUS.TE} (Testículos escrotados)`}</option>
+        <option value={"ND"}>{"ND (No definido)"}</option>
+      </EditableSelectCell>
     ),
   }),
   columnHelper.accessor("number_embryos", {

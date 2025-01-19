@@ -32,39 +32,6 @@ export default function SpecimenForm({ onResetScroll }) {
 
   const handleSubmit = async (values) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
-
-    if (!responseSpecimen.status === HttpStatus.CREATED) {
-      return;
-    }
-
-    const newSpecimenId = responseSpecimen.data.specimen_id;
-    const responseLocation = await addLocation(values.location, newSpecimenId);
-
-    if (!responseLocation.status === HttpStatus.CREATED) {
-      return;
-    }
-
-    const colectorSpecimen = {
-      contributor: values.colector.contributor_id,
-      specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.COLECTOR,
-    };
-    const colectorResponse = await addContributorSpecimen(colectorSpecimen);
-    if (!colectorResponse.status === HttpStatus.OK) {
-      return;
-    }
-
-    const preparatorSpecimen = {
-      contributor: values.preparator.contributor_id,
-      specimen: newSpecimenId,
-      contributor_role: CONTRIBUTOR_ROLES.PREPARATOR,
-    };
-    const preparatorResponse = await addContributorSpecimen(
-      preparatorSpecimen
-    );
-    if (!preparatorResponse.status === HttpStatus.OK) {
-      return;
-    }
   };
 
   //I thought of using selectedStepId as a way of controlling the Stepper

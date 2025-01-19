@@ -100,7 +100,7 @@ export default function Users() {
         <div label={"Técnicos"} className="p-1rem">
           {technicalPersonTab}
         </div>
-        <div label="Colaboradores" className="p-1rem">
+        <div label="Contribuidores" className="p-1rem">
           <ContributorPanel></ContributorPanel>
         </div>
       </Tabs>

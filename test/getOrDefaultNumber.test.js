@@ -27,6 +27,18 @@ describe('getOrDefaultNumber', () => {
         expect(result).toBeTruthy();
         expect(result).toBe(123)
     })
+    it('should get the number [  123   ] when value is string', () => {
+        const value = "  123   ";
+        const result = getOrDefaultNumber(value);
+        expect(result).toBeTruthy();
+        expect(result).toBe(123)
+    })
+    it('should get the number [  1 2  3   ] when value is string', () => {
+        const value = "  123   ";
+        const result = getOrDefaultNumber(value);
+        expect(result).toBeTruthy();
+        expect(result).toBe(123)
+    })
     it('should get the number 0.0 when value is empty string', () => {
         const value = "";
         const result = getOrDefaultNumber(value);

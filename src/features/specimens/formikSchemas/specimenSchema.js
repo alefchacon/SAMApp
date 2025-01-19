@@ -35,6 +35,9 @@ export const specimenSchema = yup.object().shape({
   sex: yup
     .string()
     .required(messages.required),
+  reproductive_status: yup
+    .string()
+    .required(messages.required),
   nature: yup
     .string()
     .required(messages.required),

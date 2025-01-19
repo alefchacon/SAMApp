@@ -62,10 +62,10 @@ export default function ContributorForm({
             <div className="button-row">
               <Button
                 className="primary"
-                label="Agregar colaborador"
+                label="Agregar contribuidor"
                 type="submit"
               >
-                {isEdit ? "Editar" : "Agregar"} colaborador
+                {isEdit ? "Editar" : "Agregar"} contribuidor
               </Button>
             </div>
           </div>

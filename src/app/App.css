@@ -629,6 +629,7 @@ input:focus, .input:focus{
   height: fit-content;
   max-height: 80vh;
   display: flex;
+  overflow: auto;
 }
 
 .modal-background{

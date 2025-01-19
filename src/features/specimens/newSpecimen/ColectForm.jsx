@@ -31,14 +31,14 @@ export default function ContributorsForm({ inputWidth = "" }) {
 
   const handleShowAddContributorModal = () => {
     showModal(
-      "Agregar colaborador",
+      "Agregar contribuidor",
       <ContributorForm onSubmit={addContributor} />
     );
   };
 
   const contributorHelperText = (
     <div className="flex-row align-items-center gap-05rem">
-      Busque y seleccione a uno de los colaboradores existentes, o{" "}
+      Busque y seleccione a uno de los contribuidores existentes, o{" "}
       <Button
         iconType="person_add"
         className="secondary"

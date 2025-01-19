@@ -10,10 +10,8 @@ class Specimen {
   constructor(
     data = {},
   ){
-    this.colection_code = data.colection_code;
-    this.colection_number =(typeof data.colection_number === "string" && data.colection_number.trim() !== "") 
-    ? parseInt(data.colection_number, 10) 
-    : data.colection_number || 0; 
+    this.colection_code = data.colection_code || "ND";
+    this.colection_number = defaults.getOrDefaultNumber(data?.colection_number, null) 
     this.catalog_id = data.catalog_id;
     
     this.colection_date = defaults.getOrDefaultDate(data)
@@ -21,6 +19,7 @@ class Specimen {
     this.hour = data.hour || null;
     this.status = capitalize(data.status ?? "True");
     this.sex = normalizeCatalogue(data.sex, SEX, SEX.ND);
+    this.reproductive_status = data.reproductive_status || "ND";
     this.nature = normalizeNature(data.nature);
     this.number_embryos = defaults.getOrDefaultNumber(data.number_embryos),
     this.comment = data.comment;

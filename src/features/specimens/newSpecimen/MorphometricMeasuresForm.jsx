@@ -1,6 +1,6 @@
 import TextField from "../../../components/ui/TextField";
 import RadioList from "../../../components/ui/RadioList";
-import { Form } from "formik";
+import REPRODUCTIVE_STATUS from "../../../stores/reproductiveStatus";
 import { useFormikContext } from "formik";
 export default function MorphometricMeasuresForm({
   inputWidth = "",
@@ -24,6 +24,24 @@ export default function MorphometricMeasuresForm({
           onChange={handleChange}
           errorMessage={errors.sex}
           hasError={errors.sex && touched.sex}
+        />
+        <RadioList
+          value={values?.reproductive_status}
+          required
+          onBlur={onBlur}
+          label="Estado reproductivo"
+          options={[
+            { label: "Activo", value: REPRODUCTIVE_STATUS.ACTIVE },
+            { label: "inactivo", value: REPRODUCTIVE_STATUS.INACTIVE },
+            { label: "Lactante", value: REPRODUCTIVE_STATUS.LACTANT },
+            { label: "Postlactante", value: REPRODUCTIVE_STATUS.POSTLACTANT },
+            { label: "TE (Testículos escrotados)", value: REPRODUCTIVE_STATUS.TE },
+            { label: "No identificado", value: "ND" },
+          ]}
+          name="reproductive_status"
+          onChange={handleChange}
+          errorMessage={errors.reproductive_status}
+          hasError={errors.reproductive_status && touched.reproductive_status}
         />
         <RadioList
           required

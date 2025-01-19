@@ -64,6 +64,16 @@ export const useSpecimens = (specie) => {
   const addSpecimen = async (newSpecimen = {}, specieId = 0) => {
     newSpecimen.specie = specieId;
 
+    newSpecimen.preparator = {
+      contributor: newSpecimen.preparator.contributor_id,
+      contributor_role: newSpecimen.preparator.contributor_role_id,
+    }
+    newSpecimen.colector = {
+      contributor: newSpecimen.colector.contributor_id,
+      contributor_role: newSpecimen.colector.contributor_role_id,
+    }
+
+
     const response = await apiWrapper.post(
       SPECIMEN_URL.concat("/"),
       newSpecimen

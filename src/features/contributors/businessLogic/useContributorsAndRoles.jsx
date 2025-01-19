@@ -29,7 +29,7 @@ export default function useContributorsAndRoles() {
         body
       );
 
-      if (response.status === HttpStatus.CREATED) {
+      if (response?.status === HttpStatus.CREATED) {
         setContributors((previousContributors) => [
           response.data.data,
           ...previousContributors,

@@ -133,7 +133,7 @@ export default function ContributorAutocomplete({
             onChange={handleFilterChange}
             onFocus={toggleDropdown}
             onKeyDown={handleKeyDown}
-            placeholder="Busque colaboradores"
+            placeholder="Busque contribuidores"
           />
 
           <span

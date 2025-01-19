@@ -51,10 +51,10 @@ export default function Migrate() {
             endButtonLabel="Migrar colección"
             onEndButtonClick={handleSubmit}
           >
-            <div label={"Colaboradores"} id="colaboradores" className="p-2rem">
+            <div label={"Contribuidores"} id="colaboradores" className="p-2rem">
               Antes de comenzar, se recomienda que ya estén registrados en el
               sistema todos los colectores y preparadores cuyos códigos
-              aparezcan en el archivo que desea migrar.
+              aparezcan en el archivo .CSV que desea migrar.
               <br />
               <br />
               Este paso es opcional: el sistema registrará todos los códigos que
@@ -107,63 +107,6 @@ export default function Migrate() {
                 Varias columnas requieren un valor. Si estas columnas están vacías 
                 a la hora de subirlas, el sistema asignará el siguiente valor por defecto:
               </p>
-
-              <table>
-  <caption>
-    Front-end web developer course 2021
-  </caption>
-  <thead>
-    <tr>
-      <th scope="col">Person</th>
-      <th scope="col">Most interest in</th>
-      <th scope="col">Age</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Chris</th>
-      <td>HTML tables</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <th scope="row">Dennis</th>
-      <td>Web accessibility</td>
-      <td>45</td>
-    </tr>
-    <tr>
-      <th scope="row">Sarah</th>
-      <td>JavaScript frameworks</td>
-      <td>29</td>
-    </tr>
-    <tr>
-      <th scope="row">Karen</th>
-      <td>Web performance</td>
-      <td>36</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th scope="row" colSpan="2">Average age</th>
-      <td>33</td>
-    </tr>
-  </tfoot>
-</table>
-
-
-              <ul>
-                <li>SEXO / sex: ND</li>
-                <li>N° EMB / number_embryos: 0</li>
-                <li>EDAD / class_age: ND</li>
-                <li>LT / length_total: 0</li>
-                <li>LC / length_tail: 0</li>
-                <li>LP / length_paw: 0</li>
-                <li>LO / length_ear: 0</li>
-                <li>PESO / weight: 0</li>
-                <li>LW / geographical_coordinates_x: 0</li>
-                <li>LN / geographical_coordinates_y: 0</li>
-                <li>ALTITUD / altitude: 0</li>
-              </ul>
-              <br />
               <br />
               <p>
                 Una vez llenado, SAM_MIGRACION.csv debería verse como el

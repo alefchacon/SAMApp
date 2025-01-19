@@ -64,7 +64,7 @@ export default function SpecimenView({
                 maxWidth={"60%"}
                 iconType={"search"}
                 placeholder={
-                  "Buscar especímenes por IDs, estado, nombre de colaborador(es)..."
+                  "Buscar especímenes por IDs, estado, nombre de contribuidor(es)..."
                 }
               ></TextField>
               {role === ROLE_TYPES.TECHNICAL_PERSON && <AddSpecimenButton />}
