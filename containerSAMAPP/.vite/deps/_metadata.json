@@ -1,0 +1,127 @@
+{
+  "hash": "7158fdb0",
+  "configHash": "53bc8cdf",
+  "lockfileHash": "e3b0c442",
+  "browserHash": "cf5eae84",
+  "optimized": {
+    "@tanstack/react-table": {
+      "src": "../../node_modules/@tanstack/react-table/build/lib/index.mjs",
+      "file": "@tanstack_react-table.js",
+      "fileHash": "270caa31",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "1d085379",
+      "needsInterop": false
+    },
+    "formik": {
+      "src": "../../node_modules/formik/dist/formik.esm.js",
+      "file": "formik.js",
+      "fileHash": "d3482da9",
+      "needsInterop": false
+    },
+    "lodash": {
+      "src": "../../node_modules/lodash/lodash.js",
+      "file": "lodash.js",
+      "fileHash": "8179b49f",
+      "needsInterop": true
+    },
+    "lodash/debounce": {
+      "src": "../../node_modules/lodash/debounce.js",
+      "file": "lodash_debounce.js",
+      "fileHash": "bde0fad5",
+      "needsInterop": true
+    },
+    "moment": {
+      "src": "../../node_modules/moment/dist/moment.js",
+      "file": "moment.js",
+      "fileHash": "1bb4daaa",
+      "needsInterop": false
+    },
+    "moment/dist/locale/es-mx": {
+      "src": "../../node_modules/moment/dist/locale/es-mx.js",
+      "file": "moment_dist_locale_es-mx.js",
+      "fileHash": "c189a19f",
+      "needsInterop": false
+    },
+    "papaparse": {
+      "src": "../../node_modules/papaparse/papaparse.min.js",
+      "file": "papaparse.js",
+      "fileHash": "9c03146e",
+      "needsInterop": true
+    },
+    "prop-types": {
+      "src": "../../node_modules/prop-types/index.js",
+      "file": "prop-types.js",
+      "fileHash": "15d76c30",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "6624e835",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "16ec6160",
+      "needsInterop": true
+    },
+    "react-leaflet": {
+      "src": "../../node_modules/react-leaflet/lib/index.js",
+      "file": "react-leaflet.js",
+      "fileHash": "7f6debbf",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "9d549dd6",
+      "needsInterop": false
+    },
+    "recharts": {
+      "src": "../../node_modules/recharts/es6/index.js",
+      "file": "recharts.js",
+      "fileHash": "b58f1f0a",
+      "needsInterop": false
+    },
+    "utm-latlng": {
+      "src": "../../node_modules/utm-latlng/UTMLatLng.js",
+      "file": "utm-latlng.js",
+      "fileHash": "cd22d155",
+      "needsInterop": true
+    },
+    "yup": {
+      "src": "../../node_modules/yup/index.esm.js",
+      "file": "yup.js",
+      "fileHash": "e4eb92f5",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ZU5SFTFX": {
+      "file": "chunk-ZU5SFTFX.js"
+    },
+    "chunk-5K6EB3MH": {
+      "file": "chunk-5K6EB3MH.js"
+    },
+    "chunk-PXTD2Z26": {
+      "file": "chunk-PXTD2Z26.js"
+    },
+    "chunk-DNZJBLNX": {
+      "file": "chunk-DNZJBLNX.js"
+    },
+    "chunk-AIWGIP6O": {
+      "file": "chunk-AIWGIP6O.js"
+    },
+    "chunk-QTVD6AVW": {
+      "file": "chunk-QTVD6AVW.js"
+    },
+    "chunk-PR4QN5HX": {
+      "file": "chunk-PR4QN5HX.js"
+    }
+  }
+}
