@@ -26,11 +26,12 @@ export function normalizeCatalogue(
     catalogue = SEX,
     defaultValue = "ND"
 ){
+    const upperCaseValue = valueToNormalize.toUpperCase()
     const valid = 
-        Object.values(catalogue).includes(valueToNormalize);
+        Object.values(catalogue).includes(upperCaseValue);
    
     if (valid){
-        return valueToNormalize;
+        return upperCaseValue;
     }
     return defaultValue;
 }

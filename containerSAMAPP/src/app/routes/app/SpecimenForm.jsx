@@ -148,7 +148,6 @@ export default function SpecimenForm({ onResetScroll }) {
                   <ColectForm></ColectForm>
                 </div>
               </Stepper>
-              <button onClick={(e) => console.log(formik.values)}>asdf</button>
           </Form>
         )}
       </Formik>

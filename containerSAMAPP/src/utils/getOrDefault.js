@@ -1,7 +1,21 @@
 import { date } from "yup";
 import moment from 'moment';
 export const getOrDefaultString = (value) => Boolean(value?.trim()) ? value : "ND"; 
-export const getOrDefaultNumber = (value, defaultValue=0) => Boolean(value) ? value : defaultValue;
+export const getOrDefaultNumber = (value, defaultValue=0) => {
+  if (!Boolean(value)){
+    return defaultValue;
+  }
+  if (typeof value === "string" && !Boolean(value.trim())){
+    return defaultValue
+  }
+
+  const parsedValue = Number(value)
+  if (Boolean(parsedValue)){
+    return parsedValue;
+  }
+  
+  return value;
+}
 
 export const getOrDefaultDate = (
   data = {year: 1999, month: 1, day: 1}, 

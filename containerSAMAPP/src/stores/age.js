@@ -1,8 +1,8 @@
 const AGE = Object.freeze({
-  JUVENILE: "Juvenil",
-  ADULT: "Adulto",
-  SUBADULT: "Subadulto",
-  BREASTFEEDING: "Lactante",
+  JUVENILE: "JUVENIL",
+  ADULT: "ADULTO",
+  SUBADULT: "SUBADULTO",
+  BREASTFEEDING: "LACTANTE",
   ND: "ND"
 });
 

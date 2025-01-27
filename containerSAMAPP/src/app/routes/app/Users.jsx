@@ -72,7 +72,7 @@ export default function Users() {
           Estos son los usuarios que administran la colección de mamíferos.{" "}
         </p>
         <Button iconType="person_add" onClick={handleShowTechnicalPersonModal}>
-          Registrar técnico
+          Agregar técnico
         </Button>
       </div>
       <br />

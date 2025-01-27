@@ -29,7 +29,7 @@ export default function TechnicalPersonPanel() {
       <div className="flex-row gap-1rem">
         <p>Estos son los usuarios que administran la colección. </p>
         <Button iconType="person_add" onClick={handleShowTechnicalPersonModal}>
-          Registrar técnico
+          Agregar técnico
         </Button>
       </div>
       <br />

@@ -49,9 +49,9 @@ describe('getOrDefaultNumber', () => {
         const result = getOrDefaultNumber(value);
         expect(result).toBe(0)
     })
-    it('should get the number 0.0 when value is non-numeric string', () => {
+    it('should get non-numeric when value is non-numeric string', () => {
         const value = "asdf";
         const result = getOrDefaultNumber(value);
-        expect(result).toBe(0)
+        expect(result).toBe(value)
     })
 })

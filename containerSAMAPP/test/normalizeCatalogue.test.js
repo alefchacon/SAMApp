@@ -21,17 +21,17 @@ describe('normalizeCatalogue', () => {
         expect(result).toBeTruthy();
         expect(result).toBe(value)
     })
-    it('SEX: returns H when input is H', () => {
-        const value = "H";
+    it('SEX: returns H when input is h', () => {
+        const value = "h";
         const result = normalizeCatalogue(value, SEX, SEX.ND);
         expect(result).toBeTruthy();
-        expect(result).toBe(value)
+        expect(result).toBe(value.toUpperCase())
     })
-    it('AGE: returns Juvenil when input is Juvenil', () => {
+    it('AGE: returns JUVENIL when input is Juvenil', () => {
         const value = "Juvenil";
         const result = normalizeCatalogue(value, AGE, AGE.ND);
         expect(result).toBeTruthy();
-        expect(result).toBe(value)
+        expect(result).toBe(value.toUpperCase())
     })
     // return
     it('SEX: returns N when input is ASDF', () => {

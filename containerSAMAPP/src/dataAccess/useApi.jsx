@@ -26,8 +26,6 @@ export default function useApi() {
   const { showSnackbar } = useSnackbar();
   const { setLoading } = useStatus();
 
-  console.log(import.meta.env.VITE_PATH_PREFIX);
-
   const api = useMemo(() => {
     return axios.create({
       baseURL: `http://localhost:8000/${import.meta.env.VITE_PATH_PREFIX}api/`,
