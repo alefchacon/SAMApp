@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../../../config/env";
+import { serverUrl } from "../../../routing/backendRoutes";
 class Photosheet {
     constructor(
       data,
@@ -12,7 +12,7 @@ class Photosheet {
         if (sheet instanceof File) {
             return URL.createObjectURL(sheet)
         } else {
-            return SERVER_URL.concat(sheet);
+            return serverUrl.concat(sheet);
         }
     }
   }

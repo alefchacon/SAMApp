@@ -1,6 +1,4 @@
 import Button from "../../../components/ui/Button";
-import { ROLE_TYPES } from "../../../stores/roleTypes";
-import { SERVER_URL } from "../../../config/env";
 
 export default function Photosheet({
   photosheet = {

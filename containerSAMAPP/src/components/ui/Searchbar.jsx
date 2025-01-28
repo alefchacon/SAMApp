@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import ButtonIcon from "./ButtonIcon";
 import Button from "./Button";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import ROUTES from "../../stores/routes";
+import ROUTES from "../../routing/frontendRoutes";
 export default function Searchbar(){
     const [focused, setFocused] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();

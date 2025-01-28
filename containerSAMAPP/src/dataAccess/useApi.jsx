@@ -8,16 +8,14 @@ import RefreshForm from "../features/auth/components/RefreshForm";
 import useSession from "../features/auth/businessLogic/useSession";
 import CREDENTIALS_KEYS from "../stores/credentialsKeys";
 import HttpStatus from "../stores/httpStatus";
-import LogInForm from "../features/auth/components/LogInForm";
 import flattenObject from "../utils/flattenObject";
+import { apiUrl } from "../routing/backendRoutes";
 export default function useApi() {
   const {
     deleteSession,
     deleteAccessToken,
     getRefreshToken,
     userIsLoggedIn,
-    getAccessToken,
-    getProfile,
     deleteSessionWithoutReload,
   } = useSession();
   const token = localStorage.getItem(CREDENTIALS_KEYS.TOKEN_ACCESS);
@@ -28,13 +26,13 @@ export default function useApi() {
 
   const api = useMemo(() => {
     return axios.create({
-      baseURL: `http://localhost:8000/${import.meta.env.VITE_PATH_PREFIX}api/`,
+      baseURL: apiUrl,
       headers: {
         "Content-Type": "application/json",
         Authorization: token ? `Bearer ${token}` : "",
       },
     });
-  }, [token]); // Only recreate when token changes
+  }, [token]); // recreate api if token refreshes
 
   const apiWrapper = useMemo(
     () => ({

@@ -2,28 +2,15 @@ services:
   sam_app:
     build:
       context: ./containerSAMAPP
+      dockerfile: Dockerfile
       args:
-        VITE_PATH_PREFIX: sam/
-    environment:
-      - VITE_PATH_PREFIX=sam/
-    restart: always
+        - VITE_APP_BACKEND_URL=http://localhost:8000/
+        - VITE_APP_PATH_PREFIX=sam/
     container_name: sam_app
-    volumes:
-      - ./containerSAMAPP:/code
-  
-  nginx_sam_app:
-    image: nginx
-    build:
-      context: ./containerSAMAPP
-      args:
-        VITE_PATH_PREFIX: sam/
-    environment:
-      - VITE_PATH_PREFIX=sam/
     restart: always
-    volumes:
-      - ./containerSAMAPP/nginx/templates:/etc/nginx/templates
-      - ./containerSAMAPP/dist:/var/www/containerSAMAPP/dist
-    depends_on:
-      - sam_app
     ports:
-      - 8002:80
+      - 3000:3000
+    networks:
+      - network
+networks:
+  network:

@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
 import { useStatus } from "../../../components/contexts/StatusContext.jsx";
-import ROUTES from "../../../stores/routes.js";
+import ROUTES from "../../../routing/frontendRoutes.js";
 import { useModal } from "../../../components/contexts/ModalContext.jsx";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../businessLogic/useAuth.jsx";

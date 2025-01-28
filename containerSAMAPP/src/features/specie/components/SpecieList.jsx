@@ -14,7 +14,7 @@ import useTextFilter from "../../../hooks/useTextFilter";
 
 // API CALLS
 import { ROLE_TYPES } from "../../../stores/roleTypes";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 
 export default function SpecieList({
   role = ROLE_TYPES.VISITOR,

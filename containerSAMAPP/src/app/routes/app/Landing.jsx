@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import Searchbar from "../../../components/ui/Searchbar";
 import Footer from "../../../components/ui/Footer";
-import Button from "../../../components/ui/Button";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 import { Link } from "react-router-dom";
 function SearchBanner({ children }) {  
   return (
@@ -21,7 +19,6 @@ function SearchBanner({ children }) {
 }
 
 export default function Landing({ species, children }) {
-  const navigate = useNavigate();
 
   return (
       <div className="h-100 flex-col">
@@ -73,8 +70,8 @@ export default function Landing({ species, children }) {
           <br/>
           </p>
           <div className="flex-row gap-1rem">
-          <Link to={ROUTES.ABOUT_COLLECTION} className="sam-button primary">Leer más</Link>
-          <Link to={ROUTES.COLLECTION} className="sam-button secondary">Ver colección</Link>
+          <Link to={`/${ROUTES.ABOUT_COLLECTION}`} className="sam-button primary">Leer más</Link>
+          <Link to={`/${ROUTES.COLLECTION}`} className="sam-button secondary">Ver colección</Link>
           </div>
         </div>
       <Footer></Footer>

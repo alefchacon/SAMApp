@@ -8,7 +8,7 @@ import useAccessRequests from "../../../features/accessRequests/businessLogic/us
 import { Link } from "react-router-dom";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator.jsx";
 import { academicSchema } from "../../../features/accessRequests/formikSchemas/accessRequestSchema.js";
-import ROUTES from "../../../stores/routes.js";
+import ROUTES from "../../../routing/frontendRoutes.js";
 import { useNavigate } from "react-router-dom";
 import HttpStatus from "../../../stores/httpStatus.js";
 import Page from "../../../components/ui/Page.jsx";

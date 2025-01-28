@@ -20,7 +20,7 @@ import Header from "../../../components/ui/Header";
 import NoResults from "../../../components/ui/NoResults";
 import ChipLabel from "../../../components/ui/ChipLabel";
 import { useNavigate } from "react-router-dom";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 import editableSpecimenColumns from "../../../features/specimens/EditableSpecimenColumns";
 import Map from "../../../features/mapping/components/Map";
 import { useParams } from "react-router-dom";
@@ -55,7 +55,10 @@ export default function SpecieDashboard({
   );
 
   useEffect(() => {
-    navigate(`${ROUTES.COLLECTION}/${selectedSpecie?.id}`)
+    if (!Boolean(selectedSpecie)){
+      return;
+    }
+    navigate(`/${ROUTES.COLLECTION}/${selectedSpecie?.id}`)
     onSpecieSelection(selectedSpecie);
   }, [selectedSpecie]);
 

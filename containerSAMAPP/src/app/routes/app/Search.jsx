@@ -11,7 +11,7 @@ import Footer from "../../../components/ui/Footer";
 import CardSpecie from "../../../features/specie/components/CardSpecie";
 import Specie from "../../../features/specie/domain/specie";
 import Searchbar from "../../../components/ui/Searchbar";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 export default function Search() {
   const [speciesByName, setSpeciesByName] = useState([]);
   const [speciesByFamily, setSpeciesByFamily] = useState([]);

@@ -6,7 +6,7 @@ import Account from "../../../features/auth/components/Account";
 import Button from "../Button";
 import ProgressBar from "../ProgressBar";
 import Searchbar from "../Searchbar";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 import ButtonIcon from "../ButtonIcon";
 import { useStatus } from "../../contexts/StatusContext";
 import NavLink from "./NavLink";

@@ -5,7 +5,6 @@ import { useModal } from "../../../components/contexts/ModalContext";
 import useApi from "../../../dataAccess/useApi";
 
 import Button from "../../../components/ui/Button";
-import { SERVER_URL } from "../../../config/env";
 import HttpStatus from "../../../stores/httpStatus";
 import Photosheet from "../domain/photosheet";
 

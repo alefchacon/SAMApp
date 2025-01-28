@@ -1,6 +1,6 @@
 import Page from "../../../components/ui/Page"
 import { Link } from "react-router-dom"
-import ROUTES from "../../../stores/routes"
+import ROUTES from "../../../routing/frontendRoutes"
 
 export default function AboutCollection(){
     return (

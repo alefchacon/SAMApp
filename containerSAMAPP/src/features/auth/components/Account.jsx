@@ -7,7 +7,7 @@ import LogInForm from "../components/LogInForm";
 import Dropdown from "../../../components/ui/Dropdown";
 import DropdownItem from "../../../components/ui/DropdownItem";
 import Badge from "../../../components/ui/Badge";
-import ROUTES from "../../../stores/routes";
+import ROUTES from "../../../routing/frontendRoutes";
 import { ROLE_TYPES } from "../../../stores/roleTypes";
 import useSession from "../businessLogic/useSession";
 

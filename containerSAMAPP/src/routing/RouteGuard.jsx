@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { ROLE_TYPES } from "../../stores/roleTypes";
-
-export default function AuthGuard({
+import { ROLE_TYPES } from "../stores/roleTypes";
+import { pathPrefix } from "./backendRoutes";
+export default function RouteGuard({
   children,
   profile,
   technicalPersonOnly,
@@ -13,15 +13,15 @@ export default function AuthGuard({
   const isAuthenticated = profile.role !== ROLE_TYPES.VISITOR;
 
   if (visitorOnly && isAuthenticated) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to={pathPrefix} state={{ from: location }} replace />;
   }
 
   if (technicalPersonOnly && profile.role !== ROLE_TYPES.TECHNICAL_PERSON) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to={pathPrefix} state={{ from: location }} replace />;
   }
 
   if (!isAuthenticated && !visitorOnly) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to={pathPrefix} state={{ from: location }} replace />;
   }
 
   return children;
