@@ -1,0 +1,261 @@
+Messages
+========
+
+__init__.py
+  Line: 1
+    pylint: django-not-configured / Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured
+
+admin.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+
+models.py
+  Line: 2
+    pylint: wrong-import-order / standard import "from re import T" should be placed before "from django.db import models"
+    pylint: unused-import / Unused T imported from re
+  Line: 3
+    pylint: unused-import / Unused RegexValidator imported from django.core.validators
+  Line: 4
+    pylint: imported-auth-user / User model imported from django.contrib.auth.models
+  Line: 6
+    pylint: pointless-string-statement / String statement has no effect
+  Line: 13
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 16
+    pycodestyle: E225 / missing whitespace around operator (col 21)
+  Line: 19
+    pycodestyle: E225 / missing whitespace around operator (col 10)
+  Line: 20
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 29
+    pycodestyle: E231 / missing whitespace after ',' (col 46)
+    pycodestyle: E225 / missing whitespace around operator (col 13)
+  Line: 30
+    pycodestyle: E231 / missing whitespace after ',' (col 45)
+    pycodestyle: E225 / missing whitespace around operator (col 13)
+  Line: 36
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+  Line: 38
+    pylint: trailing-newlines / Trailing newlines
+
+serializers.py
+  Line: 1
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 3
+    pylint: imported-auth-user / User model imported from django.contrib.auth.models
+    pylint: wrong-import-order / third party import "from django.contrib.auth.models import User" should be placed before "from . import models"
+  Line: 4
+    pylint: wrong-import-order / third party import "from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator" should be placed before "from . import models"
+    pylint: unused-import / Unused MinValueValidator imported from django.core.validators
+  Line: 5
+    pylint: wrong-import-order / third party import "from principal import regexs" should be placed before "from . import models"
+  Line: 10
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 11
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 14
+    pycodestyle: E225 / missing whitespace around operator (col 21)
+  Line: 15
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 16
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 20
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 21
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 25
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 26
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 29
+    pycodestyle: E225 / missing whitespace around operator (col 10)
+  Line: 30
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 31
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 34
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 35
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 36
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 40
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 41
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 45
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 46
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 50
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 51
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 54
+    pycodestyle: E501 / line too long (107 > 99 characters) (col 100)
+  Line: 55
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 56
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 57
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+    pycodestyle: E231 / missing whitespace after ',' (col 22)
+  Line: 58
+    pycodestyle: E127 / continuation line over-indented for visual indent (col 19)
+  Line: 60
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 62
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 63
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pycodestyle: E231 / missing whitespace after ',' (col 50)
+    pycodestyle: E225 / missing whitespace around operator (col 12)
+  Line: 64
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pycodestyle: E231 / missing whitespace after ',' (col 49)
+    pycodestyle: E225 / missing whitespace around operator (col 12)
+  Line: 65
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 66
+    pycodestyle: E501 / line too long (106 > 99 characters) (col 100)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 68
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 69
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 70
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+    pycodestyle: E231 / missing whitespace after ',' (col 22)
+  Line: 71
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+
+urls.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+  Line: 2
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 3
+    pylint: ungrouped-imports / Imports from package django are not grouped
+  Line: 8
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+
+views.py
+  Line: 5
+    pylint: import-error / Unable to import 'rest_framework.exceptions'
+  Line: 9
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: wrong-import-order / third party import "from rest_framework import viewsets" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 10
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: wrong-import-order / third party import "from rest_framework import status, permissions" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 11
+    pylint: ungrouped-imports / Imports from package django are not grouped
+    pylint: wrong-import-order / third party import "from django.shortcuts import get_object_or_404" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 12
+    pycodestyle: E271 / multiple spaces after keyword (col 39)
+    pylint: import-error / Unable to import 'rest_framework.permissions'
+    pylint: ungrouped-imports / Imports from package rest_framework are not grouped
+    pylint: wrong-import-order / third party import "from rest_framework.permissions import IsAuthenticated" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 13
+    pylint: import-error / Unable to import 'rest_framework_simplejwt.authentication'
+    pylint: wrong-import-order / third party import "from rest_framework_simplejwt.authentication import JWTAuthentication" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 14
+    pylint: import-error / Unable to import 'rest_framework.views'
+    pylint: ungrouped-imports / Imports from package rest_framework are not grouped
+    pylint: wrong-import-order / third party import "from rest_framework.views import exception_handler" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 15
+    pylint: import-error / Unable to import 'drf_spectacular.utils'
+    pylint: wrong-import-order / third party import "from drf_spectacular.utils import extend_schema" should be placed before "from .serializers import AcademicSerializer, TechnicalPersonSerializer"
+  Line: 17
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 22
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 25
+    pylint: no-else-return / Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (col 8)
+  Line: 29
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 40
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 42
+    pycodestyle: E122 / continuation line missing indentation or outdented (col 5)
+  Line: 54
+    pycodestyle: E122 / continuation line missing indentation or outdented (col 5)
+  Line: 62
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 63
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 64
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 65
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 72
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 74
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 75
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 30)
+  Line: 79
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 90
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 91
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 32)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 30)
+  Line: 95
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+  Line: 97
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 15)
+  Line: 101
+    pycodestyle: E225 / missing whitespace around operator (col 23)
+  Line: 105
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 116
+    pycodestyle: N802 / function name 'technicalPerson_list' should be lowercase (col 10)
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+    pylint: invalid-name / Method name "technicalPerson_list" doesn't conform to snake_case naming style (col 4)
+  Line: 121
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 122
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 123
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 124
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 131
+    pycodestyle: E501 / line too long (104 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ':' (col 43)
+  Line: 133
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 134
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 30)
+  Line: 138
+    pycodestyle: E501 / line too long (117 > 99 characters) (col 100)
+  Line: 149
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 150
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 32)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 30)
+  Line: 152
+    pycodestyle: N806 / variable 'technicalPerson' in function should be lowercase (col 14)
+    pylint: invalid-name / Variable name "technicalPerson" doesn't conform to snake_case naming style (col 12)
+  Line: 154
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+  Line: 156
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 15)
+
+
+
+Check Information
+=================
+         Started: 2023-12-11 17:00:36.058095
+        Finished: 2023-12-11 17:00:37.938414
+      Time Taken: 1.88 seconds
+       Formatter: grouped
+        Profiles: default, strictness_high, strictness_veryhigh, no_doc_warnings, no_test_warnings, no_member_warnings
+      Strictness: high
+  Libraries Used: django
+       Tools Run: dodgy, mccabe, profile-validator, pycodestyle, pyflakes, pylint
+  Messages Found: 131
+

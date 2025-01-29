@@ -1,0 +1,61 @@
+services:
+  sam_server:
+    env_file:
+      - container-SAMUV-server/principal/settings.env
+    environment:
+      - PATH_PREFIX=${PATH_PREFIX}
+    build:
+      context: ./container-SAMUV-server
+      dockerfile: Dockerfile
+    restart: always
+    container_name: sam_server
+    volumes:
+      - ./container-SAMUV-Server:/code
+      - ./pruebas.sql:/exampledata/pruebas.sql
+    depends_on:
+      - bd_mammalogy_colection
+
+  bd_mammalogy_colection:
+    image: postgres:15.0
+    container_name: bd_mammalogy_colection
+    restart: always
+    env_file:
+      - bd.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./pruebas.sql:/exampledata/pruebas.sql
+     
+  nginx_sam_server:
+    image: nginx
+    restart: always
+    volumes:
+      - ./container-SAMUV-Server/nginx/templates:/etc/nginx/templates
+      - ./container-SAMUV-Server/media:/media
+    depends_on:
+      - sam_server
+    ports:
+      - 8000:80
+    environment:
+      PATH_PREFIX: ${PATH_PREFIX}
+
+  sam_client:
+    build:
+      context: ./container-SAMUV-client
+      dockerfile: Dockerfile
+      args:
+        - VITE_APP_BACKEND_URL=${BACKEND_URL}
+        - VITE_APP_PATH_PREFIX=${PATH_PREFIX}
+    container_name: sam_client
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - network
+    depends_on:
+      - nginx_sam_server
+
+networks:
+  network:
+
+volumes:
+  pg_data:

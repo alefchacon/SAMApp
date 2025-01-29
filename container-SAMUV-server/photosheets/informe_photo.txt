@@ -1,0 +1,152 @@
+Messages
+========
+
+__init__.py
+  Line: 1
+    pylint: django-not-configured / Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured
+
+admin.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+
+models.py
+  Line: 10
+    pycodestyle: E225 / missing whitespace around operator (col 16)
+
+serializers.py
+  Line: 2
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 4
+    pylint: ungrouped-imports / Imports from package django are not grouped
+    pylint: wrong-import-order / third party import "from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator" should be placed before "from . import models"
+    pylint: unused-import / Unused MinValueValidator imported from django.core.validators
+  Line: 5
+    pylint: wrong-import-order / third party import "from principal import regexs" should be placed before "from . import models"
+  Line: 6
+    pylint: wrong-import-order / third party import "from PIL import Image" should be placed before "from . import models"
+    pylint: unused-import / Unused Image imported from PIL
+  Line: 17
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 19
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 6)
+  Line: 20
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 21
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 22
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 23
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 24
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 6)
+    pylint: invalid-name / Variable name "e" doesn't conform to snake_case naming style (col 5)
+  Line: 25
+    pylint: raise-missing-from / Consider explicitly re-raising using 'raise ValidationError(f'Error creando la ficha fotográfica: {e}') from e' (col 8)
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 26
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 29
+    pycodestyle: E231 / missing whitespace after ',' (col 23)
+  Line: 32
+    pylint: trailing-newlines / Trailing newlines
+
+urls.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+  Line: 2
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 3
+    pylint: ungrouped-imports / Imports from package django are not grouped
+  Line: 8
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+
+views.py
+  Line: 1
+    pylint: unused-import / Unused render imported from django.shortcuts
+  Line: 2
+    pylint: import-error / Unable to import 'rest_framework.exceptions'
+  Line: 4
+    pylint: ungrouped-imports / Imports from package django are not grouped
+  Line: 7
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: ungrouped-imports / Imports from package rest_framework are not grouped
+    pylint: wrong-import-order / third party import "from rest_framework import viewsets, status, permissions" should be placed before "from .serializers import PhotoSheetSerializer"
+  Line: 8
+    pylint: ungrouped-imports / Imports from package django are not grouped
+    pylint: wrong-import-order / third party import "from django.shortcuts import get_object_or_404" should be placed before "from .serializers import PhotoSheetSerializer"
+  Line: 9
+    pylint: import-error / Unable to import 'rest_framework_simplejwt.authentication'
+    pylint: wrong-import-order / third party import "from rest_framework_simplejwt.authentication import JWTAuthentication" should be placed before "from .serializers import PhotoSheetSerializer"
+  Line: 10
+    pylint: import-error / Unable to import 'rest_framework.permissions'
+    pylint: ungrouped-imports / Imports from package rest_framework are not grouped
+    pylint: wrong-import-order / third party import "from rest_framework.permissions import IsAuthenticated, AllowAny" should be placed before "from .serializers import PhotoSheetSerializer"
+    pylint: unused-import / Unused AllowAny imported from rest_framework.permissions
+  Line: 11
+    pylint: import-error / Unable to import 'rest_framework.decorators'
+    pylint: wrong-import-order / third party import "from rest_framework.decorators import permission_classes" should be placed before "from .serializers import PhotoSheetSerializer"
+    pylint: unused-import / Unused permission_classes imported from rest_framework.decorators
+  Line: 12
+    pylint: import-error / Unable to import 'rest_framework.views'
+    pylint: wrong-import-order / third party import "from rest_framework.views import exception_handler" should be placed before "from .serializers import PhotoSheetSerializer"
+  Line: 13
+    pylint: import-error / Unable to import 'rest_framework.response'
+    pylint: wrong-import-order / third party import "from rest_framework.response import Response" should be placed before "from .serializers import PhotoSheetSerializer"
+  Line: 15
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 17
+    pyflakes: F811 / redefinition of unused 'permission_classes' from line 11 (col 5)
+  Line: 20
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 32
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 43
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 45
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 46
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 47
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 48
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 49
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 51
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 52
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 53
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 60
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 63
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 30)
+  Line: 67
+    pycodestyle: E501 / line too long (118 > 99 characters) (col 100)
+  Line: 87
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 88
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 32)
+    pycodestyle: E303 / too many blank lines (2) (col 5)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 30)
+  Line: 90
+    pycodestyle: N806 / variable 'photoSheet' in function should be lowercase (col 14)
+    pylint: invalid-name / Variable name "photoSheet" doesn't conform to snake_case naming style (col 12)
+  Line: 92
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+
+
+
+Check Information
+=================
+         Started: 2023-12-11 16:56:31.300481
+        Finished: 2023-12-11 16:56:33.271903
+      Time Taken: 1.97 seconds
+       Formatter: grouped
+        Profiles: default, strictness_high, strictness_veryhigh, no_doc_warnings, no_test_warnings, no_member_warnings
+      Strictness: high
+  Libraries Used: django
+       Tools Run: dodgy, mccabe, profile-validator, pycodestyle, pyflakes, pylint
+  Messages Found: 71
+

@@ -1,0 +1,236 @@
+{
+"species": [{
+        "scientific_name": "mexicana",
+        "class_specie ": "Mammalia",
+        " orden": "Didelphimorphia",
+        "family": "Didelphidae",
+        "gender": "Marmosa",
+        "epithet ": "Marmosa mexicana",
+        "subspecie": "mexicana"
+    },
+    {
+        "scientific_name": "soricina",
+        "class_specie ": "Mammalia",
+        " orden": "Chiroptera",
+        "family": "Phyllostomidae",
+        "gender": "Glossophaga",
+        "epithet ": "Glossophaga soricina",
+        "subspecie": "leachii"
+    },
+    {
+        "scientific_name": "underwoodi",
+        "class_specie ": "Mammalia",
+        " orden": "Chiroptera",
+        "family": "Phyllostomidae",
+        "gender": "Hylonycteris",
+        "epithet ": "Hylonycteris underwoodi",
+        "subspecie": "underwoodi"
+    }],
+
+    "specimens":[
+        {
+            "catalog_id":"IIB-UV MAM-0001",
+            "status":"Publicado",
+            "length_total":"",
+            "length_ear":"",
+            "length_paw":"",
+            "length_tail":"",
+            "age":"",
+            "sex":"M",
+            "weight":"",
+            "number_embryos":"",
+            "colection_date":"11/04/1986", 
+            "hour":"",
+            "comment":"",
+            "specie":1
+        },
+        {
+            "catalog_id":"IIB-UV MAM-0002",
+            "status":"Publicado",
+            "length_total":"",
+            "length_ear":"",
+            "length_paw":"",
+            "length_tail":"",
+            "age":"",
+            "sex":"M",
+            "weight":"",
+            "number_embryos":"",
+            "colection_date":"09/04/1986", 
+            "hour":"",
+            "comment":"",
+            "specie":null
+        },
+
+        {
+            "catalog_id":"IIB-UV MAM-9001",
+            "status":"Publicado",
+            "length_total":"",
+            "length_ear":"",
+            "length_paw":"",
+            "length_tail":"",
+            "age":"",
+            "sex":"M",
+            "weight":"",
+            "number_embryos":"",
+            "colection_code": "IIB-UV MAM",
+            "colection_date":"09/04/1986", 
+            "hour":"",
+            "comment":"",
+            "specie":null
+        }
+    ],
+
+    "locations":[
+        {
+            "coordinates_cartesian_plane":{
+                "type": "Point",
+                "coordinates": [50.12, 112.34]
+            },
+            "geographical_coordinates":{
+                "type": "Point",
+                "coordinates": [309322.34, 2031541.64]
+            },
+            "utm_region": "15Q",
+            "msnm_google":555,
+            "altitude":600,
+            "institute_code": "IIB-UV",
+            "institute":"Instituto de Investigaciones Biologicas, UV",
+            "specific_location":"Gpe. Victoria",
+            "municipality":"Soteapan",
+            "state":"Veracruz",
+            "country":"Mexico",
+            "specimen": 1
+
+        },
+        {
+            "coordinates_cartesian_plane":{
+                "type": "Point",
+                "coordinates": [50.12, 112.34]
+            },
+            "geographical_coordinates":{
+                "type": "Point",
+                "coordinates": [312699.31, 2031622.81]
+            },
+            "utm_region": "15Q",
+            "msnm_google":274,
+            "altitude":300,
+            "institute_code": "IIB-UV",
+            "institute":"Instituto de Investigaciones Biologicas, UV",
+            "specific_location":"Magallanes",
+            "municipality":"Soteapan",
+            "state":"Veracruz",
+            "country":"Mexico",
+            "specimen": null
+
+        },
+        {
+            "coordinates_cartesian_plane":{
+                "type": "Point",
+                "coordinates": [50.12, 112.34]
+            },
+            "geographical_coordinates":{
+                "type": "Point",
+                "coordinates": [312699.31, 2031622.81]
+            },
+            "utm_region": "15Q",
+            "msnm_google":274,
+            "altitude":300,
+            "institute_code": "IIB-UV",
+            "institute":"Instituto de Investigaciones Biologicas, UV",
+            "specific_location":"Magallanes",
+            "municipality":"Soteapan",
+            "state":"Veracruz",
+            "country":"Mexico",
+            "specimen": null
+
+        }
+    ],
+    "contributors":[
+        {
+            "name":"A. Gonzalez Ch."
+        },
+        {
+            "name":"B. Hernandez "
+        },
+        {
+            "name":"C. Torres"
+        }
+    ],
+    "academic": [
+        {
+            "names": "Jose",
+            "father_last_name":"Hernandez",
+            "mother_last_name": "Rodriguez",
+            "state": "Veracruz",
+            "major": "Doctorado",
+            "city": "Xalapa",
+            "college": "Universidad Veracruzana",
+            "position": "Maestro tiempo completo",
+            "degree": "Biología agropecuaria",
+            "user": null
+        },
+        {
+            "names": "Catalina",
+            "father_last_name":"Rosales",
+            "mother_last_name": "Peréz",
+            "state": "Veracruz",
+            "major": "Maestría",
+            "city": "Xalapa",
+            "college": "Universidad Veracruzana",
+            "position": "SNI 1",
+            "degree": "Biología agropecuaria",
+            "user": null
+        },
+        {
+            "names": "Dolores",
+            "father_last_name":"Cerdan",
+            "mother_last_name": "Hernandez",
+            "state": "Veracruz",
+            "major": "Doctorado",
+            "city": "Xalapa",
+            "college": "Universidad Veracruzana",
+            "position": "SNI 2",
+            "degree": "Biología ",
+            "user": null
+        }
+    ],
+    "technical_person": [
+        {
+            "fullname": "Christian Delfín",
+            "position": "Lider del Cuerpo Academico",
+            "nomination":"Universidad Veracruzana",
+            "user": null
+        },
+        {
+            "fullname": "Nadia Guitierrez",
+            "position": "Personal técnico",
+            "nomination":"Universidad Veracruzana",
+            "user": null
+        },
+        {
+            "fullname": "Karen Hernandez",
+            "position": "Personal técnico",
+            "nomination":"Universidad Veracruzana",
+            "user": null
+        }
+    ],
+    "photosheets": [
+        {
+            "description":"Ave plumaje amarillo",
+            "sheet": "/ruta/al/archivo/imagen.jpg"
+        },
+        {
+            "description":"Ave plumaje café",
+            "sheet": "/ruta/al/archivo/imagen.jpg"
+        },
+        {
+            "description":"Lagartija ",
+            "sheet": "/ruta/al/archivo/imagen.jpg"
+        }
+    ],
+    "users": [
+        {
+            
+        }
+    ]
+}
