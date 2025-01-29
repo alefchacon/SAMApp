@@ -1,0 +1,31 @@
+Messages
+========
+
+asgi.py
+  Line: 1
+    pylint: django-not-configured / Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured
+
+urls.py
+  Line: 3
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 4
+    pylint: import-error / Unable to import 'rest_framework.documentation'
+  Line: 5
+    pylint: ungrouped-imports / Imports from package django are not grouped
+  Line: 7
+    pylint: import-error / Unable to import 'drf_spectacular.views'
+
+
+
+Check Information
+=================
+         Started: 2023-12-11 19:58:24.530134
+        Finished: 2023-12-11 19:58:26.168238
+      Time Taken: 1.64 seconds
+       Formatter: grouped
+        Profiles: default, strictness_high, strictness_veryhigh, no_doc_warnings, no_test_warnings, no_member_warnings
+      Strictness: high
+  Libraries Used: django
+       Tools Run: dodgy, mccabe, profile-validator, pycodestyle, pyflakes, pylint
+  Messages Found: 5
+

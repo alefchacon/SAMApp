@@ -1,0 +1,14 @@
+
+djangorestframework-simplejwt==5.2.2
+drf-spectacular==0.26.1
+drf-extensions==0.7.1
+djangorestframework==3.14.0
+django-model-utils==4.0.0
+gunicorn==21.0.1
+python-dotenv==1.0.0
+psycopg2==2.9.6
+PyJWT==2.8.0
+Pillow==9.5.0
+django-cors-headers==3.14.0
+coreapi
+whitenoise==6.6.0

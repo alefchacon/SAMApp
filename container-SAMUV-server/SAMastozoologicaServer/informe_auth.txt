@@ -1,0 +1,64 @@
+Messages
+========
+
+__init__.py
+  Line: 1
+    pylint: django-not-configured / Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured
+    pylint: invalid-name / Module name "SAMastozoologicaServer" doesn't conform to snake_case naming style
+
+admin.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+
+apps.py
+  Line: 3
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 6
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 7
+    pycodestyle: E305 / expected 2 blank lines after class or function definition, found 1 (col 1)
+    pylint: pointless-string-statement / String statement has no effect
+
+serializers.py
+  Line: 1
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 2
+    pylint: imported-auth-user / User model imported from django.contrib.auth.models
+
+urls.py
+  Line: 1
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 4
+    pylint: reimported / Reimport 'path' (imported line 2)
+    pylint: wrong-import-order / third party import "from django.urls import path" should be placed before "from . import views"
+    pyflakes: F811 / redefinition of unused 'path' from line 2 (col 1)
+  Line: 5
+    pylint: import-error / Unable to import 'rest_framework_simplejwt.views'
+    pylint: wrong-import-order / third party import "from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView" should be placed before "from . import views"
+  Line: 21
+    pylint: trailing-newlines / Trailing newlines
+
+views.py
+  Line: 56
+    pylint: broad-exception-caught / Catching too general exception Exception (col 19)
+    pylint: invalid-name / Variable name "e" doesn't conform to snake_case naming style (col 12)
+  Line: 85
+    pylint: raise-missing-from / Consider explicitly re-raising using 'except KeyError as exc' and 'raise ValidationError({'detail': 'Se deben proporcionar las contraseñas antiguas y nuevas.'}) from exc' (col 12)
+    pycodestyle: E501 / line too long (105 > 99 characters) (col 100)
+  Line: 98
+    pylint: trailing-newlines / Trailing newlines
+
+
+
+Check Information
+=================
+         Started: 2023-12-13 22:47:52.204835
+        Finished: 2023-12-13 22:47:53.569069
+      Time Taken: 1.36 seconds
+       Formatter: grouped
+        Profiles: default, strictness_high, strictness_veryhigh, no_doc_warnings, no_test_warnings, no_member_warnings
+      Strictness: high
+  Libraries Used: django
+       Tools Run: dodgy, mccabe, profile-validator, pycodestyle, pyflakes, pylint
+  Messages Found: 41
+

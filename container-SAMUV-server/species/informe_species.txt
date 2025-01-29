@@ -1,0 +1,792 @@
+Messages
+========
+
+__init__.py
+  Line: 1
+    pylint: django-not-configured / Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured
+
+admin.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+
+models.py
+  Line: 11
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+  Line: 13
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 14
+    pycodestyle: E302 / expected 2 blank lines, found 3 (col 1)
+  Line: 23
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 24
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 27
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 28
+    pycodestyle: E225 / missing whitespace around operator (col 11)
+  Line: 29
+    pycodestyle: E231 / missing whitespace after ',' (col 69)
+    pycodestyle: E225 / missing whitespace around operator (col 17)
+  Line: 30
+    pycodestyle: E231 / missing whitespace after ',' (col 67)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 31
+    pycodestyle: E231 / missing whitespace after ',' (col 67)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 32
+    pycodestyle: E231 / missing whitespace after ',' (col 68)
+    pycodestyle: E225 / missing whitespace around operator (col 16)
+  Line: 33
+    pycodestyle: E225 / missing whitespace around operator (col 8)
+  Line: 34
+    pycodestyle: E225 / missing whitespace around operator (col 8)
+  Line: 35
+    pycodestyle: E231 / missing whitespace after ',' (col 63)
+    pycodestyle: E225 / missing whitespace around operator (col 11)
+  Line: 36
+    pycodestyle: E225 / missing whitespace around operator (col 19)
+  Line: 37
+    pycodestyle: E225 / missing whitespace around operator (col 19)
+  Line: 39
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 40
+    pycodestyle: E225 / missing whitespace around operator (col 12)
+  Line: 41
+    pycodestyle: E501 / line too long (100 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 90)
+  Line: 42
+    pycodestyle: E501 / line too long (100 > 99 characters) (col 100)
+  Line: 53
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 54
+    pycodestyle: E225 / missing whitespace around operator (col 16)
+  Line: 55
+    pycodestyle: E225 / missing whitespace around operator (col 13)
+  Line: 56
+    pycodestyle: E222 / multiple spaces after operator (col 20)
+    pycodestyle: E225 / missing whitespace around operator (col 19)
+  Line: 57
+    pycodestyle: E222 / multiple spaces after operator (col 15)
+    pycodestyle: E225 / missing whitespace around operator (col 14)
+  Line: 58
+    pycodestyle: E225 / missing whitespace around operator (col 22)
+  Line: 59
+    pycodestyle: E225 / missing whitespace around operator (col 17)
+  Line: 60
+    pycodestyle: E225 / missing whitespace around operator (col 10)
+  Line: 61
+    pycodestyle: E225 / missing whitespace around operator (col 12)
+  Line: 62
+    pycodestyle: E501 / line too long (114 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 92)
+    pycodestyle: E225 / missing whitespace around operator (col 13)
+  Line: 67
+    pycodestyle: E303 / too many blank lines (4) (col 1)
+  Line: 69
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 74
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 76
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 80
+    pycodestyle: E225 / missing whitespace around operator (col 21)
+
+serializers.py
+  Line: 1
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 4
+    pycodestyle: E501 / line too long (104 > 99 characters) (col 100)
+  Line: 5
+    pylint: ungrouped-imports / Imports from package django are not grouped
+    pylint: wrong-import-order / third party import "from django.utils import timezone" should be placed before "from species.models import Contributor, ContributorRole, ContributorSpecimen, Location, Specimen, Specie"
+  Line: 7
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 9
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 10
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+    pycodestyle: E231 / missing whitespace after ',' (col 22)
+  Line: 11
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 17)
+  Line: 13
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 14
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 16
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 17
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 19
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 21
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 22
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 24
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 26
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 27
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 29
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 31
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 32
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 34
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 36
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 37
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 39
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 41
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 42
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 44
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 46
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 47
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 49
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 50
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 52
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 53
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 55
+    pycodestyle: E303 / too many blank lines (5) (col 1)
+  Line: 61
+    pycodestyle: E501 / line too long (147 > 99 characters) (col 100)
+  Line: 62
+    pycodestyle: E501 / line too long (145 > 99 characters) (col 100)
+  Line: 63
+    pycodestyle: E501 / line too long (143 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 112)
+  Line: 64
+    pycodestyle: E501 / line too long (144 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 113)
+  Line: 65
+    pycodestyle: E501 / line too long (102 > 99 characters) (col 100)
+  Line: 67
+    pycodestyle: E501 / line too long (140 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 124)
+  Line: 68
+    pycodestyle: E501 / line too long (112 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 96)
+  Line: 78
+    pycodestyle: E501 / line too long (102 > 99 characters) (col 100)
+  Line: 80
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 82
+    pycodestyle: E201 / whitespace after '[' (col 19)
+  Line: 83
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 84
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 85
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 86
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 87
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 88
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 89
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+  Line: 90
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 19)
+    pycodestyle: E231 / missing whitespace after ',' (col 27)
+  Line: 91
+    pycodestyle: E124 / closing bracket does not match visual indentation (col 17)
+  Line: 97
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 5)
+  Line: 98
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 100
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 101
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 102
+    pycodestyle: E225 / missing whitespace around operator (col 14)
+  Line: 103
+    pycodestyle: E231 / missing whitespace after ',' (col 22)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 106
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 109
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 111
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 114
+    pycodestyle: E225 / missing whitespace around operator (col 9)
+  Line: 115
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 5)
+  Line: 116
+    pycodestyle: E225 / missing whitespace around operator (col 14)
+  Line: 117
+    pycodestyle: E231 / missing whitespace after ',' (col 22)
+    pycodestyle: E225 / missing whitespace around operator (col 15)
+  Line: 128
+    pycodestyle: E231 / missing whitespace after ',' (col 58)
+  Line: 133
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 6)
+  Line: 134
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 136
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 138
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 139
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 6)
+  Line: 140
+    pycodestyle: E126 / continuation line over-indented for hanging indent (col 13)
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 142
+    pycodestyle: E121 / continuation line under-indented for hanging indent (col 9)
+  Line: 143
+    pycodestyle: E203 / whitespace before ',' (col 91)
+  Line: 144
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+    pycodestyle: E231 / missing whitespace after ',' (col 9)
+  Line: 145
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 149
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 150
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 154
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 9)
+  Line: 155
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 19)
+  Line: 163
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 164
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 165
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 166
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 167
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 168
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 169
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 170
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 171
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 172
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 173
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 174
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 175
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 176
+    pycodestyle: E128 / continuation line under-indented for visual indent (col 13)
+  Line: 177
+    pycodestyle: E124 / closing bracket does not match visual indentation (col 9)
+
+urls.py
+  Line: 1
+    pylint: unused-import / Unused admin imported from django.contrib
+  Line: 2
+    pylint: import-error / Unable to import 'rest_framework'
+  Line: 3
+    pylint: ungrouped-imports / Imports from package django are not grouped
+  Line: 8
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+  Line: 14
+    pycodestyle: E501 / line too long (108 > 99 characters) (col 100)
+  Line: 19
+    pycodestyle: E501 / line too long (155 > 99 characters) (col 100)
+  Line: 20
+    pycodestyle: E501 / line too long (158 > 99 characters) (col 100)
+  Line: 21
+    pycodestyle: E501 / line too long (123 > 99 characters) (col 100)
+  Line: 22
+    pycodestyle: E501 / line too long (124 > 99 characters) (col 100)
+  Line: 23
+    pycodestyle: E501 / line too long (118 > 99 characters) (col 100)
+  Line: 24
+    pycodestyle: E501 / line too long (114 > 99 characters) (col 100)
+  Line: 25
+    pycodestyle: E501 / line too long (118 > 99 characters) (col 100)
+  Line: 26
+    pycodestyle: E501 / line too long (154 > 99 characters) (col 100)
+  Line: 27
+    pycodestyle: E501 / line too long (155 > 99 characters) (col 100)
+
+views.py
+  Line: 4
+    pylint: unused-import / Unused ObjectDoesNotExist imported from django.core.exceptions
+  Line: 5
+    pylint: import-error / Unable to import 'rest_framework.response'
+  Line: 6
+    pylint: import-error / Unable to import 'rest_framework.decorators'
+    pylint: unused-import / Unused api_view imported from rest_framework.decorators
+  Line: 7
+    pylint: import-error / Unable to import 'rest_framework.response'
+    pylint: reimported / Reimport 'Response' (imported line 5)
+    pyflakes: F811 / redefinition of unused 'Response' from line 5 (col 1)
+  Line: 8
+    pylint: import-error / Unable to import 'rest_framework.exceptions'
+  Line: 9
+    pycodestyle: E501 / line too long (161 > 99 characters) (col 100)
+    pycodestyle: E231 / missing whitespace after ',' (col 112)
+  Line: 11
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: wrong-import-order / third party import "from rest_framework import viewsets" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 12
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: wrong-import-order / third party import "from rest_framework import status" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 13
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: wrong-import-order / third party import "from rest_framework import permissions" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 14
+    pylint: ungrouped-imports / Imports from package django are not grouped
+    pylint: wrong-import-order / third party import "from django.db.models import Q" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+    pylint: unused-import / Unused Q imported from django.db.models
+  Line: 15
+    pylint: wrong-import-order / third party import "from django.shortcuts import get_object_or_404" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 16
+    pylint: import-error / Unable to import 'rest_framework.permissions'
+    pylint: ungrouped-imports / Imports from package rest_framework are not grouped
+    pylint: wrong-import-order / third party import "from rest_framework.permissions import AllowAny, IsAuthenticated" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 17
+    pylint: import-error / Unable to import 'rest_framework.decorators'
+    pylint: wrong-import-order / third party import "from rest_framework.decorators import action" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 18
+    pylint: import-error / Unable to import 'rest_framework.views'
+    pylint: wrong-import-order / third party import "from rest_framework.views import exception_handler" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 19
+    pylint: import-error / Unable to import 'rest_framework'
+    pylint: reimported / Reimport 'viewsets' (imported line 11)
+    pylint: wrong-import-order / third party import "from rest_framework import viewsets" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+    pyflakes: F811 / redefinition of unused 'viewsets' from line 11 (col 1)
+  Line: 20
+    pylint: import-error / Unable to import 'rest_framework_simplejwt.authentication'
+    pylint: wrong-import-order / third party import "from rest_framework_simplejwt.authentication import JWTAuthentication" should be placed before "from .serializers import SpecieSerializer, SpecimenSerializer, ContributorSerializer, ContributorRoleSerializer, LocationSerializer, ContributorSpecimenSerializer"
+  Line: 22
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 30
+    pylint: no-else-return / Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (col 8)
+    pycodestyle: E501 / line too long (147 > 99 characters) (col 100)
+  Line: 46
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 47
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 27)
+  Line: 53
+    pycodestyle: E703 / statement ends with a semicolon (col 67)
+    pycodestyle: E225 / missing whitespace around operator (col 25)
+  Line: 55
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 57
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 63
+    pycodestyle: E501 / line too long (125 > 99 characters) (col 100)
+  Line: 68
+    pycodestyle: E303 / too many blank lines (2) (col 9)
+  Line: 71
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 76
+    pycodestyle: E501 / line too long (125 > 99 characters) (col 100)
+  Line: 81
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 85
+    pycodestyle: E501 / line too long (122 > 99 characters) (col 100)
+  Line: 90
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 92
+    pycodestyle: E501 / line too long (104 > 99 characters) (col 100)
+  Line: 94
+    pycodestyle: E501 / line too long (133 > 99 characters) (col 100)
+  Line: 97
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 110
+    pycodestyle: E303 / too many blank lines (2) (col 5)
+  Line: 111
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 117
+    pycodestyle: E501 / line too long (102 > 99 characters) (col 100)
+  Line: 119
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 120
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 30)
+  Line: 124
+    pycodestyle: E501 / line too long (108 > 99 characters) (col 100)
+  Line: 136
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 32)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 30)
+  Line: 137
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 141
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+  Line: 143
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 15)
+  Line: 144
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 146
+    pycodestyle: N803 / argument name 'idSpecie' should be lowercase (col 51)
+    pylint: invalid-name / Argument name "idSpecie" doesn't conform to snake_case naming style (col 49)
+  Line: 148
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 154
+    pycodestyle: E122 / continuation line missing indentation or outdented (col 9)
+  Line: 155
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 157
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 159
+    pycodestyle: N803 / argument name 'idSpecie' should be lowercase (col 52)
+    pylint: invalid-name / Argument name "idSpecie" doesn't conform to snake_case naming style (col 50)
+  Line: 160
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 170
+    pycodestyle: E122 / continuation line missing indentation or outdented (col 9)
+  Line: 171
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 173
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 175
+    pycodestyle: N803 / argument name 'idSpecie' should be lowercase (col 39)
+    pylint: invalid-name / Argument name "idSpecie" doesn't conform to snake_case naming style (col 37)
+  Line: 176
+    pylint: attribute-defined-outside-init / Attribute 'permission_classes' defined outside __init__ (col 8)
+  Line: 180
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 183
+    pycodestyle: E303 / too many blank lines (3) (col 1)
+  Line: 184
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 185
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 186
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 187
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 189
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 190
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 200
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 4)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 202
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 203
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 204
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 205
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 206
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 208
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 209
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 210
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 211
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 212
+    pycodestyle: E303 / too many blank lines (2) (col 4)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 213
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 218
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 220
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 221
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 29)
+  Line: 222
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 225
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 236
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 237
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 31)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 29)
+  Line: 238
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 241
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+  Line: 243
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 15)
+  Line: 244
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 247
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 248
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 249
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 250
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 252
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 253
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 263
+    pycodestyle: E301 / expected 1 blank line, found 0 (col 4)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 264
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 267
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 268
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 269
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 270
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 271
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 272
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 273
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 278
+    pycodestyle: E501 / line too long (110 > 99 characters) (col 100)
+  Line: 280
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 281
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 29)
+  Line: 282
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 285
+    pycodestyle: E501 / line too long (113 > 99 characters) (col 100)
+  Line: 296
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 297
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 31)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 29)
+  Line: 298
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 301
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+  Line: 303
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 15)
+  Line: 305
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 307
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 308
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 309
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 310
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 311
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 312
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 313
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 323
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 325
+    pycodestyle: E303 / too many blank lines (2) (col 4)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 326
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 330
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 331
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 336
+    pycodestyle: E501 / line too long (158 > 99 characters) (col 100)
+  Line: 339
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 29)
+  Line: 340
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 341
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 342
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 343
+    pycodestyle: E501 / line too long (120 > 99 characters) (col 100)
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 345
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 346
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 347
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 348
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 349
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 350
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 351
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 352
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 353
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 354
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 356
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 31)
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 29)
+  Line: 357
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 358
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 359
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 360
+    pycodestyle: E501 / line too long (108 > 99 characters) (col 100)
+    pylint: bad-indentation / Bad indentation. Found 8 spaces, expected 12
+  Line: 361
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 362
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 363
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 364
+    pylint: bad-indentation / Bad indentation. Found 4 spaces, expected 8
+  Line: 366
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+  Line: 367
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 375
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 4)
+    pycodestyle: E231 / missing whitespace after ',' (col 25)
+  Line: 376
+    pycodestyle: E117 / over-indented (col 9)
+  Line: 377
+    pycodestyle: E271 / multiple spaces after keyword (col 31)
+  Line: 380
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 384
+    pycodestyle: E501 / line too long (125 > 99 characters) (col 100)
+  Line: 407
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 411
+    pycodestyle: E303 / too many blank lines (5) (col 1)
+  Line: 431
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 432
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 433
+    pycodestyle: E111 / indentation is not a multiple of 4 (col 8)
+  Line: 434
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 435
+    pycodestyle: E302 / expected 2 blank lines, found 1 (col 1)
+  Line: 438
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 450
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 463
+    pylint: invalid-name / Argument name "pk" doesn't conform to snake_case naming style (col 30)
+  Line: 464
+    pycodestyle: E117 / over-indented (col 13)
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 465
+    pycodestyle: N806 / variable 'contributorSpecimen' in function should be lowercase (col 18)
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+    pylint: invalid-name / Variable name "contributorSpecimen" doesn't conform to snake_case naming style (col 16)
+  Line: 466
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 467
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 23)
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+  Line: 468
+    pycodestyle: E501 / line too long (108 > 99 characters) (col 100)
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 469
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 470
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+  Line: 471
+    pycodestyle: E501 / line too long (104 > 99 characters) (col 100)
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+  Line: 472
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+    pycodestyle: E251 / unexpected spaces around keyword / parameter equals (col 73)
+  Line: 473
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 474
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 475
+    pycodestyle: N803 / argument name 'primaryKey' should be lowercase (col 32)
+    pylint: invalid-name / Argument name "primaryKey" doesn't conform to snake_case naming style (col 30)
+  Line: 476
+    pycodestyle: E117 / over-indented (col 13)
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 477
+    pycodestyle: N806 / variable 'contributorSpecimen' in function should be lowercase (col 18)
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+    pylint: invalid-name / Variable name "contributorSpecimen" doesn't conform to snake_case naming style (col 16)
+  Line: 478
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 479
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 23)
+    pylint: bad-indentation / Bad indentation. Found 16 spaces, expected 12
+  Line: 480
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 481
+    pylint: no-value-for-parameter / No value for argument 'data' in constructor call (col 19)
+    pylint: bad-indentation / Bad indentation. Found 12 spaces, expected 8
+  Line: 482
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 483
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 484
+    pycodestyle: E303 / too many blank lines (2) (col 5)
+  Line: 486
+    pycodestyle: E501 / line too long (100 > 99 characters) (col 100)
+  Line: 488
+    pycodestyle: E501 / line too long (111 > 99 characters) (col 100)
+    pycodestyle: E703 / statement ends with a semicolon (col 111)
+  Line: 490
+    pycodestyle: E231 / missing whitespace after ',' (col 53)
+  Line: 491
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+  Line: 492
+    pycodestyle: W293 / blank line contains whitespace (col 1)
+
+
+
+Check Information
+=================
+         Started: 2023-12-11 17:00:16.269822
+        Finished: 2023-12-11 17:00:18.835134
+      Time Taken: 2.57 seconds
+       Formatter: grouped
+        Profiles: default, strictness_high, strictness_veryhigh, no_doc_warnings, no_test_warnings, no_member_warnings
+      Strictness: high
+  Libraries Used: django
+       Tools Run: dodgy, mccabe, profile-validator, pycodestyle, pyflakes, pylint
+  Messages Found: 423
+
