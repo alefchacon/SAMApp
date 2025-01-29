@@ -8,4 +8,4 @@ from django.db import models
 class PhotoSheet(models.Model):
     id = models.AutoField(primary_key=True)
     description= models.CharField(null=True, max_length=100)
-    sheet = models.ImageField(upload_to='photosheets/photos/')
+    sheet = models.ImageField(upload_to='photosheets/')

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('description', models.CharField(max_length=100, null=True)),
-                ('sheet', models.ImageField(upload_to='photosheets/photos/')),
+                ('sheet', models.ImageField(upload_to='photosheets/')),
             ],
         ),
     ]
