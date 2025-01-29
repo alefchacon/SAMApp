@@ -10,7 +10,7 @@ services:
     restart: always
     container_name: sam_server
     volumes:
-      - ./container-SAMUV-Server:/code
+      - ./container-SAMUV-server:/code
       - ./pruebas.sql:/exampledata/pruebas.sql
     depends_on:
       - bd_mammalogy_colection
@@ -29,8 +29,8 @@ services:
     image: nginx
     restart: always
     volumes:
-      - ./container-SAMUV-Server/nginx/templates:/etc/nginx/templates
-      - ./container-SAMUV-Server/media:/media
+      - ./container-SAMUV-server/nginx/templates:/etc/nginx/templates
+      - ./container-SAMUV-server/media:/media
     depends_on:
       - sam_server
     ports:
@@ -47,8 +47,11 @@ services:
         - VITE_APP_PATH_PREFIX=${PATH_PREFIX}
     container_name: sam_client
     restart: always
+    volumes:
+      - ./container-SAMUV-client/nginx/templates:/etc/nginx/templates
+      - ./container-SAMUV-client/public:/public
     ports:
-      - 3000:3000
+      - 3000:80
     networks:
       - network
     depends_on:

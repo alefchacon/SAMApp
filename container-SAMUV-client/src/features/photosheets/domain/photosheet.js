@@ -1,4 +1,4 @@
-import { serverUrl } from "../../../routing/backendRoutes";
+import { pathPrefix, serverUrl } from "../../../routing/backendRoutes";
 class Photosheet {
     constructor(
       data,
@@ -7,12 +7,11 @@ class Photosheet {
         this.description = data?.description || "";
         this.sheet = this.parseSheet(data?.sheet)
     }
-
     parseSheet(sheet){
         if (sheet instanceof File) {
             return URL.createObjectURL(sheet)
         } else {
-            return serverUrl.concat(sheet);
+            return serverUrl.concat(`${pathPrefix}${sheet}`);
         }
     }
   }
