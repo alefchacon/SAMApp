@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 #'django-insecure-u(c2muqgh(l-ad-m8435+&^q-$f9otnzqt3u_edg$zd9&3v2vq'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*',  'localhost', '127.0.0.1']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -140,7 +140,9 @@ PASSWORD_HASHERS = [
 APP_URL = os.environ.get("APP_URL", "http://localhost:8000")
 
 CORS_ALLOWED_ORIGINS = [
-    APP_URL
+    APP_URL,
+    # DEV ONLY
+    "http://localhost:3001"
 ]
 
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", 'django.core.mail.backends.smtp.EmailBackend')

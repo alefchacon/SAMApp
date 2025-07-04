@@ -6,11 +6,10 @@ import Account from "../../../features/auth/components/Account";
 import Button from "../Button";
 import ProgressBar from "../ProgressBar";
 import Searchbar from "../Searchbar";
-import ROUTES from "../../../routing/frontendRoutes";
-import ButtonIcon from "../ButtonIcon";
+import ROUTES from "../../../routing/FrontendRoutes";
 import { useStatus } from "../../contexts/StatusContext";
 import NavLink from "./NavLink";
-import { ROLE_TYPES } from "../../../stores/roleTypes";
+import { UserRoles } from "../../../stores/roleTypes";
 import { useState } from "react";
 import Badge from "../Badge";
 export default function Navbar({ accessRequestCount = 0, profile }) {
@@ -23,34 +22,30 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
 
   const leftMenu = (
     <>
-      
-      <NavLink 
-        route={ROUTES.LANDING} 
+      <NavLink
+        route={ROUTES.LANDING}
         label={"Inicio"}
         iconType={"home"}
         selected={pathname === "/"}
       ></NavLink>
 
-      <NavLink 
-        route={ROUTES.COLLECTION} 
+      <NavLink
+        route={ROUTES.COLLECTION}
         label={"Colección"}
         iconType={"pets"}
         selected={pathname.includes(ROUTES.COLLECTION)}
       ></NavLink>
-      
 
-
-
-      {profile?.role === ROLE_TYPES.TECHNICAL_PERSON && (
+      {profile?.role === UserRoles.TECHNICAL_PERSON && (
         <>
-          <NavLink 
-            route={ROUTES.PHOTOSHEETS} 
+          <NavLink
+            route={ROUTES.PHOTOSHEETS}
             label={"Fichas de fotocolecta"}
             iconType={"image"}
             selected={pathname.includes(ROUTES.PHOTOSHEETS)}
           ></NavLink>
-          <NavLink 
-            route={ROUTES.PERSONAL} 
+          <NavLink
+            route={ROUTES.PERSONAL}
             label={"Personal"}
             iconType={"group"}
             selected={pathname.includes(ROUTES.PERSONAL)}
@@ -60,33 +55,36 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
 
       <Dropdown
         className={"nav-link selectable-dark h-100"}
-        header={
-          <InfoItem label={"Sobre"} iconType={"info"}></InfoItem>
-        }
+        header={<InfoItem label={"Sobre"} iconType={"info"}></InfoItem>}
       >
         <div className="flex-col align-items-center">
-          <Link className="p-05rem selectable" to={ROUTES.ABOUT_INSTITUTE}>Instituto de Investigaciones Biológicas</Link>
-          <Link className="p-05rem selectable" to={ROUTES.ABOUT_COLLECTION}>Colección de Mamíferos</Link>
-          <Link className="p-05rem selectable" to={ROUTES.ABOUT_SYSTEM}>Sistema de Administración Mastozoológica</Link>
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_INSTITUTE}>
+            Instituto de Investigaciones Biológicas
+          </Link>
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_COLLECTION}>
+            Colección de Mamíferos
+          </Link>
+          <Link className="p-05rem selectable" to={ROUTES.ABOUT_SYSTEM}>
+            Sistema de Administración Mastozoológica
+          </Link>
         </div>
       </Dropdown>
     </>
-  )
+  );
 
   const rightMenu = (
     <>
       <div className="flex-row gap-1rem align-items-center justify-content-center">
-        <div style={{
-          position: "relative"
-        }}>
-          {
-            accessRequestCount > 0 &&
-            <Badge>{accessRequestCount}</Badge>
-          }
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          {accessRequestCount > 0 && <Badge>{accessRequestCount}</Badge>}
 
-          {profile?.role === ROLE_TYPES.TECHNICAL_PERSON && (
-            <NavLink 
-              route={ROUTES.REQUESTS} 
+          {profile?.role === UserRoles.TECHNICAL_PERSON && (
+            <NavLink
+              route={ROUTES.REQUESTS}
               iconType={"notifications"}
               selected={pathname.includes(ROUTES.REQUESTS)}
             ></NavLink>
@@ -95,41 +93,34 @@ export default function Navbar({ accessRequestCount = 0, profile }) {
         <Account accessRequestCount={accessRequestCount}></Account>
       </div>
     </>
-  )
+  );
 
   return (
     <>
-    <span className="main-title-uv">Universidad Veracruzana</span>
-    <nav
-      className="flex-col bg-gradient position-relative justify-content-center"
-    >
-      <div className="flex-row">
-      <div className="flex-row align-items-center gap-2rem h-100">
+      <span className="main-title-uv">Universidad Veracruzana</span>
+      <nav className="flex-col bg-gradient position-relative justify-content-center">
+        <div className="flex-row">
+          <div className="flex-row align-items-center gap-2rem h-100">
+            <div className="left-side flex-row align-items-center hide-if-mobile h-100 gap-05rem flex-grow-1">
+              {leftMenu}
+            </div>
+          </div>
+          <span></span>
+          <div className="flex-grow-1"></div>
+          <div className="right-side hide-if-mobile flex-row gap-1rem h-100">
+            {rightMenu}
+          </div>
+        </div>
         <div
-          className="left-side flex-row align-items-center hide-if-mobile h-100 gap-05rem flex-grow-1"
+          className={`shrink flex-col flex-if-mobile hide-if-desktop ${
+            showMobileMenu ? "grow" : "shrink"
+          }`}
         >
           {leftMenu}
+          {rightMenu}
         </div>
-      </div>
-      <span></span>
-      <div className="flex-grow-1"></div>
-      <div className="right-side hide-if-mobile flex-row gap-1rem h-100">
-        {rightMenu}
-      </div>
-
-      <ButtonIcon 
-        white 
-        className="flex-if-mobile hide-if-desktop" 
-        iconType={"menu"}
-        onClick={toggleShowMobileMeun}
-      ></ButtonIcon>
-      </div>
-      <div className={`shrink flex-col flex-if-mobile hide-if-desktop ${showMobileMenu ? "grow" : "shrink"}`}>
-        {leftMenu}
-        {rightMenu}
-      </div>
-      {loading && <ProgressBar main></ProgressBar>}
-    </nav>
+        {loading && <ProgressBar main></ProgressBar>}
+      </nav>
     </>
   );
 }

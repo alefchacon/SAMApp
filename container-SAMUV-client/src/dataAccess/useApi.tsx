@@ -1,0 +1,233 @@
+import React, { useMemo, useCallback } from "react";
+
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import {
+  IShowSnackbarParams,
+  useSnackbar,
+} from "@/components/contexts/SnackbarContext";
+import { useModal, IShowModalParams } from "@/components/contexts/ModalContext";
+import { useStatus } from "@/components/contexts/StatusContext";
+import RefreshForm from "../features/auth/components/RefreshForm";
+import useSession from "@/features/auth/businessLogic/useSession";
+import CredentialKeys from "../stores/CredentialsKeys";
+import HttpStatus from "@/stores/EHttpStatus";
+import flattenObject from "@/utils/flattenObject";
+import { apiUrl } from "@/routing/BackendRoutes";
+import TApiResult from "./domain/TApiResult";
+import IRequestConfig from "./domain/IRequestConfig";
+import TApiParams from "./domain/TApiParams";
+
+export default function useApi() {
+  const {
+    deleteSession,
+    deleteAccessToken,
+    getRefreshToken,
+    userIsLoggedIn,
+    deleteSessionWithoutReload,
+  } = useSession();
+  const token = localStorage.getItem(CredentialKeys.TOKEN_ACCESS);
+
+  const { showModal, closeModal } = useModal();
+  const { showSnackbar } = useSnackbar();
+  const { setLoading } = useStatus();
+
+  const api = useMemo(() => {
+    return axios.create({
+      baseURL: apiUrl,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  }, [token]); // recreate api if token refreshes
+
+  const apiWrapper = useMemo(
+    () => ({
+      async get<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+        setLoading(true);
+        try {
+          const response = await api.get(params.url, params.config);
+          const apiResult: TApiResult<T> = {
+            success: true,
+            data: response.data,
+          };
+          return apiResult;
+        } catch (error) {
+          const axiosError = error as AxiosError;
+          handleError(axiosError, params.config);
+          const apiResult: TApiResult<T> = {
+            success: false,
+            error: error as AxiosError,
+          };
+          return apiResult;
+        } finally {
+          setLoading(false);
+        }
+      },
+
+      /**
+       *
+       * @param T Parameter type
+       * @param E Return type
+       * @param data
+       * @param config
+       * @returns
+       */
+      async post<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+        setLoading(true);
+        try {
+          const response = await api.post<T>(
+            params.url,
+            params.body,
+            params.config
+          );
+          // showSnackbar(response.data.message);
+          const apiResult: TApiResult<T> = {
+            success: true,
+            data: response.data,
+          };
+          return apiResult;
+        } catch (error) {
+          handleError(error as AxiosError, params.config);
+          const apiResult: TApiResult<T> = {
+            success: false,
+            error: error as AxiosError,
+          };
+          return apiResult;
+        } finally {
+          setLoading(false);
+        }
+      },
+
+      async put<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+        setLoading(true);
+        try {
+          const response = await api.put(
+            params.url,
+            params.body,
+            params.config
+          );
+          if (params.config && !params.config.noConfirmation) {
+            showSnackbar(response.data.message);
+          }
+          const apiResult: TApiResult<T> = {
+            success: true,
+            data: response.data,
+          };
+          return apiResult;
+        } catch (error) {
+          const axiosError = error as AxiosError;
+          handleError(axiosError, params.config);
+          const apiResult: TApiResult<T> = {
+            success: true,
+            error: axiosError,
+          };
+          return apiResult;
+        } finally {
+          setLoading(false);
+        }
+      },
+
+      async delete<T>(params: TApiParams<T>) {
+        setLoading(true);
+        try {
+          const response = await api.delete(params.url);
+          showSnackbar(response.data.message);
+          return response;
+        } catch (error) {
+          handleError(error as AxiosError, params.config);
+        } finally {
+          setLoading(false);
+        }
+      },
+    }),
+    [api, handleError, setLoading, showSnackbar]
+  );
+
+  /*
+  Error messages are centralized here. Layers above dataAccess do not receive errors
+  unless they specify it in the apiWrapper config. 
+  */
+  function handleError(error: AxiosError, config?: IRequestConfig) {
+    handleBackendMessage(error, config);
+
+    if (
+      error.code === "ERR_NETWORK" ||
+      error?.response?.status === HttpStatus.INTERNAL_SERVER_ERROR
+    ) {
+      deleteSessionWithoutReload();
+      return;
+    }
+
+    const status = error.response?.status;
+    if (status === HttpStatus.UNAUTHORIZED) {
+      handleUnauthorized();
+    }
+  }
+
+  function handleBackendMessage(error: AxiosError, config?: IRequestConfig) {
+    /*
+    Upper layers can configure a request in case feedback for a specific
+    use case needs special treatment, though so far this is rarely the case.
+    Check useSpecie.migrateColection for an example. 
+    */
+    if (config?.noSnackbar) {
+      return;
+    }
+
+    const snackbarParams: IShowSnackbarParams = {};
+    snackbarParams.isError = true;
+    if (
+      error.code === "ERR_NETWORK" ||
+      error.response?.status === HttpStatus.INTERNAL_SERVER_ERROR
+    ) {
+      snackbarParams.content = "No hay conexión";
+      showSnackbar(snackbarParams);
+      return;
+    }
+
+    snackbarParams.content = getMessage(error);
+    showSnackbar(snackbarParams);
+  }
+
+  function getMessage(error: AxiosError): string {
+    /* PENDING
+    if (error.response?.data?.detail) {
+      return error.response?.data?.detail;
+    }
+    if (error.response?.data?.error) {
+      return error.response?.data?.error;
+    }
+    if (error.response?.data?.message) {
+      return error.response?.data?.message;
+    } else {
+      return flattenObject(error.response.data);
+    }
+    */
+    return "PENDING";
+  }
+
+  function handleUnauthorized() {
+    if (!userIsLoggedIn) {
+      return;
+    }
+
+    const userCanRefresh = Boolean(getRefreshToken());
+
+    if (userCanRefresh) {
+      deleteAccessToken();
+
+      const showModalParams: IShowModalParams = {
+        title: "La sesión ha expirado",
+        content: <RefreshForm />,
+        dismissable: false,
+      };
+
+      showModal(showModalParams);
+    } else {
+      deleteSession();
+    }
+  }
+
+  return { apiWrapper };
+}

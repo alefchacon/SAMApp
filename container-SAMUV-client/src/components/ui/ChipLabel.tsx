@@ -1,0 +1,33 @@
+import React from "react";
+
+interface IChipLabelProps {
+  iconType?: string;
+  children?: React.ReactNode;
+  backgroundColor?: string;
+  color?: string;
+}
+export default function ChipLabel(props: IChipLabelProps) {
+  const {
+    iconType = null,
+    children,
+    backgroundColor = "var(--selected)",
+    color = "var(--uv-green)",
+  } = props;
+  return (
+    <span
+      className="required font-size-08rem flex-row align-items-center gap-05rem min-w-fit-content h-fit-content"
+      style={{
+        color: color,
+        backgroundColor: backgroundColor,
+        padding: "0  0.5rem",
+      }}
+    >
+      {iconType && (
+        <span className="material-symbols-outlined font-size-1rem">
+          {iconType}
+        </span>
+      )}
+      {children}
+    </span>
+  );
+}

@@ -17,7 +17,7 @@ import Button from "../../../components/ui/Button";
 
 import testData from "../stores/testData";
 
-import "../../../app/App.css";
+// import "../../../app/App.css";
 
 export default function LineGraph({ initialData = testData }) {
   const initialState = {
@@ -114,9 +114,7 @@ export default function LineGraph({ initialData = testData }) {
   const nameIsNumber = typeof data[0].name === "number";
 
   return (
-    <div
-      className="highlight-bar-chart user-select-none flex-col w-100 align-items-end justify-content-right"
-    >
+    <div className="highlight-bar-chart user-select-none flex-col w-100 align-items-end justify-content-right">
       <div className="p-1rem">
         <Button className="secondary" iconType="zoom_out" onClick={zoomOut}>
           Alejar

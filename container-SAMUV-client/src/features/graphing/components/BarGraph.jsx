@@ -11,7 +11,7 @@ import {
 
 import TooltipGraph from "./TooltipGraph";
 
-import "../../../app/App.css";
+// import "../../../app/App.css";
 
 import testData from "../stores/testData";
 

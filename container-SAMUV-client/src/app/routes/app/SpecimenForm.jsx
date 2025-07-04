@@ -11,7 +11,6 @@ import { specimenSchema } from "../../../features/specimens/formikSchemas/specim
 import Page from "../../../components/ui/Page";
 
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
-import { useLocations } from "../../../features/specimens/businessLogic/useLocations";
 import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
 import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 import { useLocation } from "react-router-dom";
@@ -22,13 +21,11 @@ import { useState } from "react";
 
 export default function SpecimenForm({ onResetScroll }) {
   const { addSpecimen } = useSpecimens();
-  const { addLocation } = useLocations();
   const { addContributorSpecimen } = useContributorsAndRoles();
   const { showSnackbar } = useSnackbar();
   const [invalidSteps, setInvalidSteps] = useState([]);
   const location = useLocation();
   const selectedSpecie = location.state.specie;
-
 
   const handleSubmit = async (values) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
@@ -40,37 +37,37 @@ export default function SpecimenForm({ onResetScroll }) {
   const stepIds = Object.freeze({
     colectStep: "colecta",
     morphometricMeasuresStep: "medidas-morfometricas",
-    locationStep: "ubicacion"
-  })
+    locationStep: "ubicacion",
+  });
 
   const colectFields = [
-    "colector", 
-    "preparator", 
+    "colector",
+    "preparator",
     "colection_code",
     "colection_date",
     "colection_number",
     "nature",
     "status",
-  ]
+  ];
   const findInvalidSteps = (errors) => {
-    setInvalidSteps([])
+    setInvalidSteps([]);
     const errorKeys = Object.keys(errors);
 
-    if (errorKeys.length < 1){
+    if (errorKeys.length < 1) {
       return;
     }
     let newInvalidSteps = [];
-    for (const key of errorKeys){
-      if (colectFields.includes(key)){
-        newInvalidSteps.push(stepIds.colectStep) 
-      } else if (key === "location"){
-        newInvalidSteps.push(stepIds.locationStep) 
+    for (const key of errorKeys) {
+      if (colectFields.includes(key)) {
+        newInvalidSteps.push(stepIds.colectStep);
+      } else if (key === "location") {
+        newInvalidSteps.push(stepIds.locationStep);
       } else {
-        newInvalidSteps.push(stepIds.morphometricMeasuresStep) 
+        newInvalidSteps.push(stepIds.morphometricMeasuresStep);
       }
-    } 
-    setInvalidSteps(newInvalidSteps)
-  }
+    }
+    setInvalidSteps(newInvalidSteps);
+  };
 
   const handleValidation = async (formik) => {
     const errors = await formik.validateForm().then((errors) => {
@@ -79,14 +76,14 @@ export default function SpecimenForm({ onResetScroll }) {
       return errors;
     });
 
-    findInvalidSteps(errors)
+    findInvalidSteps(errors);
 
-    if (Object.entries(errors).length > 0) { 
+    if (Object.entries(errors).length > 0) {
       showSnackbar("Por favor, corrija los errores antes de continuar", true);
       return;
     }
-    formik.submitForm()
-  }
+    formik.submitForm();
+  };
 
   /*
     Fields need to be touched in order to show their error message.
@@ -101,10 +98,13 @@ export default function SpecimenForm({ onResetScroll }) {
   */
   function markAllFieldsTouched(values) {
     const touched = {};
-  
+
     function recurse(currentValues, currentTouched) {
       Object.keys(currentValues).forEach((key) => {
-        if (typeof currentValues[key] === 'object' && currentValues[key] !== null) {
+        if (
+          typeof currentValues[key] === "object" &&
+          currentValues[key] !== null
+        ) {
           currentTouched[key] = {};
           recurse(currentValues[key], currentTouched[key]);
         } else {
@@ -117,37 +117,34 @@ export default function SpecimenForm({ onResetScroll }) {
   }
 
   return (
-    <Page title={"Agregar espécimen"} subtitle={<CardSpecie specie={new Specie(selectedSpecie)}/>}>
+    <Page
+      title={"Agregar espécimen"}
+      subtitle={<CardSpecie specie={new Specie(selectedSpecie)} />}
+    >
       <Formik
         validationSchema={specimenSchema}
         initialValues={new SpecimenFormik()}
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {formik => (
-          <Form
-            className="w-100"
-            autoComplete="off"
-          >
-              <Stepper
-                onEndButtonClick={() => handleValidation(formik)}
-                selectedStepId={"medidas-morfometricas"}
-                onResetScroll={onResetScroll}
-                invalidSteps={invalidSteps}
-              >
-                <div
-                  label={"Medidas morfométricas"}
-                  id={"medidas-morfometricas"}
-                >
-                  <MorphometricMeasuresForm></MorphometricMeasuresForm>
-                </div>
-                <div label={"Ubicación"} id={"ubicacion"}>
-                  <LocationForm></LocationForm>
-                </div>
-                <div label={"Colecta"} id={"colecta"}>
-                  <ColectForm></ColectForm>
-                </div>
-              </Stepper>
+        {(formik) => (
+          <Form className="w-100" autoComplete="off">
+            <Stepper
+              onEndButtonClick={() => handleValidation(formik)}
+              selectedStepId={"medidas-morfometricas"}
+              onResetScroll={onResetScroll}
+              invalidSteps={invalidSteps}
+            >
+              <div label={"Medidas morfométricas"} id={"medidas-morfometricas"}>
+                <MorphometricMeasuresForm></MorphometricMeasuresForm>
+              </div>
+              <div label={"Ubicación"} id={"ubicacion"}>
+                <LocationForm></LocationForm>
+              </div>
+              <div label={"Colecta"} id={"colecta"}>
+                <ColectForm></ColectForm>
+              </div>
+            </Stepper>
           </Form>
         )}
       </Formik>

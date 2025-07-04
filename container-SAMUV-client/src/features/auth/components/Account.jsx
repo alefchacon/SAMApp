@@ -7,8 +7,8 @@ import LogInForm from "../components/LogInForm";
 import Dropdown from "../../../components/ui/Dropdown";
 import DropdownItem from "../../../components/ui/DropdownItem";
 import Badge from "../../../components/ui/Badge";
-import ROUTES from "../../../routing/frontendRoutes";
-import { ROLE_TYPES } from "../../../stores/roleTypes";
+import ROUTES from "../../../routing/FrontendRoutes";
+import { UserRoles } from "../../../stores/roleTypes";
 import useSession from "../businessLogic/useSession";
 
 export default function Account({
@@ -24,7 +24,7 @@ export default function Account({
     deleteSession();
   };
 
-  if (profile.role === ROLE_TYPES.VISITOR) {
+  if (profile.role === UserRoles.VISITOR) {
     return (
       <div className="flex-row">
         <Button
@@ -48,7 +48,6 @@ export default function Account({
     <>
       <div className="flex-row align-items-center gap-1rem selectable-dark rounded-5 nav-link">
         <Dropdown
-          
           header={
             <div>
               <p className="font-weight-600">@{profile.username}</p>
