@@ -57,12 +57,12 @@ export default function SpecieList(props: ISpecieListProps) {
 
   const technicalButtons = (
     <div className="flex-row gap-1rem">
-      <button className="primary" onClick={onAdd}>
+      <button className="btn btn-primary" onClick={onAdd}>
         Agregar especie
       </button>
       <button
         onClick={() => navigate(`/${FrontendRoutes.MIGRATE}`)}
-        className="secondary"
+        className="btn btn-secondary"
       >
         Migrar colección
       </button>
@@ -77,7 +77,7 @@ export default function SpecieList(props: ISpecieListProps) {
       hide={fold}
     >
       {fold ? (
-        <button className="icon-only m-1rem color-white" onClick={toggleFold}>
+        <button className="btn btn-primary" onClick={toggleFold}>
           Ver especies
         </button>
       ) : (
@@ -85,10 +85,7 @@ export default function SpecieList(props: ISpecieListProps) {
           <div className="specie-list p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient">
             <div></div>
             <p>Especies</p>
-            <button
-              className="icon-only color-white"
-              onClick={toggleFold}
-            ></button>
+            <button className="btn btn-primary" onClick={toggleFold}></button>
           </div>
           <div className="flex-col divider p-1rem gap-05rem">
             {role === ROLE_TYPES.TECHNICAL_PERSON && technicalButtons}

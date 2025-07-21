@@ -51,7 +51,7 @@ export default function useSession() {
       return visitorProfile;
     }
 
-    return JSON.parse(profileString as string) as Profile;
+    return new Profile(JSON.parse(profileString as string));
   }, []);
 
   const refreshAccessToken = useCallback((token: string) => {

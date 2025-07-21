@@ -8,7 +8,7 @@ import {
   REQUEST_APPROVE,
   REQUEST_REJECT,
 } from "./accessURL";
-import { AccessRequest, IAccessRequest } from "../domain/accessRequest";
+import { AccessRequest, IAccessRequest } from "../domain/AccessRequest";
 export default function useAccessRequests() {
   const { apiWrapper } = useApi();
   const [pendingAccessRequests, setPendingAccessRequests] = useState<
@@ -17,33 +17,47 @@ export default function useAccessRequests() {
   const [pendingAccessRequestCount, setPendingAccessRequestCount] = useState(0);
 
   const getPendingAccessRequests = useCallback(async () => {
-    const response = await apiWrapper.get(REQUEST_PENDING);
-    setPendingAccessRequests(
-      response.data.map((request: IAccessRequest) => new AccessRequest(request))
-    );
+    const response = await apiWrapper.get<IAccessRequest[]>({
+      url: REQUEST_PENDING,
+    });
+
+    if (response.data) {
+      setPendingAccessRequests(
+        response.data.map(
+          (request: IAccessRequest) => new AccessRequest(request)
+        )
+      );
+    }
   }, []);
 
   const getPendingAccessRequestCount = async () => {
-    const response = await apiWrapper.get(REQUEST_PENDING_COUNT);
-    setPendingAccessRequestCount(response.data);
+    const response = await apiWrapper.get<number>({
+      url: REQUEST_PENDING_COUNT,
+    });
+    if (response.data) {
+      setPendingAccessRequestCount(response.data);
+    }
   };
 
   const approveAccessRequest = async (requestId = 0) => {
-    const response = await apiWrapper.get(REQUEST_APPROVE(requestId));
+    const response = await apiWrapper.get({ url: REQUEST_APPROVE(requestId) });
     setPendingAccessRequests((previousRequests) =>
       previousRequests.filter((request) => request.id !== requestId)
     );
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
   const rejectAccessRequest = async (requestId = 0) => {
-    const response = await apiWrapper.get(REQUEST_REJECT(requestId));
+    const response = await apiWrapper.get({ url: REQUEST_REJECT(requestId) });
     setPendingAccessRequests((previousRequests) =>
       previousRequests.filter((request) => request.id !== requestId)
     );
     setPendingAccessRequestCount(pendingAccessRequests.length);
   };
   const addAccessRequest = async (accessRequest = {}) => {
-    return await apiWrapper.post(ACCESS_REQUESTS_URL, accessRequest);
+    return await apiWrapper.post({
+      url: ACCESS_REQUESTS_URL,
+      body: accessRequest,
+    });
   };
 
   return {

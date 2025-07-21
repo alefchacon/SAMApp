@@ -39,7 +39,6 @@ export const useSpecimens = (specie?: Specie) => {
     [UserRoles.VISITOR]: (specieId: number) =>
       apiWrapper.get<Specimen[]>({ url: SPECIMEN_LIST_VISITOR_URL(specieId) }),
   };
-  console.error(specie);
 
   const getSpecimensByRole = async ({
     specieId = 0,

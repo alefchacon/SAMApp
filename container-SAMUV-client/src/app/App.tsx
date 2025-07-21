@@ -62,7 +62,7 @@ function App() {
             path={ROUTES.COLLECTION}
             element={
               <SpecieDashboard
-                role={UserRoles.VISITOR}
+                role={profile.role}
                 onSpecieSelection={() => {}}
               />
             }

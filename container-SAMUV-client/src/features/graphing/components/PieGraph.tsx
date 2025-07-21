@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
-import TooltipGraph from "./TooltipGraph";
-export default function PieGraph({ data }) {
-  const [_data, setData] = useState(data);
+import TooltipContent from "./TooltipContent";
+import { IGraphData } from "../util/specimenSorter";
 
-  const [hoveredSlice, setHoveredSlice] = useState(null);
+interface ISlice {
+  name: string;
+}
+
+interface IPieGraphProps {
+  initialData: IGraphData[];
+}
+
+export default function PieGraph({ initialData }: IPieGraphProps) {
+  const [data, setData] = useState(initialData);
+
+  const [hoveredSlice, setHoveredSlice] = useState<ISlice | null>(null);
 
   useEffect(() => {
-    setData(data);
-  }, [data]);
+    setData(initialData);
+  }, [initialData]);
 
   useEffect(() => {
     if (!hoveredSlice) {
-      setData(data);
+      setData(initialData);
       return;
     }
 
@@ -21,9 +32,13 @@ export default function PieGraph({ data }) {
   }, [hoveredSlice]);
 
   function hightlightSlice() {
+    if (!hoveredSlice) {
+      return;
+    }
+
     const { name } = hoveredSlice;
 
-    const updatedData = _data.map((item) => {
+    const updatedData = data.map((item) => {
       if (item.name !== name) {
         return { ...item, opacity: 0.2 };
       }
@@ -33,8 +48,8 @@ export default function PieGraph({ data }) {
     setData(updatedData);
   }
 
-  const handleMouseEnter = (slice) => {
-    setData(data);
+  const handleMouseEnter = (slice: any) => {
+    setData(initialData);
     setHoveredSlice(slice);
   };
   const handleMouseLeave = () => {
@@ -47,7 +62,7 @@ export default function PieGraph({ data }) {
           dataKey="value"
           nameKey="name"
           isAnimationActive={false}
-          data={_data}
+          data={data}
           cx="50%"
           cy="50%"
           outerRadius={110}
@@ -57,7 +72,14 @@ export default function PieGraph({ data }) {
           onMouseLeave={handleMouseLeave}
         />
 
-        <Tooltip content={<TooltipGraph />} />
+        <Tooltip
+          content={(content) => (
+            <TooltipContent
+              payload={(content.payload ?? []) as Payload<number, string>[]}
+              label={content.label}
+            />
+          )}
+        />
         <Legend
           onMouseEnter={(o) => handleMouseEnter(o.payload)}
           onMouseLeave={handleMouseLeave}

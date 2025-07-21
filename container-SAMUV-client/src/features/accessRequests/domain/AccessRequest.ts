@@ -1,4 +1,4 @@
-import { IAcademic, Academic } from "@/features/user/domain/academic";
+import { IAcademic, Academic } from "@/features/user/domain/Academic";
 
 export interface IAccessRequest {
   id?: number;

@@ -58,7 +58,7 @@ export function ModalProvider(props: IModalProviderProps) {
   };
 
   const closeModal = (params: IOnCloseParams) => {
-    if (params.reason === "clickaway") {
+    if (params.reason && params.reason === "clickaway") {
       return;
     }
     setOpen(false);

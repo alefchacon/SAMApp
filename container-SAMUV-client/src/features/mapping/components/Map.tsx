@@ -16,6 +16,8 @@ export default function Map(props: IMapProps) {
   const { specimens = [], role = UserRoles.VISITOR } = props;
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
 
+  console.error(role);
+
   const fetchAllCoordinates = async () => {
     if (role !== UserRoles.TECHNICAL_PERSON) {
       return;

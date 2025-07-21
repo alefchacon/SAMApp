@@ -17,7 +17,10 @@ export default function useAuth() {
   } = useSession();
 
   const resetPassword = useCallback(async (credentials: ICredentials) => {
-    const response = await apiWrapper.post(PASSWORD_RESET_URL, credentials);
+    const response = await apiWrapper.post({
+      url: PASSWORD_RESET_URL,
+      body: credentials,
+    });
     return response;
   }, []);
 
@@ -27,35 +30,28 @@ export default function useAuth() {
       password: password,
     };
 
-    const response = await apiWrapper.post<ICredentials, ISession>(
-      LOGIN_URL,
-      body,
-      {
+    const response = await apiWrapper.post<ISession>({
+      url: LOGIN_URL,
+      body: body,
+      config: {
         getError: false,
-      }
-    );
+      },
+    });
 
-    if (response?.status === EHttpStatus.OK && "data" in response) {
-      storeSession(response?.data);
+    if (response.success && "data" in response) {
+      storeSession(response?.data as ISession);
     }
   };
 
   const refreshToken = useCallback(async () => {
+    const url = TOKEN_REFRESH_URL;
     const body: ISession = {
       refresh: getRefreshToken(),
     };
-    const response = await apiWrapper.post<ISession, ISession>(
-      TOKEN_REFRESH_URL,
-      body,
-      {
-        getError: true,
-      }
-    );
+    const response = await apiWrapper.post<ISession>({ url, body });
 
-    if (response && "data" in response) {
+    if (response && "data" in response && response.data) {
       refreshAccessToken(response.data.refresh!);
-    } else {
-      console.error("Could not refresh token:", response);
     }
 
     deleteRefreshToken();

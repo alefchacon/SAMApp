@@ -15,7 +15,7 @@ import Multigraph from "../../../features/graphing/components/Multigraph";
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import { useSpecie } from "@/features/specie/businessLogic/useSpecie";
 
-import DATE_TYPES from "@/features/graphing/stores/dateTypes";
+import DATE_TYPES, { DateTypes } from "@/features/graphing/stores/dateTypes";
 import Header from "@/components/ui/Header";
 import NoResults from "../../../components/ui/NoResults";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ interface ISpecieDashboardProps {
   onSpecieSelection: (selectedSpecie: Specie) => void;
 }
 export default function SpecieDashboard(props: ISpecieDashboardProps) {
-  const { role = UserRoles.VISITOR, onSpecieSelection } = props;
+  const { role, onSpecieSelection } = props;
 
   const {
     species,
@@ -92,11 +92,11 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
   function AddSpecimenButton() {
     return (
       <div className="flex-row gap-1rem">
-        <button onClick={navigateToAddSpecimen} className={"primary-white"}>
+        <button onClick={navigateToAddSpecimen} className={"btn btn-primary"}>
           Agregar espécimen
         </button>
 
-        <button className="secondary-white" onClick={downloadSpecimens}>
+        <button className="btn btn-secondary" onClick={downloadSpecimens}>
           Descargar especímenes
         </button>
       </div>
@@ -128,7 +128,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
         defaultColumns={editableSpecimenColumns}
       ></EditableTable>
     ),
-    [selectedSpecie]
+    [specimens]
   );
 
   function SpecieView() {
@@ -149,7 +149,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
           <Tabs className={`divider`}>
             {/* DEV ONLY: validate user is logged in:*/}
             <Tab
-              label="sadf"
+              label="Especímenes"
               // id={SPECIMENS_TAB_ID}
             >
               {memoizedTable}
@@ -160,37 +160,36 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
             >
               {memoizedTable}
             </Tab>
+            <Tab label={"Métricas"}>
+              <>
+                <div style={{ width: "100%", overflow: "hidden" }}>
+                  <Map specimens={specimens} role={role}></Map>
+                </div>
 
-            {/*
-            <Tab label={"Métricas"} id={METRICS_TAB_ID}>
-              <div style={{ width: "100%", overflow: "hidden" }}>
-                <Map specimens={specimens} role={role}></Map>
-              </div>
-
-              <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
-                <Multigraph
-                  graphTitle="Especímenes recolectados por mes"
-                  specimens={specimens}
-                  attributeToGraph={{
-                    name: "colection_date",
-                    type: DATE_TYPES.MONTH,
-                  }}
-                  yLabel="Especímenes"
-                  xLabel="Meses"
-                />
-                <Multigraph
-                  graphTitle="Especímenes recolectados por año"
-                  specimens={specimens}
-                  attributeToGraph={{
-                    name: "colection_date",
-                    type: DATE_TYPES.YEAR,
-                  }}
-                  yLabel="Especímenes"
-                  xLabel="Meses"
-                />
-              </div>
+                <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
+                  <Multigraph
+                    graphTitle="Especímenes recolectados por mes"
+                    specimens={specimens}
+                    attributeToGraph={{
+                      name: "colection_date",
+                      type: DateTypes.MONTH,
+                    }}
+                    yLabel="Especímenes"
+                    xLabel="Meses"
+                  />
+                  <Multigraph
+                    graphTitle="Especímenes recolectados por año"
+                    specimens={specimens}
+                    attributeToGraph={{
+                      name: "colection_date",
+                      type: DateTypes.YEAR,
+                    }}
+                    yLabel="Especímenes"
+                    xLabel="Meses"
+                  />
+                </div>
+              </>
             </Tab>
-                */}
           </Tabs>
         ) : (
           <NoResults itemName="especímenes" />
@@ -211,7 +210,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
         onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
       ></SpecieList>
-      <div className={`specie-view`}>
+      <div className={`specie-view rounded border border-secondary`}>
         <SpecieView />
       </div>
     </>

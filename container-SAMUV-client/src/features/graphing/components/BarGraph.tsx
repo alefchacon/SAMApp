@@ -9,17 +9,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import TooltipGraph from "./TooltipGraph";
+import TooltipContent from "./TooltipContent";
 
 // import "../../../app/App.css";
 
 import testData from "../stores/testData";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
+import { IGraphData } from "../util/specimenSorter";
 
+interface IBarGraph {
+  yLabel: string;
+  xLabel: string;
+  data: IGraphData[];
+}
 export default function BarGraph({
   yLabel = "yLabel",
   xLabel = "xLabel",
-  data = null,
-}) {
+  data,
+}: IBarGraph) {
   return (
     <div className="w-100 h-100">
       <ResponsiveContainer
@@ -43,7 +50,7 @@ export default function BarGraph({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="name"
-            padding={20}
+            padding={{ left: 20, right: 20 }}
             label={{ value: xLabel, position: "insideBottom", offset: -10 }}
           />
           <YAxis
@@ -54,7 +61,14 @@ export default function BarGraph({
               offset: 10,
             }}
           />
-          <Tooltip content={<TooltipGraph />} />
+          <Tooltip
+            content={(content) => (
+              <TooltipContent
+                payload={(content.payload ?? []) as Payload<number, string>[]}
+                label={content.label}
+              />
+            )}
+          />
 
           <Bar dataKey="value" />
         </BarChart>

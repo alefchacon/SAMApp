@@ -1,22 +1,27 @@
+import React from "react";
 import Button from "../../../components/ui/Button";
 import TextField from "../../../components/ui/TextField";
 
 import { Formik, Form } from "formik";
 import { loginSchema } from "../formikSchemas/loginSchema";
 
-import { useStatus } from "../../../components/contexts/StatusContext.jsx";
+import { useStatus } from "../../../components/contexts/StatusContext.js";
 import ROUTES from "../../../routing/FrontendRoutes.js";
-import { useModal } from "../../../components/contexts/ModalContext.jsx";
+import { useModal } from "../../../components/contexts/ModalContext.js";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../businessLogic/useAuth.jsx";
+import useAuth from "../businessLogic/useAuth.js";
+import IOnCloseParams from "@/components/contexts/IOnCloseProps";
 
-export default function LogInForm({ onSubmit }) {
+interface ILogInFormProps {
+  onSubmit: (params: IOnCloseParams) => void;
+}
+export default function LogInForm({ onSubmit }: ILogInFormProps) {
   const { closeModal } = useModal();
   const { logIn } = useAuth();
   const navigate = useNavigate();
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values: any, actions: any) => {
     await logIn(values.username, values.password);
-    onSubmit();
+    onSubmit({});
   };
 
   return (
@@ -33,7 +38,7 @@ export default function LogInForm({ onSubmit }) {
             iconType={"person"}
             fullwidth
             errorMessage={errors.username}
-            hasError={errors.username && touched.username}
+            hasError={Boolean(errors.username && touched.username)}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.username}
@@ -48,7 +53,7 @@ export default function LogInForm({ onSubmit }) {
             type="password"
             fullwidth
             errorMessage={errors.password}
-            hasError={errors.password && touched.password}
+            hasError={Boolean(errors.password && touched.password)}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.password}
@@ -57,21 +62,20 @@ export default function LogInForm({ onSubmit }) {
           <br />
           <br />
           <div className="flex-col ">
-            <Button iconType="login" type="submit" className="w-100 primary">
+            <button type="submit" className="w-100 primary">
               Entrar
-            </Button>
+            </button>
             <br />
-            <Button
-              iconType="passkey"
+            <button
               className="secondary w-100"
-              fullwidth
-              onClick={() => {
-                closeModal();
+              onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                // DEV ONLY: test this reason
+                closeModal({ event: event, reason: "any" });
                 navigate(ROUTES.REQUEST_ACCESS);
               }}
             >
               Solicitar acceso
-            </Button>
+            </button>
           </div>
         </Form>
       )}

@@ -11,16 +11,30 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import TooltipGraph from "./TooltipGraph";
+import TooltipContent from "./TooltipContent";
 
 import Button from "../../../components/ui/Button";
+import Specimen from "@/features/specimens/domain/model/Specimen";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
+import { IGraphData } from "../util/specimenSorter";
 
-import testData from "../stores/testData";
+type ZoomState = {
+  data: IGraphData[];
+  left: string;
+  right: string;
+  refAreaLeft: string;
+  refAreaRight: string;
+  top: string | number;
+  bottom: string | number;
+  animation: boolean;
+};
 
-// import "../../../app/App.css";
+interface ILineGraphProps {
+  initialData: IGraphData[];
+}
 
-export default function LineGraph({ initialData = testData }) {
-  const initialState = {
+export default function LineGraph({ initialData }: ILineGraphProps) {
+  const initialState: ZoomState = {
     data: initialData,
     left: "dataMin",
     right: "dataMax",
@@ -30,6 +44,7 @@ export default function LineGraph({ initialData = testData }) {
     bottom: "dataMin-1",
     animation: true,
   };
+  const [state, setState] = useState<ZoomState>(initialState);
 
   useEffect(() => {
     setState((previousState) => ({
@@ -44,7 +59,12 @@ export default function LineGraph({ initialData = testData }) {
     }));
   }, [initialData]);
 
-  const getAxisYDomain = (from, to, ref, offset) => {
+  const getAxisYDomain = (
+    from: string,
+    to: string,
+    ref: string,
+    offset: number
+  ) => {
     let fromIndex = initialData.findIndex((data) => data.name === from);
     let toIndex = initialData.findIndex((data) => data.name === to);
 
@@ -55,16 +75,18 @@ export default function LineGraph({ initialData = testData }) {
     }
     const refData = initialData.slice(fromIndex, toIndex);
 
-    let [bottom, top] = [refData[0][ref], refData[0][ref]];
-    refData.forEach((d) => {
-      if (d[ref] > top) top = d[ref];
-      if (d[ref] < bottom) bottom = d[ref];
+    let [bottom, top] = [refData[0].value, refData[0].value];
+    refData.forEach((data) => {
+      if (data.value > top) {
+        top = data.value;
+      }
+      if (data.value < bottom) {
+        bottom = data.value;
+      }
     });
 
     return [(bottom | 0) - offset, (top | 0) + offset];
   };
-
-  const [state, setState] = useState(initialState);
 
   const zoom = () => {
     let { refAreaLeft, refAreaRight, data } = state;
@@ -111,32 +133,35 @@ export default function LineGraph({ initialData = testData }) {
 
   const { data, left, right, refAreaLeft, refAreaRight, top, bottom } = state;
 
-  const nameIsNumber = typeof data[0].name === "number";
+  const nameIsNumber = typeof initialData[0].name === "number";
+
+  debugger;
+  console.error("data", data);
 
   return (
     <div className="highlight-bar-chart user-select-none flex-col w-100 align-items-end justify-content-right">
       <div className="p-1rem">
-        <Button className="secondary" iconType="zoom_out" onClick={zoomOut}>
+        <button className="secondary" onClick={zoomOut}>
           Alejar
-        </Button>
+        </button>
       </div>
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart
-          width={"100%"}
+          width={100}
           height={400}
           data={data}
           onMouseDown={(e) =>
             setState((previousState) => ({
               ...previousState,
-              refAreaLeft: e.activeLabel,
+              refAreaLeft: e.activeLabel!,
             }))
           }
           onMouseMove={(e) =>
             state.refAreaLeft &&
             setState((previousState) => ({
               ...previousState,
-              refAreaRight: e.activeLabel,
+              refAreaRight: e.activeLabel!,
             }))
           }
           onMouseUp={zoom}
@@ -148,7 +173,9 @@ export default function LineGraph({ initialData = testData }) {
             domain={[left, right]}
             type={nameIsNumber ? "number" : "category"}
             min={0}
-            tickFormatter={nameIsNumber ? (value) => Math.floor(value) : ""}
+            tickFormatter={
+              nameIsNumber ? (value) => String(Math.floor(value)) : () => ""
+            }
           />
           <YAxis
             allowDataOverflow
@@ -156,10 +183,23 @@ export default function LineGraph({ initialData = testData }) {
             type="number"
             yAxisId="1"
             min={0}
-            tickFormatter={(value) => Math.floor(value)}
+            tickFormatter={(value) => String(Math.floor(value))}
           />
 
-          <Tooltip content={<TooltipGraph />} />
+          <Tooltip
+            content={
+              <Tooltip
+                content={(content) => (
+                  <TooltipContent
+                    payload={
+                      (content.payload ?? []) as Payload<number, string>[]
+                    }
+                    label={content.label}
+                  />
+                )}
+              />
+            }
+          />
           <Line
             yAxisId="1"
             type="linear"

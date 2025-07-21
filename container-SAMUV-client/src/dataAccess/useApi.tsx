@@ -43,7 +43,7 @@ export default function useApi() {
 
   const apiWrapper = useMemo(
     () => ({
-      async get<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+      async get<T>(params: TApiParams): Promise<TApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.get(params.url, params.config);
@@ -73,7 +73,7 @@ export default function useApi() {
        * @param config
        * @returns
        */
-      async post<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+      async post<T>(params: TApiParams): Promise<TApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.post<T>(
@@ -99,7 +99,7 @@ export default function useApi() {
         }
       },
 
-      async put<T>(params: TApiParams<T>): Promise<TApiResult<T>> {
+      async put<T>(params: TApiParams): Promise<TApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.put(
@@ -128,7 +128,7 @@ export default function useApi() {
         }
       },
 
-      async delete<T>(params: TApiParams<T>) {
+      async delete<T>(params: TApiParams) {
         setLoading(true);
         try {
           const response = await api.delete(params.url);

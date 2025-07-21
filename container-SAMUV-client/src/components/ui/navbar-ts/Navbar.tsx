@@ -2,12 +2,14 @@ import React from "react";
 import FrontendRoutes from "@/routing/FrontendRoutes";
 import { Link } from "react-router-dom";
 import { Profile } from "@/features/auth/domain/Profile";
+import Account from "@/features/auth/components/Account";
+import { profile } from "console";
 
 interface INavbarProps {
   profile: Profile;
   accessRequestCount: number;
 }
-export default function Navbar(props: INavbarProps) {
+export default function Navbar({ profile, accessRequestCount }: INavbarProps) {
   return (
     <nav className="navbar navbar-expand-lg bg-gradient-2">
       <div className="container-fluid">
@@ -41,7 +43,7 @@ export default function Navbar(props: INavbarProps) {
                 Colección
               </Link>
             </li>
-            {!props.profile.isVisitor() && (
+            {true && (
               <li className="nav-item">
                 <Link
                   className="nav-link text-light"
@@ -51,7 +53,7 @@ export default function Navbar(props: INavbarProps) {
                 </Link>
               </li>
             )}
-            {props.profile.isTechnicalPerson() && (
+            {true && (
               <li className="nav-item">
                 <Link
                   className="nav-link text-light"
@@ -115,7 +117,7 @@ export default function Navbar(props: INavbarProps) {
                 to={FrontendRoutes.REQUESTS}
               >
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {props.accessRequestCount}
+                  {accessRequestCount}
                   <span className="visually-hidden">unread messages</span>
                 </span>
                 <span className={`material-symbols-outlined`}>
@@ -124,10 +126,11 @@ export default function Navbar(props: INavbarProps) {
               </Link>
             </li>
           </ul>
+          <Account></Account>
           <span>
             <div className="d-flex flex-col g-0">
               <p className="m-0">Bienvenido,</p>
-              <p className="m-0 lead">{props.profile.fullname}</p>
+              <p className="m-0 lead">{profile.fullname}</p>
             </div>
           </span>
         </div>

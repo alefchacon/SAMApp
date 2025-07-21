@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 
-import Button from "../../../components/ui/Button";
+import React from "react";
 import { useModal } from "../../../components/contexts/ModalContext";
-import { Link, useNavigate } from "react-router-dom";
-import LogInForm from "../components/LogInForm";
-import Dropdown from "../../../components/ui/Dropdown";
-import DropdownItem from "../../../components/ui/DropdownItem";
-import Badge from "../../../components/ui/Badge";
+import { useNavigate } from "react-router-dom";
+import LogInForm from "./LogInForm";
+// import Dropdown from "../../../components/ui/Dropdown";
+// import DropdownItem from "../../../components/ui/DropdownItem";
+import Badge from "@/components/ui/Badge";
 import ROUTES from "../../../routing/FrontendRoutes";
-import { UserRoles } from "../../../stores/roleTypes";
 import useSession from "../businessLogic/useSession";
 
 export default function Account({
@@ -24,29 +23,28 @@ export default function Account({
     deleteSession();
   };
 
-  if (profile.role === UserRoles.VISITOR) {
+  if (profile.isVisitor()) {
     return (
       <div className="flex-row">
-        <Button
-          iconType="login"
+        <button
           onClick={() =>
-            showModal(
-              "Entrar",
-              <LogInForm onSubmit={closeModal} />,
-              true,
-              "30%"
-            )
+            showModal({
+              title: "Entrar",
+              content: <LogInForm onSubmit={closeModal} />,
+              dismissable: true,
+              maxHeight: "30%",
+            })
           }
         >
           Entrar
-        </Button>
+        </button>
       </div>
     );
   }
 
   return (
-    <>
-      <div className="flex-row align-items-center gap-1rem selectable-dark rounded-5 nav-link">
+    <div className="flex-row align-items-center gap-1rem selectable-dark rounded-5 nav-link">
+      {/*
         <Dropdown
           header={
             <div>
@@ -64,7 +62,7 @@ export default function Account({
             onClick={handleLogOut}
           ></DropdownItem>
         </Dropdown>
-      </div>
-    </>
+              */}
+    </div>
   );
 }

@@ -1,8 +1,8 @@
 import IRequestConfig from "./IRequestConfig";
 
-export type TApiParams<T> = {
+export type TApiParams = {
   url: string;
-  body?: T;
+  body?: any;
   config?: IRequestConfig;
 };
 
