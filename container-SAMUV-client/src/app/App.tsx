@@ -8,7 +8,7 @@ import ROUTES from "../routing/FrontendRoutes.js";
 import SpecieDashboard from "./routes/app/SpecieDashboard.js";
 // COMPONENTS
 import { UserRoles } from "@/stores/EUserRoles.js";
-import Navbar from "@/components/ui/navbar-ts/Navbar";
+import Navbar from "@/components/ui/navbar/Navbar.js";
 // CSS
 import "./App.css";
 
@@ -49,12 +49,14 @@ function App() {
 
   return (
     <>
-      <span className="main-title-uv">Universidad Veracruzana</span>
       <Navbar
         profile={profile}
         accessRequestCount={pendingAccessRequestCount}
       ></Navbar>
-      <main ref={mainDivRef} className="flex-row h-100 overflow-auto">
+      <main
+        ref={mainDivRef}
+        className="flex-row h-100 overflow-auto bg-gray-50"
+      >
         <Routes>
           <Route index path={ROUTES.LANDING} element={<Landing />}></Route>
           <Route

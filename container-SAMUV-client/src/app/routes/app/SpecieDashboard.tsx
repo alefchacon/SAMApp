@@ -26,6 +26,7 @@ import { useParams } from "react-router-dom";
 import { Specie, defaultSpecie } from "@/features/specie/domain/Specie";
 import ChipLabel from "@/components/ui/ChipLabel";
 import Tab from "@/components/ui/Tab";
+import Button from "@/components/ui/Button";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
@@ -89,16 +90,20 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
       },
     });
 
-  function AddSpecimenButton() {
+  function TechnicalPersonButtons() {
+    if (!(role === ROLE_TYPES.TECHNICAL_PERSON)) {
+      return null;
+    }
+
     return (
       <div className="flex-row gap-1rem">
-        <button onClick={navigateToAddSpecimen} className={"btn btn-primary"}>
+        <Button onClick={navigateToAddSpecimen} primary>
           Agregar espécimen
-        </button>
+        </Button>
 
-        <button className="btn btn-secondary" onClick={downloadSpecimens}>
+        <Button onClick={downloadSpecimens} icon="download">
           Descargar especímenes
-        </button>
+        </Button>
       </div>
     );
   }
@@ -131,31 +136,28 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     [specimens]
   );
 
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+
   function SpecieView() {
     return (
       <>
-        <Header title={<i>{selectedSpecie?.epithet}</i>} padding={false}>
+        <Header
+          title={<i>{selectedSpecie?.epithet}</i>}
+          padding={false}
+          rightContent={<TechnicalPersonButtons />}
+        >
           <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
-
-          {role === ROLE_TYPES.TECHNICAL_PERSON && (
-            <>
-              <br />
-              <AddSpecimenButton />
-            </>
-          )}
         </Header>
 
         {specimens?.length > 0 ? (
-          <Tabs className={`divider`}>
+          <Tabs
+            className={`divider`}
+            onChange={setActiveTabIndex}
+            defaultActiveTabIndex={activeTabIndex}
+          >
             {/* DEV ONLY: validate user is logged in:*/}
             <Tab
               label="Especímenes"
-              // id={SPECIMENS_TAB_ID}
-            >
-              {memoizedTable}
-            </Tab>
-            <Tab
-              label="sadf"
               // id={SPECIMENS_TAB_ID}
             >
               {memoizedTable}
@@ -166,7 +168,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
                   <Map specimens={specimens} role={role}></Map>
                 </div>
 
-                <div className="p-1rem gap-1rem h-100 multigraph-wrapper">
+                <div className="p-3 gap-3 h-full multigraph-wrapper">
                   <Multigraph
                     graphTitle="Especímenes recolectados por mes"
                     specimens={specimens}
@@ -210,7 +212,9 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
         onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
       ></SpecieList>
-      <div className={`specie-view rounded border border-secondary`}>
+      <div
+        className={`specie-view rounded-lg outline outline-black/8 bg-white`}
+      >
         <SpecieView />
       </div>
     </>

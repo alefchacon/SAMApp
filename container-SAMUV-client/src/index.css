@@ -1,5 +1,4 @@
 :root {
-  
   overflow: hidden;
   line-height: 1.5;
   font-size: 15px;
@@ -21,7 +20,7 @@ body {
   overflow: hidden;
 }
 
-nav{
+nav {
   z-index: 20;
   display: flex;
   flex-direction: row;
@@ -29,47 +28,43 @@ nav{
   padding: 0.5rem 2rem;
 }
 
-hr{
+hr {
   margin: 0;
   border: 1px solid var(--uv-gray-darker);
 }
 
-h1{
-  font-size: clamp(1.5rem, 1vw + 1.5rem, 3rem);
+h1 {
+  font-size: clamp(1.5rem, 1vw + 1.2rem, 3rem);
   font-weight: 500;
   letter-spacing: 0;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin: 0;
 }
 
-h2{
-  padding-top: 20px;
-}
-
-h3{
+h3 {
   margin: 0;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-p{
+p {
   margin: 0;
   padding: 0;
 }
 
-footer{
+footer {
   background-color: var(--dark);
 }
 
-table{
+table {
   table-layout: auto;
-  table-layout: fixed; 
-  height: 100%;  
+  table-layout: fixed;
+  height: 100%;
 }
 
-th{
+th {
   padding: 0px 20px;
   font-size: 0.8em;
 }
@@ -85,7 +80,7 @@ select {
   cursor: pointer;
 }
 
-form{
+form {
   width: 100%;
   min-width: 400px;
 }

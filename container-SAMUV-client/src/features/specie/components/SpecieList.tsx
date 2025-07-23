@@ -15,6 +15,8 @@ import useTextFilter from "@/hooks/useTextFilter";
 import { ROLE_TYPES, UserRoles } from "../../../stores/EUserRoles";
 import FrontendRoutes from "../../../routing/FrontendRoutes";
 import { Specie } from "../domain/Specie";
+import Button from "@/components/ui/Button";
+import TextField from "@/components/ui/TextField";
 
 interface ISpecieListProps {
   role: UserRoles;
@@ -57,15 +59,15 @@ export default function SpecieList(props: ISpecieListProps) {
 
   const technicalButtons = (
     <div className="flex-row gap-1rem">
-      <button className="btn btn-primary" onClick={onAdd}>
+      <Button onClick={onAdd} primary>
         Agregar especie
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => navigate(`/${FrontendRoutes.MIGRATE}`)}
-        className="btn btn-secondary"
+        icon="upload"
       >
         Migrar colección
-      </button>
+      </Button>
     </div>
   );
 
@@ -81,29 +83,28 @@ export default function SpecieList(props: ISpecieListProps) {
           Ver especies
         </button>
       ) : (
-        <div className={` ${fold && "fold"} flex-col h-100 w-100`}>
+        <div className={` ${fold && "fold"} flex flex-col h-100 w-100`}>
+          <Button onClick={toggleFold}>asdf</Button>
           <div className="specie-list p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient">
             <div></div>
             <p>Especies</p>
             <button className="btn btn-primary" onClick={toggleFold}></button>
           </div>
-          <div className="flex-col divider p-1rem gap-05rem">
+          <div className="flex flex-col divider p-1rem gap-05rem">
             {role === ROLE_TYPES.TECHNICAL_PERSON && technicalButtons}
             <div className="flex-row">
-              {/*
               <TextField
                 placeholder={"Buscar especies"}
                 onChange={handleFilterChange}
                 iconType={"search"}
               ></TextField>
-              */}
             </div>
           </div>
 
           {species?.length > 0 ? (
             <ul
               role="list"
-              className="specie-list-items flex-col overflow-auto h-100 flex-grow-1 unstyled"
+              className="specie-list-items flex flex-col overflow-auto h-100 flex-grow-1 unstyled"
             >
               {filteredItems.map((specie, index) => (
                 <ListItem key={index} selected={specie.id === selectedSpecieId}>

@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-table": "^8.17.3",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.7",
@@ -28,6 +29,7 @@
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.23.1",
     "recharts": "^2.12.7",
+    "tailwindcss": "^4.1.11",
     "utm-latlng": "^1.0.8",
     "yup": "^1.4.0"
   },

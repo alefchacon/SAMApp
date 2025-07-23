@@ -64,6 +64,9 @@ export default function Landing(props: ILandingProps) {
 
       <div className="page-padding p-2 g-2 d-flex flex-column">
         <h2>Sobre la colección de mamíferos</h2>
+        <p className="font-bold underline text-3x1 bg-indigo-100 hover:bg-indigo-500">
+          asdf
+        </p>
         <p>
           La colección de mamíferos provee un espacio de custodia de ejemplares
           de los mamíferos silvestres del estado de Veracruz, con el fin de

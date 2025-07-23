@@ -5,14 +5,21 @@ interface ITabsProps {
   className: string;
   buttons?: React.ReactNode;
   center?: boolean;
+  onChange?: (selectedTabIndex: number) => void;
+  defaultActiveTabIndex?: number;
 }
 export default function Tabs(props: ITabsProps) {
   const { children, className, buttons = null, center = false } = props;
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    props.defaultActiveTabIndex || 0
+  );
 
   const handleSelectedTabChange = (newIndex: number) => {
-    setSelectedIndex(newIndex);
+    setActiveTabIndex(newIndex);
+    if (props.onChange) {
+      props.onChange(newIndex);
+    }
   };
 
   /*
@@ -53,7 +60,7 @@ export default function Tabs(props: ITabsProps) {
               <li
                 key={index}
                 className={`tab selectable p-1rem flex-row justify-content-center ${
-                  selectedIndex === index ? "selected-tab" : ""
+                  activeTabIndex === index ? "selected-tab" : ""
                 }`}
                 onClick={() => handleSelectedTabChange(index)}
               >
@@ -68,8 +75,8 @@ export default function Tabs(props: ITabsProps) {
         </div>
       </div>
 
-      <div className={`${children[selectedIndex]?.props?.className} tab-panel`}>
-        {children[selectedIndex].props.children}
+      <div className={`tab-panel`}>
+        {children[activeTabIndex].props.children}
       </div>
     </div>
   );

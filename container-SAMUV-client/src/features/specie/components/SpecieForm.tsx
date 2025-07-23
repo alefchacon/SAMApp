@@ -68,7 +68,6 @@ export default function SpecieForm(props: ISpecieFormProps) {
         handleBlur,
       }) => (
         <Form className="input-group" action="" autoComplete="off">
-          {/*
           <Autocomplete
             required
             id="orden"
@@ -94,7 +93,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             setFieldValue={setFieldValue}
             onChange={handleChange}
             onBlur={handleBlur}
-            ></Autocomplete>
+          ></Autocomplete>
 
           <Autocomplete
             id="gender"
@@ -121,7 +120,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             setFieldValue={setFieldValue}
             onChange={handleChange}
             onBlur={handleBlur}
-            ></Autocomplete>
+          ></Autocomplete>
           <Autocomplete
             id="subspecie"
             required
@@ -134,8 +133,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             setFieldValue={setFieldValue}
             onChange={handleChange}
             onBlur={handleBlur}
-            ></Autocomplete>
-            */}
+          ></Autocomplete>
 
           <div className="flex-row justify-content-right ptop-2rem">
             <button type="submit">

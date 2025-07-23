@@ -12,7 +12,7 @@ import useSession from "../businessLogic/useSession";
 
 export default function Account({
   authenticated = false,
-  accessRequestCount = "",
+  accessRequestCount = 0,
 }) {
   const { showModal, closeModal } = useModal();
   const { getProfile, deleteSession } = useSession();
