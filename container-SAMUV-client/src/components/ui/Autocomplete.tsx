@@ -1,31 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  LegacyRef,
+  RefObject,
+} from "react";
 import useTextFilter from "../../hooks/useTextFilter";
 import TextField from "./TextField";
 import Highlight from "./Highlight";
-import useKeyboardSelection from "../../hooks/useKeyboardSelection";
+import useKeyboardSelection from "@/hooks/useKeyboardSelection";
 
 interface IAutocompleteProps {
-  items: string[];
-  label: string | React.ReactElement;
-  placeholder: string | React.ReactElement;
-  required: boolean;
-  errorMessage: string | React.ReactElement;
-  name: string;
-  id: string;
-  hasError: boolean;
-  value: string;
-  disabled: boolean;
-  type: string;
-  setFieldValue: (name: string, option: string) => void;
-  onChange: () => void;
-  onBlur: () => void;
-  maxLength: number;
+  items?: string[];
+  label?: string | React.ReactElement;
+  placeholder?: string;
+  required?: boolean;
+  errorMessage?: string;
+  name?: string;
+  id?: string;
+  hasError?: boolean;
+  value?: string;
+  disabled?: boolean;
+  type?: string;
+  setFieldValue?: (name: string, option: string) => void;
+  onChange?: (value: any) => void;
+  onBlur?: (event: React.FocusEvent<any, Element>) => void;
+  maxLength?: number;
 }
 export default function Autocomplete(props: IAutocompleteProps) {
   const {
     items = ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
-    label = null,
-    placeholder = null,
+    label,
+    placeholder,
     required = false,
     errorMessage = "",
     name = ``,
@@ -40,12 +46,16 @@ export default function Autocomplete(props: IAutocompleteProps) {
   } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef();
-  const textFieldRef = useRef();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const textFieldRef = useRef<HTMLInputElement>(null);
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(items, 0);
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option: any) => {
+    if (!textFieldRef.current) {
+      return;
+    }
+
     textFieldRef.current.value = option;
     setFieldValue(name, option);
     setIsOpen(false);
@@ -65,8 +75,11 @@ export default function Autocomplete(props: IAutocompleteProps) {
     setIsOpen(!isOpen);
   };
 
-  const handleOutsideClick = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -78,12 +91,12 @@ export default function Autocomplete(props: IAutocompleteProps) {
     };
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<any>) => {
     setFieldValue(name, e.target.value);
     handleFilterChange(e);
   };
 
-  const handleBlur = (event: HTMLevent) => {
+  const handleBlur = (event: React.FocusEvent<any, Element>) => {
     setIsOpen(false);
     onBlur(event);
   };
@@ -98,7 +111,6 @@ export default function Autocomplete(props: IAutocompleteProps) {
         id={id}
         name={name}
         type={type}
-        className={`${getErrorClassName()} input`}
         maxLength={maxLength}
         disabled={disabled}
         onChange={handleChange}

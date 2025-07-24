@@ -2,10 +2,10 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 interface IHeaderProps {
-  children: React.ReactNode;
-  title: string | React.ReactElement;
+  children?: React.ReactNode;
+  title: string | React.ReactNode;
   rightContent?: React.ReactNode;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   padding?: boolean;
 }
 export default function Header(props: IHeaderProps) {

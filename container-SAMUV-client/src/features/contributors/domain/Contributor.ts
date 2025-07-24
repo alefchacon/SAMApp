@@ -1,9 +1,13 @@
-import { EContriubutorRoles } from "@/stores/EContributorRoles";
+import { EContributorRoles } from "@/stores/EContributorRoles";
 
 export interface IContributorSpecimen {
   id?: number;
-  contributor: number; // this is the contributor's id. This is the name in the backend
-  contributor_role: EContriubutorRoles;
+  code?: string;
+  name?: string;
+  contributor?: number; // this is the contributor's id. This is the name in the backend
+  contributor_role?: EContributorRoles;
+  contributor_role_id?: number;
+  contributor_id?: number;
 }
 
 export interface IContributor {
@@ -23,7 +27,7 @@ export class Contributor implements IContributor {
     this.id = data.id;
     this.code =
       data?.code ||
-      (role === EContriubutorRoles.COLECTOR
+      (role === EContributorRoles.COLECTOR
         ? data?.colector
         : data?.preparator) ||
       "ND";

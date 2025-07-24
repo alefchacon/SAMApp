@@ -13,7 +13,7 @@ import moment from "moment";
 import { EReproductiveStatus } from "./domain/enum/EReproductiveStatus";
 import { EAge } from "./domain/enum/EAge";
 import { ESex } from "./domain/enum/ESex";
-import { EContriubutorRoles } from "@/stores/EContributorRoles";
+import { EContributorRoles } from "@/stores/EContributorRoles";
 import Specimen from "./domain/model/Specimen";
 
 const columnHelper = createColumnHelper<Specimen>();

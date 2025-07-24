@@ -1,33 +1,40 @@
+import React, { Component } from "react";
 // FORMS
 import LocationForm from "../../../features/specimens/newSpecimen/LocationForm";
-import ColectForm from "../../../features/specimens/newSpecimen/ColectForm";
-import MorphometricMeasuresForm from "../../../features/specimens/newSpecimen/MorphometricMeasuresForm";
-import Specie from "../../../features/specie/domain/specie";
+import ContributorsForm from "@/features/specimens/newSpecimen/ContributorsForm";
+import MorphometricMeasuresForm from "@/features/specimens/newSpecimen/MorphometricMeasuresForm";
+import { Specie } from "@/features/specie/domain/Specie";
 // COMPONENTS
-import Stepper from "../../../components/ui/Stepper";
+import Stepper from "@/components/ui/Stepper";
 import CardSpecie from "../../../features/specie/components/CardSpecie";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps, FormikErrors, FormikTouched } from "formik";
 import { specimenSchema } from "../../../features/specimens/formikSchemas/specimenSchema";
-import Page from "../../../components/ui/Page";
+import Page from "@/components/ui/Page";
 
 import { useSpecimens } from "../../../features/specimens/businessLogic/useSpecimens";
 import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
-import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
 import { useLocation } from "react-router-dom";
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
-import SpecimenFormik from "../../../features/specimens/domain/specimenFormik";
-import HttpStatus from "../../../stores/httpStatus";
+// import SpecimenFormik from "../../../features/specimens/domain/specimenFormik";
+import Specimen, {
+  defaultSpecimen,
+  ISpecimen,
+} from "@/features/specimens/domain/model/Specimen";
 import { useState } from "react";
+import Step from "@/components/ui/Step";
 
-export default function SpecimenForm({ onResetScroll }) {
+interface ISpecimenFormProps {
+  onResetScroll: () => void;
+}
+export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
   const { addSpecimen } = useSpecimens();
   const { addContributorSpecimen } = useContributorsAndRoles();
   const { showSnackbar } = useSnackbar();
-  const [invalidSteps, setInvalidSteps] = useState([]);
+  const [invalidSteps, setInvalidSteps] = useState<string[]>([]);
   const location = useLocation();
   const selectedSpecie = location.state.specie;
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: ISpecimen) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
   };
 
@@ -49,7 +56,7 @@ export default function SpecimenForm({ onResetScroll }) {
     "nature",
     "status",
   ];
-  const findInvalidSteps = (errors) => {
+  const findInvalidSteps = (errors: FormikErrors<ISpecimen>) => {
     setInvalidSteps([]);
     const errorKeys = Object.keys(errors);
 
@@ -69,7 +76,7 @@ export default function SpecimenForm({ onResetScroll }) {
     setInvalidSteps(newInvalidSteps);
   };
 
-  const handleValidation = async (formik) => {
+  const handleValidation = async (formik: FormikProps<ISpecimen>) => {
     const errors = await formik.validateForm().then((errors) => {
       const allFieldsTouched = markAllFieldsTouched(formik.values);
       formik.setTouched(allFieldsTouched);
@@ -79,7 +86,10 @@ export default function SpecimenForm({ onResetScroll }) {
     findInvalidSteps(errors);
 
     if (Object.entries(errors).length > 0) {
-      showSnackbar("Por favor, corrija los errores antes de continuar", true);
+      showSnackbar({
+        content: "Por favor, corrija los errores antes de continuar",
+        isError: true,
+      });
       return;
     }
     formik.submitForm();
@@ -92,14 +102,15 @@ export default function SpecimenForm({ onResetScroll }) {
     in order to get the list of errors.
     The problem with validateForm() is that it does not set the fields
     as touched, so we need to do that manually as well.
-    The problem with THAT is that the SpecimenFormik object has a
+    The problem with THAT is that the Specimen object has a
     nested location object in it, so in order to set it as 
     touched I had to do recursion.
   */
-  function markAllFieldsTouched(values) {
+  /*
+  function markAllFieldsTouched(values: ISpecimen) {
     const touched = {};
 
-    function recurse(currentValues, currentTouched) {
+    function recurse(currentValues: ISpecimen, currentTouched: boolean) {
       Object.keys(currentValues).forEach((key) => {
         if (
           typeof currentValues[key] === "object" &&
@@ -115,6 +126,25 @@ export default function SpecimenForm({ onResetScroll }) {
     recurse(values, touched);
     return touched;
   }
+    */
+  function markAllFieldsTouched<T extends object>(values: T): FormikTouched<T> {
+    const touched = {} as FormikTouched<T>;
+
+    function recurse(currentValues: any, currentTouched: any) {
+      Object.keys(currentValues).forEach((key) => {
+        const val = currentValues[key];
+        if (typeof val === "object" && val !== null && !Array.isArray(val)) {
+          currentTouched[key] = {};
+          recurse(val, currentTouched[key]);
+        } else {
+          currentTouched[key] = true;
+        }
+      });
+    }
+
+    recurse(values, touched);
+    return touched;
+  }
 
   return (
     <Page
@@ -123,7 +153,7 @@ export default function SpecimenForm({ onResetScroll }) {
     >
       <Formik
         validationSchema={specimenSchema}
-        initialValues={new SpecimenFormik()}
+        initialValues={defaultSpecimen}
         onSubmit={handleSubmit}
         enableReinitialize
       >
@@ -135,15 +165,18 @@ export default function SpecimenForm({ onResetScroll }) {
               onResetScroll={onResetScroll}
               invalidSteps={invalidSteps}
             >
-              <div label={"Medidas morfométricas"} id={"medidas-morfometricas"}>
+              <Step
+                label={"Medidas morfométricas"}
+                id={"medidas-morfometricas"}
+              >
                 <MorphometricMeasuresForm></MorphometricMeasuresForm>
-              </div>
-              <div label={"Ubicación"} id={"ubicacion"}>
+              </Step>
+              <Step label={"Ubicación"} id={"ubicacion"}>
                 <LocationForm></LocationForm>
-              </div>
-              <div label={"Colecta"} id={"colecta"}>
-                <ColectForm></ColectForm>
-              </div>
+              </Step>
+              <Step label={"Colecta"} id={"colecta"}>
+                <ContributorsForm></ContributorsForm>
+              </Step>
             </Stepper>
           </Form>
         )}

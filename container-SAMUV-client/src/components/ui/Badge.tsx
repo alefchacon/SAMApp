@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IBadgeProps {
-  children: React.ReactElement;
+  children: React.ReactElement | string;
 }
 export default function Badge({ children }: IBadgeProps) {
   return (

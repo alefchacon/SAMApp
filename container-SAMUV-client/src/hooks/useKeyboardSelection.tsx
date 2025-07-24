@@ -1,35 +1,36 @@
 import { useState } from "react";
+
 export default function useKeyboardSelection(
-  isOpen,
-  setIsOpen,
-  items,
-  handleOptionSelect
+  isOpen: boolean,
+  setIsOpen: (open: boolean) => void,
+  items: any[],
+  handleOptionSelect: (option: any) => void
 ) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (!isOpen) {
-      if (e.key === "ArrowDown") {
+      if (event.key === "ArrowDown") {
         setIsOpen(true);
       }
       return;
     }
 
-    switch (e.key) {
+    switch (event.key) {
       case "ArrowUp":
-        e.preventDefault();
+        event.preventDefault();
         setSelectedIndex((previousIndex) =>
           previousIndex > 0 ? previousIndex - 1 : items.length - 1
         );
         break;
       case "ArrowDown":
-        e.preventDefault();
+        event.preventDefault();
         setSelectedIndex((previousIndex) =>
           previousIndex < items.length - 1 ? previousIndex + 1 : 0
         );
         break;
       case "Enter":
-        e.preventDefault();
+        event.preventDefault();
         if (selectedIndex >= 0) {
           handleOptionSelect(items[selectedIndex]);
         }

@@ -1,6 +1,13 @@
+import React from "react";
 import Button from "./Button";
 
-export default function Chip({ children, index = 0, onRemove }) {
+interface IChipProps {
+  children?: React.ReactNode;
+  index?: number;
+  onRemove?: (index: number) => void;
+}
+
+export default function Chip({ children, index = 0, onRemove }: IChipProps) {
   return (
     <div
       className="chip  rounded-5 flex-row justify-content-space-between align-items-center bg-darkgray border "
@@ -15,7 +22,7 @@ export default function Chip({ children, index = 0, onRemove }) {
 
       {onRemove && (
         <Button
-          iconType="cancel"
+          icon="cancel"
           onClick={() => onRemove(index)}
           className="icon-only"
         ></Button>

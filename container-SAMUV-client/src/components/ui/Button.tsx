@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 interface IButtonProps {
-  children?: React.ReactElement | string;
+  children?: React.ReactNode | string;
   primary?: boolean;
   type?: "button" | "submit" | "reset";
   isDisabled?: boolean;

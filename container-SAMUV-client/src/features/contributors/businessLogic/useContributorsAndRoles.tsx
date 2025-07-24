@@ -2,17 +2,17 @@ import { useState, useCallback } from "react";
 import useApi from "../../../dataAccess/useApi";
 
 import { CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL } from "./contributorsUrl";
-import { EContriubutorRoles } from "@/stores/EContributorRoles";
-import Contributor from "../domain/Contributor";
+import { EContributorRoles } from "@/stores/EContributorRoles";
+import Contributor, { IContributorSpecimen } from "../domain/Contributor";
 import TApiResult from "@/dataAccess/domain/TApiResult";
 import { IContributorSpecimen2 } from "../domain/ContributorSpecimenSerializer";
 
 export default function useContributorsAndRoles() {
-  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [contributors, setContributors] = useState<IContributorSpecimen[]>([]);
   const { apiWrapper } = useApi();
 
   const getContributors = useCallback(async () => {
-    const response = await apiWrapper.get<Contributor[]>({
+    const response = await apiWrapper.get<IContributorSpecimen[]>({
       url: CONTRIBUTORS_URL,
     });
 
@@ -28,7 +28,7 @@ export default function useContributorsAndRoles() {
 
   const addContributor = useCallback(
     async (
-      newContributor = { name: "", code: "" }
+      newContributor: IContributorSpecimen
     ): Promise<TApiResult<Contributor>> => {
       const body = {
         name: newContributor.name,
@@ -77,7 +77,7 @@ export default function useContributorsAndRoles() {
       newContributorSpecimen = {
         specimen: 0,
         contributor: 0,
-        contributor_role: EContriubutorRoles.COLECTOR,
+        contributor_role: EContributorRoles.COLECTOR,
       }
     ) => {
       const body = {

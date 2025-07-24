@@ -1,24 +1,35 @@
 //LIBRARIES
-import { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import React, { useState } from "react";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { contributorSchema } from "../formikSchemas/contributorSchema";
 
 import Button from "../../../components/ui/Button";
 import TextField from "../../../components/ui/TextField";
-import Modal from "../../../components/ui/modal/Modal";
 
 import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";
-import Contributor from "../domain/contributor";
-import HttpStatus from "../../../stores/httpStatus";
+import Contributor, {
+  defaultContributor,
+  IContributorSpecimen,
+} from "../domain/Contributor";
+import EHttpStatus from "@/stores/EHttpStatus";
+import TApiResult from "@/dataAccess/domain/TApiResult";
 
+interface IContributorFormProps {
+  onSubmit: (values: Contributor) => Promise<TApiResult<Contributor>>;
+  contributor?: IContributorSpecimen;
+}
 export default function ContributorForm({
   onSubmit,
-  contributor = new Contributor(),
-}) {
-  const handleSubmit = async (values, actions) => {
+  contributor = defaultContributor,
+}: IContributorFormProps) {
+  //
+  const handleSubmit = async (
+    values: Contributor,
+    actions: FormikHelpers<Contributor>
+  ) => {
     const response = await onSubmit(values);
 
-    if (response.status === HttpStatus.CREATED) {
+    if (response.success) {
       actions.resetForm();
     }
     //onSecondaryClick();
@@ -43,7 +54,7 @@ export default function ContributorForm({
               value={values.code}
               onChange={handleChange}
               errorMessage={errors.code}
-              hasError={errors.code && touched.code}
+              hasError={Boolean(errors.code && touched.code)}
               required
               maxLength={100}
               isFormik
@@ -55,16 +66,12 @@ export default function ContributorForm({
               value={values.name}
               onChange={handleChange}
               errorMessage={errors.name}
-              hasError={errors.name && touched.name}
+              hasError={Boolean(errors.name && touched.name)}
               maxLength={200}
               isFormik
             ></TextField>
             <div className="button-row">
-              <Button
-                className="primary"
-                label="Agregar contribuidor"
-                type="submit"
-              >
+              <Button className="primary" type="submit">
                 {isEdit ? "Editar" : "Agregar"} contribuidor
               </Button>
             </div>

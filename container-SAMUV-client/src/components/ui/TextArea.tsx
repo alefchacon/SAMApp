@@ -1,5 +1,5 @@
 // LIBRARIES
-import { Children, useState, useEffect, cloneElement } from "react";
+import React, { Children, useState, useEffect, cloneElement } from "react";
 import { Field } from "formik";
 
 // COMPONENTS
@@ -34,7 +34,7 @@ export default function TextArea({
     return hasError ? "hasError" : "";
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter" && onEnter) {
       onEnter();
       return;
@@ -54,13 +54,13 @@ export default function TextArea({
         </div>
 
         {helperText && (
-          <div
+          <label
             htmlFor={`${id}`}
             className={`sam-text-field-helper-text`}
             id={`${id}-helper-text`}
           >
             {helperText}
-          </div>
+          </label>
         )}
       </div>
 
@@ -91,15 +91,15 @@ export default function TextArea({
       </div>
 
       {hasError && (
-        <div
+        <label
           role="alert"
           aria-live="assertive"
           className={`error-text text-wrap`}
           htmlFor={`${id}`}
           id={`${id}-error-message`}
         >
-            {errorMessage}
-          </div>
+          {errorMessage}
+        </label>
       )}
     </div>
   );

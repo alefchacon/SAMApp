@@ -1,10 +1,27 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useTextFilter from "../../../hooks/useTextFilter";
 
-import Chip from "../../../components/ui/ChipInput";
-import ChipLabel from "../../../components/ui/ChipLabel";
+import Chip from "@/components/ui/ChipInput";
+import ChipLabel from "@/components/ui/ChipLabel";
 import CardContributor from "./CardContributor";
 import useKeyboardSelection from "../../../hooks/useKeyboardSelection";
+import { IContributor, IContributorSpecimen } from "../domain/Contributor";
+
+interface IContributorAutocompleteProps {
+  contributors: IContributor[];
+  roleId: number;
+  label?: string | null;
+  helperText?: string | React.ReactNode;
+  required?: boolean;
+  errorMessage?: string;
+  name: string;
+  id?: string;
+  hasError?: boolean;
+  disabled?: boolean;
+  onChange: (selectedContributor: IContributorSpecimen, roleId: number) => void;
+  maxLength?: number;
+  defaultContributor: IContributor;
+}
 export default function ContributorAutocomplete({
   contributors = [
     {
@@ -27,38 +44,48 @@ export default function ContributorAutocomplete({
   disabled = false,
   onChange,
   maxLength = 50,
-  value,
-}) {
+  defaultContributor,
+}: IContributorAutocompleteProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const [paddingLeft, setPaddingLeft] = useState(0);
+
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter(contributors);
-  const dropdownRef = useRef();
-  const textFieldRef = useRef();
-  const handleOptionSelect = (option) => {
-    option.contributor_role_id = roleId;
-    onChange(option, roleId);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const textFieldRef = useRef(null);
+  const iconRef = useRef<HTMLSpanElement>(null);
+
+  const handleOptionSelect = (selectedContributor: IContributorSpecimen) => {
+    selectedContributor.contributor_role_id = roleId;
+    onChange(selectedContributor, roleId);
     setIsOpen(false);
   };
+
   const { handleKeyDown, selectedIndex } = useKeyboardSelection(
     isOpen,
     setIsOpen,
     filteredItems,
     handleOptionSelect
   );
+
   const getErrorClassName = () => {
     return hasError ? "hasError" : "";
   };
 
   const selectedContributor = contributors.find(
-    (contributor) => contributor.code === value?.code
+    (contributor) => contributor.code === defaultContributor?.code
   );
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOutsideClick = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -75,8 +102,6 @@ export default function ContributorAutocomplete({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-  const iconRef = useRef(null);
-  const [paddingLeft, setPaddingLeft] = useState(0);
 
   useEffect(() => {
     const adjustPadding = () => {
@@ -108,23 +133,23 @@ export default function ContributorAutocomplete({
               )}
             </label>
           )}
-          <div
+          <label
             htmlFor={`${id}`}
             className={`helper-text`}
             id={`${id}-helper-text`}
           >
             {helperText}
-          </div>
+          </label>
         </div>
-<br></br>
-        <div
-          className=" display-inline-block flex-row align-items-center w-100 g-1rem position-relative min-w-fit-content"
-        >
+        <br></br>
+        <div className=" display-inline-block flex-row align-items-center w-100 g-1rem position-relative min-w-fit-content">
           <input
             ref={textFieldRef}
             type="text"
             name={name}
-            className={`w-100 h-100 input flex-grow-1 ${hasError ? "hasError" : ""}`}
+            className={`w-100 h-100 input flex-grow-1 ${
+              hasError ? "hasError" : ""
+            }`}
             style={{
               paddingLeft: `${paddingLeft}px`,
             }}
@@ -153,13 +178,13 @@ export default function ContributorAutocomplete({
         </div>
       </div>
 
-      <div
+      <label
         className={`error-text`}
         htmlFor={`${id}`}
         id={`${id}-error-message`}
       >
         {hasError && errorMessage}
-      </div>
+      </label>
 
       {isOpen && (
         <ul className="dropdown-menu pop-up unstyled">

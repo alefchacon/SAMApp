@@ -64,3 +64,21 @@ class Location implements ILocation {
 }
 
 export default Location;
+
+export const defaultLocation: ILocation = {
+  id: 0,
+  coordinates_cartesian_plane_x: 0,
+  coordinates_cartesian_plane_y: 0,
+  geographical_coordinates_x: 0,
+  geographical_coordinates_y: 0,
+  utm_region: "",
+  msnm_google: 0,
+  altitude: 0,
+  institute_code: "IIB-UV",
+  institute: "Instituto de Investigaciones Biológicas, UV",
+  specific_location: "",
+  municipality: "",
+  state: "",
+  country: "MEX",
+  kilometer: "",
+};

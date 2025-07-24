@@ -1,4 +1,4 @@
-import Location from "./Location";
+import Location, { defaultLocation } from "./Location";
 import { capitalize } from "lodash";
 import moment from "moment";
 import * as defaults from "@/utils/getOrDefault";
@@ -22,7 +22,7 @@ interface IDatedObject {
   day?: number;
 }
 
-interface ISpecimen extends IDatedObject {
+export interface ISpecimen extends IDatedObject {
   id?: number;
   colection_code: string;
   colection_number: string;
@@ -50,8 +50,8 @@ interface ISpecimen extends IDatedObject {
   so the following is written as such to be backend-compliant 
   */
   specie?: number | Specie;
-  colector?: IContributorSpecimen;
-  preparator?: IContributorSpecimen;
+  colector?: IContributorSpecimen | string;
+  preparator?: IContributorSpecimen | string;
 }
 
 class Specimen implements ISpecimen {
@@ -137,3 +137,36 @@ class Specimen implements ISpecimen {
 }
 
 export default Specimen;
+
+export const defaultSpecimen: ISpecimen = {
+  id: 1,
+  colection_code: "IIB-UV MAM",
+  colection_number: "",
+  catalog_id: "",
+  colection_date: "",
+  preparation_date: "",
+  hour: "",
+  status: false,
+  sex: ESex.ND,
+  reproductive_status: EReproductiveStatus.ND,
+  nature: ENature.ND,
+  number_embryos: 0,
+  comment: "",
+  class_age: "",
+
+  //medidas-morfometricas
+  length_total: 0,
+  length_ear: 0,
+  length_paw: 0,
+  length_tail: 0,
+  weight: 0,
+  location: defaultLocation,
+  /*
+  "specie" can be an object or an integer.
+  This is because the backend's serializer calls the specie FK "specie",
+  so the following is written as such to be backend-compliant 
+  */
+  specie: 0,
+  colector: "",
+  preparator: "",
+};

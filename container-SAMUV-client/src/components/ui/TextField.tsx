@@ -7,7 +7,7 @@ import ChipLabel from "./ChipLabel";
 
 // DEV ONLY: probably get rid of this component altogether
 interface ITextFieldProps {
-  label?: string;
+  label?: string | React.ReactElement;
   helperText?: string;
   placeholder?: string;
   required?: boolean;
@@ -15,7 +15,7 @@ interface ITextFieldProps {
   name?: string;
   id?: string;
   hasError?: boolean;
-  value?: string;
+  value?: string | number;
   isFormik?: boolean;
   disabled?: boolean;
   type?: string;
@@ -29,7 +29,7 @@ interface ITextFieldProps {
   onFocus?: (event: React.FocusEvent<any, Element>) => void;
   step?: number;
   max?: number | string;
-  min?: number;
+  min?: number | string;
   onBlur?: (event: React.FocusEvent<any, Element>) => void;
   defaultValue?: string | number;
   onPaste?: () => void;

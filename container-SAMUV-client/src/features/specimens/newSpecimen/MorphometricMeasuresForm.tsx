@@ -1,11 +1,12 @@
+import React from "react";
 import TextField from "../../../components/ui/TextField";
-import RadioList from "../../../components/ui/RadioList";
-import REPRODUCTIVE_STATUS from "../../../stores/reproductiveStatus";
+import RadioList from "@/components/ui/RadioList";
+import { EReproductiveStatus } from "../domain/enum/EReproductiveStatus";
 import { useFormikContext } from "formik";
-export default function MorphometricMeasuresForm({
-  inputWidth = "",
-}) {
-  const { values, errors, touched, onBlur, handleChange } = useFormikContext();
+import { ISpecimen } from "../domain/model/Specimen";
+export default function MorphometricMeasuresForm({ inputWidth = "" }) {
+  const { values, errors, touched, handleBlur, handleChange } =
+    useFormikContext<ISpecimen>();
 
   return (
     <div className="flex-col gap-2rem">
@@ -13,7 +14,7 @@ export default function MorphometricMeasuresForm({
         <RadioList
           value={values?.sex}
           required
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label="Sexo"
           options={[
             { label: "Macho", value: "M" },
@@ -23,30 +24,35 @@ export default function MorphometricMeasuresForm({
           name="sex"
           onChange={handleChange}
           errorMessage={errors.sex}
-          hasError={errors.sex && touched.sex}
+          hasError={Boolean(errors.sex && touched.sex)}
         />
         <RadioList
           value={values?.reproductive_status}
           required
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label="Estado reproductivo"
           options={[
-            { label: "Activo", value: REPRODUCTIVE_STATUS.ACTIVE },
-            { label: "inactivo", value: REPRODUCTIVE_STATUS.INACTIVE },
-            { label: "Lactante", value: REPRODUCTIVE_STATUS.LACTANT },
-            { label: "Postlactante", value: REPRODUCTIVE_STATUS.POSTLACTANT },
-            { label: "TE (Testículos escrotados)", value: REPRODUCTIVE_STATUS.TE },
+            { label: "Activo", value: EReproductiveStatus.ACTIVE },
+            { label: "inactivo", value: EReproductiveStatus.INACTIVE },
+            { label: "Lactante", value: EReproductiveStatus.LACTANT },
+            { label: "Postlactante", value: EReproductiveStatus.POSTLACTANT },
+            {
+              label: "TE (Testículos escrotados)",
+              value: EReproductiveStatus.TE,
+            },
             { label: "No identificado", value: "ND" },
           ]}
           name="reproductive_status"
           onChange={handleChange}
           errorMessage={errors.reproductive_status}
-          hasError={errors.reproductive_status && touched.reproductive_status}
+          hasError={Boolean(
+            errors.reproductive_status && touched.reproductive_status
+          )}
         />
         <RadioList
           required
           value={values?.class_age}
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label="Edad"
           options={[
             { label: "Juvenil", value: "Juvenil" },
@@ -58,7 +64,7 @@ export default function MorphometricMeasuresForm({
           name="class_age"
           onChange={handleChange}
           errorMessage={errors.class_age}
-          hasError={errors.class_age && touched.class_age}
+          hasError={Boolean(errors.class_age && touched.class_age)}
         />
       </div>
 
@@ -134,7 +140,7 @@ export default function MorphometricMeasuresForm({
           max={99.999}
         ></TextField>
         <TextField
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label={"Número de embriones"}
           type="number"
           isFormik

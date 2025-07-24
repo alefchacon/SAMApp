@@ -8,7 +8,7 @@ import {
 } from "./urls/specimenURL.js";
 import { UserRoles } from "../../../stores/EUserRoles";
 import moment from "moment";
-import Specimen from "../domain/model/Specimen";
+import Specimen, { ISpecimen } from "../domain/model/Specimen";
 import useDownload from "@/hooks/useDownload";
 import useApi from "../../../dataAccess/useApi";
 import EHttpStatus from "../../../stores/EHttpStatus";
@@ -92,7 +92,7 @@ export const useSpecimens = (specie?: Specie) => {
     I need to unfuck the design in the backend, because the way we are handling the 
     contributors is a fucking mess right now.
   */
-  const addSpecimen = async (newSpecimen: Specimen, specieId: number = 0) => {
+  const addSpecimen = async (newSpecimen: ISpecimen, specieId: number = 0) => {
     /*
     newSpecimen.specie = specieId;
 

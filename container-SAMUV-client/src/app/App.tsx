@@ -6,6 +6,7 @@ import moment from "moment";
 // FEATURES
 import ROUTES from "../routing/FrontendRoutes.js";
 import SpecieDashboard from "./routes/app/SpecieDashboard.js";
+import SpecimenForm from "./routes/app/SpecimenForm.js";
 // COMPONENTS
 import { UserRoles } from "@/stores/EUserRoles.js";
 import Navbar from "@/components/ui/navbar/Navbar.js";
@@ -38,13 +39,11 @@ function App() {
   };
   */
 
-  const mainDivRef = useRef(null);
+  const mainDivRef = useRef<HTMLDivElement>(null);
   const resetScroll = () => {
-    /*
     if (mainDivRef.current) {
       mainDivRef.current.scrollTop = 0;
     }
-      */
   };
 
   return (
@@ -68,6 +67,11 @@ function App() {
                 onSpecieSelection={() => {}}
               />
             }
+          ></Route>
+          <Route
+            index
+            path={`${ROUTES.COLLECTION}/${ROUTES.ADD_SPECIMEN}`}
+            element={<SpecimenForm onResetScroll={resetScroll} />}
           ></Route>
         </Routes>
       </main>

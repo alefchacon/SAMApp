@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 
 // CUSTOM COMPONENTS
 import Button from "../../../components/ui/Button";
-// import Autocomplete from "../../../components/ui/Autocomplete";
+import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS
 import { specieSchema } from "../formikSchemas/specieSchema";
@@ -75,7 +75,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             items={ranks?.ordens}
             label="Orden"
             errorMessage={errors.orden}
-            hasError={errors.orden && touched.orden}
+            hasError={Boolean(errors.orden && touched.orden)}
             value={values.orden}
             setFieldValue={setFieldValue}
             onChange={handleChange}
@@ -88,7 +88,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             items={ranks?.families}
             label="Familia"
             errorMessage={errors.family}
-            hasError={errors.family && touched.family}
+            hasError={Boolean(errors.family && touched.family)}
             value={values.family}
             setFieldValue={setFieldValue}
             onChange={handleChange}
@@ -102,7 +102,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             required
             items={ranks?.genders}
             value={values.gender}
-            hasError={errors.gender && touched.gender}
+            hasError={Boolean(errors.gender && touched.gender)}
             errorMessage={errors.gender}
             setFieldValue={setFieldValue}
             onChange={handleChange}
@@ -115,7 +115,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             required
             items={ranks?.species_specie}
             value={values.specie_specie}
-            hasError={errors.specie_specie && touched.specie_specie}
+            hasError={Boolean(errors.specie_specie && touched.specie_specie)}
             errorMessage={errors.specie_specie}
             setFieldValue={setFieldValue}
             onChange={handleChange}
@@ -128,7 +128,7 @@ export default function SpecieForm(props: ISpecieFormProps) {
             label="Sub especie"
             items={ranks?.subspecies}
             value={values.subspecie}
-            hasError={errors.subspecie && touched.subspecie}
+            hasError={Boolean(errors.subspecie && touched.subspecie)}
             errorMessage={errors.subspecie}
             setFieldValue={setFieldValue}
             onChange={handleChange}

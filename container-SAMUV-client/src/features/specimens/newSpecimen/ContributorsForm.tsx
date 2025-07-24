@@ -1,25 +1,32 @@
 // LIBRARIES
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Form, useFormikContext } from "formik";
 
 // CUSTOM COMPONENTS
 import TextField from "../../../components/ui/TextField";
 import Button from "../../../components/ui/Button";
-import ContributorForm from "../../contributors/components/ContributorForm";
-import ContributorAutocomplete from "../../contributors/components/ContributorAutocomplete";
+import ContributorForm from "@/features/contributors/components/ContributorForm";
+import ContributorAutocomplete from "@/features/contributors/components/ContributorAutocomplete";
 import moment from "moment";
 import { useModal } from "../../../components/contexts/ModalContext";
 import RadioList from "../../../components/ui/RadioList";
 //VALIDATION SCHEMAS
-import TextArea from "../../../components/ui/TextArea";
+// import TextArea from "../../../components/ui/TextArea";
 import useContributorsAndRoles from "../../contributors/businessLogic/useContributorsAndRoles";
-import CONTRIBUTOR_ROLES from "../../../stores/contributorRoles";
+import { EContributorRoles } from "@/stores/EContributorRoles";
+import { getContributorTypeById } from "@/stores/EContributorRoles";
 import NATURE from "../../../stores/nature";
-import CONTRIBUTOR_ROLE_NAMES from "../../../stores/contributorRoleNames";
+import ContributorRoleMap from "@/stores/ContributorRoleMap";
+import EContributorTypes from "@/stores/EContributorRoles";
+import {
+  IContributor,
+  IContributorSpecimen,
+} from "@/features/contributors/domain/Contributor";
+import { ISpecimen } from "../domain/model/Specimen";
 
 export default function ContributorsForm({ inputWidth = "" }) {
-  const { values, errors, touched, onBlur, handleChange, setFieldValue } =
-    useFormikContext();
+  const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
+    useFormikContext<ISpecimen>();
 
   const { contributors, getContributors, addContributor } =
     useContributorsAndRoles();
@@ -30,17 +37,17 @@ export default function ContributorsForm({ inputWidth = "" }) {
   }, []);
 
   const handleShowAddContributorModal = () => {
-    showModal(
-      "Agregar contribuidor",
-      <ContributorForm onSubmit={addContributor} />
-    );
+    showModal({
+      title: "Agregar contribuidor",
+      content: <ContributorForm onSubmit={addContributor} />,
+    });
   };
 
   const contributorHelperText = (
     <div className="flex-row align-items-center gap-05rem">
       Busque y seleccione a uno de los contribuidores existentes, o{" "}
       <Button
-        iconType="person_add"
+        icon="person_add"
         className="secondary"
         onClick={handleShowAddContributorModal}
       >
@@ -49,25 +56,40 @@ export default function ContributorsForm({ inputWidth = "" }) {
     </div>
   );
 
-  const handleContributorChange = (newContributor) => {
-    const thisContributorRoleName =
-      CONTRIBUTOR_ROLE_NAMES[newContributor.contributor_role_id];
+  const handleContributorChange = (newContributor: IContributorSpecimen) => {
+    if (!newContributor.contributor_role_id) {
+      return;
+    }
+
+    let thisContributorRoleName = ContributorRoleMap.get(
+      newContributor.contributor_role_id
+    );
+
+    if (!thisContributorRoleName) {
+      thisContributorRoleName = "colector";
+    }
+
+    const currentContributor = values[
+      thisContributorRoleName
+    ] as IContributorSpecimen;
 
     const userSelectedSameContributor =
-      values[thisContributorRoleName]?.contributor_id === newContributor.id;
+      currentContributor.contributor_id === newContributor.id;
 
     if (userSelectedSameContributor) {
       return;
     }
 
-    let newContributorSpecimenRelationship = {
+    let newContributorSpecimenRelationship: IContributorSpecimen = {
       contributor_id: newContributor.id,
       contributor_role_id: newContributor.contributor_role_id,
       name: newContributor.name,
       code: newContributor.code,
     };
 
-    const relationshipId = values[thisContributorRoleName]?.id;
+    const relationshipId = (
+      values[thisContributorRoleName] as IContributorSpecimen
+    )?.id;
     const userIsEditingExistingSpecimen = Boolean(relationshipId);
     if (userIsEditingExistingSpecimen) {
       newContributorSpecimenRelationship.id = relationshipId;
@@ -80,38 +102,38 @@ export default function ContributorsForm({ inputWidth = "" }) {
     <div>
       <div className="input-group">
         <h2>Colecta</h2>
-          <TextField
-            onBlur={onBlur}
-            required
-            isFormik
-            name="colection_date"
-            label={"Fecha de colecta"}
-            value={values.colection_date}
-            onChange={handleChange}
-            hasError={Boolean(errors.colection_date && touched.colection_date)}
-            errorMessage={errors.colection_date}
-            type="date"
-            maxWidth={inputWidth}
-            max={moment().format("YYYY-MM-DD")}
-          ></TextField>
-          <TextField
-            onBlur={onBlur}
-            isFormik
-            label={"Hora de la colecta"}
-            maxWidth={inputWidth}
-            type="time"
-            name="hour"
-            value={values.hour}
-            onChange={handleChange}
-            hasError={Boolean(errors.hour && touched.hour)}
-            errorMessage={errors.hour}
-            step={60}
-            min="00:00"
-            max="23:59"
-          ></TextField>
+        <TextField
+          onBlur={handleBlur}
+          required
+          isFormik
+          name="colection_date"
+          label={"Fecha de colecta"}
+          value={String(values.colection_date)}
+          onChange={handleChange}
+          hasError={Boolean(errors.colection_date && touched.colection_date)}
+          errorMessage={errors.colection_date}
+          type="date"
+          maxWidth={inputWidth}
+          max={moment().format("YYYY-MM-DD")}
+        ></TextField>
+        <TextField
+          onBlur={handleBlur}
+          isFormik
+          label={"Hora de la colecta"}
+          maxWidth={inputWidth}
+          type="time"
+          name="hour"
+          value={values.hour}
+          onChange={handleChange}
+          hasError={Boolean(errors.hour && touched.hour)}
+          errorMessage={errors.hour}
+          step={60}
+          min="00:00"
+          max="23:59"
+        ></TextField>
         <RadioList
           required
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label="Naturaleza del ejemplar"
           value={values.nature}
           options={[
@@ -129,16 +151,15 @@ export default function ContributorsForm({ inputWidth = "" }) {
           onChange={handleChange}
           errorMessage={errors.nature}
           maxWidth={inputWidth}
-          hasError={errors.nature && touched.nature}
+          hasError={Boolean(errors.nature && touched.nature)}
         />
 
         <ContributorAutocomplete
-          roleId={CONTRIBUTOR_ROLES.COLECTOR}
+          roleId={EContributorRoles.COLECTOR}
           required
           id="colector"
-          value={values.colector}
+          defaultContributor={values.colector as IContributorSpecimen}
           name="colector"
-          onBlur={onBlur}
           onChange={handleContributorChange}
           label={"Colector"}
           helperText={contributorHelperText}
@@ -152,7 +173,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
           id="colection_number"
           name="colection_number"
           onChange={handleChange}
-          onBlur={onBlur}
+          onBlur={handleBlur}
           value={values.colection_number}
           errorMessage={errors.colection_number}
           type="number"
@@ -165,14 +186,12 @@ export default function ContributorsForm({ inputWidth = "" }) {
         ></TextField>
       </div>
       <div className="input-group">
-      
         <h2>Preparación</h2>
         <ContributorAutocomplete
-          roleId={CONTRIBUTOR_ROLES.PREPARATOR}
-          value={values.preparator}
+          roleId={EContributorRoles.PREPARATOR}
+          defaultContributor={values.preparator as IContributorSpecimen}
           id="preparator"
           name="preparator"
-          onBlur={onBlur}
           onChange={handleContributorChange}
           helperText={contributorHelperText}
           hasError={Boolean(errors.preparator && touched.preparator)}
@@ -183,11 +202,11 @@ export default function ContributorsForm({ inputWidth = "" }) {
         ></ContributorAutocomplete>
 
         <TextField
-          onBlur={onBlur}
+          onBlur={handleBlur}
           isFormik
           name="preparation_date"
           label={"Fecha de preparación"}
-          value={values.preparation_date}
+          value={String(values.preparation_date)}
           onChange={handleChange}
           hasError={Boolean(
             errors.preparation_date && touched.preparation_date
@@ -201,7 +220,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
       <div className="input-group">
         <RadioList
           required
-          onBlur={onBlur}
+          onBlur={handleBlur}
           label="Estado"
           value={values.status === "true"}
           options={[
@@ -215,8 +234,8 @@ export default function ContributorsForm({ inputWidth = "" }) {
           maxWidth={inputWidth}
         />
 
-        <TextArea
-          onBlur={onBlur}
+        <TextField
+          onBlur={handleBlur}
           label={"Observaciones"}
           maxLength={200}
           isFormik
@@ -225,7 +244,7 @@ export default function ContributorsForm({ inputWidth = "" }) {
           onChange={handleChange}
           hasError={Boolean(errors.comment && touched.comment)}
           errorMessage={errors.comment}
-        ></TextArea>
+        ></TextField>
       </div>
     </div>
   );

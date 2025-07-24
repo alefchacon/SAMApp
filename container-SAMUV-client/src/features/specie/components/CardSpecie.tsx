@@ -10,7 +10,7 @@ interface ICardSpecieProps {
   clickableRank?: boolean;
   filterText?: string;
   selected?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 export default function CardSpecie(props: ICardSpecieProps) {
   const {
