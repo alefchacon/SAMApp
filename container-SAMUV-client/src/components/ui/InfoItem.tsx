@@ -2,7 +2,7 @@ import React from "react";
 
 interface IInfoItemProps {
   label: string;
-  iconType: string;
+  iconType?: string;
   fullheight?: boolean;
 }
 export default function InfoItem({

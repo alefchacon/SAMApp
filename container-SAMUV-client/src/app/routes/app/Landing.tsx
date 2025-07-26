@@ -2,8 +2,23 @@ import Searchbar from "@/components/ui/Searchbar";
 import Footer from "@/components/ui/Footer";
 import ROUTES from "@/routing/FrontendRoutes";
 import React from "react";
-
+import { Navbar } from "@/components/ui/navbar-ts/Navbar";
 import { Link } from "react-router-dom";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ISearchBannerProps {
   children: React.ReactNode;
@@ -55,6 +70,7 @@ export default function Landing(props: ILandingProps) {
             <h1 id="landing-tag">
               Acceso abierto a los mamíferos veracruzanos
             </h1>
+            <Navbar></Navbar>
           </div>
         </div>
         <br />

@@ -15,7 +15,7 @@ import useTextFilter from "@/hooks/useTextFilter";
 import { ROLE_TYPES, UserRoles } from "../../../stores/EUserRoles";
 import FrontendRoutes from "../../../routing/FrontendRoutes";
 import { Specie } from "../domain/Specie";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/ButtonCustom";
 import TextField from "@/components/ui/TextField";
 
 interface ISpecieListProps {
@@ -104,7 +104,7 @@ export default function SpecieList(props: ISpecieListProps) {
           {species?.length > 0 ? (
             <ul
               role="list"
-              className="specie-list-items flex flex-col overflow-auto h-100 flex-grow-1 unstyled"
+              className="specie-list-items flex flex-col overflow-auto flex-grow-1"
             >
               {filteredItems.map((specie, index) => (
                 <ListItem key={index} selected={specie.id === selectedSpecieId}>

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 
 // CUSTOM COMPONENTS
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import Autocomplete from "../../../components/ui/Autocomplete";
 
 // VALIDATION SCHEMAS

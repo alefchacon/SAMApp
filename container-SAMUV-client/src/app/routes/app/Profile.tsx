@@ -1,5 +1,5 @@
 import Page from "../../../components/ui/Page";
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import TextField from "../../../components/ui/TextField";
 import PasswordValidator from "../../../features/auth/components/PasswordValidator";
 import { Formik, Form } from "formik";
@@ -28,16 +28,10 @@ export default function Profile({ profile }) {
         })}
         enableReinitialize
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-        }) => (
+        {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form className="">
             <div className="input-group">
-            <h2>Actualizar contrasena</h2>
+              <h2>Actualizar contrasena</h2>
 
               <TextField
                 isFormik

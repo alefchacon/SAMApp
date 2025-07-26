@@ -7,8 +7,9 @@ export const decimalSchema = yup
   .min(0, messages.decimal)
   .max(99.999, messages.decimal)
   .test("is-decimal", messages.decimal, (value) => {
-    if (!value) {
+    if (value === null || value === undefined) {
       return false;
     }
-    return Boolean(value.toString().match(decimalRegex));
+    const valid = Boolean(value.toString().match(decimalRegex));
+    return valid;
   });

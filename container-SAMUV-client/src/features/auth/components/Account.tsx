@@ -27,6 +27,7 @@ export default function Account({
     return (
       <div className="flex-row">
         <button
+          className="selectable-dark rounded-sm p-1"
           onClick={() =>
             showModal({
               title: "Entrar",

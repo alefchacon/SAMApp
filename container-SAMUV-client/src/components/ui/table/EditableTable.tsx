@@ -14,9 +14,9 @@ import {
 } from "@tanstack/react-table";
 
 // COMPONENTS
-import Button from "../Button";
+import Button from "../ButtonCustom";
 // import "../../../app/App.css";
-import TableRow from "./TableRow";
+import TableRow, { PinDirection } from "./TableRow";
 import Specimen from "@/features/specimens/domain/model/Specimen";
 
 interface IEditableTableProps {
@@ -62,7 +62,7 @@ export default function EditableTable({
   ) => {
     const keys = path.split(".");
     let specimen = updatedSpecimen;
-
+    console.error(path);
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
       if (!(key in specimen)) {
@@ -70,17 +70,22 @@ export default function EditableTable({
       }
       specimen = specimen[key];
     }
-
+    console.error(specimen[keys[keys.length - 1]]);
     specimen[keys[keys.length - 1]] = value;
   };
 
   const table = useReactTable({
     data: tableData,
-    columns: filteredColumns,
+    columns: columns,
     columnResizeMode,
     columnResizeDirection,
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
+    initialState: {
+      columnPinning: {
+        right: ["actions"],
+      },
+    },
     state: {
       pagination,
       columnFilters,
@@ -143,7 +148,7 @@ export default function EditableTable({
             }
           />
         )}
-        {header.isPlaceholder
+        {header.isPlaceholder && header.column.getCanPin()
           ? null
           : flexRender(header.column.columnDef.header, header.getContext())}
 
@@ -172,7 +177,7 @@ export default function EditableTable({
 
   return (
     <>
-      <div className="table-actions flex-row p-05rem align-items-center justify-content-space-between bg-white">
+      <div className="table-actions flex flex-row p-05rem align-items-center justify-content-space-between bg-white">
         <div className="table-page-buttons flex-row align-items-center">
           <button
             className="secondary"
@@ -217,31 +222,114 @@ export default function EditableTable({
           </select>
         </div>
       </div>
-      <div className="table-wrapper h-100">
-        <div
-          className="table"
-          {...{
-            style: {
-              //width: table.getCenterTotalSize(),
-              height: "100%",
-              width: isTechnicalPerson ? "" : "100%",
-            },
-          }}
-        >
-          <div className="thead">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <div className="tr" key={headerGroup.id}>
-                {headerGroup.headers.map((header, index) => (
-                  <TableHeader table={table} header={header} key={index} />
-                ))}
-              </div>
-            ))}
-          </div>
+      <div className="flex flex-row">
+        <div className="table-wrapper h-100">
+          <div
+            className="table"
+            {...{
+              style: {
+                //width: table.getCenterTotalSize(),
+                height: "100%",
+                width: isTechnicalPerson ? "" : "100%",
+              },
+            }}
+          >
+            <div className="thead">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <div
+                  className="tr"
+                  key={headerGroup.id}
+                  style={{ display: "flex" }}
+                >
+                  {/* Left/Center columns */}
+                  <div style={{ display: "flex", flex: 1 }}>
+                    {headerGroup.headers
+                      .filter((header) => !header.column.getIsPinned())
+                      .map((header, index) => (
+                        <TableHeader
+                          table={table}
+                          header={header}
+                          key={index}
+                        />
+                      ))}
+                  </div>
 
-          <div className="tbody">
-            {table.getRowModel().rows.map((row, index) => (
-              <TableRow key={index} rowData={row} />
-            ))}
+                  {/* Right pinned columns */}
+                  <div className="flex sticky right-0 z-1 bg-gray-50">
+                    {headerGroup.headers
+                      .filter(
+                        (header) => header.column.getIsPinned() === "right"
+                      )
+                      .map((header, index) => (
+                        <TableHeader
+                          table={table}
+                          header={header}
+                          key={index}
+                        />
+                      ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="tbody">
+              {table.getRowModel().rows.map((row, index) => {
+                return (
+                  <div
+                    key={row.id}
+                    className="tr selectable position-relative"
+                    style={{ display: "flex" }}
+                  >
+                    {/* Left/Center cells */}
+                    <div style={{ display: "flex", flex: 1 }}>
+                      {row
+                        .getVisibleCells()
+                        .filter((cell) => !cell.column.getIsPinned())
+                        .map((cell) => (
+                          <div
+                            className="td position-relative"
+                            key={cell.id}
+                            style={{
+                              width: cell.column.getSize(),
+                              position: "relative",
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </div>
+                        ))}
+                    </div>
+
+                    {/* Right pinned cells */}
+                    <div className="flex sticky right-0 z-1 bg-white shadow-[0_5px_5px_rgba(0,0,0,0.25)]">
+                      {row
+                        .getVisibleCells()
+                        .filter((cell) => {
+                          return cell.column.getIsPinned() === "right";
+                        })
+                        .map((cell) => {
+                          return (
+                            <div
+                              className="td"
+                              key={cell.id}
+                              style={{
+                                width: cell.column.getSize(),
+                              }}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

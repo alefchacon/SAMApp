@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 
-import Button from "./Button";
+import Button from "./ButtonCustom";
 import Badge from "./Badge";
 import Step from "./Step";
 

@@ -92,26 +92,25 @@ export const useSpecimens = (specie?: Specie) => {
     I need to unfuck the design in the backend, because the way we are handling the 
     contributors is a fucking mess right now.
   */
-  const addSpecimen = async (newSpecimen: ISpecimen, specieId: number = 0) => {
-    /*
+  const addSpecimen = async (newSpecimen: Specimen, specieId: number = 0) => {
     newSpecimen.specie = specieId;
 
     newSpecimen.preparator = {
-      contributor: newSpecimen.preparator.contributor_id,
-      contributor_role: newSpecimen.preparator.contributor_role_id,
-    };
-    newSpecimen.colector = {
-      contributor: newSpecimen.colector.contributor_id,
-      contributor_role: newSpecimen.colector.contributor_role_id,
+      contributor: newSpecimen.preparator!.contributor_id,
+      contributor_role: newSpecimen.preparator!.contributor_role_id,
     };
 
-    const response = await apiWrapper.post(
-      SPECIMEN_URL.concat("/"),
-      newSpecimen
-    );
+    newSpecimen.colector = {
+      contributor: newSpecimen.colector!.contributor_id,
+      contributor_role: newSpecimen.colector!.contributor_role_id,
+    };
+
+    const response = await apiWrapper.post({
+      url: SPECIMEN_URL.concat("/"),
+      body: newSpecimen,
+    });
 
     return response;
-    */
   };
 
   const deleteSpecimen = useCallback(async (specimenId = 0) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import TextField from "../../../components/ui/TextField";
 
 import { Formik, Form } from "formik";

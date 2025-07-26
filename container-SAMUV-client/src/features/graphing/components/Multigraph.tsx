@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import PieGraph from "./PieGraph";
 import BarGraph from "./BarGraph";
 import LineGraph from "./LineGraph";
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import Card from "@/components/ui/Card";
 import DATE_TYPES, { DateTypes } from "../stores/dateTypes";
 import Specimen from "@/features/specimens/domain/model/Specimen";

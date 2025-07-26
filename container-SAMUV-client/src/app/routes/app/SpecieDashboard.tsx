@@ -26,7 +26,8 @@ import { useParams } from "react-router-dom";
 import { Specie, defaultSpecie } from "@/features/specie/domain/Specie";
 import ChipLabel from "@/components/ui/ChipLabel";
 import Tab from "@/components/ui/Tab";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/ButtonCustom";
+import TextField from "@/components/ui/TextField";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";

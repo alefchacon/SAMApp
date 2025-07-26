@@ -142,7 +142,7 @@ export const defaultSpecimen: ISpecimen = {
   id: 1,
   colection_code: "IIB-UV MAM",
   colection_number: "",
-  catalog_id: "",
+  catalog_id: "0",
   colection_date: "",
   preparation_date: "",
   hour: "",

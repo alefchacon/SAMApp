@@ -13,7 +13,7 @@ import {
 
 import TooltipContent from "./TooltipContent";
 
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import Specimen from "@/features/specimens/domain/model/Specimen";
 import { Payload } from "recharts/types/component/DefaultTooltipContent";
 import { IGraphData } from "../util/specimenSorter";

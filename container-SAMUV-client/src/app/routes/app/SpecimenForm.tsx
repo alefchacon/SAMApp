@@ -22,6 +22,8 @@ import Specimen, {
 } from "@/features/specimens/domain/model/Specimen";
 import { useState } from "react";
 import Step from "@/components/ui/Step";
+import Button from "@/components/ui/ButtonCustom";
+import { decimalRegex } from "@/validation/regexes";
 
 interface ISpecimenFormProps {
   onResetScroll: () => void;
@@ -35,6 +37,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
   const selectedSpecie = location.state.specie;
 
   const handleSubmit = async (values: ISpecimen) => {
+    console.error("submitting");
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
   };
 
@@ -106,27 +109,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
     nested location object in it, so in order to set it as 
     touched I had to do recursion.
   */
-  /*
-  function markAllFieldsTouched(values: ISpecimen) {
-    const touched = {};
 
-    function recurse(currentValues: ISpecimen, currentTouched: boolean) {
-      Object.keys(currentValues).forEach((key) => {
-        if (
-          typeof currentValues[key] === "object" &&
-          currentValues[key] !== null
-        ) {
-          currentTouched[key] = {};
-          recurse(currentValues[key], currentTouched[key]);
-        } else {
-          currentTouched[key] = true;
-        }
-      });
-    }
-    recurse(values, touched);
-    return touched;
-  }
-    */
   function markAllFieldsTouched<T extends object>(values: T): FormikTouched<T> {
     const touched = {} as FormikTouched<T>;
 
@@ -178,6 +161,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
                 <ContributorsForm></ContributorsForm>
               </Step>
             </Stepper>
+            <Button onClick={() => handleValidation(formik)}>Test</Button>
           </Form>
         )}
       </Formik>

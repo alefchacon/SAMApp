@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link, useLocation } from "react-router-dom";
 import Account from "../../../features/auth/components/Account";
-import Button from "../Button";
+import Button from "../ButtonCustom";
 import ProgressBar from "../ProgressBar";
 import ROUTES from "../../../routing/FrontendRoutes";
 import { useStatus } from "../../contexts/StatusContext";
@@ -12,6 +12,21 @@ import { useState } from "react";
 import Badge from "../Badge";
 import { IProfile } from "@/features/auth/domain/Profile";
 import "../../../app/App.css";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface INavbarProps {
   accessRequestCount: number;
@@ -32,7 +47,7 @@ export default function Navbar({
   const leftMenu = (
     <>
       <NavLink
-        route={ROUTES.LANDING}
+        route={"/"}
         label={"Inicio"}
         iconType={"home"}
         selected={pathname === "/"}
@@ -44,6 +59,20 @@ export default function Navbar({
         iconType={"pets"}
         selected={pathname.includes(ROUTES.COLLECTION)}
       ></NavLink>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger className="nav-link flex flex-row selectable-dark p-1 align-center rounded-sm">
+          Sobre nosotros...
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem>Subscription</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {profile?.role === UserRoles.TECHNICAL_PERSON && (
         <>
@@ -95,7 +124,7 @@ export default function Navbar({
     <>
       <span className="main-title-uv">Universidad Veracruzana</span>
       <nav className="flex flex-column bg-gradient-2 relative">
-        <div className="flex-row">
+        <div className="flex flex-row justify-content-between w-full">
           <div className="left-side flex flex-row gap-3 hide-if-mobile">
             {leftMenu}
           </div>

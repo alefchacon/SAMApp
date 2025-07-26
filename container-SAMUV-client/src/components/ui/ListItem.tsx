@@ -10,7 +10,7 @@ export default function ListItem(props: IListItem) {
 
   return (
     <li
-      className={`list-item flex flex-col hover:!bg-green-100 outline hoverable2 outline-black/5 cursor-pointer p-2 rounded-sm ${position} ${
+      className={`list-item flex flex-col hover:!bg-green-100 hoverable2 outline-black/5 cursor-pointer rounded-sm p-3 ${position} ${
         selected ? "selected" : ""
       }`}
     >

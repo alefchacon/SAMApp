@@ -33,7 +33,7 @@ export default function RadioList({
     <fieldset
       name={name}
       className={`rounded-5 flex-col gap-05rem ${errorClass}`}
-      onChange={(e) => onChange}
+      onChange={onChange}
       onBlur={onBlur}
       style={{ maxWidth: maxWidth ?? "" }}
     >

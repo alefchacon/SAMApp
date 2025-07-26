@@ -15,6 +15,22 @@ import { EAge } from "./domain/enum/EAge";
 import { ESex } from "./domain/enum/ESex";
 import { EContributorRoles } from "@/stores/EContributorRoles";
 import Specimen from "./domain/model/Specimen";
+import Button from "@/components/ui/ButtonCustom";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const columnHelper = createColumnHelper<Specimen>();
 
@@ -33,7 +49,7 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         path={`location.geographical_coordinates_x`}
         initialValue={info.getValue()?.geographical_coordinates_x}
         onUpdate={useLocations().updateLocation}
-        databaseTableId={info.row.original.location!.id}
+        databaseTableId={info.row.original.location?.id}
         table={info.table}
         row={info.row}
         column={info.column}
@@ -51,7 +67,7 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         path={`location.geographical_coordinates_y`}
         initialValue={info.getValue()?.geographical_coordinates_y}
         onUpdate={useLocations().updateLocation}
-        databaseTableId={info.row.original.location!.id}
+        databaseTableId={info.row.original.location?.id}
         table={info.table}
         row={info.row}
         column={info.column}
@@ -70,7 +86,7 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         path={`location.coordinates_cartesian_plane_x`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_x}
         onUpdate={useLocations().updateLocation}
-        databaseTableId={info.row.original.location!.id}
+        databaseTableId={info.row.original.location?.id}
         table={info.table}
         row={info.row}
         column={info.column}
@@ -88,7 +104,7 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         path={`location.coordinates_cartesian_plane_y`}
         initialValue={info.getValue()?.coordinates_cartesian_plane_y}
         onUpdate={useLocations().updateLocation}
-        databaseTableId={info.row.original.location!.id}
+        databaseTableId={info.row.original.location?.id}
         table={info.table}
         row={info.row}
         column={info.column}
@@ -586,6 +602,26 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         row={info.row}
         column={info.column}
       />
+    ),
+  }),
+  columnHelper.display({
+    id: "actions",
+    header: "", // Remove the arrow function temporarily
+    size: 70,
+    cell: (info) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button
+            onClick={() => alert(info.row.original.id)}
+            icon="more_vert"
+          ></Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Cambiar especie</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">Eliminar</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     ),
   }),
 ];

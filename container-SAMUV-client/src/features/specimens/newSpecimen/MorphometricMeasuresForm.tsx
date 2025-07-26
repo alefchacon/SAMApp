@@ -4,8 +4,9 @@ import RadioList from "@/components/ui/RadioList";
 import { EReproductiveStatus } from "../domain/enum/EReproductiveStatus";
 import { useFormikContext } from "formik";
 import { ISpecimen } from "../domain/model/Specimen";
+import { ESex } from "../domain/enum/ESex";
 export default function MorphometricMeasuresForm({ inputWidth = "" }) {
-  const { values, errors, touched, handleBlur, handleChange } =
+  const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
     useFormikContext<ISpecimen>();
 
   return (
@@ -17,9 +18,9 @@ export default function MorphometricMeasuresForm({ inputWidth = "" }) {
           onBlur={handleBlur}
           label="Sexo"
           options={[
-            { label: "Macho", value: "M" },
-            { label: "Hembra", value: "H" },
-            { label: "No identificado", value: "N" },
+            { label: "Macho", value: ESex.MALE },
+            { label: "Hembra", value: ESex.FEMALE },
+            { label: "No identificado", value: ESex.ND },
           ]}
           name="sex"
           onChange={handleChange}

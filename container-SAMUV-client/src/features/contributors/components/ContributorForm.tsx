@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import { contributorSchema } from "../formikSchemas/contributorSchema";
 
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonCustom";
 import TextField from "../../../components/ui/TextField";
 
 import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";

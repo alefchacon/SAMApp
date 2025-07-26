@@ -24,11 +24,11 @@ export default function CardSpecie(props: ICardSpecieProps) {
 
   return (
     <div onClick={onClick}>
-      <div className="font-weight-500">
+      <p className="font-weight-500 text-lg">
         <i>
           <Highlight text={specie.epithet} highlight={filterText}></Highlight>
         </i>
-      </div>
+      </p>
       <Taxonomy
         specie={specie}
         center={false}

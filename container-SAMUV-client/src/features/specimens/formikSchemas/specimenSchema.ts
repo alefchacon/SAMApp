@@ -16,11 +16,6 @@ export const specimenSchema = yup.object().shape({
     .matches(catalogIdSpecimenRegex, messages.id)
     .max(20)
     .required(messages.required),
-  catalog_id: yup
-    .string()
-    .max(20)
-    .matches(catalogIdSpecimenRegex, messages.id)
-    .required(messages.required),
   colection_date: yup
     .date()
     .max(new Date(), messages.maxDatetoday)
