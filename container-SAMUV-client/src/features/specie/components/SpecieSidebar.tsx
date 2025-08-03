@@ -15,8 +15,9 @@ import useTextFilter from "@/hooks/useTextFilter";
 import { ROLE_TYPES, UserRoles } from "../../../stores/EUserRoles";
 import FrontendRoutes from "../../../routing/FrontendRoutes";
 import { Specie } from "../domain/Specie";
-import Button from "@/components/ui/ButtonCustom";
+import { Button } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
+import { Dna, Upload } from "lucide-react";
 
 interface ISpecieListProps {
   role: UserRoles;
@@ -28,7 +29,7 @@ interface ISpecieListProps {
   onAddSpecimen: () => void;
   onFold: (fold: boolean) => void;
 }
-export default function SpecieList(props: ISpecieListProps) {
+export default function SpecieSidebar(props: ISpecieListProps) {
   const {
     role = UserRoles.VISITOR,
     species = new Array<Specie>(),
@@ -41,8 +42,9 @@ export default function SpecieList(props: ISpecieListProps) {
   } = props;
 
   const [fold, setFold] = useState(false);
-  const [filteredItems, handleFilterChange, filterText] =
-    useTextFilter<Specie>(species);
+  const [filteredItems, handleFilterChange, filterText] = useTextFilter<Specie>(
+    { items: species }
+  );
 
   const navigate = useNavigate();
 
@@ -59,17 +61,19 @@ export default function SpecieList(props: ISpecieListProps) {
 
   const technicalButtons = (
     <div className="flex-row gap-1rem">
-      <Button onClick={onAdd} primary>
-        Agregar especie
+      <Button onClick={onAdd}>
+        <Dna></Dna> Agregar especie
       </Button>
       <Button
         onClick={() => navigate(`/${FrontendRoutes.MIGRATE}`)}
-        icon="upload"
+        variant={"outline"}
       >
-        Migrar colección
+        <Upload></Upload> Migrar colección
       </Button>
     </div>
   );
+
+  console.error(species);
 
   return (
     <ResizableDiv
@@ -84,12 +88,6 @@ export default function SpecieList(props: ISpecieListProps) {
         </button>
       ) : (
         <div className={` ${fold && "fold"} flex flex-col h-100 w-100`}>
-          <Button onClick={toggleFold}>asdf</Button>
-          <div className="specie-list p-1rem font-weight-600 flex-row justify-content-space-between align-items-center bg-gradient">
-            <div></div>
-            <p>Especies</p>
-            <button className="btn btn-primary" onClick={toggleFold}></button>
-          </div>
           <div className="flex flex-col divider p-1rem gap-05rem">
             {role === ROLE_TYPES.TECHNICAL_PERSON && technicalButtons}
             <div className="flex-row">
@@ -108,18 +106,6 @@ export default function SpecieList(props: ISpecieListProps) {
             >
               {filteredItems.map((specie, index) => (
                 <ListItem key={index} selected={specie.id === selectedSpecieId}>
-                  {role === ROLE_TYPES.TECHNICAL_PERSON && (
-                    <HoverableActions>
-                      <button
-                        className="icon-only color-white"
-                        onClick={() => onEdit(specie)}
-                      ></button>
-                      <button
-                        className="icon-only color-white"
-                        onClick={onAddSpecimen}
-                      ></button>
-                    </HoverableActions>
-                  )}
                   <CardSpecie
                     specie={specie}
                     filterText={filterText}

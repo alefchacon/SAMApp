@@ -14,6 +14,11 @@ from rest_framework.decorators import action
 from rest_framework.views import exception_handler
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from drf_spectacular.utils import extend_schema
+from django.db.models.functions import Concat
+from django.db.models import Value
+from django.db.models import Count
+from django.db.models.functions import Extract, TruncMonth, TruncYear
+
 import json
 import os
 from django.conf import settings 
@@ -26,7 +31,20 @@ class SpecieViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
 
     def get_permissions(self):
-        if self.action in ['get_by_gender', 'get_by_orden', 'get_by_scientific_name', 'get_by_family', 'get_specimen_list_visitor', 'list', 'get_taxonomy_ranks']:
+        if self.action in [
+            'get_by_gender', 
+            'get_by_orden', 
+            'get_by_scientific_name', 
+            'get_by_family', 
+            'get_by_subspecie', 
+            'get_specimen_list_visitor', 
+            'list', 
+            'get_ranks_preview', 
+            'get_ordens', 
+            'get_taxon_by_name',
+            'search_species',
+            'get_specimen_metrics_by_taxon'
+        ]:
             return [permissions.AllowAny()]
         else:
             return [permissions.IsAuthenticated()]
@@ -65,18 +83,216 @@ class SpecieViewSet(viewsets.ModelViewSet):
             404: 'No encontrado - El especie no fue encontrado.'
         }
     )
-    def get_taxonomy_ranks(self, request, pk=None):
-        taxonomic_data = {
-            'classes_specie': list(models.Specie.objects.values_list('class_specie', flat=True).distinct()),
-            'ordens': list(models.Specie.objects.values_list('orden', flat=True).distinct()),
-            'families': list(models.Specie.objects.values_list('family', flat=True).distinct()),
-            'genders': list(models.Specie.objects.values_list('gender', flat=True).distinct()),
-            'species_specie': list(models.Specie.objects.values_list('specie_specie', flat=True).distinct()),
-            'subspecies': list(models.Specie.objects.values_list('subspecie', flat=True).distinct()),
+
+    def get_ranks_preview(self, request):
+        size = request.query_params.get('size', 5)
+        try:
+            size = int(size) if size else None
+        except ValueError:
+            size = 5
+        taxa_by_rank = self.get_taxa(size)
+        for rank, taxa in taxa_by_rank.items():
+            taxa_by_rank[rank] = sorted([value for value in taxa if value is not None and value is not ''])
+            result = []
+            for taxon in taxa:
+                filter_kwargs = {f"{rank}__istartswith": taxon}
+                species = models.Specie.objects.filter(**filter_kwargs).order_by('gender', 'gender')
+                result.append({
+                    "rank": rank,
+                    "taxon": taxon,
+                    "specimen_count": models.Specimen.objects.filter(specie_id__in=[specie.id for specie in species]).count()
+                })
+                taxa_by_rank[rank] = result
+        return JsonResponse(taxa_by_rank, status=status.HTTP_200_OK)
+    
+    def get_taxa(self, size = 5):
+        return {
+            'class_specie': list(models.Specie.objects.values_list('class_specie', flat=True).distinct()[:size]),
+            'orden': list(models.Specie.objects.values_list('orden', flat=True).distinct()[:size]),
+            'family': list(models.Specie.objects.values_list('family', flat=True).distinct()[:size]),
+            'gender': list(models.Specie.objects.values_list('gender', flat=True).distinct()[:size]),
+            'specie_specie': list(models.Specie.objects.values_list('specie_specie', flat=True).distinct()[:size]),
+            'subspecie': list(models.Specie.objects.values_list('subspecie', flat=True).distinct()[:size]),
         }
-        for rank, values in taxonomic_data.items():
-            taxonomic_data[rank] = sorted([value for value in values if value is not None and value is not ''])
-        return JsonResponse(taxonomic_data, status=status.HTTP_200_OK)
+
+    def get_taxon_by_name(self, request, taxon):
+        hierarchy = ['orden', 'family', 'gender', 'specie_specie', 'subspecie']
+        
+        current_rank = None
+        current_index = None
+        for i, rank in enumerate(hierarchy):
+            filter_kwargs = {f"{rank}__istartswith": taxon}
+            if models.Specie.objects.filter(**filter_kwargs).exists():
+                current_rank = rank
+                current_index = i
+                break
+        
+        if current_rank is None:
+            return JsonResponse({"error": f"Taxon '{taxon}' not found in any rank"}, status=status.HTTP_200_OK, safe=False)
+        
+
+        parent_ranks = hierarchy[:current_index]
+        children_ranks = hierarchy[current_index + 1:]
+        
+        filter_kwargs = {f"{current_rank}__istartswith": taxon}
+
+        taxon_records = models.Specie.objects.filter(**filter_kwargs)
+        
+        parents = []
+        if parent_ranks:
+            first_record = taxon_records.values(*parent_ranks).first()
+            for parent_rank in parent_ranks:
+                parents.append({
+                    "rank_name": parent_rank,
+                    "taxon_name": first_record[parent_rank],
+                })
+        
+        children = []
+        for child_rank in children_ranks:
+            child_values = list(taxon_records.values_list(child_rank, flat=True)
+                            .distinct().exclude(**{f"{child_rank}__isnull": True}))
+            for child in child_values:
+                if child:
+                    children.append({
+                        "rank_name": child_rank,
+                        "taxon_name": child,
+                    })
+
+        taxon_data = {
+            'rank_name': current_rank,
+            'taxon_name': taxon,
+            'parent_ranks': parents,
+            'children_ranks': children,
+        }
+        
+        return JsonResponse(taxon_data, status=status.HTTP_200_OK, safe=False)
+    
+    def search_species(self, request):
+        taxon_name = request.query_params.get('query', 'mammalia')
+        specie_data = self.get_species_by_taxon(taxon_name)
+
+        return JsonResponse(specie_data, status=status.HTTP_200_OK, safe=False)
+    
+    def get_specimen_metrics_by_taxon(self, request):
+        taxon_name = request.query_params.get('query', 'mammalia')
+        # taxon_species = self.get_species_by_taxon(taxon_name)
+        taxon_species = self.get_species_by_taxon(taxon_name)["species"]
+
+        species_ids = [species['id'] for species in taxon_species]
+        # Get specimens for all these species and group by month/year
+        specimens_by_month = models.Specimen.objects.filter(
+            specie_id__in=species_ids,
+            colection_date__isnull=False
+        ).annotate(
+            year=Extract('colection_date', 'year'),
+            month=Extract('colection_date', 'month')
+        ).values('year', 'month').annotate(
+            count=Count('id')
+        ).order_by('year', 'month')
+        
+        specimens_by_year = models.Specimen.objects.filter(
+            specie_id__in=species_ids,
+            colection_date__isnull=False
+        ).annotate(
+            year=Extract('colection_date', 'year')
+        ).values('year').annotate(
+            count=Count('id')
+        ).order_by('year')
+        
+        # Format the response
+        monthly_data = []
+        for item in specimens_by_month:
+            monthly_data.append({
+                'year': item['year'],
+                'month': item['month'],
+                'count': item['count']
+            })
+        
+        yearly_data = []
+        for item in specimens_by_year:
+            yearly_data.append({
+                'year': item['year'],
+                'count': item['count']
+            })
+        
+        response = {
+            'taxon_name': taxon_name,
+            'total_species': len(taxon_species),
+            'total_specimens': sum(item['count'] for item in yearly_data),
+            'specimens_by_month': monthly_data,
+            'specimens_by_year': yearly_data,
+        }
+        
+        return JsonResponse(response, safe=False)
+
+    def get_species_by_taxon(self, taxon_name):
+        hierarchy = ['orden', 'family', 'gender', 'specie_specie']
+        
+        taxon_matches = []
+        species = []
+        for rank in hierarchy:
+            matching_taxa = models.Specie.objects.filter(
+                **{f"{rank}__icontains": taxon_name}
+            ).values_list(rank, flat=True).distinct()
+            if matching_taxa:
+                taxon_matches.append({
+                    "rank_name": rank,
+                    "taxa_names": list(matching_taxa)
+                })
+            for taxon in matching_taxa:
+                if taxon: 
+                    species.append(list(models.Specie.objects.filter(**{rank: taxon}).values()))
+
+        
+        epithet_species = list(models.Specie.objects.annotate(
+            epithet=Concat('gender', Value(' '), 'specie_specie', Value(' '), 'subspecie')
+        ).filter(epithet__icontains=taxon_name).values())
+
+        species.extend(epithet_species)
+
+        all_species = []
+        for species_list in species:
+            if isinstance(species_list, list):
+                all_species.extend(species_list)
+            else:
+                all_species.append(species_list)
+
+        unique_species = {specie['id']: specie for specie in all_species}.values()
+        return {
+            "species": list(unique_species),
+            "taxa": taxon_matches
+        }
+    
+    def get_ordens(self, request, pk=None):
+        orden_names = list(models.Specie.objects.values_list('orden', flat=True).distinct())
+        species_list=[]      
+        for orden_name in orden_names:
+            species = models.Specie.objects.filter(orden__istartswith=orden_name).order_by('gender', 'gender')
+            
+            species_list.append({
+                "rank_name": "orden",
+                "taxon_name": orden_name,
+                "specimen_count": models.Specimen.objects.filter(specie_id__in=[specie.id for specie in species]).count()
+            })
+        return JsonResponse(species_list, status=status.HTTP_200_OK, safe=False)
+    
+    def get_genders_by_family(self, request, family):
+        gender_names = models.Specie.objects.filter(family__istartswith=family).order_by('family', 'gender').values().values_list('gender', flat=True).distinct()
+        filters=[]      
+        for gender_name in gender_names:
+            species = models.Specie.objects.filter(gender__istartswith=gender_name).order_by('gender', 'gender')
+            specie_names = list(species.values_list('specie_specie', flat=True).distinct())
+            filters.append({
+                "filter_name": gender_name,
+                "species_count": species.count(),
+                "children_names": specie_names,
+                "specimen_count": models.Specimen.objects.filter(specie_id__in=[specie.id for specie in species]).count()
+            })
+        response={
+            "filter_type": "gender",
+            "filters": filters
+        }
+        return JsonResponse(response, status=status.HTTP_200_OK, safe=False)
 
     
     @extend_schema(
@@ -135,9 +351,25 @@ class SpecieViewSet(viewsets.ModelViewSet):
         if scientific_name is None or scientific_name == '':
             error_data = {'error': 'El parámetro "scientific_name" no fue proporcionado o es inválido.'}
             return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
-        species_list = models.Specie.objects.filter(
-            Q(gender__icontains=scientific_name) | Q(specie_specie__icontains=scientific_name) | Q(subspecie__icontains=scientific_name)
-        ).order_by('gender').values()
+        
+        species_list = list(models.Specie.objects.annotate(
+            epithet=Concat('gender', Value(' '), 'specie_specie', Value(' '), 'subspecie')
+        ).filter(epithet__icontains=scientific_name).values())
+        species_data = species_list  
+        return JsonResponse(species_data, safe=False)
+    
+    @extend_schema(
+    description="Obtiene una lista de especie por la subespecie.",
+        responses={
+            200: 'Lista de elementos especie en formato JSON.',
+        }
+    )
+    def get_by_subspecie(self, request, subspecie):
+        self.permission_classes = [AllowAny]
+        if subspecie is None or subspecie == '':
+            error_data = {'error': 'El parámetro "subspecie" no fue proporcionado o es inválido.'}
+            return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
+        species_list = models.Specie.objects.filter(subspecie__istartswith=subspecie).order_by('subspecie', 'gender').values()
         species_data = list(species_list)  
         return JsonResponse(species_data, safe=False)
 

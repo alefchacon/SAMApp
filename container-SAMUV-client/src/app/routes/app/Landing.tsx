@@ -1,24 +1,10 @@
-import Searchbar from "@/components/ui/Searchbar";
 import Footer from "@/components/ui/Footer";
 import ROUTES from "@/routing/FrontendRoutes";
 import React from "react";
 import { Navbar } from "@/components/ui/navbar-ts/Navbar";
 import { Link } from "react-router-dom";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import SearchInput from "@/components/ui/SearchInput";
+import useSearch from "@/features/specie/businessLogic/useSearch";
 
 interface ISearchBannerProps {
   children: React.ReactNode;
@@ -43,15 +29,16 @@ interface ILandingProps {
   children?: React.ReactNode;
 }
 export default function Landing(props: ILandingProps) {
+  const { search } = useSearch();
   return (
-    <div className="d-flex flex-column">
+    <div className="flex flex-col">
       <SearchBanner>
-        <div className="d-flex flex-row g-1 m-0 align-items-center">
-          <div className="position-relative d-flex justify-content-center align-items-center">
-            <div id="logo-bg" className="position-relative bg-white"></div>
+        <div className="flex flex-row gap-5 items-center">
+          <div className="relative flex justify-center items-center">
+            <div id="logo-bg" className="relative bg-white"></div>
             <img
               id="logo"
-              className="position-absolute"
+              className="absolute"
               style={{
                 height: "17vh",
                 backgroundSize: "cover",
@@ -70,11 +57,10 @@ export default function Landing(props: ILandingProps) {
             <h1 id="landing-tag">
               Acceso abierto a los mamíferos veracruzanos
             </h1>
-            <Navbar></Navbar>
           </div>
         </div>
         <br />
-        <Searchbar></Searchbar>
+        <SearchInput onSubmit={search}></SearchInput>
         {props.children}
       </SearchBanner>
 

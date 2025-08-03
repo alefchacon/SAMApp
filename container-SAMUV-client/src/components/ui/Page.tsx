@@ -1,6 +1,6 @@
 import React from "react";
 
-import Card from "./Card.js";
+// import Card from "./Card.js";
 import Footer from "./Footer.js";
 import Header from "./Header.js";
 
@@ -22,11 +22,8 @@ export default function Page({
       <div className="flex flex-col page-padding flex-grow-1">
         <br />
         <br />
-        {disableShadow ? (
-          <div className={"flex-col gap-2rem p-2rem"}>{children}</div>
-        ) : (
-          <Card className={"flex-col gap-2rem p-2rem"}>{children}</Card>
-        )}
+
+        <div className={"flex-col gap-2rem p-2rem"}>{children}</div>
       </div>
       <br />
       <br />

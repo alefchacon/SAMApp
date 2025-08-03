@@ -33,12 +33,10 @@ export default function Taxonomy(props: ITaxonomyProps) {
     queryType = "orden",
   }) {
     return (
-      <div className="flex-row gap-05rem ">
+      <div className="flex flex-row gap-1 ">
         <div className="flex-col">
-          {showRankName && (
-            <p className="rank font-size-08rem opacity-05">{rankName}</p>
-          )}
-          <div className="font-size-09rem">
+          {showRankName && <p className="rank text-xs">{rankName}</p>}
+          <div className="text-sm">
             <Highlight text={rank} highlight={filterText}></Highlight>
           </div>
         </div>

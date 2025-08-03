@@ -1,8 +1,6 @@
 import React, { ReactElement, useState } from "react";
 
 import Button from "./ButtonCustom";
-import Badge from "./Badge";
-import Step from "./Step";
 
 interface IStepperProps {
   children: React.ReactNode;
@@ -95,7 +93,7 @@ export default function Stepper({
                 }`}
               >
                 {invalidSteps.includes((tab as ReactElement).props.id) && (
-                  <Badge>!</Badge>
+                  <div>!</div>
                 )}
                 {index + 1}
               </div>

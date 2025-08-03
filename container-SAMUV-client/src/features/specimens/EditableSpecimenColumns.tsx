@@ -15,8 +15,9 @@ import { EAge } from "./domain/enum/EAge";
 import { ESex } from "./domain/enum/ESex";
 import { EContributorRoles } from "@/stores/EContributorRoles";
 import Specimen from "./domain/model/Specimen";
-import Button from "@/components/ui/ButtonCustom";
-
+import { EllipsisVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DialogSwitchSpecie } from "./components/DialogSwitchSpecie";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +35,10 @@ import {
 
 const columnHelper = createColumnHelper<Specimen>();
 
-const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
+const editableSpecimenColumns = (
+  onSwitchSpecie: (specimenToSwitch: Specimen) => void,
+  onDeleteSpecimen: (specimenToDelete: Specimen) => void
+): ColumnDef<Specimen, any>[] => [
   columnHelper.accessor("id", {
     header: () => "ID",
     cell: (info) => info.getValue(),
@@ -613,13 +617,22 @@ const editableSpecimenColumns: ColumnDef<Specimen, any>[] = [
         <DropdownMenuTrigger>
           <Button
             onClick={() => alert(info.row.original.id)}
-            icon="more_vert"
-          ></Button>
+            variant={"outline"}
+          >
+            <EllipsisVertical></EllipsisVertical>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Cambiar especie</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onSwitchSpecie(info.row.original)}>
+            Cambiar especie
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Eliminar</DropdownMenuItem>
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={() => onDeleteSpecimen(info.row.original)}
+          >
+            Eliminar
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     ),

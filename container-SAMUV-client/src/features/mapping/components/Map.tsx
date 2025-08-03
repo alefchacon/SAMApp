@@ -34,9 +34,11 @@ export default function Map(props: IMapProps) {
   }, [specimens]);
 
   const onEachFeature = (feature: any, layer: any) => {
+    console.error(feature);
     const specimenAmount = getStateSpecimens(feature).length;
     const specimenNoun = specimenAmount === 1 ? "espécimen" : "especímenes";
     const popupMessage = `${specimenAmount} ${specimenNoun} de ${feature.properties.name}`;
+    console.error(specimenAmount);
     if (feature.properties && feature.properties.name) {
       layer.bindPopup(popupMessage);
     }
@@ -60,6 +62,7 @@ export default function Map(props: IMapProps) {
   };
 
   const filterBySpecimen = (feature: any) => {
+    console.error(feature);
     return getStateSpecimens(feature).length > 0;
   };
 

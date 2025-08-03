@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import "moment/dist/locale/es-mx";
 import moment from "moment";
 // FEATURES
-import ROUTES from "../routing/FrontendRoutes.js";
+import ROUTES, { FrontendRoutes } from "../routing/FrontendRoutes.js";
 import SpecieDashboard from "./routes/app/SpecieDashboard.js";
 import SpecimenForm from "./routes/app/SpecimenForm.js";
 // COMPONENTS
@@ -16,7 +16,12 @@ import "./App.css";
 import useAccessRequests from "@/features/accessRequests/businessLogic/useAccessRequests";
 import useSession from "@/features/auth/businessLogic/useSession";
 import Landing from "./routes/app/Landing.js";
-
+import { Combobox } from "@/components/ui/Combobox.js";
+import SpeciesFilter from "./routes/SpeciesFilter.js";
+import SpeciesDiscover from "./routes/SpeciesDiscover";
+import Search from "./routes/app/Search.js";
+import SpecieRouter from "@/features/specie/components/SpecieRouter.js";
+import SpecieOrdens from "./routes/SpecieOrdens.js";
 function App() {
   moment.locale("es-mx");
   const [selectedSpecie, setSelectedSpecie] = useState();
@@ -46,6 +51,16 @@ function App() {
     }
   };
 
+  const getCollectionElement = () => {
+    if (profile.isTechnicalPerson()) {
+      return (
+        <SpecieDashboard role={profile.role} onSpecieSelection={() => {}} />
+      );
+    } else {
+      return <SpecieOrdens />;
+    }
+  };
+
   return (
     <>
       <Navbar
@@ -60,18 +75,14 @@ function App() {
           <Route index path={ROUTES.LANDING} element={<Landing />}></Route>
           <Route
             index
-            path={ROUTES.COLLECTION}
-            element={
-              <SpecieDashboard
-                role={profile.role}
-                onSpecieSelection={() => {}}
-              />
-            }
-          ></Route>
-          <Route
-            index
             path={`${ROUTES.COLLECTION}/${ROUTES.ADD_SPECIMEN}`}
             element={<SpecimenForm onResetScroll={resetScroll} />}
+          ></Route>
+          <Route index path={`/test`} element={<SpeciesDiscover />}></Route>
+          <Route
+            index
+            path={`${FrontendRoutes.SPECIES}`}
+            element={<SpecieRouter profile={profile} />}
           ></Route>
         </Routes>
       </main>

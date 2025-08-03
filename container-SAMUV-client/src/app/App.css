@@ -45,6 +45,12 @@ h2 {
   font-weight: 500;
 }
 
+.switch-specie-cols {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem;
+}
+
 .bg-gradient-2 {
   color: white;
   background-image: var(--gradient) !important;
@@ -235,10 +241,6 @@ fieldset {
   background-color: var(--uv-green-light);
 }
 
-.border {
-  box-shadow: inset 0px 0px 0px 1px var(--border);
-}
-
 .sam-button.danger:hover {
   background-color: var(--error);
   color: var(--bg-main);
@@ -396,7 +398,7 @@ th,
   opacity: 0;
   border: 1px solid darkgray;
   transition: opacity 0.1s ease-in-out;
-  z-index: 1;
+  z-index: 100;
 }
 
 .resize-bar:hover {
@@ -1286,7 +1288,7 @@ fieldset.hasError {
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.63 0.15 145);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);

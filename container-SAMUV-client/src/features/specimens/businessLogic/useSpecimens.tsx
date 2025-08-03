@@ -113,13 +113,13 @@ export const useSpecimens = (specie?: Specie) => {
     return response;
   };
 
-  const deleteSpecimen = useCallback(async (specimenId = 0) => {
+  const deleteSpecimen = useCallback(async (specimenToDelete: Specimen) => {
     const response = await apiWrapper.delete({
-      url: `${SPECIMEN_URL}/${specimenId}`,
+      url: `${SPECIMEN_URL}/${specimenToDelete.id}`,
     });
     if (response!.status === EHttpStatus.NO_CONTENT) {
       const newSpecimens = specimens.filter(
-        (specimen) => specimen.id !== specimenId
+        (specimen) => specimen.id !== specimenToDelete.id
       );
       setSpecimens(newSpecimens);
     }
@@ -185,16 +185,18 @@ export const useSpecimens = (specie?: Specie) => {
     */
   };
 
-  const updateSpecimen = async (updatedSpecimen: Specimen) => {
+  const updateSpecimen = async (
+    updatedSpecimen: Specimen
+  ): Promise<TApiResult<Specimen>> => {
     const config = {
       noConfirmation: true,
     };
-    const response = await apiWrapper.put({
+    const apiResult = await apiWrapper.put<Specimen>({
       url: `${SPECIMEN_URL}/${updatedSpecimen.id}/`,
       body: updatedSpecimen,
       config,
     });
-    return response;
+    return apiResult;
   };
 
   return {

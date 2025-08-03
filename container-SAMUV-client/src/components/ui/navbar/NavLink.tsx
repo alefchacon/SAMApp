@@ -23,8 +23,9 @@ export default function NavLink({
         selected ? "selected" : ""
       }`}
     >
-      {children}
-      <InfoItem label={label} iconType={iconType}></InfoItem>
+      <div className="flex flex-row items-center justify-center gap-3">
+        {children}
+      </div>
     </Link>
   );
 }

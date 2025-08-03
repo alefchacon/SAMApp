@@ -3,10 +3,19 @@ import debounce from "lodash/debounce";
 
 import { useStatus } from "../components/contexts/StatusContext";
 
-export default function useTextFilter<T>(
+interface IUseTextFilterParams<T> {
+  items: Array<T>;
+  debounceMs?: number;
+}
+export default function useTextFilter<T>({
   items = new Array<T>(),
-  debounceMs = 700
-): [T[], (e: React.ChangeEvent<HTMLInputElement>) => void, string, () => void] {
+  debounceMs = 700,
+}: IUseTextFilterParams<T>): [
+  T[],
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  string,
+  () => void
+] {
   const [filterText, setFilterText] = useState("");
   const [debouncedFilterText, setDebouncedFilterText] = useState<string>("");
   const { setLoading } = useStatus();

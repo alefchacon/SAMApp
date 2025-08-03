@@ -3,6 +3,7 @@ import Taxonomy from "./Taxonomy";
 import Highlight from "@/components/ui/Highlight";
 import { defaultSpecie, Specie } from "../domain/Specie";
 // import { filter } from "lodash";
+import CardBase from "@/components/ui/CardBase";
 
 interface ICardSpecieProps {
   specie: Specie;
@@ -23,19 +24,24 @@ export default function CardSpecie(props: ICardSpecieProps) {
   } = props;
 
   return (
-    <div onClick={onClick}>
-      <p className="font-weight-500 text-lg">
-        <i>
-          <Highlight text={specie.epithet} highlight={filterText}></Highlight>
-        </i>
-      </p>
-      <Taxonomy
-        specie={specie}
-        center={false}
-        clickableRank={clickableRank}
-        showRankName={showRankName}
-        filterText={filterText}
-      ></Taxonomy>
+    <div onClick={onClick} className="w-full flex flex-row">
+      <CardBase
+        clickable
+        title={
+          <i>
+            <Highlight text={specie.epithet} highlight={filterText}></Highlight>
+          </i>
+        }
+        content={
+          <Taxonomy
+            specie={specie}
+            center={false}
+            clickableRank={clickableRank}
+            showRankName={showRankName}
+            filterText={filterText}
+          ></Taxonomy>
+        }
+      />
     </div>
   );
 }

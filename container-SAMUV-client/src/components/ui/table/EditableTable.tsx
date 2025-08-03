@@ -62,7 +62,6 @@ export default function EditableTable({
   ) => {
     const keys = path.split(".");
     let specimen = updatedSpecimen;
-    console.error(path);
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
       if (!(key in specimen)) {
@@ -70,8 +69,8 @@ export default function EditableTable({
       }
       specimen = specimen[key];
     }
-    console.error(specimen[keys[keys.length - 1]]);
     specimen[keys[keys.length - 1]] = value;
+    console.error(specimen);
   };
 
   const table = useReactTable({
@@ -105,6 +104,7 @@ export default function EditableTable({
                 ...previousTableData[updatedRowIndex],
               };
               setNestedValue(updatedRow, path, value);
+              console.error(updatedRow);
               return updatedRow;
             }
             return row;

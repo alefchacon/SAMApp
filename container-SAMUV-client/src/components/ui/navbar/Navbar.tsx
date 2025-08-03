@@ -9,22 +9,18 @@ import { useStatus } from "../../contexts/StatusContext";
 import NavLink from "./NavLink";
 import { UserRoles } from "@/stores/EUserRoles";
 import { useState } from "react";
-import Badge from "../Badge";
+import SearchInput from "../SearchInput";
+import useSearch from "@/features/specie/businessLogic/useSearch";
 import { IProfile } from "@/features/auth/domain/Profile";
 import "../../../app/App.css";
+import { Home, PawPrint } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -38,6 +34,7 @@ export default function Navbar({
   profile,
 }: INavbarProps) {
   const { loading } = useStatus();
+  const { search } = useSearch();
   const location = useLocation();
   const pathname = location.pathname.toLowerCase();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -46,19 +43,17 @@ export default function Navbar({
 
   const leftMenu = (
     <>
-      <NavLink
-        route={"/"}
-        label={"Inicio"}
-        iconType={"home"}
-        selected={pathname === "/"}
-      ></NavLink>
+      <NavLink route={"/"} label={"Inicio"} selected={pathname === "/"}>
+        <Home></Home> Inicio
+      </NavLink>
 
       <NavLink
-        route={ROUTES.COLLECTION}
+        route={ROUTES.SPECIES}
         label={"Colección"}
-        iconType={"pets"}
-        selected={pathname.includes(ROUTES.COLLECTION)}
-      ></NavLink>
+        selected={pathname.includes(ROUTES.SPECIES)}
+      >
+        <PawPrint></PawPrint> Colección
+      </NavLink>
 
       <DropdownMenu>
         <DropdownMenuTrigger className="nav-link flex flex-row selectable-dark p-1 align-center rounded-sm">
@@ -101,11 +96,7 @@ export default function Navbar({
             position: "relative",
           }}
         >
-          {accessRequestCount > 0 && (
-            <Badge>
-              <div>accessRequestCount</div>
-            </Badge>
-          )}
+          {accessRequestCount > 0 && <div>accessRequestCount</div>}
 
           {profile?.role === UserRoles.TECHNICAL_PERSON && (
             <NavLink
@@ -115,7 +106,10 @@ export default function Navbar({
             ></NavLink>
           )}
         </div>
-        <Account accessRequestCount={accessRequestCount}></Account>
+        <div className="flex flex-col md:flex-row gap-3">
+          <SearchInput placeholder={``} onSubmit={search}></SearchInput>
+          <Account accessRequestCount={accessRequestCount}></Account>
+        </div>
       </div>
     </>
   );

@@ -1,14 +1,22 @@
 import { useState, useCallback } from "react";
 import useApi from "../../../dataAccess/useApi";
 import {
+  METRICS_URL,
+  ORDENS_URL,
+  SPECIE_BY_TAXON_URL,
   SPECIE_MIGRATE_URL,
+  SPECIE_SEARCH_URL,
   SPECIE_URL,
+  TAXON_URL,
   TAXONOMY_RANKS_URL,
 } from "./specieUrl";
 import { ISpecie, Specie } from "../domain/Specie";
 import { AxiosError } from "axios";
 import useDownload from "../../../hooks/useDownload";
 import { ITaxonomyRanks } from "../domain/ITaxonomyRanks";
+import { IMatch, IMatches, Matches } from "../domain/Match";
+import { ITaxon } from "../domain/Taxon";
+import { IMetrics } from "@/features/specimens/domain/model/Metrics";
 
 export const useSpecie = () => {
   const [species, setSpecies] = useState<Specie[]>([]);
@@ -100,6 +108,64 @@ export const useSpecie = () => {
 
   const selectedSpecieDefault = species ? species[0] : null;
 
+  const searchSpecies = async (taxon: string): Promise<Matches> => {
+    const result = await apiWrapper.get<Matches>({
+      url: SPECIE_SEARCH_URL(taxon),
+    });
+    if (result.success && result.data) {
+      return new Matches(result.data);
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
+  const getSpeciesByTaxon = async ({
+    taxon = "",
+    query = "",
+  }): Promise<Specie[]> => {
+    const result = await apiWrapper.get<Specie[]>({
+      url: SPECIE_BY_TAXON_URL({ taxon, query }),
+    });
+    if (result.success && result.data) {
+      return result.data;
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
+  const getTaxonByName = async (name: string): Promise<ITaxon> => {
+    const result = await apiWrapper.get<ITaxon>({
+      url: TAXON_URL(name),
+    });
+    if (result.success && result.data) {
+      return result.data;
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
+  const getMetricsByTaxonName = async (name: string): Promise<IMetrics> => {
+    const result = await apiWrapper.get<IMetrics>({
+      url: METRICS_URL(name),
+    });
+    if (result.success && result.data) {
+      return result.data;
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
+  const getOrdens = async (): Promise<ITaxon[]> => {
+    const result = await apiWrapper.get<ITaxon[]>({
+      url: ORDENS_URL,
+    });
+    if (result.success && result.data) {
+      return result.data;
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
   return {
     species,
     getSpecies,
@@ -109,5 +175,10 @@ export const useSpecie = () => {
     migrateColection,
     getTaxonomyRanks,
     downloadMigrationFormat,
+    searchSpecies,
+    getSpeciesByTaxon,
+    getTaxonByName,
+    getMetricsByTaxonName,
+    getOrdens,
   };
 };

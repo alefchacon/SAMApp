@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo, Component } from "react";
 
-import SpecieList from "../../../features/specie/components/SpecieList";
+import SpecieSidebar from "../../../features/specie/components/SpecieSidebar";
 
 import EditableTable from "../../../components/ui/table/EditableTable";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 // import Button from "../../../components/ui/Button";
-import Tabs from "@/components/ui/Tabs";
+import Tabs from "@/components/ui/TabsCustom";
 
 import SpecieForm from "@/features/specie/components/SpecieForm";
 
@@ -26,8 +26,12 @@ import { useParams } from "react-router-dom";
 import { Specie, defaultSpecie } from "@/features/specie/domain/Specie";
 import ChipLabel from "@/components/ui/ChipLabel";
 import Tab from "@/components/ui/Tab";
-import Button from "@/components/ui/ButtonCustom";
+import { Button } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
+import Specimen from "@/features/specimens/domain/model/Specimen";
+import { Plus, Download, PawPrint, Edit } from "lucide-react";
+import useSwitchSpecie from "@/features/specimens/businessLogic/useSwitchSpecie";
+import useDeleteSpecimen from "@/features/specimens/businessLogic/useDeleteSpecimen";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
@@ -69,8 +73,15 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     onSpecieSelection(selectedSpecie);
   }, [selectedSpecie]);
 
-  const { specimens, downloadSpecimens } = useSpecimens(selectedSpecie);
+  const { specimens, downloadSpecimens, deleteSpecimen } =
+    useSpecimens(selectedSpecie);
   const [specieListFolded, setSpecieListFolded] = useState(false);
+
+  const { dialogSwitchSpecie, setSpecimenToSwitch } = useSwitchSpecie({
+    species: species,
+  });
+
+  const { dialogDeleteSpecimen, setSpecimenToDelete } = useDeleteSpecimen();
 
   const { showModal } = useModal();
 
@@ -78,10 +89,6 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     getSpecies();
     // DEV ONLY: check if this dep array works the same as []
   }, [getSpecies]);
-
-  const handleEditSpecimen = () => {
-    showModal({ title: "Agregar espécimen" });
-  };
 
   const navigateToAddSpecimen = () =>
     navigate(`${FrontendRoutes.ADD_SPECIMEN}`, {
@@ -97,13 +104,17 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     }
 
     return (
-      <div className="flex-row gap-1rem">
-        <Button onClick={navigateToAddSpecimen} primary>
-          Agregar espécimen
+      <div className="flex flex-row gap-3 flex-wrap h-fit">
+        <Button onClick={navigateToAddSpecimen}>
+          <PawPrint></PawPrint> Agregar espécimen
         </Button>
 
-        <Button onClick={downloadSpecimens} icon="download">
-          Descargar especímenes
+        <Button onClick={downloadSpecimens} variant={"outline"}>
+          <Edit></Edit> Editar especie
+        </Button>
+
+        <Button onClick={downloadSpecimens} variant={"outline"}>
+          <Download></Download> Descargar especímenes
         </Button>
       </div>
     );
@@ -131,7 +142,10 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
       <EditableTable
         isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
         data={specimens}
-        defaultColumns={editableSpecimenColumns}
+        defaultColumns={editableSpecimenColumns(
+          setSpecimenToSwitch,
+          setSpecimenToDelete
+        )}
       ></EditableTable>
     ),
     [specimens]
@@ -170,6 +184,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
                 </div>
 
                 <div className="p-3 gap-3 h-full multigraph-wrapper">
+                  {/*
                   <Multigraph
                     graphTitle="Especímenes recolectados por mes"
                     specimens={specimens}
@@ -189,7 +204,8 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
                     }}
                     yLabel="Especímenes"
                     xLabel="Meses"
-                  />
+                    />
+                    */}
                 </div>
               </>
             </Tab>
@@ -200,10 +216,9 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
       </>
     );
   }
-
   return (
     <>
-      <SpecieList
+      <SpecieSidebar
         role={role}
         species={species}
         onSelectionChange={handleSelectedSpecieChange}
@@ -212,10 +227,12 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
         onEdit={showSpecieUpdateModal}
         onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
-      ></SpecieList>
+      ></SpecieSidebar>
       <div
         className={`specie-view rounded-lg outline outline-black/8 bg-white`}
       >
+        {dialogSwitchSpecie}
+        {dialogDeleteSpecimen}
         <SpecieView />
       </div>
     </>

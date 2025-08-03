@@ -10,12 +10,12 @@ export interface ISpecie {
 
 export class Specie implements ISpecie {
   id: number = -1;
-  class_specie: string = "CLASE";
-  orden: string = "ORDEN";
-  family: string = "FAMILIA";
-  gender: string = "GÉNERO";
-  subspecie: string = "SUBESPECIE";
-  specie_specie: string = "ESPECIE";
+  class_specie: string = "";
+  orden: string = "";
+  family: string = "";
+  gender: string = "";
+  subspecie: string = "";
+  specie_specie: string = "";
   specimens: any[] = [];
   constructor(data: ISpecie, specimens = []) {
     this.id = data?.id;

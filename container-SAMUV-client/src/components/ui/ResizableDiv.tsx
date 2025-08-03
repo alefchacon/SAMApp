@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 
 interface IResizableDiv {
   children: React.ReactNode;
-  className: string;
+  className?: string;
   width?: number;
   resizeVertical?: boolean;
-  hide: boolean;
+  hide?: boolean;
 }
 export default function ResizableDiv(props: IResizableDiv) {
   const {
@@ -35,7 +35,7 @@ export default function ResizableDiv(props: IResizableDiv) {
   }, []);
 
   const handleMouseMove = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       if (!isResizing) {
         return;
       }
@@ -77,7 +77,7 @@ export default function ResizableDiv(props: IResizableDiv) {
 
   return (
     <div
-      className={`resizable-div position-relative overflow-auto flex-row ${className}`}
+      className={`resizable-div overflow-auto ${className}`}
       style={{
         width: hide ? "fit-content" : `${size.width}px`,
         height: resizeVertical
@@ -88,7 +88,7 @@ export default function ResizableDiv(props: IResizableDiv) {
       }}
     >
       <div
-        className="resize-bar shadow-all flex-col justify-content-center align-items-center"
+        className="resize-bar shadow-lg flex flex-col justify-center align-center"
         style={{
           cursor: "e-resize",
         }}
