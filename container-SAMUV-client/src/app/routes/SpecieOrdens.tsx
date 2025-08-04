@@ -18,7 +18,7 @@ export default function SpecieOrdens() {
   return (
     <div className="w-full">
       <Header
-        title={"Colección mamíferos"}
+        title={"Colección de mamíferos"}
         subtitle={
           "Seleccione una de las siguientes ordenes para consultar sus rangos taxonómicos, especies y especímenes."
         }

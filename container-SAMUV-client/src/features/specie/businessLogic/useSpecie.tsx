@@ -89,7 +89,7 @@ export const useSpecie = () => {
       response.error instanceof AxiosError
     ) {
       // DEV ONLY: figure out how to destructure errors here:
-      //return response.error.response.data.errors;
+      return response.error.response.data.errors;
     }
   }, []);
 
@@ -166,6 +166,17 @@ export const useSpecie = () => {
     }
   };
 
+  const getSpecie = async (specieId: number): Promise<Specie> => {
+    const result = await apiWrapper.get<ISpecie>({
+      url: `${SPECIE_URL}/${specieId}`,
+    });
+    if (result.success && result.data) {
+      return new Specie(result.data);
+    } else {
+      throw new Error("DEV ONLY");
+    }
+  };
+
   return {
     species,
     getSpecies,
@@ -180,5 +191,6 @@ export const useSpecie = () => {
     getTaxonByName,
     getMetricsByTaxonName,
     getOrdens,
+    getSpecie,
   };
 };

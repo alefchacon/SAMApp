@@ -43,7 +43,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             'get_ordens', 
             'get_taxon_by_name',
             'search_species',
-            'get_specimen_metrics_by_taxon'
+            'get_visitor_metrics_by_taxon'
         ]:
             return [permissions.AllowAny()]
         else:
@@ -173,17 +173,19 @@ class SpecieViewSet(viewsets.ModelViewSet):
 
         return JsonResponse(specie_data, status=status.HTTP_200_OK, safe=False)
     
-    def get_specimen_metrics_by_taxon(self, request):
+    def get_visitor_metrics_by_taxon(self, request):
         taxon_name = request.query_params.get('query', 'mammalia')
-        # taxon_species = self.get_species_by_taxon(taxon_name)
+        
         taxon_species = self.get_species_by_taxon(taxon_name)["species"]
 
         species_ids = [species['id'] for species in taxon_species]
-        # Get specimens for all these species and group by month/year
-        specimens_by_month = models.Specimen.objects.filter(
+        
+        taxon_specimens = models.Specimen.objects.filter(
             specie_id__in=species_ids,
             colection_date__isnull=False
-        ).annotate(
+        )
+
+        specimens_by_month = taxon_specimens.annotate(
             year=Extract('colection_date', 'year'),
             month=Extract('colection_date', 'month')
         ).values('year', 'month').annotate(
@@ -215,13 +217,33 @@ class SpecieViewSet(viewsets.ModelViewSet):
                 'count': item['count']
             })
         
+        locations = models.Location.objects.filter(specimen__in=taxon_specimens)
+        if not request.user.is_authenticated:
+            states = [{
+                "location": {
+                    "state": location.state
+                }
+            } for location in locations]
+        else:
+            states = [{
+                "location": {
+                    "state": location.state,
+                    "coordinates_cartesian_plane_x": location.coordinates_cartesian_plane_x,
+                    "coordinates_cartesian_plane_y": location.coordinates_cartesian_plane_y,
+                    "geographical_coordinates_x": location.geographical_coordinates_x,
+                    "geographical_coordinates_y": location.geographical_coordinates_y,
+                    "utm_region": location.utm_region,
+                }
+            } for location in locations]
+
+
         response = {
             'taxon_name': taxon_name,
-            'total_species': len(taxon_species),
-            'total_specimens': sum(item['count'] for item in yearly_data),
             'specimens_by_month': monthly_data,
             'specimens_by_year': yearly_data,
+            'specimens': states,
         }
+
         
         return JsonResponse(response, safe=False)
 

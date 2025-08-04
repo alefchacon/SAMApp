@@ -45,7 +45,12 @@ export default function Search({ query }: ISearchProps) {
             <h2>Especies</h2>
             <div className="grid gap-5">
               {matches?.species.map((match, index) => (
-                <CardSpecie specie={match} filterText={query}></CardSpecie>
+                <CardSpecie
+                  canNavigate
+                  key={index}
+                  specie={match}
+                  filterText={query}
+                ></CardSpecie>
               ))}
             </div>
           </div>
@@ -53,7 +58,7 @@ export default function Search({ query }: ISearchProps) {
             <h2>Rangos taxonómicos</h2>
             <div className="flex flex-col gap-5">
               {matches?.taxa.map((match, index) => (
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5" key={index}>
                   <div>{rankDisplayNames[match.rank_name]}</div>
                   <div className="grid gap-5">
                     {match.taxa_names.map((taxon) => (

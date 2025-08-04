@@ -1,35 +1,43 @@
-import Button from "../../../components/ui/Button";
+import React from "react";
+import { Button } from "@/components/ui/button";
 import HoverableActions from "../../../components/ui/HoverableActions";
 import { useModal } from "../../../components/contexts/ModalContext";
 import { useEffect } from "react";
-import useContributorsAndRoles from "../../../features/contributors/businessLogic/useContributorsAndRoles";
-import CardContributor from "../../../features/contributors/components/CardContributor";
+import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";
+import CardContributor from "./CardContributor";
 import ContributorForm from "./ContributorForm";
 import NoResults from "../../../components/ui/NoResults";
 import TextField from "../../../components/ui/TextField";
 import useTextFilter from "../../../hooks/useTextFilter";
 import ListItem from "../../../components/ui/ListItem";
+import Contributor, { IContributorSpecimen } from "../domain/Contributor";
+
 export default function ContributorPanel() {
   const { contributors, getContributors, addContributor, updateContributor } =
     useContributorsAndRoles();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
-    useTextFilter(contributors);
+    useTextFilter<IContributorSpecimen>({ items: contributors });
   const { showModal } = useModal();
   useEffect(() => {
     getContributors();
   }, []);
 
   const handleShowContributorModal = () => {
-    showModal(
-      "Agregar contribuidor",
-      <ContributorForm onSubmit={addContributor} />
-    );
+    showModal({
+      title: "Agregar contribuidor",
+      content: <ContributorForm onSubmit={addContributor} />,
+    });
   };
-  const handleEditContributorModal = (contributor) => {
-    showModal(
-      "Editar contribuidor",
-      <ContributorForm onSubmit={updateContributor} contributor={contributor} />
-    );
+  const handleEditContributorModal = (contributor: Contributor) => {
+    showModal({
+      title: "Editar contribuidor",
+      content: (
+        <ContributorForm
+          onSubmit={updateContributor}
+          contributor={contributor}
+        />
+      ),
+    });
   };
 
   return (
@@ -40,7 +48,7 @@ export default function ContributorPanel() {
           placeholder="Buscar contribuidores"
           onChange={handleFilterChange}
         ></TextField>
-        <Button iconType="person_add" onClick={handleShowContributorModal}>
+        <Button onClick={handleShowContributorModal}>
           Agregar contribuidor
         </Button>
       </div>
@@ -49,14 +57,14 @@ export default function ContributorPanel() {
         {contributors.length > 0 ? (
           filteredItems.map((contributor, index) => (
             <ListItem key={index}>
-              <HoverableActions position="absolute">
+              <HoverableActions>
                 <Button
-                  iconType="edit"
                   onClick={() => handleEditContributorModal(contributor)}
                   className="icon-only color-white"
                 ></Button>
               </HoverableActions>
               <CardContributor
+                index={index}
                 contributor={contributor}
                 filterText={filterText}
                 key={index}
@@ -69,5 +77,4 @@ export default function ContributorPanel() {
       </ul>
     </>
   );
-
 }

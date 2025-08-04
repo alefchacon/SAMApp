@@ -1,3 +1,5 @@
+import Specimen from "./Specimen";
+
 export interface IMetric {
   year?: number;
   month?: number;
@@ -7,4 +9,5 @@ export interface IMetric {
 export interface IMetrics {
   specimens_by_month: IMetric[];
   specimens_by_year: IMetric[];
+  specimens: Specimen[];
 }

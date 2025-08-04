@@ -5,7 +5,6 @@ import SpecieSidebar from "../../../features/specie/components/SpecieSidebar";
 import EditableTable from "../../../components/ui/table/EditableTable";
 import Taxonomy from "../../../features/specie/components/Taxonomy";
 // import Button from "../../../components/ui/Button";
-import Tabs from "@/components/ui/TabsCustom";
 
 import SpecieForm from "@/features/specie/components/SpecieForm";
 
@@ -24,14 +23,13 @@ import editableSpecimenColumns from "../../../features/specimens/EditableSpecime
 import Map from "@/features/mapping/components/Map";
 import { useParams } from "react-router-dom";
 import { Specie, defaultSpecie } from "@/features/specie/domain/Specie";
-import ChipLabel from "@/components/ui/ChipLabel";
 import Tab from "@/components/ui/Tab";
 import { Button } from "@/components/ui/button";
-import TextField from "@/components/ui/TextField";
-import Specimen from "@/features/specimens/domain/model/Specimen";
 import { Plus, Download, PawPrint, Edit } from "lucide-react";
 import useSwitchSpecie from "@/features/specimens/businessLogic/useSwitchSpecie";
 import useDeleteSpecimen from "@/features/specimens/businessLogic/useDeleteSpecimen";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import SpecimenMetrics from "@/features/specimens/components/SpecimenMetrics";
 
 const METRICS_TAB_ID = "METRICAS";
 const SPECIMENS_TAB_ID = "METRICAS";
@@ -151,71 +149,6 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     [specimens]
   );
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-
-  function SpecieView() {
-    return (
-      <>
-        <Header
-          title={<i>{selectedSpecie?.epithet}</i>}
-          padding={false}
-          rightContent={<TechnicalPersonButtons />}
-        >
-          <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
-        </Header>
-
-        {specimens?.length > 0 ? (
-          <Tabs
-            className={`divider`}
-            onChange={setActiveTabIndex}
-            defaultActiveTabIndex={activeTabIndex}
-          >
-            {/* DEV ONLY: validate user is logged in:*/}
-            <Tab
-              label="Especímenes"
-              // id={SPECIMENS_TAB_ID}
-            >
-              {memoizedTable}
-            </Tab>
-            <Tab label={"Métricas"}>
-              <>
-                <div style={{ width: "100%", overflow: "hidden" }}>
-                  <Map specimens={specimens} role={role}></Map>
-                </div>
-
-                <div className="p-3 gap-3 h-full multigraph-wrapper">
-                  {/*
-                  <Multigraph
-                    graphTitle="Especímenes recolectados por mes"
-                    specimens={specimens}
-                    attributeToGraph={{
-                      name: "colection_date",
-                      type: DateTypes.MONTH,
-                    }}
-                    yLabel="Especímenes"
-                    xLabel="Meses"
-                  />
-                  <Multigraph
-                    graphTitle="Especímenes recolectados por año"
-                    specimens={specimens}
-                    attributeToGraph={{
-                      name: "colection_date",
-                      type: DateTypes.YEAR,
-                    }}
-                    yLabel="Especímenes"
-                    xLabel="Meses"
-                    />
-                    */}
-                </div>
-              </>
-            </Tab>
-          </Tabs>
-        ) : (
-          <NoResults itemName="especímenes" />
-        )}
-      </>
-    );
-  }
   return (
     <>
       <SpecieSidebar
@@ -233,7 +166,42 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
       >
         {dialogSwitchSpecie}
         {dialogDeleteSpecimen}
-        <SpecieView />
+        <Header
+          title={<i>{selectedSpecie?.epithet}</i>}
+          padding={false}
+          rightContent={<TechnicalPersonButtons />}
+        >
+          <Taxonomy specie={selectedSpecie} center={false}></Taxonomy>
+        </Header>
+
+        {specimens?.length > 0 ? (
+          <Tabs defaultValue="specimens" className="h-100 gap-0">
+            <div className="px-5 py-3">
+              <TabsList>
+                <TabsTrigger value="specimens">Especímenes</TabsTrigger>
+                <TabsTrigger value="metrics">Métricas</TabsTrigger>
+              </TabsList>
+            </div>
+            <TabsContent value="specimens" className="h-100">
+              <EditableTable
+                isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
+                data={specimens}
+                defaultColumns={editableSpecimenColumns(
+                  setSpecimenToSwitch,
+                  setSpecimenToDelete
+                )}
+              ></EditableTable>
+            </TabsContent>
+            <TabsContent value="metrics" className="px-5 pb-5">
+              <SpecimenMetrics
+                taxonName={selectedSpecie.epithet}
+                specimens={specimens}
+              ></SpecimenMetrics>
+            </TabsContent>
+          </Tabs>
+        ) : (
+          <NoResults itemName="especímenes" />
+        )}
       </div>
     </>
   );

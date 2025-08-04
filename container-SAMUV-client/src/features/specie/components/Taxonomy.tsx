@@ -2,6 +2,7 @@ import React from "react";
 import { defaultSpecie, Specie } from "../domain/Specie";
 import { Link } from "react-router-dom";
 import Highlight from "@/components/ui/Highlight";
+import { ChevronRight } from "lucide-react";
 
 interface ITaxonomyProps {
   specie?: Specie;
@@ -19,11 +20,7 @@ export default function Taxonomy(props: ITaxonomyProps) {
     filterText = null,
   } = props;
 
-  const delimiter = (
-    <span className="material-symbols-outlined flex-row align-items-center font-size-1rem color-inherit">
-      chevron_right
-    </span>
-  );
+  const delimiter = <ChevronRight size={"1rem"} />;
 
   function Rank({
     rank = "rank",
@@ -33,7 +30,7 @@ export default function Taxonomy(props: ITaxonomyProps) {
     queryType = "orden",
   }) {
     return (
-      <div className="flex flex-row gap-1 ">
+      <div className="flex flex-row gap-1 items-center">
         <div className="flex-col">
           {showRankName && <p className="rank text-xs">{rankName}</p>}
           <div className="text-sm">
@@ -49,8 +46,8 @@ export default function Taxonomy(props: ITaxonomyProps) {
 
   return (
     <div
-      className={`taxonomy flex-row flex-wrap-wrap gap-05rem font-size-inherit 
-        ${center ? "justify-content-center" : "justify-content-start"}`}
+      className={`taxonomy flex flex-row flex-wrap-wrap gap-1 font-size-inherit items-center 
+        ${center ? "justify-center" : "justify-start"}`}
     >
       <Rank
         showRankName={showRankName}

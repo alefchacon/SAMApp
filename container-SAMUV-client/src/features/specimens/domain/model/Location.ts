@@ -1,6 +1,6 @@
 import * as defaults from "@/utils/getOrDefault";
 
-interface ILocation {
+export interface ILocation {
   id?: number;
   coordinates_cartesian_plane_x: number;
   coordinates_cartesian_plane_y: number;
@@ -37,16 +37,16 @@ class Location implements ILocation {
 
   constructor(data: ILocation) {
     this.coordinates_cartesian_plane_x = defaults.getOrDefaultNumber(
-      data.coordinates_cartesian_plane_x
+      data?.coordinates_cartesian_plane_x
     );
     this.coordinates_cartesian_plane_y = defaults.getOrDefaultNumber(
-      data.coordinates_cartesian_plane_y
+      data?.coordinates_cartesian_plane_y
     );
     this.geographical_coordinates_x = defaults.getOrDefaultNumber(
-      data.geographical_coordinates_x
+      data?.geographical_coordinates_x
     );
     this.geographical_coordinates_y = defaults.getOrDefaultNumber(
-      data.geographical_coordinates_y
+      data?.geographical_coordinates_y
     );
     this.utm_region = defaults.getOrDefaultString(data.utm_region);
     this.msnm_google = defaults.getOrDefaultNumber(data.msnm_google);

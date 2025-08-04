@@ -13,35 +13,32 @@ import { Button } from "./button";
 
 export interface IDialogCustomProps {
   title: string;
-  description: React.ReactNode;
-  onClose: () => void;
-  open: boolean;
+  description?: React.ReactNode;
   children?: React.ReactNode;
   submitButton?: React.ReactNode;
+  closeButton?: React.ReactNode;
+  trigger?: React.ReactNode;
 }
-export default function DialogCustom({
+export default function DialogUncontrolled({
   title,
   description,
-  onClose,
-  open,
   children,
   submitButton,
+  closeButton,
+  trigger,
 }: IDialogCustomProps) {
   return (
-    <Dialog open={open}>
-      <DialogContent className="flex! flex-column!" showCloseButton={false}>
-        <div className="flex flex-col gap-8">
+    <Dialog>
+      <DialogTrigger>{trigger}</DialogTrigger>
+      <DialogContent className="flex! flex-column!" showCloseButton={true}>
+        <div className="flex flex-col gap-8 w-full">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           {children}
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline" onClick={onClose}>
-                Cancelar
-              </Button>
-            </DialogClose>
+            {closeButton && <DialogClose asChild>{closeButton}</DialogClose>}
             {submitButton}
           </DialogFooter>
         </div>

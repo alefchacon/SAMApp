@@ -3,8 +3,8 @@ import ResizableDiv from "@/components/ui/ResizableDiv";
 import Header from "@/components/ui/Header";
 import CardSpecie from "@/features/specie/components/CardSpecie";
 import { defaultSpecie, Specie } from "@/features/specie/domain/Specie";
-import { FrontendSpecieParams } from "@/routing/FrontendRoutes";
-import { useSearchParams } from "react-router-dom";
+import FrontendRoutes, { FrontendSpecieParams } from "@/routing/FrontendRoutes";
+import { useSearchParams, useParams } from "react-router-dom";
 import { useSpecie } from "@/features/specie/businessLogic/useSpecie";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { ITaxon } from "@/features/specie/domain/Taxon";
@@ -14,7 +14,8 @@ import Highlight from "@/components/ui/Highlight";
 import { ChevronLeft } from "lucide-react";
 import SpecimenMetrics from "@/features/specimens/components/SpecimenMetrics";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Taxonomy from "@/features/specie/components/Taxonomy";
 interface ITaxonomyFilterProps {
   selected?: boolean;
   rankName?: string;
@@ -42,11 +43,11 @@ const TaxonomyFilter = ({
 };
 
 interface ISpeciesFilterProps {
-  taxonName: string;
-  rankName: FrontendSpecieParams;
+  taxonName?: string;
+  rankName?: FrontendSpecieParams;
 }
 
-export default function SpeciesFilter({
+export default function TaxonomyBuilder({
   taxonName,
   rankName,
 }: ISpeciesFilterProps) {
@@ -54,8 +55,15 @@ export default function SpeciesFilter({
   const [remainingFilters, setRemainingFilters] = useState<ITaxon[]>([]);
   const [currentTaxonName, setCurrentTaxonName] = useState<string>("");
   const [species, setSpecies] = useState<Specie[]>([]);
+  const [specie, setSpecie] = useState<Specie>();
 
-  const { getSpeciesByTaxon, getTaxonByName, getOrdens } = useSpecie();
+  const { specieId } = useParams();
+  const viewSingleSpecie = Boolean(specieId);
+
+  const location = useLocation();
+  const cachedSpecie = location.state as Specie;
+
+  const { getSpeciesByTaxon, getTaxonByName, getSpecie } = useSpecie();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
@@ -64,7 +72,46 @@ export default function SpeciesFilter({
     });
 
   useEffect(() => {
-    // getTaxonByName()
+    if (!specieId) {
+      return;
+    }
+
+    let specie: Specie;
+    if (cachedSpecie) {
+      specie = new Specie(cachedSpecie);
+      setSpecie(specie);
+      return;
+    }
+
+    getSpecie(Number(specieId)).then((specie) => {
+      setSpecie(specie);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!specie) {
+      return;
+    }
+
+    const selectedFilters: ITaxon[] = [];
+    Object.entries(specie).map(([key, value]) => {
+      if (Object.keys(FrontendSpecieParams).includes(key)) {
+        const newTaxon: ITaxon = {
+          rank_name: key as FrontendSpecieParams,
+          taxon_name: value,
+        };
+        selectedFilters.push(newTaxon);
+      }
+    });
+
+    setSelectedFilters(selectedFilters);
+  }, [specie]);
+
+  useEffect(() => {
+    if (!taxonName) {
+      return;
+    }
+
     setCurrentTaxonName(taxonName);
     getTaxonByName(taxonName).then((data) => {
       if (!data.parent_ranks || !data.children_ranks) {
@@ -84,26 +131,13 @@ export default function SpeciesFilter({
     if (currentTaxonName === newFilter.taxon_name) {
       return;
     }
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete(rankName);
-    params.set(FrontendSpecieParams[newFilter.rank_name], newFilter.taxon_name);
-    setSearchParams(params);
-
-    setSelectedFilters((prevFilters) => [...prevFilters, newFilter]);
+    navigate(
+      `/${FrontendRoutes.SPECIES}?${
+        FrontendSpecieParams[newFilter.rank_name]
+      }=${newFilter.taxon_name}`
+    );
   };
 
-  const [ordens, setOrdens] = useState<ITaxon[]>();
-  const [showTaxonSidebar, setShowTaxonSidebar] = useState<boolean>(true);
-  const toggleShowTaxonSidebar = () => setShowTaxonSidebar(!showTaxonSidebar);
-  useEffect(() => {
-    if (showTaxonSidebar) {
-      return;
-    }
-    setSelectedFilters([]);
-    getOrdens().then((ordens) => {
-      setOrdens(ordens);
-    });
-  }, [showTaxonSidebar]);
   const navigate = useNavigate();
 
   const TaxonSidebar = () => {
@@ -120,7 +154,7 @@ export default function SpeciesFilter({
             <div></div>
           </div>
           {selectedFilters.map((filter, index) => {
-            if (!filter) {
+            if (!filter || !filter.taxon_name) {
               return;
             }
             return (
@@ -159,54 +193,57 @@ export default function SpeciesFilter({
     );
   };
 
-  const OrdenSidebar = () => {
-    return (
-      <div className="p-4">
-        {ordens?.map((orden, index) => (
-          <TaxonomyFilter
-            key={index}
-            taxonName={orden.taxon_name}
-            rankName={orden.rank_name}
-            onClick={() => handleAddFilter(orden)}
-          />
-        ))}
+  const speciesViewer = (
+    <div className={`specie-view rounded-lg outline outline-black/8 bg-white`}>
+      {" "}
+      <Header padding={false} title={currentFilter?.taxon_name}>
+        <div>{currentFilter?.rank_name}</div>
+      </Header>
+      <div className="p-5">
+        <Tabs defaultValue="species" className="h-100">
+          <TabsList>
+            <TabsTrigger value="species">Especies</TabsTrigger>
+            <TabsTrigger value="specimens">Especímenes</TabsTrigger>
+          </TabsList>
+          <TabsContent value="species">
+            <div className="grid gap-5">
+              {species?.map((specie, index) => (
+                <CardSpecie
+                  canNavigate
+                  specie={new Specie(specie)}
+                  key={index}
+                />
+              ))}
+            </div>
+          </TabsContent>
+          <TabsContent value="specimens" className="pb-5">
+            <SpecimenMetrics taxonName={taxonName}></SpecimenMetrics>
+          </TabsContent>
+        </Tabs>
       </div>
-    );
-  };
+    </div>
+  );
+
+  const specieViewer = (
+    <div className={`specie-view rounded-lg outline outline-black/8 bg-white`}>
+      <Header padding={false} title={<i>{specie?.epithet}</i>}>
+        <div>{currentFilter?.rank_name}</div>
+        <Taxonomy specie={specie} center={false}></Taxonomy>
+      </Header>
+      <div className="p-5">
+        <SpecimenMetrics taxonName={specie?.epithet}></SpecimenMetrics>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-row w-full h-full">
       <ResizableDiv className="sticky! top-0 z-10 outline outline-black/8">
         <div className="flex flex-col w-full h-full">
-          {showTaxonSidebar ? <TaxonSidebar /> : <OrdenSidebar />}
+          <TaxonSidebar />
         </div>
       </ResizableDiv>
-      <div
-        className={`specie-view rounded-lg outline outline-black/8 bg-white`}
-      >
-        {" "}
-        <Header padding={false} title={currentFilter?.taxon_name}>
-          <div>{currentFilter?.rank_name}</div>
-        </Header>
-        <div className="p-5">
-          <Tabs defaultValue="account">
-            <TabsList>
-              <TabsTrigger value="account">Especies</TabsTrigger>
-              <TabsTrigger value="password">Especímenes</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">
-              <div className="grid gap-5">
-                {species?.map((specie) => (
-                  <CardSpecie specie={new Specie(specie)} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="password">
-              <SpecimenMetrics taxonName={taxonName}></SpecimenMetrics>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </div>
+      <>{viewSingleSpecie ? specieViewer : speciesViewer}</>
     </div>
   );
 }

@@ -55,7 +55,7 @@ export interface ISpecimen extends IDatedObject {
 }
 
 class Specimen implements ISpecimen {
-  id?: number = -1;
+  id?: number;
   colection_code: string = "";
   colection_number: string = "";
   catalog_id: string = "";
@@ -76,7 +76,7 @@ class Specimen implements ISpecimen {
   length_tail: number = 0;
   weight: number = 0;
   location?: Location;
-  specie?: number | Specie = -1;
+  specie?: number | Specie;
   colector?: IContributorSpecimen;
   preparator?: IContributorSpecimen;
 

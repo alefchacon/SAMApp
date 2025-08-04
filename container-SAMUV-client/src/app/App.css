@@ -1158,20 +1158,6 @@ fieldset.hasError {
     min-width: 400px;
   }
 
-  .nav-link {
-    height: 40px;
-  }
-
-  .dropdown-menu {
-    position: static;
-    height: fit-content;
-  }
-
-  .input-group {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
   .page-padding {
     padding-left: clamp(5%, 5%, 10%) !important;
     padding-right: clamp(5%, 5%, 10%) !important;

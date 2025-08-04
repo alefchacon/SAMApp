@@ -17,11 +17,12 @@ import useAccessRequests from "@/features/accessRequests/businessLogic/useAccess
 import useSession from "@/features/auth/businessLogic/useSession";
 import Landing from "./routes/app/Landing.js";
 import { Combobox } from "@/components/ui/Combobox.js";
-import SpeciesFilter from "./routes/SpeciesFilter.js";
+import TaxonomyBuilder from "./routes/TaxonomyBuilder.js";
 import SpeciesDiscover from "./routes/SpeciesDiscover";
 import Search from "./routes/app/Search.js";
 import SpecieRouter from "@/features/specie/components/SpecieRouter.js";
 import SpecieOrdens from "./routes/SpecieOrdens.js";
+import Migrate from "./routes/app/Migrate.js";
 function App() {
   moment.locale("es-mx");
   const [selectedSpecie, setSelectedSpecie] = useState();
@@ -75,14 +76,24 @@ function App() {
           <Route index path={ROUTES.LANDING} element={<Landing />}></Route>
           <Route
             index
-            path={`${ROUTES.COLLECTION}/${ROUTES.ADD_SPECIMEN}`}
+            path={`${ROUTES.SPECIES}/${ROUTES.ADD_SPECIMEN}`}
             element={<SpecimenForm onResetScroll={resetScroll} />}
           ></Route>
           <Route index path={`/test`} element={<SpeciesDiscover />}></Route>
           <Route
             index
+            path={`${FrontendRoutes.SPECIES}/:specieId`}
+            element={<TaxonomyBuilder />}
+          ></Route>
+          <Route
+            index
             path={`${FrontendRoutes.SPECIES}`}
             element={<SpecieRouter profile={profile} />}
+          ></Route>
+          <Route
+            index
+            path={`${FrontendRoutes.MIGRATE}`}
+            element={<Migrate />}
           ></Route>
         </Routes>
       </main>

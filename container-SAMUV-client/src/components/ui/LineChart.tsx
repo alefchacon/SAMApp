@@ -44,8 +44,8 @@ export function LineChartCustom({
       <CardHeader>
         <CardTitle>Especímenes por año</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="h-100 w-100">
+        <ChartContainer config={chartConfig} className="h-65 w-100">
           <LineChart
             accessibilityLayer
             data={data}

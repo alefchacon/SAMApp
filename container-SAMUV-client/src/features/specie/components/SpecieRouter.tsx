@@ -1,7 +1,7 @@
 import Search from "@/app/routes/app/Search";
 import React from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
-import SpeciesFilter from "@/app/routes/SpeciesFilter";
+import TaxonomyBuilder from "@/app/routes/TaxonomyBuilder";
 import SpecieOrdens from "@/app/routes/SpecieOrdens";
 import SpecieDashboard from "@/app/routes/app/SpecieDashboard";
 import {
@@ -16,7 +16,7 @@ interface ISpecieRouterParams {
 export default function SpecieRouter({ profile }: ISpecieRouterParams) {
   const [searchParams] = useSearchParams();
 
-  if (!profile.isTechnicalPerson()) {
+  if (profile.isTechnicalPerson()) {
     return <SpecieDashboard role={profile.role} onSpecieSelection={() => {}} />;
   }
 
@@ -38,5 +38,5 @@ export default function SpecieRouter({ profile }: ISpecieRouterParams) {
   }
 
   query = searchParams.get(specieParam) || "";
-  return <SpeciesFilter taxonName={query} rankName={specieParam} />;
+  return <TaxonomyBuilder taxonName={query} rankName={specieParam} />;
 }

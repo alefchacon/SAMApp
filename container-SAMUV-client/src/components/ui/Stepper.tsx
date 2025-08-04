@@ -5,10 +5,10 @@ import Button from "./ButtonCustom";
 interface IStepperProps {
   children: React.ReactNode;
   selectedStepId: number | string;
-  onResetScroll: () => void;
+  onResetScroll?: () => void;
   endButtonLabel?: string;
   onEndButtonClick: () => void;
-  invalidSteps: any[];
+  invalidSteps?: any[];
 }
 
 export default function Stepper({
@@ -71,7 +71,7 @@ export default function Stepper({
   return (
     <div className="stepper-wrapper flex-wrap-wrap">
       <ul
-        className={`stepper flex-row bg-white unstyled position-sticky top-0 z-index-5`}
+        className={`stepper flex-row bg-white unstyled position-sticky top-0 z-index-5 shadow-sm rounded-sm`}
       >
         {childArray.map((tab, index) => (
           <div

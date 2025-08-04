@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../../components/ui/ButtonCustom";
+import { Button } from "@/components/ui/button";
 import TextField from "../../../components/ui/TextField";
 
 import { Formik, Form } from "formik";
@@ -11,9 +11,12 @@ import { useModal } from "../../../components/contexts/ModalContext.js";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../businessLogic/useAuth.js";
 import IOnCloseParams from "@/components/contexts/IOnCloseProps";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Input } from "@/components/ui/input";
+import FormInput from "@/components/ui/FormInput";
 
 interface ILogInFormProps {
-  onSubmit: (params: IOnCloseParams) => void;
+  onSubmit?: (params: IOnCloseParams) => void;
 }
 export default function LogInForm({ onSubmit }: ILogInFormProps) {
   const { closeModal } = useModal();
@@ -21,7 +24,9 @@ export default function LogInForm({ onSubmit }: ILogInFormProps) {
   const navigate = useNavigate();
   const handleSubmit = async (values: any, actions: any) => {
     await logIn(values.username, values.password);
-    onSubmit({});
+    if (onSubmit) {
+      onSubmit({});
+    }
   };
 
   return (
@@ -32,42 +37,30 @@ export default function LogInForm({ onSubmit }: ILogInFormProps) {
     >
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form autoComplete="off">
-          <TextField
+          <FormInput
+            label="Nombre de usuario"
             name="username"
-            label={"Nombre de usuario"}
-            iconType={"person"}
-            fullwidth
-            errorMessage={errors.username}
-            hasError={Boolean(errors.username && touched.username)}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.username}
-            isFormik
-          ></TextField>
-          <br />
-          <TextField
-            isFormik
+          ></FormInput>
+          <FormInput
+            label="Contraseña"
             name="password"
-            label={"Contraseña"}
-            iconType={"key"}
-            type="password"
-            fullwidth
-            errorMessage={errors.password}
-            hasError={Boolean(errors.password && touched.password)}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.password}
-          ></TextField>
-          <br />
-          <br />
-          <br />
-          <div className="flex-col ">
-            <button type="submit" className="w-100 primary">
+            type="password"
+          ></FormInput>
+
+          <div className="flex flex-col gap-3 w-full items-center">
+            <Button type="submit" className="w-[200px]">
               Entrar
-            </button>
-            <br />
-            <button
-              className="secondary w-100"
+            </Button>
+            <Separator />
+            <Button
+              className="w-[200px]"
+              variant={"outline"}
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 // DEV ONLY: test this reason
                 closeModal({ event: event, reason: "any" });
@@ -75,7 +68,7 @@ export default function LogInForm({ onSubmit }: ILogInFormProps) {
               }}
             >
               Solicitar acceso
-            </button>
+            </Button>
           </div>
         </Form>
       )}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Specimen from "../domain/model/Specimen";
-import DialogCustom, { IDialogCustomProps } from "@/components/ui/DialogCustom";
+import DialogCustom, {
+  IDialogCustomProps,
+} from "@/components/ui/DialogControlled";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSpecimens } from "./useSpecimens";

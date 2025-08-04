@@ -4,6 +4,8 @@ import Highlight from "@/components/ui/Highlight";
 import { defaultSpecie, Specie } from "../domain/Specie";
 // import { filter } from "lodash";
 import CardBase from "@/components/ui/CardBase";
+import { useNavigate } from "react-router-dom";
+import FrontendRoutes from "@/routing/FrontendRoutes";
 
 interface ICardSpecieProps {
   specie: Specie;
@@ -12,6 +14,7 @@ interface ICardSpecieProps {
   filterText?: string;
   selected?: boolean;
   onClick?: () => void;
+  canNavigate: boolean;
 }
 export default function CardSpecie(props: ICardSpecieProps) {
   const {
@@ -21,10 +24,25 @@ export default function CardSpecie(props: ICardSpecieProps) {
     filterText = "",
     selected = false,
     onClick,
+    canNavigate = false,
   } = props;
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    {
+      if (canNavigate) {
+        navigate(`/${FrontendRoutes.SPECIES}/${specie.id}`, { state: specie });
+        return;
+      }
+      if (onClick) {
+        onClick();
+      }
+    }
+  };
+
   return (
-    <div onClick={onClick} className="w-full flex flex-row">
+    <div onClick={handleClick} className="w-full flex flex-row">
       <CardBase
         clickable
         title={

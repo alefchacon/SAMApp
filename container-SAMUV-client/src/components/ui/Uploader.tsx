@@ -1,31 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Papa from "papaparse";
 import Chip from "./ChipInput";
 import FileInfo from "./FileInfo";
 
-import { FILE_TYPES_STRING } from "../../stores/fileTypes";
+import { EFileTypes } from "../../stores/EFileTypes";
 import ProgressBar from "./ProgressBar";
-import Specie from "../../features/specie/domain/specie";
-import Specimen from "../../features/specimens/domain/specimen";
-import Location from "../../features/specimens/domain/location";
-import Contributor from "../../features/contributors/domain/contributor";
-import CONTRIBUTOR_ROLES from "../../stores/contributorRoles";
+import { Specie } from "@/features/specie/domain/Specie";
+import Specimen from "@/features/specimens/domain/model/Specimen";
+import Location, {
+  ILocation,
+} from "@/features/specimens/domain/model/Location";
+import Contributor, {
+  IContributor,
+} from "@/features/contributors/domain/Contributor";
+import { EContributorRoles } from "@/stores/EContributorRoles";
 
+interface IUploaderProps {
+  id?: string;
+  multiple?: boolean;
+  buttonLabel?: string;
+  displayExtension?: string;
+  accept?: EFileTypes.CSV;
+  onUpload?: () => void;
+  onParse?: (speciesWithSpecimens: Specie[]) => void;
+}
 export default function Uploader({
   id = "upload",
   multiple = false,
   buttonLabel = "Label",
   displayExtension = ".CSV",
-  accept = FILE_TYPES_STRING.CSV,
+  accept = EFileTypes.CSV,
   onUpload,
   onParse,
-}) {
-  const [files, setFiles] = useState([]);
-  const [parsedFiles, setParsedFiles] = useState();
+}: IUploaderProps) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [parsedFiles, setParsedFiles] = useState<Specie[]>();
   const [isDragging, setIsDragging] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
 
-  const handleDragOver = (event) => {
+  const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setIsDragging(true);
   };
@@ -34,21 +47,29 @@ export default function Uploader({
     setIsDragging(false);
   };
 
-  const handleDropFile = (event) => {
+  const handleDropFile = (event: React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setIsDragging(false);
-    const newFiles = event.dataTransfer.files;
+    const newFiles = Array.from(event.dataTransfer.files);
 
     parseFiles(newFiles);
   };
 
-  const handleClickFile = async (event) => {
+  const handleClickFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.error("FUCK!");
+
+    if (!event.target.files) {
+      return;
+    }
+
     const newFiles = Array.from(event.target.files);
 
     parseFiles(newFiles);
   };
 
-  const parseFiles = async (newFiles = []) => {
+  const parseFiles = async (newFiles: File[] = []) => {
     setIsParsing(true);
 
     for (let i = 0; i < newFiles.length; i++) {
@@ -60,59 +81,72 @@ export default function Uploader({
     }
 
     setFiles((previousFiles) => [...previousFiles, ...newFiles]);
+
+    console.error(newFiles);
+
     const reader = new FileReader();
     reader.onload = function (event) {
-      parseCSV(event.target.result);
-      setIsParsing(false);
+      if (event.target && event.target.result) {
+        parseCSV(event.target.result);
+        setIsParsing(false);
+      }
     };
     reader.readAsText(newFiles[0], "ISO-8859-1");
   };
 
-  const equals = (specieA, specieB) => {
+  const equals = (specieA: Specie, specieB: Specie) => {
     return JSON.stringify(specieA) === JSON.stringify(specieB);
   };
 
-  const getUniqueSpecies = (colectionCsv) => {
+  const getUniqueSpecies = (colectionCsv: any[]) => {
     const allSpecies = colectionCsv.map((row) => new Specie(row));
     return allSpecies.filter(
       (specieA, index, self) =>
         index === self.findIndex((specieB) => equals(specieA, specieB))
     );
-  }
+  };
 
-  const groupSpecimensBySpecie = (uniqueSpecies, colectionCsv) => {
+  const groupSpecimensBySpecie = (
+    uniqueSpecies: Specie[],
+    colectionCsv: any[]
+  ) => {
     return uniqueSpecies.map((specie) => {
       const specimenData = colectionCsv.filter((row) =>
         equals(specie, new Specie(row))
       );
       specie.specimens = specimenData.map((data) => {
         let specimen = new Specimen(data);
-        specimen.location = new Location(data);
+        specimen.location = new Location(data as ILocation);
         specimen.colector = new Contributor(
-          data, 
-          CONTRIBUTOR_ROLES.COLECTOR
+          data as IContributor,
+          EContributorRoles.COLECTOR
         );
         specimen.preparator = new Contributor(
-          data,
-          CONTRIBUTOR_ROLES.PREPARATOR
+          data as IContributor,
+          EContributorRoles.PREPARATOR
         );
         return specimen;
       });
       return specie;
     });
-  }
+  };
 
-  const handleParsedFiles = (result) => {
-    const colectionCsv = result.data;
-    const uniqueSpecies = getUniqueSpecies(colectionCsv)
+  const handleParsedFiles = (result: Papa.ParseResult<unknown>) => {
+    const colectionCsv = result.data as Specie[];
+    const uniqueSpecies = getUniqueSpecies(colectionCsv);
 
-    const speciesWithSpecimens = groupSpecimensBySpecie(uniqueSpecies, colectionCsv);
-    
+    const speciesWithSpecimens = groupSpecimensBySpecie(
+      uniqueSpecies,
+      colectionCsv
+    );
+
+    console.error(speciesWithSpecimens);
+
     onParse(speciesWithSpecimens);
     setParsedFiles(speciesWithSpecimens);
   };
-  
-  function parseCSV(file) {
+
+  function parseCSV(file: File) {
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
@@ -131,9 +165,12 @@ export default function Uploader({
     setFiles((previousFiles) =>
       previousFiles.filter((_, index) => index !== indexToDelete)
     );
-    setParsedFiles((previousParsedFiles) =>
-      previousParsedFiles.filter((_, index) => index !== indexToDelete)
-    );
+    setParsedFiles((previousParsedFiles) => {
+      if (!previousParsedFiles) {
+        return [];
+      }
+      previousParsedFiles.filter((_, index) => index !== indexToDelete);
+    });
   };
 
   return (
@@ -148,9 +185,7 @@ export default function Uploader({
         onDrop={handleDropFile}
       >
         <ProgressBar visible={isParsing}></ProgressBar>
-        <span
-          className="material-symbols-outlined p-1rem font-size-4rem"
-        >
+        <span className="material-symbols-outlined p-1rem font-size-4rem">
           upload
         </span>
         Clic para seleccionar su archivo {displayExtension}, o arrastrelo aquí.

@@ -74,7 +74,7 @@ export default function EditableTable({
   };
 
   const table = useReactTable({
-    data: tableData,
+    data: data,
     columns: columns,
     columnResizeMode,
     columnResizeDirection,

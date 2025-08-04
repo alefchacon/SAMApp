@@ -24,6 +24,7 @@ import { useState } from "react";
 import Step from "@/components/ui/Step";
 import Button from "@/components/ui/ButtonCustom";
 import { decimalRegex } from "@/validation/regexes";
+import DialogNewSpecimen from "@/features/specimens/newSpecimen2/DialogNewSpecimen";
 
 interface ISpecimenFormProps {
   onResetScroll: () => void;
@@ -34,7 +35,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
   const { showSnackbar } = useSnackbar();
   const [invalidSteps, setInvalidSteps] = useState<string[]>([]);
   const location = useLocation();
-  const selectedSpecie = location.state.specie;
+  const selectedSpecie = location.state?.specie;
 
   const handleSubmit = async (values: ISpecimen) => {
     console.error("submitting");

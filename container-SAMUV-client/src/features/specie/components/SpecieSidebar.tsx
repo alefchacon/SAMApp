@@ -18,6 +18,8 @@ import { Specie } from "../domain/Specie";
 import { Button } from "@/components/ui/button";
 import TextField from "@/components/ui/TextField";
 import { Dna, Upload } from "lucide-react";
+import Highlight from "@/components/ui/Highlight";
+import { Separator } from "@/components/ui/separator";
 
 interface ISpecieListProps {
   role: UserRoles;
@@ -73,8 +75,6 @@ export default function SpecieSidebar(props: ISpecieListProps) {
     </div>
   );
 
-  console.error(species);
-
   return (
     <ResizableDiv
       className={`specie-list ${
@@ -105,13 +105,29 @@ export default function SpecieSidebar(props: ISpecieListProps) {
               className="specie-list-items flex flex-col overflow-auto flex-grow-1"
             >
               {filteredItems.map((specie, index) => (
-                <ListItem key={index} selected={specie.id === selectedSpecieId}>
-                  <CardSpecie
-                    specie={specie}
-                    filterText={filterText}
+                <>
+                  <ListItem
                     onClick={() => handleSelection(specie.id)}
-                  ></CardSpecie>
-                </ListItem>
+                    key={index}
+                    selected={specie.id === selectedSpecieId}
+                  >
+                    <i className="text-md opacity-80">
+                      <Highlight
+                        text={specie.epithet}
+                        highlight={filterText}
+                      ></Highlight>
+                    </i>
+                    {filterText && (
+                      <Taxonomy
+                        filterText={filterText}
+                        specie={specie}
+                        center={false}
+                        showRankName={false}
+                      ></Taxonomy>
+                    )}
+                  </ListItem>
+                  <Separator></Separator>
+                </>
               ))}
             </ul>
           ) : (

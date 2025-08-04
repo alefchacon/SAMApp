@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link, useLocation } from "react-router-dom";
 import Account from "../../../features/auth/components/Account";
-import Button from "../ButtonCustom";
+import { Button } from "../button";
 import ProgressBar from "../ProgressBar";
 import ROUTES from "../../../routing/FrontendRoutes";
 import { useStatus } from "../../contexts/StatusContext";
@@ -11,9 +11,9 @@ import { UserRoles } from "@/stores/EUserRoles";
 import { useState } from "react";
 import SearchInput from "../SearchInput";
 import useSearch from "@/features/specie/businessLogic/useSearch";
-import { IProfile } from "@/features/auth/domain/Profile";
+import { IProfile, Profile } from "@/features/auth/domain/Profile";
 import "../../../app/App.css";
-import { Home, PawPrint } from "lucide-react";
+import { Home, PawPrint, Aperture, User, Bell, Info, Menu } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -23,10 +23,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "../Badge";
 
 interface INavbarProps {
   accessRequestCount: number;
-  profile: IProfile;
+  profile: Profile;
 }
 
 export default function Navbar({
@@ -56,8 +57,8 @@ export default function Navbar({
       </NavLink>
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="nav-link flex flex-row selectable-dark p-1 align-center rounded-sm">
-          Sobre nosotros...
+        <DropdownMenuTrigger className="flex flex-row selectable-dark p-1 items-center rounded-sm gap-3">
+          <Info></Info> Sobre nosotros...
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -69,20 +70,20 @@ export default function Navbar({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {profile?.role === UserRoles.TECHNICAL_PERSON && (
+      {!profile.isVisitor() && (
         <>
           <NavLink
             route={ROUTES.PHOTOSHEETS}
-            label={"Fichas de fotocolecta"}
-            iconType={"image"}
             selected={pathname.includes(ROUTES.PHOTOSHEETS)}
-          ></NavLink>
+          >
+            <Aperture></Aperture> Fichas fotográficas
+          </NavLink>
           <NavLink
             route={ROUTES.PERSONAL}
-            label={"Personal"}
-            iconType={"group"}
             selected={pathname.includes(ROUTES.PERSONAL)}
-          ></NavLink>
+          >
+            <User></User> Personal
+          </NavLink>
         </>
       )}
     </>
@@ -90,24 +91,27 @@ export default function Navbar({
 
   const rightMenu = (
     <>
-      <div className="gap-3">
-        <div
-          style={{
-            position: "relative",
-          }}
-        >
-          {accessRequestCount > 0 && <div>accessRequestCount</div>}
-
+      <div className="gap-5 flex flex-row items-center">
+        <SearchInput placeholder={``} onSubmit={search}></SearchInput>
+        <div className="flex flex-row gap-3 relative">
           {profile?.role === UserRoles.TECHNICAL_PERSON && (
             <NavLink
               route={ROUTES.REQUESTS}
-              iconType={"notifications"}
               selected={pathname.includes(ROUTES.REQUESTS)}
-            ></NavLink>
+            >
+              <div className="relative">
+                {accessRequestCount > 0 && (
+                  <Badge
+                    variant={"destructive"}
+                    className="h-fit w-fit absolute bottom-3 left-3"
+                  >
+                    {accessRequestCount}
+                  </Badge>
+                )}
+                <Bell></Bell>
+              </div>
+            </NavLink>
           )}
-        </div>
-        <div className="flex flex-col md:flex-row gap-3">
-          <SearchInput placeholder={``} onSubmit={search}></SearchInput>
           <Account accessRequestCount={accessRequestCount}></Account>
         </div>
       </div>
@@ -127,12 +131,6 @@ export default function Navbar({
           <div className="right-side hide-if-mobile flex flex-row gap-3">
             {rightMenu}
           </div>
-          <button
-            className="flex-if-mobile hide-if-desktop"
-            onClick={toggleShowMobileMeun}
-          >
-            sadf
-          </button>
         </div>
         <div
           className={`shrink flex-col flex-if-mobile hide-if-desktop ${
@@ -142,6 +140,13 @@ export default function Navbar({
           {leftMenu}
           {rightMenu}
         </div>
+        <Button
+          className="flex-if-mobile hide-if-desktop"
+          onClick={toggleShowMobileMeun}
+          variant={"ghost"}
+        >
+          <Menu />
+        </Button>
         {loading && <ProgressBar main></ProgressBar>}
       </nav>
     </>

@@ -31,7 +31,7 @@ urlpatterns = [
 
 
     path('species/search', views.SpecieViewSet.as_view({'get': 'search_species'}), name='species-by-taxon'),
-    path('species/metrics', views.SpecieViewSet.as_view({'get': 'get_specimen_metrics_by_taxon'}), name='metrics-by-taxon'),
+    path('species/metrics', views.SpecieViewSet.as_view({'get': 'get_visitor_metrics_by_taxon'}), name='metrics-by-taxon'),
     path('species/migrate', views.SpecieViewSet.as_view({
       'get': 'get_migration_format',
       'post': 'migrate_collection'

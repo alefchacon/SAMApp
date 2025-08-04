@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Specie } from "@/features/specie/domain/Specie";
 import Specimen from "../domain/model/Specimen";
 import TApiResult from "@/dataAccess/domain/TApiResult";
-import DialogCustom, { IDialogCustomProps } from "@/components/ui/DialogCustom";
+import DialogCustom, {
+  IDialogCustomProps,
+} from "@/components/ui/DialogControlled";
 import { ArrowLeftRight, ChevronRight } from "lucide-react";
 import { Combobox } from "@/components/ui/Combobox";
 import { Button } from "@/components/ui/button";

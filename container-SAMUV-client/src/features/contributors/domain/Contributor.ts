@@ -23,7 +23,7 @@ export class Contributor implements IContributor {
   code?: string = "";
   name?: string = "";
 
-  constructor(data: IContributor, role = null) {
+  constructor(data: IContributor, role?: EContributorRoles) {
     this.id = data.id;
     this.code =
       data?.code ||

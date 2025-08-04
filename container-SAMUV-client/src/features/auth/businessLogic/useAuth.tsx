@@ -48,10 +48,11 @@ export default function useAuth() {
     const body: ISession = {
       refresh: getRefreshToken(),
     };
+    debugger;
     const response = await apiWrapper.post<ISession>({ url, body });
 
     if (response && "data" in response && response.data) {
-      refreshAccessToken(response.data.refresh!);
+      refreshAccessToken(response.data.access!);
     }
 
     deleteRefreshToken();

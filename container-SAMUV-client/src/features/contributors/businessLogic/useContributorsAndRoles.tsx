@@ -50,8 +50,10 @@ export default function useContributorsAndRoles() {
   );
 
   const updateContributor = useCallback(
-    async (contributorToUpdate: Contributor) => {
-      const response = await apiWrapper.put({
+    async (
+      contributorToUpdate: Contributor
+    ): Promise<TApiResult<Contributor>> => {
+      const response = await apiWrapper.put<Contributor>({
         url: `${CONTRIBUTORS_URL}/${contributorToUpdate.id}/`,
         body: contributorToUpdate,
       });

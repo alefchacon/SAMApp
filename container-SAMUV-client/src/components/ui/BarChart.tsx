@@ -16,7 +16,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/ui/Chart";
 import { IMetric } from "@/features/specimens/domain/model/Metrics";
 
 export const description = "A bar chart";
@@ -45,8 +45,8 @@ export function BarChartCustom({
       <CardHeader>
         <CardTitle>Especímenes por mes</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="h-100 w-100">
+        <ChartContainer config={chartConfig} className="h-65 w-100">
           <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis

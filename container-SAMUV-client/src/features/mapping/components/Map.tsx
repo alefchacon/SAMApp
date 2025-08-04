@@ -5,27 +5,28 @@ import "leaflet/dist/leaflet.css";
 import mexico from "../stores/mexico.json";
 import { UserRoles } from "@/stores/EUserRoles";
 import Specimen from "@/features/specimens/domain/model/Specimen";
-import { getCoordinates } from "../util/coordinateUtils";
+import { getGeographicalCoordinates } from "../util/coordinateUtils";
 import type { GeoJsonObject } from "geojson";
 
 interface IMapProps {
   specimens: Specimen[];
-  role: UserRoles;
+  role?: UserRoles;
 }
 export default function Map(props: IMapProps) {
   const { specimens = [], role = UserRoles.VISITOR } = props;
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
 
-  console.error(role);
-
   const fetchAllCoordinates = async () => {
+    /*
     if (role !== UserRoles.TECHNICAL_PERSON) {
       return;
     }
+      */
 
     const positions = await Promise.all(
-      specimens.map((specimen) => getCoordinates(specimen))
+      specimens.map((specimen) => getGeographicalCoordinates(specimen))
     );
+    console.error(positions);
     setCoordinates(positions);
   };
 
@@ -34,7 +35,6 @@ export default function Map(props: IMapProps) {
   }, [specimens]);
 
   const onEachFeature = (feature: any, layer: any) => {
-    console.error(feature);
     const specimenAmount = getStateSpecimens(feature).length;
     const specimenNoun = specimenAmount === 1 ? "espécimen" : "especímenes";
     const popupMessage = `${specimenAmount} ${specimenNoun} de ${feature.properties.name}`;
@@ -52,38 +52,30 @@ export default function Map(props: IMapProps) {
     //Perhaps it'd be faster to modify the geojson itself but
     // idk if that will break anything and I aint got time to test that.
     const stateCode = feature.properties.id.split("-")[1];
-    return specimens.filter(
-      (specimen) => getSpecimenState(specimen) === stateCode
-    );
-  };
-
-  const getSpecimenState = (specimen: Specimen) => {
-    return specimen?.location?.state;
+    return specimens.filter((specimen) => {
+      return specimen?.location?.state === stateCode;
+    });
   };
 
   const filterBySpecimen = (feature: any) => {
-    console.error(feature);
     return getStateSpecimens(feature).length > 0;
   };
 
   const CoordinateMarkers = () => {
+    console.error(coordinates);
     return (
       <>
-        {coordinates.map(
-          ([latitude, longitude], index) =>
-            Boolean(latitude) &&
-            Boolean(longitude) && (
-              <Marker key={index} position={[latitude, longitude]}>
-                <Popup>
-                  Se encontraron especímenes aquí
-                  <br></br>
-                  <br></br>
-                  Latitud: &nbsp;&nbsp;&nbsp;{latitude} <br></br>
-                  Longitud: {longitude} <br></br>
-                </Popup>
-              </Marker>
-            )
-        )}
+        {coordinates.map(([latitude, longitude], index) => (
+          <Marker key={index} position={[latitude, longitude]}>
+            <Popup>
+              Se encontraron especímenes aquí
+              <br></br>
+              <br></br>
+              Latitud: &nbsp;&nbsp;&nbsp;{latitude} <br></br>
+              Longitud: {longitude} <br></br>
+            </Popup>
+          </Marker>
+        ))}
       </>
     );
   };
@@ -97,13 +89,13 @@ export default function Map(props: IMapProps) {
       zoom={4}
       minZoom={3}
       maxZoom={maxZoom}
-      style={{ height: "400px", width: "100%", zIndex: "1" }}
+      style={{ height: "100%", width: "100%", zIndex: "1" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {role === UserRoles.TECHNICAL_PERSON && <CoordinateMarkers />}
+      <CoordinateMarkers />
 
       <GeoJSON
         data={mexico as GeoJsonObject}
