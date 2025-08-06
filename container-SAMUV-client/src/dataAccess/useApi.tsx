@@ -73,23 +73,23 @@ export default function useApi() {
        * @param config
        * @returns
        */
-      async post<T>(params: TApiParams): Promise<TApiResult<T>> {
+      async post<T>(params: TApiParams): Promise<IApiResult<T>> {
         setLoading(true);
         try {
-          const response = await api.post<T>(
+          const response = await api.post(
             params.url,
             params.body,
             params.config
           );
           // showSnackbar(response.data.message);
-          const apiResult: TApiResult<T> = {
+          const apiResult: IApiResult<T> = {
             success: true,
-            data: response.data,
+            apiResponse: response.data,
           };
           return apiResult;
         } catch (error) {
           handleError(error as AxiosError, params.config);
-          const apiResult: TApiResult<T> = {
+          const apiResult: IApiResult<T> = {
             success: false,
             error: error as AxiosError,
           };

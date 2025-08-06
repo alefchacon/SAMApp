@@ -39,8 +39,9 @@ export default function useContributorsAndRoles() {
       body: body,
     });
 
-    if (response.success && response.data) {
-      const contributorsPlusNewValue = [response.data, ...contributors];
+    if (response.success && response.apiResponse) {
+      const newContributor = response.apiResponse.data;
+      const contributorsPlusNewValue = [newContributor, ...contributors];
       setContributors(contributorsPlusNewValue);
     }
     return Promise.resolve(response);
@@ -54,7 +55,6 @@ export default function useContributorsAndRoles() {
       body: contributorToUpdate,
     });
 
-    console.error(response.apiResponse);
     if (response.success && response.apiResponse) {
       const updatedContributor = response.apiResponse.data;
       const contributorsSansOldValue = contributors.filter(

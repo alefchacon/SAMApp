@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import { contributorSchema } from "../formikSchemas/contributorSchema";
 
-import Button from "../../../components/ui/ButtonCustom";
+import { Button } from "@/components/ui/button";
 import TextField from "../../../components/ui/TextField";
 
 import useContributorsAndRoles from "../businessLogic/useContributorsAndRoles";
@@ -12,15 +12,21 @@ import Contributor, {
   IContributorSpecimen,
 } from "../domain/Contributor";
 import EHttpStatus from "@/stores/EHttpStatus";
-import TApiResult from "@/dataAccess/domain/TApiResult";
+import TApiResult, { IApiResult } from "@/dataAccess/domain/TApiResult";
+import IOnCloseParams, {
+  defaultCloseParams,
+} from "@/components/contexts/IOnCloseProps";
+import FormInput from "@/components/ui/FormInput";
 
 interface IContributorFormProps {
-  onSubmit: (values: Contributor) => Promise<void>;
+  onSubmit: (values: Contributor) => Promise<IApiResult<Contributor>>;
   contributor?: IContributorSpecimen;
+  onCancel: (params: IOnCloseParams) => void;
 }
 export default function ContributorForm({
   onSubmit,
   contributor = defaultContributor,
+  onCancel,
 }: IContributorFormProps) {
   //
   const handleSubmit = async (
@@ -29,12 +35,11 @@ export default function ContributorForm({
   ) => {
     const response = await onSubmit(values);
 
-    /*
     if (response.success) {
-      actions.resetForm();
+      actions.resetForm({
+        values: { code: "", name: "" },
+      });
     }
-      */
-    //onSecondaryClick();
   };
 
   const isEdit = Boolean(contributor.id);
@@ -46,37 +51,42 @@ export default function ContributorForm({
       onSubmit={handleSubmit}
       enableReinitialize
     >
-      {({ values, errors, touched, handleSubmit, handleChange }) => (
+      {({ values, errors, touched, handleSubmit, handleChange, resetForm }) => (
         <Form action="" autoComplete="off">
-          <div className="input-group">
-            <TextField
-              name="code"
-              id="code"
-              label={"Clave"}
-              value={values.code}
-              onChange={handleChange}
-              errorMessage={errors.code}
-              hasError={Boolean(errors.code && touched.code)}
-              required
-              maxLength={100}
-              isFormik
-            ></TextField>
-            <TextField
-              name="name"
-              id="name"
-              label={"Nombre completo"}
-              value={values.name}
-              onChange={handleChange}
-              errorMessage={errors.name}
-              hasError={Boolean(errors.name && touched.name)}
-              maxLength={200}
-              isFormik
-            ></TextField>
-            <div className="button-row">
-              <Button className="primary" type="submit">
-                {isEdit ? "Editar" : "Agregar"} contribuidor
-              </Button>
-            </div>
+          <FormInput
+            inputClassName="w-[200px]"
+            name="code"
+            id="code"
+            label={"Clave"}
+            value={values.code}
+            onChange={handleChange}
+            errorMessage={errors.code}
+            hasError={Boolean(errors.code && touched.code)}
+            required
+            maxLength={100}
+            isFormik
+          ></FormInput>
+          <FormInput
+            name="name"
+            id="name"
+            label={"Nombre completo"}
+            value={values.name}
+            onChange={handleChange}
+            errorMessage={errors.name}
+            hasError={Boolean(errors.name && touched.name)}
+            maxLength={200}
+            isFormik
+          ></FormInput>
+          <div className="button-row">
+            <Button
+              variant={"outline"}
+              onClick={() => onCancel(defaultCloseParams)}
+            >
+              Cancelar
+            </Button>
+            <Button type="submit">
+              {isEdit ? "Editar" : "Agregar"} contribuidor
+            </Button>
           </div>
         </Form>
       )}

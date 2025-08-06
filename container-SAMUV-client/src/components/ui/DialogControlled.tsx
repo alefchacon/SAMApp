@@ -19,33 +19,27 @@ export interface IDialogCustomProps {
   children?: React.ReactNode;
   submitButton?: React.ReactNode;
 }
-export default function DialogControlled({
+const DialogControlled = ({
   title,
   description,
   onClose,
   open,
   children,
   submitButton,
-}: IDialogCustomProps) {
+}: IDialogCustomProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="flex! flex-column!" showCloseButton={false}>
+      <DialogContent className="flex! flex-column!" showCloseButton>
         <div className="flex flex-col gap-8 w-full">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           {children}
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline" onClick={onClose}>
-                Cancelar
-              </Button>
-            </DialogClose>
-            {submitButton}
-          </DialogFooter>
         </div>
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default DialogControlled;

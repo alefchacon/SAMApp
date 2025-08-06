@@ -17,7 +17,7 @@ export default function ContributorPanel() {
     useContributorsAndRoles();
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter<IContributorSpecimen>({ items: contributors });
-  const { showModal } = useModal();
+  const { showModal, closeModal } = useModal();
   useEffect(() => {
     getContributors();
   }, []);
@@ -25,7 +25,9 @@ export default function ContributorPanel() {
   const handleShowContributorModal = () => {
     showModal({
       title: "Agregar contribuidor",
-      content: <ContributorForm onSubmit={addContributor} />,
+      content: (
+        <ContributorForm onSubmit={addContributor} onCancel={closeModal} />
+      ),
     });
   };
   const handleEditContributorModal = (contributor: Contributor) => {
@@ -56,20 +58,22 @@ export default function ContributorPanel() {
       <ul className="unstyled">
         {contributors.length > 0 ? (
           filteredItems.map((contributor, index) => (
-            <ListItem key={index}>
-              <HoverableActions>
-                <Button
-                  onClick={() => handleEditContributorModal(contributor)}
-                  className="icon-only color-white"
-                ></Button>
-              </HoverableActions>
-              <CardContributor
-                index={index}
-                contributor={contributor}
-                filterText={filterText}
-                key={index}
-              ></CardContributor>
-            </ListItem>
+            <>
+              <ListItem key={index}>
+                <HoverableActions>
+                  <Button
+                    onClick={() => handleEditContributorModal(contributor)}
+                    className="icon-only color-white"
+                  ></Button>
+                </HoverableActions>
+                <CardContributor
+                  index={index}
+                  contributor={contributor}
+                  filterText={filterText}
+                  key={index}
+                ></CardContributor>
+              </ListItem>
+            </>
           ))
         ) : (
           <NoResults itemName="contribuidores" />

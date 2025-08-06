@@ -38,8 +38,8 @@ export default function useAuth() {
       },
     });
 
-    if (response.success && "data" in response) {
-      storeSession(response?.data as ISession);
+    if (response.success && response.apiResponse) {
+      storeSession(response?.apiResponse as ISession);
     }
   };
 
@@ -48,11 +48,10 @@ export default function useAuth() {
     const body: ISession = {
       refresh: getRefreshToken(),
     };
-    debugger;
     const response = await apiWrapper.post<ISession>({ url, body });
 
-    if (response && "data" in response && response.data) {
-      refreshAccessToken(response.data.access!);
+    if (response && "apiResponse" in response && response.apiResponse) {
+      refreshAccessToken(response.apiResponse.data.access!);
     }
 
     deleteRefreshToken();

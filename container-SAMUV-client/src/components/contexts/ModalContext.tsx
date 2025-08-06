@@ -11,6 +11,7 @@ import React, {
 import DialogUncontrolled from "../ui/DialogUncontrolled";
 import Modal from "../ui/modal/Modal";
 import IOnCloseParams from "./IOnCloseProps";
+import DialogControlled from "../ui/DialogControlled";
 
 interface IModalContext {
   showModal: (params: IShowModalParams) => void;
@@ -70,15 +71,9 @@ export function ModalProvider(props: IModalProviderProps) {
       value={{ showModal, closeModal, setModalContent, setModalTitle }}
     >
       {props.children}
-      <Modal
-        open={open}
-        onClose={closeModal}
-        title={modalTitle}
-        children={modalContent}
-        dismissable={dismissable}
-        width={width}
-        maxHeight={maxHeight}
-      />
+      <DialogControlled title={modalTitle} open={open} onClose={closeModal}>
+        {modalContent}
+      </DialogControlled>
     </ModalContext.Provider>
   );
 }

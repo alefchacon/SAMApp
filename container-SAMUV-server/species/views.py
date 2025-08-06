@@ -855,8 +855,8 @@ class ContributorViewSet(viewsets.ModelViewSet):
         try:
             int_pk = int(pk)
         except (ValueError, TypeError):
-            return JsonResponse({'message': 'El contribuidor no fue encontrado.'}, status=status.HTTP_400_BAD_REQUEST)
-        if existing_user.first().id != int_pk:
+            return JsonResponse({'message': 'El contribuidor no fue encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+        if existing_user and existing_user.first().id != int_pk:
             return JsonResponse({'message': 'Ya existe un contribuidor con este código.'}, status=status.HTTP_400_BAD_REQUEST)
         try:
             contributor = self.queryset.get(pk=pk)

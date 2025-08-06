@@ -31,20 +31,18 @@ export default function Account({
     deleteSession();
   };
 
+  const handleShowLoginModal = () => {
+    showModal({ title: "Entrar", content: <LogInForm /> });
+  };
+
   if (profile.isVisitor()) {
     return (
-      <div className="flex-row">
-        <DialogUncontrolled
-          title="Entrar"
-          trigger={
-            <button className="selectable-dark rounded-sm p-1 py-2 flex flex-row gap-2 items-center">
-              <LogIn></LogIn> Entrar
-            </button>
-          }
-        >
-          <LogInForm></LogInForm>
-        </DialogUncontrolled>
-      </div>
+      <button
+        onClick={handleShowLoginModal}
+        className="selectable-dark rounded-sm p-1 py-2 flex flex-row gap-2 items-center"
+      >
+        <LogIn></LogIn> Entrar
+      </button>
     );
   }
 
