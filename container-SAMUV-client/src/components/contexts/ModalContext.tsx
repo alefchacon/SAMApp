@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 
+import DialogUncontrolled from "../ui/DialogUncontrolled";
 import Modal from "../ui/modal/Modal";
 import IOnCloseParams from "./IOnCloseProps";
 

@@ -15,7 +15,7 @@ import EHttpStatus from "@/stores/EHttpStatus";
 import TApiResult from "@/dataAccess/domain/TApiResult";
 
 interface IContributorFormProps {
-  onSubmit: (values: Contributor) => Promise<TApiResult<Contributor>>;
+  onSubmit: (values: Contributor) => Promise<void>;
   contributor?: IContributorSpecimen;
 }
 export default function ContributorForm({
@@ -29,9 +29,11 @@ export default function ContributorForm({
   ) => {
     const response = await onSubmit(values);
 
+    /*
     if (response.success) {
       actions.resetForm();
     }
+      */
     //onSecondaryClick();
   };
 

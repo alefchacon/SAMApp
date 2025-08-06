@@ -3,7 +3,7 @@ import React from "react";
 
 import useAuth from "../businessLogic/useAuth";
 import useSession from "../businessLogic/useSession";
-
+import { Button } from "@/components/ui/button";
 export default function RefreshForm() {
   const { refreshToken } = useAuth();
   const { deleteSession } = useSession();
@@ -12,12 +12,10 @@ export default function RefreshForm() {
     <div className="flex-col">
       <p>¿Necesita más tiempo?</p>
       <div className="button-row">
-        <button type="button" className="secondary" onClick={deleteSession}>
+        <Button type="button" variant={"outline"} onClick={deleteSession}>
           No, cierra la sesión
-        </button>{" "}
-        <button className="primary" onClick={refreshToken}>
-          Sí, dame más tiempo
-        </button>
+        </Button>{" "}
+        <Button onClick={refreshToken}>Sí, dame más tiempo</Button>
       </div>
     </div>
   );

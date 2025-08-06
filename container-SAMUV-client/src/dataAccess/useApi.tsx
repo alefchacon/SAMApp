@@ -13,7 +13,7 @@ import CredentialKeys from "../stores/CredentialsKeys";
 import HttpStatus from "@/stores/EHttpStatus";
 import flattenObject from "@/utils/flattenObject";
 import { apiUrl } from "@/routing/BackendRoutes";
-import TApiResult from "./domain/TApiResult";
+import TApiResult, { IApiResult } from "./domain/TApiResult";
 import IRequestConfig from "./domain/IRequestConfig";
 import TApiParams from "./domain/TApiParams";
 
@@ -99,7 +99,7 @@ export default function useApi() {
         }
       },
 
-      async put<T>(params: TApiParams): Promise<TApiResult<T>> {
+      async put<T>(params: TApiParams): Promise<IApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.put(
@@ -110,15 +110,15 @@ export default function useApi() {
           if (params.config && !params.config.noConfirmation) {
             showSnackbar(response.data.message);
           }
-          const apiResult: TApiResult<T> = {
+          const apiResult: IApiResult<T> = {
             success: true,
-            data: response.data,
+            apiResponse: response.data,
           };
           return apiResult;
         } catch (error) {
           const axiosError = error as AxiosError;
           handleError(axiosError, params.config);
-          const apiResult: TApiResult<T> = {
+          const apiResult: IApiResult<T> = {
             success: true,
             error: axiosError,
           };

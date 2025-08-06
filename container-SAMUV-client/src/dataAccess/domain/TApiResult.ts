@@ -6,4 +6,15 @@ type TApiResult<T> = {
   error?: AxiosError;
 };
 
+interface IApiResponse<T> {
+  message: string;
+  data: T;
+}
+
+export interface IApiResult<T> {
+  success: boolean;
+  apiResponse?: IApiResponse<T>;
+  error?: AxiosError;
+}
+
 export default TApiResult;

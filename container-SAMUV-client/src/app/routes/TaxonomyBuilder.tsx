@@ -199,7 +199,7 @@ export default function TaxonomyBuilder({
       <Header padding={false} title={currentFilter?.taxon_name}>
         <div>{currentFilter?.rank_name}</div>
       </Header>
-      <div className="p-5">
+      <div className="p-5 h-100">
         <Tabs defaultValue="species" className="h-100">
           <TabsList>
             <TabsTrigger value="species">Especies</TabsTrigger>
@@ -230,7 +230,7 @@ export default function TaxonomyBuilder({
         <div>{currentFilter?.rank_name}</div>
         <Taxonomy specie={specie} center={false}></Taxonomy>
       </Header>
-      <div className="p-5">
+      <div className="p-5 h-100">
         <SpecimenMetrics taxonName={specie?.epithet}></SpecimenMetrics>
       </div>
     </div>

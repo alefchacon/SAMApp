@@ -3,6 +3,8 @@ interface IUser {
   username?: string;
   password?: string;
   passwordConfirmation?: string;
+  first_name?: string;
+  last_name?: string;
 }
 
 class User implements IUser {
@@ -10,6 +12,8 @@ class User implements IUser {
   username = "";
   password = "";
   passwordConfirmation = "";
+  first_name = "";
+  last_name = "";
 
   constructor(data: IUser = {}) {
     Object.assign(this, data);
@@ -17,3 +21,12 @@ class User implements IUser {
 }
 
 export default User;
+
+export const defaultUser = new User({
+  email: "",
+  username: "",
+  password: "",
+  passwordConfirmation: "",
+  first_name: "",
+  last_name: "",
+});

@@ -2,7 +2,7 @@ import React, { useState, isValidElement } from "react";
 import Tab, { ITabProps } from "./Tab";
 interface ITabsProps {
   children: React.ReactElement<ITabProps>[];
-  className: string;
+  className?: string;
   buttons?: React.ReactNode;
   center?: boolean;
   onChange?: (selectedTabIndex: number) => void;

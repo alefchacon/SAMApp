@@ -1,4 +1,4 @@
-import User from "./User";
+import User, { defaultUser } from "./User";
 
 export interface IAcademic {
   names?: string;
@@ -10,7 +10,7 @@ export interface IAcademic {
   college?: string;
   position?: string;
   degree?: string;
-  user?: User;
+  user: User;
 }
 
 export class Academic implements IAcademic {
@@ -23,9 +23,9 @@ export class Academic implements IAcademic {
   college?: string;
   position?: string;
   degree?: string;
-  user?: User;
+  user: User;
 
-  constructor(data: IAcademic = {}) {
+  constructor(data: IAcademic) {
     this.names = data.names;
     this.father_last_name = data.father_last_name;
     this.mother_last_name = data.mother_last_name;
@@ -35,6 +35,11 @@ export class Academic implements IAcademic {
     this.college = "";
     this.position = "";
     this.degree = "";
-    this.user = new User(data?.user);
+    this.user = data.user ? new User(data.user) : defaultUser;
   }
 }
+
+export const defaultAcademic: IAcademic = {
+  position: "",
+  user: defaultUser,
+};

@@ -7,7 +7,7 @@ import Header from "./Header.js";
 interface IPageProps {
   children: React.ReactNode;
   title: string | React.ReactNode;
-  subtitle: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   disableShadow?: boolean;
 }
 export default function Page({

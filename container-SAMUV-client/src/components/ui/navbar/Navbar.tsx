@@ -121,7 +121,7 @@ export default function Navbar({
   return (
     <>
       <span className="main-title-uv">Universidad Veracruzana</span>
-      <nav className="flex flex-column bg-gradient-2 relative">
+      <nav className="flex flex-col bg-gradient-2 relative">
         <div className="flex flex-row justify-content-between w-full">
           <div className="left-side flex flex-row gap-3 hide-if-mobile">
             {leftMenu}

@@ -852,7 +852,11 @@ class ContributorViewSet(viewsets.ModelViewSet):
         code = request.data.get('code')
 
         existing_user = models.Contributor.objects.filter(code=code)
-        if existing_user:
+        try:
+            int_pk = int(pk)
+        except (ValueError, TypeError):
+            return JsonResponse({'message': 'El contribuidor no fue encontrado.'}, status=status.HTTP_400_BAD_REQUEST)
+        if existing_user.first().id != int_pk:
             return JsonResponse({'message': 'Ya existe un contribuidor con este código.'}, status=status.HTTP_400_BAD_REQUEST)
         try:
             contributor = self.queryset.get(pk=pk)

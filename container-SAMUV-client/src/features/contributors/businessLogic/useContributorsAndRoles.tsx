@@ -4,14 +4,14 @@ import useApi from "../../../dataAccess/useApi";
 import { CONTRIBUTORS_URL, CONTRIBUTORS_SPECIMEN_URL } from "./contributorsUrl";
 import { EContributorRoles } from "@/stores/EContributorRoles";
 import Contributor, { IContributorSpecimen } from "../domain/Contributor";
-import TApiResult from "@/dataAccess/domain/TApiResult";
+import TApiResult, { IApiResult } from "@/dataAccess/domain/TApiResult";
 import { IContributorSpecimen2 } from "../domain/ContributorSpecimenSerializer";
 
 export default function useContributorsAndRoles() {
   const [contributors, setContributors] = useState<IContributorSpecimen[]>([]);
   const { apiWrapper } = useApi();
 
-  const getContributors = useCallback(async () => {
+  const getContributors = async () => {
     const response = await apiWrapper.get<IContributorSpecimen[]>({
       url: CONTRIBUTORS_URL,
     });
@@ -24,55 +24,51 @@ export default function useContributorsAndRoles() {
       (contributor) => new Contributor(contributor)
     );
     setContributors(contributorModels);
-  }, []);
+  };
 
-  const addContributor = useCallback(
-    async (
-      newContributor: IContributorSpecimen
-    ): Promise<TApiResult<Contributor>> => {
-      const body = {
-        name: newContributor.name,
-        code: newContributor.code,
-      };
-      const response = await apiWrapper.post<Contributor>({
-        url: CONTRIBUTORS_URL.concat("/"),
-        body: body,
-      });
+  const addContributor = async (
+    newContributor: IContributorSpecimen
+  ): Promise<TApiResult<Contributor>> => {
+    const body = {
+      name: newContributor.name,
+      code: newContributor.code,
+    };
 
-      if (response.success && response.data) {
-        const contributorsPlusNewValue = [response.data, ...contributors];
-        setContributors(contributorsPlusNewValue);
-      }
+    const response = await apiWrapper.post<Contributor>({
+      url: CONTRIBUTORS_URL.concat("/"),
+      body: body,
+    });
 
-      return Promise.resolve(response);
-    },
-    []
-  );
+    if (response.success && response.data) {
+      const contributorsPlusNewValue = [response.data, ...contributors];
+      setContributors(contributorsPlusNewValue);
+    }
+    return Promise.resolve(response);
+  };
 
-  const updateContributor = useCallback(
-    async (
-      contributorToUpdate: Contributor
-    ): Promise<TApiResult<Contributor>> => {
-      const response = await apiWrapper.put<Contributor>({
-        url: `${CONTRIBUTORS_URL}/${contributorToUpdate.id}/`,
-        body: contributorToUpdate,
-      });
+  const updateContributor = async (
+    contributorToUpdate: Contributor
+  ): Promise<IApiResult<Contributor>> => {
+    const response = await apiWrapper.put<Contributor>({
+      url: `${CONTRIBUTORS_URL}/${contributorToUpdate.id}/`,
+      body: contributorToUpdate,
+    });
 
-      if (response.success && response.data) {
-        const contributorsSansOldValue = contributors.filter(
-          (contributor) => contributor.id !== contributorToUpdate.id
-        );
-        const contributorsPlusNewValue = [
-          ...contributorsSansOldValue,
-          response.data,
-        ];
-        setContributors(contributorsPlusNewValue);
-      }
+    console.error(response.apiResponse);
+    if (response.success && response.apiResponse) {
+      const updatedContributor = response.apiResponse.data;
+      const contributorsSansOldValue = contributors.filter(
+        (contributor) => contributor.id !== updatedContributor.id
+      );
+      const contributorsPlusNewValue = [
+        ...contributorsSansOldValue,
+        updatedContributor,
+      ];
+      setContributors(contributorsPlusNewValue);
+    }
 
-      return response;
-    },
-    []
-  );
+    return response;
+  };
 
   const addContributorSpecimen = useCallback(
     async (

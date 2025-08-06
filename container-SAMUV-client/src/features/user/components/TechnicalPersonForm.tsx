@@ -1,34 +1,43 @@
+import React from "react";
 import TextField from "../../../components/ui/TextField";
-import Button from "../../../components/ui/Button";
-import { Formik, Form } from "formik";
+import { Button } from "@/components/ui/button";
+import { Formik, Form, FormikValues, FormikHelpers } from "formik";
 import { technicalPersonSchema } from "../formikSchemas/technicalPersonSchema";
 import useUsers from "../businessLogic/useUsers";
-export default function TehnicalPersonForm({onSubmit}) {
-  const {addTechnicalPerson} = useUsers();
-  const handleSubmit = (values, actions) => {
+import { Academic, defaultAcademic } from "../domain/Academic";
+import IOnCloseParams, {
+  defaultCloseParams,
+} from "@/components/contexts/IOnCloseProps";
+
+interface ITechnicalPersonFormProps {
+  onSubmit: (params: any) => void;
+}
+export default function TehnicalPersonForm({
+  onSubmit,
+}: ITechnicalPersonFormProps) {
+  const { addTechnicalPerson } = useUsers();
+  const handleSubmit = (
+    values: FormikValues,
+    actions: FormikHelpers<Academic>
+  ) => {
     addTechnicalPerson(values).then(() => {
-      actions.resetForm()
-      onSubmit();
+      actions.resetForm();
+      onSubmit(defaultCloseParams);
     });
-  }
+  };
 
   return (
     <Formik
       onSubmit={handleSubmit}
       validationSchema={technicalPersonSchema}
-      initialValues={{
-        position: "",
-        user: {
-          first_name: "",
-          last_name: "",
-          email: "",
-        }
-        //Los campos faltantes se generan en el back: 
+      initialValues={
+        defaultAcademic
+        //Los campos faltantes se generan en el back:
         //"username" sale del email, la cadena antes del @
         //"password" es una cadena random
         //"nomination" es la misma que position
         //"fullname" es una concatenación de first_name y last_name
-      }}
+      }
     >
       {({
         values,
@@ -48,7 +57,9 @@ export default function TehnicalPersonForm({onSubmit}) {
             onBlur={handleBlur}
             value={values.user.first_name}
             errorMessage={errors.user?.first_name}
-            hasError={errors.user?.first_name && touched.user?.first_name}
+            hasError={Boolean(
+              errors.user?.first_name && touched.user?.first_name
+            )}
             maxLength={50}
             isFormik
           ></TextField>
@@ -61,7 +72,9 @@ export default function TehnicalPersonForm({onSubmit}) {
             onBlur={handleBlur}
             value={values.user.last_name}
             errorMessage={errors.user?.last_name}
-            hasError={errors.user?.last_name && touched.user?.last_name}
+            hasError={Boolean(
+              errors.user?.last_name && touched.user?.last_name
+            )}
             maxLength={50}
             isFormik
           ></TextField>
@@ -74,7 +87,7 @@ export default function TehnicalPersonForm({onSubmit}) {
             onBlur={handleBlur}
             value={values.position}
             errorMessage={errors.position}
-            hasError={errors.position && touched.position}
+            hasError={Boolean(errors.position && touched.position)}
             maxLength={50}
             isFormik
           ></TextField>
@@ -90,7 +103,7 @@ export default function TehnicalPersonForm({onSubmit}) {
             onBlur={handleBlur}
             value={values.user.email}
             errorMessage={errors.user?.email}
-            hasError={errors.user?.email && touched.user?.email}
+            hasError={Boolean(errors.user?.email && touched.user?.email)}
             isFormik
             helperText="El sistema enviara un mensaje a la dirección que usted proporcione, incluyendo una contraseña provicional que permita al nuevo técnico iniciar sesión."
           ></TextField>
