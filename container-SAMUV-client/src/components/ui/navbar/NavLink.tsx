@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import InfoItem from "../InfoItem";
+import IconText from "../IconText";
 
 interface INavLinkProps {
   route?: string;

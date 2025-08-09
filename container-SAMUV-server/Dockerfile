@@ -4,6 +4,8 @@ RUN mkdir /dependencias
 COPY requeriments.txt /dependencias
 RUN pip install -r /dependencias/requeriments.txt
 
+ENV RESEND_EMAIL=""
+ENV RESEND_API_KEY=""
 ENV PATH_PREFIX=""
 ENV DATABASE_HOST=""
 ENV DATABASE_NAME=""

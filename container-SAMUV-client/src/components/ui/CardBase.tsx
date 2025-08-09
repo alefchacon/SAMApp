@@ -36,9 +36,8 @@ export default function CardBase({
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
-        <CardAction>{action}</CardAction>
       </CardHeader>
-      {content && <CardContent>{content}</CardContent>}
+      {content && <CardContent className="flex-1">{content}</CardContent>}
       {footer && <CardFooter className="flex-col gap-2">{footer}</CardFooter>}
     </Card>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import TextField from "../../../components/ui/TextField";
+import FormInput from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";
 import { Formik, Form, FormikValues, FormikHelpers } from "formik";
 import { technicalPersonSchema } from "../formikSchemas/technicalPersonSchema";
@@ -48,7 +49,7 @@ export default function TehnicalPersonForm({
         handleBlur,
       }) => (
         <Form className="input-group">
-          <TextField
+          <FormInput
             required
             label={"Nombre(s)"}
             id="user.first_name"
@@ -62,8 +63,8 @@ export default function TehnicalPersonForm({
             )}
             maxLength={50}
             isFormik
-          ></TextField>
-          <TextField
+          ></FormInput>
+          <FormInput
             required
             label={"Apellido paterno"}
             id="user.last_name"
@@ -77,8 +78,8 @@ export default function TehnicalPersonForm({
             )}
             maxLength={50}
             isFormik
-          ></TextField>
-          <TextField
+          ></FormInput>
+          <FormInput
             required
             label={"Puesto"}
             id="position"
@@ -90,10 +91,10 @@ export default function TehnicalPersonForm({
             hasError={Boolean(errors.position && touched.position)}
             maxLength={50}
             isFormik
-          ></TextField>
+          ></FormInput>
           <br />
 
-          <TextField
+          <FormInput
             required
             label={"Email"}
             maxLength={100}
@@ -106,7 +107,7 @@ export default function TehnicalPersonForm({
             hasError={Boolean(errors.user?.email && touched.user?.email)}
             isFormik
             helperText="El sistema enviara un mensaje a la dirección que usted proporcione, incluyendo una contraseña provicional que permita al nuevo técnico iniciar sesión."
-          ></TextField>
+          ></FormInput>
 
           <div className="button-row">
             <Button type="submit">Agregar técnico</Button>

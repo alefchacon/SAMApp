@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from "react";
-
+import { toast } from "sonner";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   IShowSnackbarParams,
@@ -16,6 +16,7 @@ import { apiUrl } from "@/routing/BackendRoutes";
 import TApiResult, { IApiResult } from "./domain/TApiResult";
 import IRequestConfig from "./domain/IRequestConfig";
 import TApiParams from "./domain/TApiParams";
+import { CheckCircle } from "lucide-react";
 
 export default function useApi() {
   const {
@@ -43,14 +44,17 @@ export default function useApi() {
 
   const apiWrapper = useMemo(
     () => ({
-      async get<T>(params: TApiParams): Promise<TApiResult<T>> {
+      async get<T>(params: TApiParams): Promise<IApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.get(params.url, params.config);
-          const apiResult: TApiResult<T> = {
+          const apiResult: IApiResult<T> = {
             success: true,
-            data: response.data,
+            apiResponse: response.data,
           };
+          if (apiResult.apiResponse?.message) {
+            toast.success(apiResult.apiResponse?.message);
+          }
           return apiResult;
         } catch (error) {
           const axiosError = error as AxiosError;
@@ -181,17 +185,20 @@ export default function useApi() {
       error.code === "ERR_NETWORK" ||
       error.response?.status === HttpStatus.INTERNAL_SERVER_ERROR
     ) {
-      snackbarParams.content = "No hay conexión";
-      showSnackbar(snackbarParams);
+      toast("No hay conexión", {
+        position: "top-center",
+      });
+
       return;
     }
 
-    snackbarParams.content = getMessage(error);
-    showSnackbar(snackbarParams);
+    toast(getMessage(error), {
+      position: "top-center",
+    });
   }
 
   function getMessage(error: AxiosError): string {
-    /* PENDING
+    // DEV ONLY
     if (error.response?.data?.detail) {
       return error.response?.data?.detail;
     }
@@ -203,8 +210,6 @@ export default function useApi() {
     } else {
       return flattenObject(error.response.data);
     }
-    */
-    return "PENDING";
   }
 
   function handleUnauthorized() {

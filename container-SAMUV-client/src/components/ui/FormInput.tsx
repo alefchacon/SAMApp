@@ -1,6 +1,7 @@
 import React from "react";
 import { Input } from "./input";
 import { Label } from "./label";
+import { Check } from "lucide-react";
 interface IFormInputProps {
   id?: string;
   label?: string;
@@ -12,6 +13,9 @@ interface IFormInputProps {
   onBlur: React.FocusEventHandler<HTMLInputElement>;
   value?: any;
   inputClassName?: string;
+  maxLength?: number;
+  helperText?: string;
+  required?: boolean;
 }
 export default function FormInput(props: IFormInputProps) {
   const {
@@ -24,25 +28,39 @@ export default function FormInput(props: IFormInputProps) {
     onChange,
     onBlur,
     value,
-    inputClassName,
+    inputClassName = "",
+    maxLength,
+    helperText,
+    required,
   } = props;
 
   let style = inputClassName;
   if (hasError) {
-    style = style?.concat(" pr-8 border-destructive");
+    style = style.concat(" border-2 border-destructive");
   }
 
   return (
     <div className="flex flex-col gap-2 relative pb-5">
-      <Label htmlFor={name}>{label}</Label>
+      <div className="flex flex-row gap-2">
+        <Label htmlFor={name} className="font-semibold">
+          {label}
+        </Label>
+        {required && (
+          <span className="flex flex-row gap-1 items-center text-xs bg-green-300 px-2 rounded-sm opacity-80">
+            <Check size={"0.8rem"}></Check> Requerido
+          </span>
+        )}
+      </div>
+      {helperText && <p className="text-sm color-gray">{helperText}</p>}
       <Input
-        id={name}
+        id={id}
         name={name}
         className={style}
         type={type}
         onChange={onChange}
         onBlur={onBlur}
         value={value}
+        maxLength={maxLength}
       ></Input>
 
       {hasError && (

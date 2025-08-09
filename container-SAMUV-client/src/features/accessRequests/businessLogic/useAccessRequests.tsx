@@ -14,44 +14,53 @@ export default function useAccessRequests() {
   const [pendingAccessRequests, setPendingAccessRequests] = useState<
     AccessRequest[]
   >([]);
-  const [pendingAccessRequestCount, setPendingAccessRequestCount] = useState(0);
 
-  const getPendingAccessRequests = useCallback(async () => {
+  const getPendingAccessRequests = async () => {
     const response = await apiWrapper.get<IAccessRequest[]>({
       url: REQUEST_PENDING,
     });
 
-    if (response.data) {
+    if (response.apiResponse?.data) {
       setPendingAccessRequests(
-        response.data.map(
+        response.apiResponse.data.map(
           (request: IAccessRequest) => new AccessRequest(request)
         )
       );
     }
-  }, []);
+  };
 
+  const STORED_COUNT_KEY = "pendingAccessRequestCount";
   const getPendingAccessRequestCount = async () => {
     const response = await apiWrapper.get<number>({
       url: REQUEST_PENDING_COUNT,
     });
-    if (response.data) {
-      setPendingAccessRequestCount(response.data);
+
+    if (!response.apiResponse?.data) {
+      localStorage.setItem(STORED_COUNT_KEY, String(0));
     }
+
+    const fetchedCount = response.apiResponse?.data || 0;
+    localStorage.setItem(STORED_COUNT_KEY, fetchedCount.toString());
   };
 
   const approveAccessRequest = async (requestId = 0) => {
     const response = await apiWrapper.get({ url: REQUEST_APPROVE(requestId) });
-    setPendingAccessRequests((previousRequests) =>
-      previousRequests.filter((request) => request.id !== requestId)
+
+    const newPendingAccessRequest = pendingAccessRequests.filter(
+      (request) => request.id !== requestId
     );
-    setPendingAccessRequestCount(pendingAccessRequests.length);
+    setPendingAccessRequests(newPendingAccessRequest);
+
+    localStorage.setItem(
+      STORED_COUNT_KEY,
+      newPendingAccessRequest.length.toString()
+    );
   };
   const rejectAccessRequest = async (requestId = 0) => {
     const response = await apiWrapper.get({ url: REQUEST_REJECT(requestId) });
     setPendingAccessRequests((previousRequests) =>
       previousRequests.filter((request) => request.id !== requestId)
     );
-    setPendingAccessRequestCount(pendingAccessRequests.length);
   };
   const addAccessRequest = async (accessRequest = {}) => {
     return await apiWrapper.post({
@@ -63,7 +72,7 @@ export default function useAccessRequests() {
   return {
     pendingAccessRequests,
     getPendingAccessRequests,
-    pendingAccessRequestCount,
+
     getPendingAccessRequestCount,
     approveAccessRequest,
     rejectAccessRequest,

@@ -17,13 +17,9 @@ export default function Page({
   disableShadow,
 }: IPageProps) {
   return (
-    <div className="flex flex-col w-100">
+    <div className="flex flex-col w-100 h-100">
       <Header title={title} subtitle={subtitle}></Header>
-      <div className="flex flex-col page-padding h-100 p-2">
-        <div className={"flex-col gap-2rem"}>{children}</div>
-      </div>
-
-      <Footer></Footer>
+      <div className="flex flex-col page-padding h-100 p-2">{children}</div>
     </div>
   );
 }

@@ -16,11 +16,12 @@ export default function useContributorsAndRoles() {
       url: CONTRIBUTORS_URL,
     });
 
-    if (response.error || !response.data) {
+    console.error(response);
+    if (response.error || !response.apiResponse?.data) {
       return;
     }
 
-    const contributorModels = response.data.map(
+    const contributorModels = response.apiResponse.data.map(
       (contributor) => new Contributor(contributor)
     );
     setContributors(contributorModels);

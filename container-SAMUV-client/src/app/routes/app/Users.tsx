@@ -1,6 +1,5 @@
 import React from "react";
 import Page from "../../../components/ui/Page";
-import Tabs from "@/components/ui/TabsCustom";
 import { Button } from "@/components/ui/button";
 import HoverableActions from "../../../components/ui/HoverableActions";
 import { useModal } from "../../../components/contexts/ModalContext";
@@ -14,15 +13,15 @@ import useSession from "../../../features/auth/businessLogic/useSession";
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 import Tab from "@/components/ui/Tab";
 import { defaultCloseParams } from "@/components/contexts/IOnCloseProps";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+
 export default function Users() {
   const { technicalPersons, getTechnicalPersons, deleteTechnicalPerson } =
     useUsers();
-  const { getContributors } = useContributorsAndRoles();
   const { showModal, closeModal } = useModal();
   const { showSnackbar } = useSnackbar();
   useEffect(() => {
     getTechnicalPersons();
-    getContributors();
   }, []);
 
   const { getProfile } = useSession();
@@ -111,11 +110,19 @@ export default function Users() {
 
   return (
     <Page title={"Usuarios"}>
-      <Tabs>
-        <Tab label={"Técnicos"}>{technicalPersonTab}</Tab>
-        <Tab label="Contribuidores">
+      <Tabs defaultValue="technical-persons" className="h-100 gap-0">
+        <div className="pb-3">
+          <TabsList>
+            <TabsTrigger value="technical-persons">Técnicos</TabsTrigger>
+            <TabsTrigger value="colaborators">Colaboradores</TabsTrigger>
+          </TabsList>
+        </div>
+        <TabsContent value="technical-persons" className="h-100">
+          <Tab label={"Técnicos"}>{technicalPersonTab}</Tab>
+        </TabsContent>
+        <TabsContent value="colaborators" className="px-5 pb-5">
           <ContributorPanel></ContributorPanel>
-        </Tab>
+        </TabsContent>
       </Tabs>
     </Page>
   );

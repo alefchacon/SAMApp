@@ -1,4 +1,8 @@
-import { IAcademic, Academic } from "@/features/user/domain/Academic";
+import {
+  IAcademic,
+  Academic,
+  defaultAcademic,
+} from "@/features/user/domain/Academic";
 
 export interface IAccessRequest {
   id?: number;
@@ -17,6 +21,13 @@ export class AccessRequest implements IAccessRequest {
     this.id = data?.id || -1;
     this.orcid = data?.orcid || "";
     this.about = data?.about || "";
-    this.academic = new Academic(data.academic);
+    this.academic = new Academic(data.academic || defaultAcademic);
   }
 }
+
+export const defaultAccessRequest: IAccessRequest = {
+  about: "",
+  academic: defaultAcademic,
+  id: 0,
+  orcid: "",
+};

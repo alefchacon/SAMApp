@@ -7,6 +7,8 @@ import moment from "moment";
 import ROUTES, { FrontendRoutes } from "../routing/FrontendRoutes.js";
 import SpecieDashboard from "./routes/app/SpecieDashboard.js";
 import SpecimenForm from "./routes/app/SpecimenForm.js";
+import AccessRequestForm from "./routes/app/AccessRequestForm.js";
+import AccessRequests from "./routes/app/AccessRequests.js";
 // COMPONENTS
 import { UserRoles } from "@/stores/EUserRoles.js";
 import Navbar from "@/components/ui/navbar/Navbar.js";
@@ -31,8 +33,7 @@ function App() {
   const profile = getProfile();
   const isTechnicalPerson = profile.role === UserRoles.TECHNICAL_PERSON;
 
-  const { pendingAccessRequestCount, getPendingAccessRequestCount } =
-    useAccessRequests();
+  const { getPendingAccessRequestCount } = useAccessRequests();
 
   useEffect(() => {
     if (isTechnicalPerson) {
@@ -40,11 +41,8 @@ function App() {
     }
   }, []);
 
-  /*
-  const handleSelectedSpecieChange = async (newSelectedSpecie) => {
-    setSelectedSpecie(newSelectedSpecie);
-  };
-  */
+  const pendingAccessRequestCount =
+    Number(localStorage.getItem("pendingAccessRequestCount")) || 0;
 
   const mainDivRef = useRef<HTMLDivElement>(null);
   const resetScroll = () => {
@@ -100,6 +98,16 @@ function App() {
             index
             path={`${FrontendRoutes.PERSONAL}`}
             element={<Users />}
+          ></Route>
+          <Route
+            index
+            path={`${FrontendRoutes.REQUEST_ACCESS}`}
+            element={<AccessRequestForm />}
+          ></Route>
+          <Route
+            index
+            path={`${FrontendRoutes.REQUESTS}`}
+            element={<AccessRequests />}
           ></Route>
         </Routes>
       </main>

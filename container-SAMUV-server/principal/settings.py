@@ -153,6 +153,9 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", 'biocoleccionuv@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", 'fsik ceao xswm aoau')
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", 'biocoleccionuv@gmail.com')
 
+RESEND_EMAIL = os.environ.get("RESEND_EMAIL", "noreply@resend.dev")
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "re_bHghrmFw_HWQ57bHdWBa63uG2AX2nTSwZ")
+
 PATH_PREFIX = os.environ.get("PATH_PREFIX", "")
 if PATH_PREFIX and not PATH_PREFIX.endswith('/'):
     PATH_PREFIX += '/'

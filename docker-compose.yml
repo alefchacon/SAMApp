@@ -4,6 +4,8 @@ services:
       - container-SAMUV-server/principal/settings.env
     environment:
       - PATH_PREFIX=${PATH_PREFIX}
+      - RESEND_EMAIL=${RESEND_EMAIL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
     build:
       context: ./container-SAMUV-server
       dockerfile: Dockerfile
@@ -24,7 +26,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./pruebas.sql:/exampledata/pruebas.sql
-     
+
   nginx_sam_server:
     image: nginx
     restart: always
@@ -37,6 +39,8 @@ services:
       - 8000:80
     environment:
       PATH_PREFIX: ${PATH_PREFIX}
+      RESEND_EMAIL: ${RESEND_EMAIL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
 
   sam_client:
     build:

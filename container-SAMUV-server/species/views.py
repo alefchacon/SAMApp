@@ -793,14 +793,18 @@ class ContributorViewSet(viewsets.ModelViewSet):
         return response
     
    @extend_schema(
-    description="Obtiene una lista de contribuidor por la nombre científico.",
+    description="Obtiene una lista de contribuidores.",
         responses={
             200: 'Lista de elementos contribuidores en formato JSON.',
         }
     )
-   def contributor_list(self, request):
+   def list(self, request):
         serializer = self.serializer_class(self.queryset, many=True)
-        return JsonResponse(serializer.data)
+        response = {
+            "message": "Yeah boi",
+            "data": serializer.data
+        }
+        return JsonResponse(response, safe=False)
 
    @extend_schema(
     description="Obtiene un conribuidor por medio de su id.",

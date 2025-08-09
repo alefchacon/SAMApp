@@ -60,6 +60,7 @@ export default function LogInForm({ onSubmit }: ILogInFormProps) {
             <Separator />
             <Button
               className="w-[200px]"
+              type="button"
               variant={"outline"}
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 // DEV ONLY: test this reason

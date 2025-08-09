@@ -50,8 +50,8 @@ export default function useAuth() {
     };
     const response = await apiWrapper.post<ISession>({ url, body });
 
-    if (response && "apiResponse" in response && response.apiResponse) {
-      refreshAccessToken(response.apiResponse.data.access!);
+    if (response.success && response.apiResponse) {
+      refreshAccessToken(response.apiResponse.access!);
     }
 
     deleteRefreshToken();

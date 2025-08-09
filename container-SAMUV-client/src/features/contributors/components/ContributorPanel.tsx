@@ -15,9 +15,12 @@ import Contributor, { IContributorSpecimen } from "../domain/Contributor";
 export default function ContributorPanel() {
   const { contributors, getContributors, addContributor, updateContributor } =
     useContributorsAndRoles();
+
   const [filteredItems, handleFilterChange, filterText, clearFilter] =
     useTextFilter<IContributorSpecimen>({ items: contributors });
+
   const { showModal, closeModal } = useModal();
+
   useEffect(() => {
     getContributors();
   }, []);

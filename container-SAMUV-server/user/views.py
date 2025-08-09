@@ -20,6 +20,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 import secrets
 import string
+import resend
+import os
 
 class AcademicViewSet(viewsets.ModelViewSet):
     serializer_class = AcademicSerializer
@@ -170,7 +172,11 @@ class TechnicalPersonViewSet(viewsets.ModelViewSet):
     def list(self, pk):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response = {
+            "message": "",
+            "data": serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
    
     @extend_schema(
     description="Crear una nuevo personal técnicco.",
@@ -202,14 +208,16 @@ class TechnicalPersonViewSet(viewsets.ModelViewSet):
         
         serializer.save()
 
-        send_mail(
-            subject='Bienvenido a la Biocolección',
-            message=f'Puede iniciar sesión utilizando las siguientes credenciales \n\n Nombre de usuario: {username} \nContraseña: {random_password} \n\nProcure actualizar su contraseña tan pronto le sea posible.',
-            html_message=f'Puede iniciar sesión utilizando las siguientes credenciales <br/><br/> Nombre de usuario: {username} <br/>Contraseña: {random_password} <br/><br/><b>Procure actualizar su contraseña tan pronto le sea posible.</b>',
-            from_email='',
-            recipient_list=[email],
-            fail_silently=False,
-        )
+        resend.api_key = os.environ["RESEND_API_KEY"]
+
+        params: resend.Emails.SendParams = {
+            "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
+            "to": [email],
+            "subject": "Bienvenido a la biocolección",
+            'text': f'Puede iniciar sesión utilizando las siguientes credenciales \n\n Nombre de usuario: {username} \nContraseña: {random_password} \n\nProcure actualizar su contraseña tan pronto le sea posible.',
+        }
+
+        resend.Emails.send(params)
 
         headers = self.get_success_headers(serializer.data)
         message = "El personal técnico fue registrado con éxito"
@@ -279,7 +287,7 @@ class RequestViewSet(viewsets.ModelViewSet):
         response = exception_handler(exc, self.request)
 
         if response is None:
-            return  Response({'error': 'Ha ocurrido un error inesperado.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return  Response({'error': str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if isinstance(exc, Http404):
             response.data = {'error': 'La solicitud no fue encontrada.'}
@@ -317,10 +325,10 @@ class RequestViewSet(viewsets.ModelViewSet):
         email = request.data.get('academic', {}).get('user', {}).get('email')
 
         existing_user = models.User.objects.filter(email=email)
-        if existing_user:
+        if existing_user and existing_user.first().is_active:
             return JsonResponse({'message': 'Ya existe una cuenta con este email.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        _ = serializer.save()
+        # _ = serializer.save()
         headers = self.get_success_headers(serializer.data)
         message = "La solicitud fue guardada con éxito"
 
@@ -332,14 +340,17 @@ class RequestViewSet(viewsets.ModelViewSet):
         ]
         orcid = request.data.get('orcid', '')
         about = request.data.get('about', '')
-        
-        send_mail(
-            subject='Solicitud de acceso a la biocolección',
-            message=f'ORCID: https://orcid.org/{orcid}\nEmail: {email}\n\nAcerca de: {about}',
-            from_email='',
-            recipient_list=technical_person_emails,
-            fail_silently=False,
-        )
+
+        resend.api_key = os.environ["RESEND_API_KEY"]
+
+        params: resend.Emails.SendParams = {
+            "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
+            "to": technical_person_emails,
+            "subject": "Solicitud de acceso a la biocolección",
+            'text': f'ORCID: https://orcid.org/{orcid}\nEmail: {email}\n\nAcerca de: {about}',
+        }
+
+        resend.Emails.send(params)
 
         return JsonResponse({"message": message}, status=status.HTTP_201_CREATED, headers=headers)
         
@@ -354,7 +365,11 @@ class RequestViewSet(viewsets.ModelViewSet):
     def get_pending(self, request):
         pending_requests = models.Request.objects.filter(status="pendiente").all()
         serializer = self.serializer_class(pending_requests, many=True)
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        response = {
+            "message": "",
+            "data": serializer.data
+        }
+        return JsonResponse(response, safe=False, status=status.HTTP_200_OK)
     
     @extend_schema(
     description="Obtiene el número de elementos solicitud cuyo estado es pendiente.",
@@ -365,8 +380,11 @@ class RequestViewSet(viewsets.ModelViewSet):
     )
     def get_pending_count(self, request):
         pending_request_count = models.Request.objects.filter(status="pendiente").count()
-
-        return JsonResponse(pending_request_count, safe=False, status=status.HTTP_200_OK)
+        response = {
+            "message": "",
+            "data": pending_request_count
+        }
+        return JsonResponse(response, safe=False, status=status.HTTP_200_OK)
 
 
     @extend_schema(
@@ -391,17 +409,21 @@ class RequestViewSet(viewsets.ModelViewSet):
         user.is_active = 't'
         user.save()
         
-        send_mail(
-            subject='Se aprobó su solicitud de acceso',
-            message=f'Le agradecemos su paciencia. Ahora puede iniciar sesión con las credenciales que ingresó durante el proceso de registro y consultar información más detallada de los especímenes en la biocolección del Instituto de Investigaciones Biológicas de la Universidad Veracruzana.',
-            from_email='',
-            recipient_list=[user.email],
-            fail_silently=False,
-        )
+        resend.api_key = os.environ["RESEND_API_KEY"]
 
-        message = 'La solicitud fue actualizada con éxito'
+        params: resend.Emails.SendParams = {
+            "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
+            "to": [user.email],
+            "subject": "Solicitud aprobada",
+            'text': f'Le agradecemos su paciencia. Ahora puede iniciar sesión con las credenciales que ingresó durante el proceso de registro y consultar información más detallada de los especímenes en la biocolección del Instituto de Investigaciones Biológicas de la Universidad Veracruzana.',
+        }
+
+        resend.Emails.send(params)
+
+        message = 'La solicitud fue concedida con éxito'
 
         return JsonResponse({"message": message}, status=status.HTTP_200_OK)
+        
 
     @extend_schema(
     description="Actualiza el estado de una solicitud a rechazada, y notifica al solicitante vía email.",
@@ -423,13 +445,17 @@ class RequestViewSet(viewsets.ModelViewSet):
 
         user = models.User.objects.get(id=access_request.academic.user.id)
 
-        send_mail(
-            subject='Se denegó su solicitud de acceso',
-            message='Lo sentimos, su solicitud fue rechazada.',
-            from_email='',
-            recipient_list=[user.email],
-            fail_silently=False,
-        )
-        message = 'La solicitud fue actualizada con éxito'
+        resend.api_key = os.environ["RESEND_API_KEY"]
+
+        params: resend.Emails.SendParams = {
+            "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
+            "to": [user.email],
+            "subject": "Solicitud rechazada",
+            'text': f'Lo sentimos, su solicitud fue rechazada.',
+        }
+
+        resend.Emails.send(params)
+
+        message = 'La solicitud fue rechazada con éxito'
         return JsonResponse({"message": message}, status=status.HTTP_200_OK)
         

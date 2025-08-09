@@ -444,15 +444,6 @@ th,
   padding: 0 20px;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-bottom: 50px;
-  padding-left: clamp(10%, 20%, 50%) !important;
-  padding-right: clamp(10%, 20%, 50%) !important;
-}
-
 .highlight {
   background-color: yellow;
   border-radius: 5px;
@@ -462,6 +453,10 @@ th,
 .multigraph {
   min-height: 400px;
   max-height: 400px;
+}
+
+.input-group > h2 {
+  padding-bottom: 1rem;
 }
 
 .input-label {
@@ -787,7 +782,7 @@ fieldset.hasError {
 
 .button-row {
   gap: 1rem;
-  padding-top: 3rem;
+  width: 100%;
   display: flex;
   justify-content: end;
   align-items: center;

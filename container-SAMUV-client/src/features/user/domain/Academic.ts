@@ -37,9 +37,21 @@ export class Academic implements IAcademic {
     this.degree = "";
     this.user = data.user ? new User(data.user) : defaultUser;
   }
+
+  get fullName() {
+    return `${this.names} ${this.father_last_name} ${this.mother_last_name}`;
+  }
 }
 
 export const defaultAcademic: IAcademic = {
   position: "",
+  names: "",
+  father_last_name: "",
+  mother_last_name: "",
+  state: "",
+  major: "major",
+  city: "",
+  college: "",
+  degree: "",
   user: defaultUser,
 };

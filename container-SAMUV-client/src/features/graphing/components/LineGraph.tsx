@@ -135,9 +135,6 @@ export default function LineGraph({ initialData }: ILineGraphProps) {
 
   const nameIsNumber = typeof initialData[0].name === "number";
 
-  debugger;
-  console.error("data", data);
-
   return (
     <div className="highlight-bar-chart user-select-none flex-col w-100 align-items-end justify-content-right">
       <div className="p-1rem">

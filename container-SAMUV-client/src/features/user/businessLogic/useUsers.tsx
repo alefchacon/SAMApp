@@ -12,20 +12,22 @@ export default function useUsers() {
 
   const getTechnicalPersons = useCallback(async () => {
     apiWrapper
-      .get({ url: TECHNICAL_PERSON_URL })
-      .then((response) => setTechnicalPersons(response.data));
+      .get<ITechnicalPerson[]>({ url: TECHNICAL_PERSON_URL })
+      .then((response) =>
+        setTechnicalPersons(response.apiResponse?.data || [])
+      );
   }, []);
 
   const addTechnicalPerson = useCallback(async (technicalPerson: any) => {
-    const response = await apiWrapper.post({
-      url: TECHNICAL_PERSON_URL,
-      body: technicalPerson,
-    });
-    if (response.success) {
-      // const newTechnicalPerson = response.data.data;
-      // setTechnicalPersons((prev) => [...prev, newTechnicalPerson]);
-      setTechnicalPersons((prev) => [...prev, tech]);
-    }
+    // const response = await apiWrapper.post<ITechnicalPerson>({
+    //   url: TECHNICAL_PERSON_URL,
+    //   body: technicalPerson,
+    // });
+    // if (response.success && response.apiResponse) {
+    //   const newTechnicalPerson = response.apiResponse.data;
+    //   setTechnicalPersons((prev) => [...prev, newTechnicalPerson]);
+    // }
+    setTechnicalPersons((prev) => [...prev, technicalPerson]);
   }, []);
 
   const deleteTechnicalPerson = useCallback(

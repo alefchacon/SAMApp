@@ -1,16 +1,29 @@
-import { lowerCase } from "lodash";
+import React from "react";
 import TextField from "../../../components/ui/TextField";
+import FormInput from "@/components/ui/FormInput";
 import {
   minLengthRegex,
   upperCaseRegex,
   lowerCaseRegex,
   numberRegex,
   symbolRegex,
-} from "../../../validation/regexesPassword";
-import { useState, useEffect } from "react";
+} from "@/validation/regexesPassword";
 import Checker from "./Checker";
 
-
+interface IPasswordValidatorProps {
+  required?: boolean;
+  label?: string;
+  password?: string;
+  passwordConfirmation?: string;
+  onChange: (event: React.ChangeEvent<any>) => void;
+  onBlur?: (event: React.FocusEvent<any, Element>) => void;
+  name: string;
+  passwordConfirmationName: string;
+  passwordHasError: boolean;
+  passwordConfirmationHasError: boolean;
+  passwordErrorMessage: string;
+  passwordConfirmationErrorMessage: string;
+}
 export default function PasswordValidator({
   required,
   label = "Contraseña",
@@ -22,10 +35,9 @@ export default function PasswordValidator({
   passwordConfirmationName = "passwordConfirmation",
   passwordHasError = false,
   passwordConfirmationHasError = false,
-  setFieldError,
   passwordErrorMessage,
   passwordConfirmationErrorMessage,
-}) {
+}: IPasswordValidatorProps) {
   //CRITERIA:
   const hasMinLength = minLengthRegex.test(password);
   const hasUpperCase = upperCaseRegex.test(password);
@@ -33,25 +45,26 @@ export default function PasswordValidator({
     /[a-z]/.test(password) = true, because JS casts null into "null" (a string)
     so we make sure password is NOT null, and *then* test it against the regex.
     */
-  const hasLowerCase = password && lowerCaseRegex.test(password);
+  const hasLowerCase = Boolean(password && lowerCaseRegex.test(password));
   const hasNumber = numberRegex.test(password);
   const hasSymbol = symbolRegex.test(password);
 
   const criteriaAreMet =
     hasMinLength && hasUpperCase && hasLowerCase && hasNumber && hasSymbol;
 
-  const passwordsMatch =
-    password && passwordConfirmation && password === passwordConfirmation;
+  const passwordsMatch = Boolean(
+    password && passwordConfirmation && password === passwordConfirmation
+  );
 
   return (
     <div className="password-validator flex-col ">
-      <TextField
+      <FormInput
         required={required}
         isFormik
         name={name}
         value={password}
         type="password"
-        onBlur={onBlur}
+        onBlur={(e) => onBlur}
         label={label}
         helperText={
           "Ingrese una contraseña que cumpla los siguientes criterios"
@@ -60,7 +73,6 @@ export default function PasswordValidator({
         hasError={passwordHasError}
         errorMessage={passwordErrorMessage}
       />
-      <br />
       <div>
         <Checker
           id="length-checker"
@@ -100,8 +112,7 @@ export default function PasswordValidator({
         </Checker>
       </div>
       <br />
-      <TextField
-        required={required}
+      <FormInput
         name={passwordConfirmationName}
         hasError={passwordConfirmationHasError}
         type="password"
@@ -109,7 +120,7 @@ export default function PasswordValidator({
         onChange={onChange}
         errorMessage={passwordConfirmationErrorMessage}
       />
-      <br />
+
       <Checker
         id="match-checker"
         fulfilled={passwordsMatch}
