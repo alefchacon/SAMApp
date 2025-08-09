@@ -801,7 +801,7 @@ class ContributorViewSet(viewsets.ModelViewSet):
    def list(self, request):
         serializer = self.serializer_class(self.queryset, many=True)
         response = {
-            "message": "Yeah boi",
+            "message": "",
             "data": serializer.data
         }
         return JsonResponse(response, safe=False)

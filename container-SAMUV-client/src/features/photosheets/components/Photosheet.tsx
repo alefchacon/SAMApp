@@ -1,31 +1,37 @@
-import Button from "../../../components/ui/Button";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { defaultPhotosheet, IPhotosheet } from "../domain/Photosheet";
 
+interface IPhotosheetProps {
+  photosheet: IPhotosheet;
+  isTechnicalPerson: boolean;
+  onDelete: (photosheetId: number) => void;
+  onUpdate: (photosheet: IPhotosheet) => void;
+  children: React.ReactNode;
+}
 export default function Photosheet({
-  photosheet = {
-    id: 0,
-    description: "description",
-    sheet: "src/assets/images/0.webp",
-  },
+  photosheet = defaultPhotosheet,
   isTechnicalPerson = false,
   onDelete,
   onUpdate,
-  children
-}) {
+  children,
+}: IPhotosheetProps) {
+  if (typeof photosheet.sheet !== "string") {
+    return <div>Sheet must be string</div>;
+  }
+
   const sheetURL = photosheet.sheet;
 
   const technicalPersonButtons = (
     <>
       <Button
         className="icon-only color-white"
-        iconType="edit"
-        value={photosheet}
-        onClick={onUpdate}
+        onClick={() => onUpdate(photosheet)}
       ></Button>
       <Button
         className="icon-only color-white danger"
-        iconType="delete"
         value={photosheet.id}
-        onClick={onDelete}
+        onClick={() => onDelete(photosheet.id)}
       ></Button>
     </>
   );
@@ -44,15 +50,10 @@ export default function Photosheet({
   };
 
   return (
-    <div
-      className="photosheet-wrapper flex-row selectable position-relative align-items-end hoverable2"
-    >
-      <div
-        className="flex-row justify-content-right position-absolute top-0 w-100 show-on-hover bg-black-transparent display-none"
-      >
+    <div className="photosheet-wrapper flex-row selectable position-relative align-items-end hoverable2">
+      <div className="flex-row justify-content-right position-absolute top-0 w-100 show-on-hover bg-black-transparent display-none">
         <Button
           className="icon-only color-white"
-          iconType="download"
           onClick={handleDownload}
         ></Button>
         {isTechnicalPerson && technicalPersonButtons}

@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PHOTOSHEETS_URL from "./photosheetsURL";
 import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 import { useModal } from "../../../components/contexts/ModalContext";
 import useApi from "../../../dataAccess/useApi";
 
-import Button from "../../../components/ui/Button";
-import HttpStatus from "../../../stores/httpStatus";
-import Photosheet from "../domain/photosheet";
+import { Button } from "@/components/ui/button";
+import { IPhotosheet, Photosheet } from "../domain/Photosheet";
+import TApiParams from "@/dataAccess/domain/TApiParams";
+import { defaultCloseParams } from "@/components/contexts/IOnCloseProps";
 
 export default function usePhotosheets() {
-  const [photosheets, setPhotosheets] = useState([]);
+  const [photosheets, setPhotosheets] = useState<Photosheet[]>([]);
 
   const { showSnackbar } = useSnackbar();
   const { apiWrapper } = useApi();
@@ -17,13 +18,16 @@ export default function usePhotosheets() {
 
   useEffect(() => {
     getPhotosheets().then((response) => {
-      const newPhotosheets = response.data.map((photosheet) => new Photosheet(photosheet));
+      const fetchedPhotosheets = response.apiResponse?.data || [];
+      const newPhotosheets = fetchedPhotosheets.map(
+        (photosheet) => new Photosheet(photosheet)
+      );
       newPhotosheets.sort(orderByIdDescending);
       setPhotosheets(newPhotosheets);
     });
   }, []);
 
-  const orderByIdDescending = (objectA, objectB) => {
+  const orderByIdDescending = (objectA: IPhotosheet, objectB: IPhotosheet) => {
     if (objectA.id < objectB.id) {
       return 1;
     } else if (objectA.id > objectB.id) {
@@ -33,28 +37,36 @@ export default function usePhotosheets() {
   };
 
   async function getPhotosheets() {
-    const response = await apiWrapper.get(PHOTOSHEETS_URL);
+    const response = await apiWrapper.get<IPhotosheet[]>({
+      url: PHOTOSHEETS_URL,
+    });
     return response;
   }
 
-  const addPhotosheet = async (photosheet) => {
+  const addPhotosheet = async (photosheet: IPhotosheet) => {
     let formData = new FormData();
     formData.append("description", photosheet.description);
     formData.append("sheet", photosheet.sheet);
 
-    const response = await apiWrapper.post(PHOTOSHEETS_URL, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
+    const payload: TApiParams = {
+      url: PHOTOSHEETS_URL,
+      body: formData,
+      config: {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    });
-    
-    if (response?.request?.status === HttpStatus.CREATED) {
-      const newPhotosheet = new Photosheet(response?.data.data);
+    };
+
+    const response = await apiWrapper.post<Photosheet>(payload);
+
+    if (response?.success && response.apiResponse) {
+      const newPhotosheet = new Photosheet(response.apiResponse.data);
       setPhotosheets((previous) => [newPhotosheet, ...previous]);
     }
   };
 
-  const updatePhotosheet = async (photosheet) => {
+  const updatePhotosheet = async (photosheet: IPhotosheet) => {
     let formData = new FormData();
     formData.append("description", photosheet.description);
 
@@ -66,17 +78,19 @@ export default function usePhotosheets() {
       formData.append("sheet", photosheet.sheet);
     }
 
-    const response = await apiWrapper.put(
-      PHOTOSHEETS_URL.concat(`${photosheet.id}/`),
-      formData,
-      {
+    const payload: TApiParams = {
+      url: PHOTOSHEETS_URL.concat(`${photosheet.id}/`),
+      body: formData,
+      config: {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
-    );
+      },
+    };
 
-    if (response.request.status === HttpStatus.OK) {
+    const response = await apiWrapper.put(payload);
+
+    if (response.success) {
       const updatedPhotosheet = new Photosheet(photosheet);
       setPhotosheets((previous) =>
         previous.map((photosheet) =>
@@ -88,27 +102,27 @@ export default function usePhotosheets() {
     }
   };
 
-  const confirmDeletePhotosheet = async (photosheetId = 0) => {
-    showModal(
-      "Eliminar ficha fotográfica",
-      <div className="flex-col w-100">
-        ¿Está seguro de eliminar la ficha fotográfica?
-        <div className="button-row">
-          <Button
-            iconType="delete"
-            className="danger"
-            value={photosheetId}
-            onClick={deletePhotosheet}
-          >
-            Sí, elimínala
-          </Button>
+  const confirmDeletePhotosheet = async (photosheetId: number) => {
+    showModal({
+      title: "Eliminar ficha fotográfica",
+      content: (
+        <div className="flex-col w-100">
+          ¿Está seguro de eliminar la ficha fotográfica?
+          <div className="button-row">
+            <Button
+              className="danger"
+              onClick={() => deletePhotosheet(photosheetId)}
+            >
+              Sí, elimínala
+            </Button>
+          </div>
         </div>
-      </div>
-    );
+      ),
+    });
   };
 
-  const deletePhotosheet = async (photosheetId = 0) => {
-    closeModal();
+  const deletePhotosheet = async (photosheetId: number = 0) => {
+    closeModal(defaultCloseParams);
     const response = await apiWrapper.delete(
       `${PHOTOSHEETS_URL}${photosheetId}/`
     );
@@ -120,10 +134,10 @@ export default function usePhotosheets() {
     }
   };
 
-  return [
+  return {
     photosheets,
     addPhotosheet,
     updatePhotosheet,
     confirmDeletePhotosheet,
-  ];
+  };
 }

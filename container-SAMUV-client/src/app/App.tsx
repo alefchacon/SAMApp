@@ -26,6 +26,7 @@ import SpecieRouter from "@/features/specie/components/SpecieRouter.js";
 import SpecieOrdens from "./routes/SpecieOrdens.js";
 import Migrate from "./routes/app/Migrate.js";
 import Users from "./routes/app/Users.js";
+import Photosheets from "./routes/app/Photosheets.js";
 function App() {
   moment.locale("es-mx");
   const [selectedSpecie, setSelectedSpecie] = useState();
@@ -108,6 +109,11 @@ function App() {
             index
             path={`${FrontendRoutes.REQUESTS}`}
             element={<AccessRequests />}
+          ></Route>
+          <Route
+            index
+            path={`${FrontendRoutes.PHOTOSHEETS}`}
+            element={<Photosheets />}
           ></Route>
         </Routes>
       </main>

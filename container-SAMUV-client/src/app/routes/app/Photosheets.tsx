@@ -1,39 +1,43 @@
-import {useRef } from "react";
+import React, { useRef } from "react";
 import TextField from "../../../components/ui/TextField";
-import Button from "../../../components/ui/Button";
-import UploaderImage from "../../../components/ui/UploaderImage";
-import Photosheet from "../../../features/photosheets/components/Photosheet";
+import { Button } from "@/components/ui/button";
+import UploaderImage from "@/components/ui/UploaderImage";
+import Photosheet from "@/features/photosheets/components/Photosheet";
 import { useModal } from "../../../components/contexts/ModalContext";
-import usePhotosheets from "../../../features/photosheets/businessLogic/usePhotosheets";
+import usePhotosheets from "@/features/photosheets/businessLogic/usePhotosheets";
 import useTextFilter from "../../../hooks/useTextFilter";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import Highlight from "../../../components/ui/Highlight";
 import Page from "../../../components/ui/Page";
-import { photosheetSchema } from "../../../features/photosheets/formikSchemas/photosheetSchema";
+import { photosheetSchema } from "@/features/photosheets/formikSchemas/photosheetSchema";
+import useSession from "@/features/auth/businessLogic/useSession";
+import {
+  defaultPhotosheet,
+  IPhotosheet,
+  Photosheet as PhotosheetModel,
+} from "@/features/photosheets/domain/Photosheet";
 
 export default function Photosheets({ isTechnicalPerson = false }) {
   const { showModal } = useModal();
-
-  const [
+  const { getProfile } = useSession();
+  const profile = getProfile();
+  const {
     photosheets,
     addPhotosheet,
     updatePhotosheet,
     confirmDeletePhotosheet,
-  ] = usePhotosheets();
+  } = usePhotosheets();
 
-  const [filteredItems, handleFilterChange, filterText] = useTextFilter(photosheets);
+  const [filteredItems, handleFilterChange, filterText] =
+    useTextFilter<PhotosheetModel>({ items: photosheets });
 
-  function PhotosheetForm({
-    photosheet = {
-      id: "",
-      description: "",
-      sheet: "",
-    },
-    isEdit = false,
-  }) {
+  function PhotosheetForm({ photosheet = defaultPhotosheet, isEdit = false }) {
     const formikRef = useRef(null);
 
-    const handleSubmit = async (values, actions) => {
+    const handleSubmit = async (
+      values: IPhotosheet,
+      actions: FormikHelpers<IPhotosheet>
+    ) => {
       if (isEdit) {
         await updatePhotosheet(values);
       } else {
@@ -55,8 +59,6 @@ export default function Photosheets({ isTechnicalPerson = false }) {
             values,
             errors,
             touched,
-            isValid,
-            dirty,
             setFieldValue,
             submitForm,
             handleChange,
@@ -75,7 +77,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
                 onBlur={handleBlur}
                 value={values.description}
                 errorMessage={errors.description}
-                hasError={errors.description && touched.description}
+                hasError={Boolean(errors.description && touched.description)}
                 maxLength={100}
                 isFormik
               ></TextField>
@@ -96,23 +98,26 @@ export default function Photosheets({ isTechnicalPerson = false }) {
   }
 
   const showAddPhotosheetModal = () => {
-    showModal("Agregar ficha de fotocolecta", <PhotosheetForm />);
+    showModal({
+      title: "Agregar ficha de fotocolecta",
+      content: <PhotosheetForm />,
+    });
   };
 
-  const handleDelete = (id = 0) => {
+  const handleDelete = (id: number = 0) => {
     confirmDeletePhotosheet(id);
   };
 
-  const showEditPhotosheetModal = (photosheet) => {
-    showModal(
-      "Editar ficha fotográfica",
-      <PhotosheetForm photosheet={photosheet} isEdit />
-    );
+  const showEditPhotosheetModal = (photosheet: IPhotosheet) => {
+    showModal({
+      title: "Editar ficha fotográfica",
+      content: <PhotosheetForm photosheet={photosheet} isEdit />,
+    });
   };
 
   return (
-    <Page title={"Fichas de fotocolecta"} >
-        <div className="flex-row gap-1rem align-items-center justify-content-center p-1rem">
+    <Page title={"Fichas de fotocolecta"}>
+      <div className="flex-row gap-1rem align-items-center justify-content-center p-1rem">
         {" "}
         <TextField
           iconType={"search"}
@@ -120,17 +125,14 @@ export default function Photosheets({ isTechnicalPerson = false }) {
           onChange={handleFilterChange}
           maxWidth={"50%"}
         ></TextField>
-        {isTechnicalPerson && (
+        {profile.isTechnicalPerson() && (
           <Button onClick={showAddPhotosheetModal}>
             Agregar ficha fotográfica
           </Button>
         )}
       </div>
       <div className="h-100">
-        <div
-          className="photosheet-gallery flex-row flex-wrap-wrap justify-content-center"
-        >
-          
+        <div className="photosheet-gallery flex-row flex-wrap-wrap justify-content-center">
           {filteredItems.map((photosheet, index) => (
             <Photosheet
               photosheet={photosheet}
@@ -138,7 +140,12 @@ export default function Photosheets({ isTechnicalPerson = false }) {
               onDelete={handleDelete}
               onUpdate={showEditPhotosheetModal}
               isTechnicalPerson={isTechnicalPerson}
-            ><Highlight text={photosheet.description} highlight={filterText}></Highlight></Photosheet>
+            >
+              <Highlight
+                text={photosheet.description}
+                highlight={filterText}
+              ></Highlight>
+            </Photosheet>
           ))}
         </div>
       </div>
