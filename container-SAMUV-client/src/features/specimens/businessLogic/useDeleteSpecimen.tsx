@@ -3,7 +3,7 @@ import Specimen from "../domain/model/Specimen";
 import DialogCustom, {
   IDialogCustomProps,
 } from "@/components/ui/DialogControlled";
-import { Trash } from "lucide-react";
+import { ArrowLeft, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSpecimens } from "./useSpecimens";
 
@@ -33,6 +33,16 @@ export default function useDeleteSpecimen() {
         ¿Desea eliminar el espécimen con ID {specimenToDelete?.id}?{" "}
         <b>Esta acción no puede deshacerse</b>.
       </>
+    ),
+    children: (
+      <div className="button-row">
+        <Button variant={"outline"} onClick={handleClose}>
+          <ArrowLeft /> Cancelar
+        </Button>
+        <Button onClick={handleSubmit} variant={"destructive"}>
+          <Trash /> Eliminar espécimen
+        </Button>
+      </div>
     ),
     open: Boolean(specimenToDelete),
     submitButton: (

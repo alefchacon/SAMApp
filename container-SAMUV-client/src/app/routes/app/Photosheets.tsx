@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import TextField from "../../../components/ui/TextField";
+import FormInput from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";
 import UploaderImage from "@/components/ui/UploaderImage";
 import Photosheet from "@/features/photosheets/components/Photosheet";
@@ -64,12 +65,12 @@ export default function Photosheets({ isTechnicalPerson = false }) {
             handleChange,
             handleBlur,
           }) => (
-            <Form className="flex-col input-group" autoComplete="off">
+            <Form className="flex flex-col" autoComplete="off">
               <UploaderImage
                 imageURL={photosheet.sheet}
                 onUpload={(sheet) => setFieldValue("sheet", sheet)}
               ></UploaderImage>
-              <TextField
+              <FormInput
                 label={"Descripción de la ficha"}
                 id="description"
                 name="description"
@@ -79,8 +80,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
                 errorMessage={errors.description}
                 hasError={Boolean(errors.description && touched.description)}
                 maxLength={100}
-                isFormik
-              ></TextField>
+              ></FormInput>
               <div className="button-row">
                 <Button
                   onClick={(sheet) => {
@@ -115,6 +115,8 @@ export default function Photosheets({ isTechnicalPerson = false }) {
     });
   };
 
+  console.error(photosheets);
+
   return (
     <Page title={"Fichas de fotocolecta"}>
       <div className="flex-row gap-1rem align-items-center justify-content-center p-1rem">
@@ -139,7 +141,7 @@ export default function Photosheets({ isTechnicalPerson = false }) {
               key={index}
               onDelete={handleDelete}
               onUpdate={showEditPhotosheetModal}
-              isTechnicalPerson={isTechnicalPerson}
+              isTechnicalPerson={profile.isTechnicalPerson()}
             >
               <Highlight
                 text={photosheet.description}

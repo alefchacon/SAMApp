@@ -2,7 +2,8 @@ import { useState, useCallback } from "react";
 import { TECHNICAL_PERSON_URL } from "./userURL";
 import useApi from "../../../dataAccess/useApi";
 import EHttpStatus from "@/stores/EHttpStatus";
-import { ITechnicalPerson } from "../domain/TechnicalPerson";
+import { ITechnicalPerson, TechnicalPerson } from "../domain/TechnicalPerson";
+import { IApiResult } from "@/dataAccess/domain/TApiResult";
 
 export default function useUsers() {
   const [technicalPersons, setTechnicalPersons] = useState<ITechnicalPerson[]>(
@@ -18,17 +19,19 @@ export default function useUsers() {
       );
   }, []);
 
-  const addTechnicalPerson = useCallback(async (technicalPerson: any) => {
-    // const response = await apiWrapper.post<ITechnicalPerson>({
-    //   url: TECHNICAL_PERSON_URL,
-    //   body: technicalPerson,
-    // });
-    // if (response.success && response.apiResponse) {
-    //   const newTechnicalPerson = response.apiResponse.data;
-    //   setTechnicalPersons((prev) => [...prev, newTechnicalPerson]);
-    // }
-    setTechnicalPersons((prev) => [...prev, technicalPerson]);
-  }, []);
+  const addTechnicalPerson = async (
+    technicalPerson: TechnicalPerson
+  ): Promise<IApiResult<TechnicalPerson>> => {
+    const response = await apiWrapper.post<TechnicalPerson>({
+      url: TECHNICAL_PERSON_URL,
+      body: technicalPerson.serialized,
+    });
+    if (response.success && response.apiResponse) {
+      const newTechnicalPerson = response.apiResponse.data;
+      setTechnicalPersons((prev) => [...prev, newTechnicalPerson]);
+    }
+    return response;
+  };
 
   const deleteTechnicalPerson = useCallback(
     async (technicalPersonId: number) => {

@@ -17,7 +17,7 @@ import flattenObject from "../../../utils/flattenObject";
 import SPECIMEN_KEYS from "../domain/enum/SpecimenKeys";
 import { Specie } from "@/features/specie/domain/Specie";
 import { AxiosResponse } from "axios";
-import TApiResult from "@/dataAccess/domain/TApiResult";
+import TApiResult, { IApiResult } from "@/dataAccess/domain/TApiResult";
 
 export const useSpecimens = (specie?: Specie) => {
   const [specimens, setSpecimens] = useState<Specimen[]>([]);
@@ -43,21 +43,8 @@ export const useSpecimens = (specie?: Specie) => {
   const getSpecimensByRole = async ({
     specieId = 0,
     role = UserRoles.VISITOR,
-  }: TGetSpecimensByRoleParams): Promise<TApiResult<Specimen[]>> => {
-    /*
-      let response = null;
-
-      if (role === UserRoles.TECHNICAL_PERSON) {
-        response = await apiWrapper.get<Specimen[]>(SPECIMEN_LIST_URL(specieId));
-      } else if (role === UserRoles.ACADEMIC) {
-        response = await apiWrapper.get<Specimen[]>(SPECIMEN_LIST_ACADEMIC_URL(specieId));
-      } else {
-        response = await apiWrapper.get<Specimen[]>(SPECIMEN_LIST_VISITOR_URL(specieId));
-      }
-    */
-
+  }: TGetSpecimensByRoleParams): Promise<IApiResult<Specimen[]>> => {
     const response = await specimenListApiCalls[role](specieId);
-    console.error(response);
     return response;
   };
 
@@ -65,11 +52,12 @@ export const useSpecimens = (specie?: Specie) => {
     if (specie) {
       getSpecimensByRole({ specieId: specie.id, role: profile?.role }).then(
         (response) => {
-          if (!response.success || !response.data) {
+          console.error(response);
+          if (!response.success || !response.apiResponse?.data) {
             return;
           }
 
-          const specimens = response?.data.map((specimen) => {
+          const specimens = response?.apiResponse.data.map((specimen) => {
             specimen.specie = specie;
             return specimen;
           });
@@ -117,7 +105,7 @@ export const useSpecimens = (specie?: Specie) => {
     const response = await apiWrapper.delete({
       url: `${SPECIMEN_URL}/${specimenToDelete.id}`,
     });
-    if (response!.status === EHttpStatus.NO_CONTENT) {
+    if (response.success) {
       const newSpecimens = specimens.filter(
         (specimen) => specimen.id !== specimenToDelete.id
       );
@@ -126,29 +114,27 @@ export const useSpecimens = (specie?: Specie) => {
   }, []);
 
   const getSpecimensForCSV = () => {
-    /*
     const cleanSpecimens = specimens.map((specimen) => {
-      specimen.colector_code = specimen.colector.code;
-      specimen.colector_name = specimen.colector.name;
-      specimen.preparator_code = specimen.preparator.code;
-      specimen.preparator_name = specimen.preparator.name;
+      specimen.colector_code = specimen.colector?.code;
+      specimen.colector_name = specimen.colector?.name;
+      specimen.preparator_code = specimen.preparator?.code;
+      specimen.preparator_name = specimen.preparator?.name;
       delete specimen.colector;
       delete specimen.preparator;
       delete specimen.specie;
       delete specimen.id;
-      delete specimen.location.id;
-      delete specimen.location.specimen;
+      delete specimen.location?.id;
       return specimen;
     });
     return cleanSpecimens;
-    */
   };
   const toCSV = async () => {
-    /*
     const cleanSpecimens = getSpecimensForCSV();
 
     const keys = Object.keys(flattenObject(cleanSpecimens[0], "", {}, false));
-    const translatedKeys = keys.map((key) => SPECIMEN_KEYS[key]);
+    const translatedKeys = keys.map(
+      (key) => SPECIMEN_KEYS[key as keyof Specimen]
+    );
 
     const csvRows = [];
     csvRows.push(translatedKeys.join(","));
@@ -171,18 +157,15 @@ export const useSpecimens = (specie?: Specie) => {
     });
 
     return csvRows.join("\n");
-    */
   };
 
   const downloadSpecimens = () => {
-    /*
-    const filename = `IIB_${specie.epithet
+    const filename = `IIB_${specie?.epithet
       .split(" ")
       .join("-")}_${moment().format("YYYY-MM-DD")}`;
     toCSV().then((csv) => {
       download({ file: csv, type: "text/csv", filename: filename });
     });
-    */
   };
 
   const updateSpecimen = async (

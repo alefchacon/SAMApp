@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Specie } from "@/features/specie/domain/Specie";
 import Specimen from "../domain/model/Specimen";
 import TApiResult from "@/dataAccess/domain/TApiResult";
-import DialogCustom, {
+import DialogControlled, {
   IDialogCustomProps,
 } from "@/components/ui/DialogControlled";
-import { ArrowLeftRight, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowLeftRight, ChevronRight } from "lucide-react";
 import { Combobox } from "@/components/ui/Combobox";
 import { Button } from "@/components/ui/button";
 import { useSpecimens } from "./useSpecimens";
@@ -53,23 +53,11 @@ export default function useSwitchSpecie({ species }: IParams) {
       </>
     ),
     open: Boolean(specimenToSwitch),
-    submitButton: (
-      <Button onClick={handleSubmit} disabled={!userSelectedANewSpecie}>
-        {" "}
-        {userSelectedANewSpecie ? (
-          <>
-            <ArrowLeftRight /> Cambiar especie
-          </>
-        ) : (
-          "Seleccione una especie antes de continuar"
-        )}
-      </Button>
-    ),
     onClose: handleClose,
   };
 
   const dialogSwitchSpecie = (
-    <DialogCustom {...dialogProps}>
+    <DialogControlled {...dialogProps}>
       <div className="switch-specie-cols">
         <div className="flex flex-col">
           <label className="text-xs">Especie actual</label>
@@ -82,7 +70,22 @@ export default function useSwitchSpecie({ species }: IParams) {
           <Combobox options={species} onChange={setNewSpecie}></Combobox>
         </div>
       </div>
-    </DialogCustom>
+      <div className="button-row">
+        <Button variant={"outline"} onClick={handleClose}>
+          <ArrowLeft></ArrowLeft> Cancelar
+        </Button>
+        <Button onClick={handleSubmit} disabled={!userSelectedANewSpecie}>
+          {" "}
+          {userSelectedANewSpecie ? (
+            <>
+              <ArrowLeftRight /> Cambiar especie
+            </>
+          ) : (
+            "Seleccione una especie antes de continuar"
+          )}
+        </Button>
+      </div>
+    </DialogControlled>
   );
 
   return { dialogSwitchSpecie, setSpecimenToSwitch };

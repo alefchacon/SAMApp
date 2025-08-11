@@ -1,30 +1,26 @@
 import React from "react";
-import TextField from "../../../components/ui/TextField";
 import FormInput from "@/components/ui/FormInput";
 import { Button } from "@/components/ui/button";
 import { Formik, Form, FormikValues, FormikHelpers } from "formik";
 import { technicalPersonSchema } from "../formikSchemas/technicalPersonSchema";
-import useUsers from "../businessLogic/useUsers";
-import { Academic, defaultAcademic } from "../domain/Academic";
-import IOnCloseParams, {
-  defaultCloseParams,
-} from "@/components/contexts/IOnCloseProps";
+import {
+  defaultTecnicalPerson,
+  ITechnicalPerson,
+  TechnicalPerson,
+} from "../domain/TechnicalPerson";
 
 interface ITechnicalPersonFormProps {
-  onSubmit: (params: any) => void;
+  onSubmit: (technicalPerson: TechnicalPerson) => void;
 }
 export default function TehnicalPersonForm({
   onSubmit,
 }: ITechnicalPersonFormProps) {
-  const { addTechnicalPerson } = useUsers();
-  const handleSubmit = (
-    values: FormikValues,
-    actions: FormikHelpers<Academic>
+  const handleSubmit = async (
+    values: TechnicalPerson,
+    actions: FormikHelpers<TechnicalPerson>
   ) => {
-    addTechnicalPerson(values).then(() => {
-      actions.resetForm();
-      onSubmit(defaultCloseParams);
-    });
+    await onSubmit(values);
+    actions.resetForm();
   };
 
   return (
@@ -32,7 +28,7 @@ export default function TehnicalPersonForm({
       onSubmit={handleSubmit}
       validationSchema={technicalPersonSchema}
       initialValues={
-        defaultAcademic
+        defaultTecnicalPerson
         //Los campos faltantes se generan en el back:
         //"username" sale del email, la cadena antes del @
         //"password" es una cadena random
@@ -62,7 +58,6 @@ export default function TehnicalPersonForm({
               errors.user?.first_name && touched.user?.first_name
             )}
             maxLength={50}
-            isFormik
           ></FormInput>
           <FormInput
             required
@@ -77,7 +72,6 @@ export default function TehnicalPersonForm({
               errors.user?.last_name && touched.user?.last_name
             )}
             maxLength={50}
-            isFormik
           ></FormInput>
           <FormInput
             required
@@ -90,7 +84,6 @@ export default function TehnicalPersonForm({
             errorMessage={errors.position}
             hasError={Boolean(errors.position && touched.position)}
             maxLength={50}
-            isFormik
           ></FormInput>
           <br />
 
@@ -105,7 +98,6 @@ export default function TehnicalPersonForm({
             value={values.user.email}
             errorMessage={errors.user?.email}
             hasError={Boolean(errors.user?.email && touched.user?.email)}
-            isFormik
             helperText="El sistema enviara un mensaje a la dirección que usted proporcione, incluyendo una contraseña provicional que permita al nuevo técnico iniciar sesión."
           ></FormInput>
 

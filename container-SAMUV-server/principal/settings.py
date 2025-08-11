@@ -63,9 +63,9 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,7 +142,8 @@ APP_URL = os.environ.get("APP_URL", "http://localhost:8000")
 CORS_ALLOWED_ORIGINS = [
     APP_URL,
     # DEV ONLY
-    "http://localhost:3001"
+    "http://localhost:3001",
+    "http://localhost:3000"
 ]
 
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", 'django.core.mail.backends.smtp.EmailBackend')

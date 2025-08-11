@@ -5,6 +5,8 @@ import { EFileTypes } from "@/stores/EFileTypes";
 import ProgressBar from "./ProgressBar";
 import { toast } from "sonner";
 
+import { Upload } from "lucide-react";
+
 interface IUploaderImageProps {
   id?: string;
   multiple?: boolean;
@@ -85,7 +87,7 @@ export default function UploaderImage({
         htmlFor={id}
         className={`${
           isDragging && "selected"
-        } flex-col justify-content-center align-items-center selectable rounded-5 caption img-container position-relative overflow-hidden`}
+        } flex flex-col justify-center items-center selectable rounded-5 caption relative overflow-hidden`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDropFile}
@@ -95,12 +97,10 @@ export default function UploaderImage({
           <img
             src={typeof imgURLToUse === "string" ? imgURLToUse : ""}
             alt="Imagen por subir"
-            className="photosheet"
+            className="photosheet max-h-[250px]"
           />
         ) : (
-          <span className="material-symbols-outlined p-1rem font-size-4rem">
-            upload
-          </span>
+          <Upload size={"5rem"} />
         )}
         De clic aquí para seleccionar una imágen, o arrástrela
       </label>

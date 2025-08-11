@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { defaultPhotosheet, IPhotosheet } from "../domain/Photosheet";
+import { Download, Trash, Edit, Expand } from "lucide-react";
 
 interface IPhotosheetProps {
   photosheet: IPhotosheet;
@@ -25,37 +26,43 @@ export default function Photosheet({
   const technicalPersonButtons = (
     <>
       <Button
-        className="icon-only color-white"
         onClick={() => onUpdate(photosheet)}
-      ></Button>
+        variant={"ghost"}
+        className="text-white hover:color-black"
+      >
+        <Edit />
+      </Button>
       <Button
-        className="icon-only color-white danger"
         value={photosheet.id}
         onClick={() => onDelete(photosheet.id)}
-      ></Button>
+        variant={"ghost"}
+        className="text-white hover:color-black"
+      >
+        <Trash />
+      </Button>
     </>
   );
 
   const handleDownload = async () => {
-    const response = await fetch(sheetURL, { mode: "cors" });
-    const blob = await response.blob();
-    const objectUrl = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = objectUrl;
-    a.download = "sam-ficha.jpg";
-    a.click();
-
-    URL.revokeObjectURL(objectUrl);
+    const link = document.createElement("a");
+    link.href = sheetURL;
+    link.download = "image.png";
+    link.target = "_blank"; // Opens in new tab if download fails
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
     <div className="photosheet-wrapper flex-row selectable position-relative align-items-end hoverable2">
       <div className="flex-row justify-content-right position-absolute top-0 w-100 show-on-hover bg-black-transparent display-none">
         <Button
-          className="icon-only color-white"
           onClick={handleDownload}
-        ></Button>
+          variant={"ghost"}
+          className="text-white hover:color-black"
+        >
+          <Expand></Expand>
+        </Button>
         {isTechnicalPerson && technicalPersonButtons}
       </div>
       <img className="photosheet" src={sheetURL} alt={photosheet.description} />

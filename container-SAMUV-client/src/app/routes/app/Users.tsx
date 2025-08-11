@@ -14,10 +14,18 @@ import { useSnackbar } from "../../../components/contexts/SnackbarContext";
 import Tab from "@/components/ui/Tab";
 import { defaultCloseParams } from "@/components/contexts/IOnCloseProps";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import {
+  ITechnicalPerson,
+  TechnicalPerson,
+} from "@/features/user/domain/TechnicalPerson";
 
 export default function Users() {
-  const { technicalPersons, getTechnicalPersons, deleteTechnicalPerson } =
-    useUsers();
+  const {
+    technicalPersons,
+    getTechnicalPersons,
+    deleteTechnicalPerson,
+    addTechnicalPerson,
+  } = useUsers();
   const { showModal, closeModal } = useModal();
   const { showSnackbar } = useSnackbar();
   useEffect(() => {
@@ -30,8 +38,12 @@ export default function Users() {
   const handleShowTechnicalPersonModal = () => {
     showModal({
       title: "Agregar técnico",
-      content: <TehnicalPersonForm onSubmit={closeModal} />,
+      content: <TehnicalPersonForm onSubmit={handleAddTechnicalPerson} />,
     });
+  };
+
+  const handleAddTechnicalPerson = async (technicalPerson: TechnicalPerson) => {
+    await addTechnicalPerson(technicalPerson);
   };
 
   const handleDeleteTechnicalPerson = (technicalPersonId: number) => {

@@ -26,12 +26,14 @@ export const useSpecie = () => {
 
   const getSpecies = useCallback(async () => {
     apiWrapper.get<Specie[]>({ url: SPECIE_URL }).then((response) => {
-      if (!response.success || !response.data) {
+      if (!response.success || !response.apiResponse?.data) {
         setSpecies([]);
         return;
       }
 
-      const species = response.data.map((specie) => new Specie(specie));
+      const species = response.apiResponse.data.map(
+        (specie) => new Specie(specie)
+      );
       setSpecies(species);
     });
   }, []);
@@ -112,8 +114,8 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<Matches>({
       url: SPECIE_SEARCH_URL(taxon),
     });
-    if (result.success && result.data) {
-      return new Matches(result.data);
+    if (result.success && result.apiResponse?.data) {
+      return new Matches(result.apiResponse.data);
     } else {
       throw new Error("DEV ONLY");
     }
@@ -126,8 +128,9 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<Specie[]>({
       url: SPECIE_BY_TAXON_URL({ taxon, query }),
     });
-    if (result.success && result.data) {
-      return result.data;
+    console.error(result);
+    if (result.success && result.apiResponse?.data) {
+      return result.apiResponse.data;
     } else {
       throw new Error("DEV ONLY");
     }
@@ -137,8 +140,8 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<ITaxon>({
       url: TAXON_URL(name),
     });
-    if (result.success && result.data) {
-      return result.data;
+    if (result.success && result.apiResponse?.data) {
+      return result.apiResponse.data;
     } else {
       throw new Error("DEV ONLY");
     }
@@ -148,8 +151,8 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<IMetrics>({
       url: METRICS_URL(name),
     });
-    if (result.success && result.data) {
-      return result.data;
+    if (result.success && result.apiResponse?.data) {
+      return result.apiResponse.data;
     } else {
       throw new Error("DEV ONLY");
     }
@@ -159,8 +162,8 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<ITaxon[]>({
       url: ORDENS_URL,
     });
-    if (result.success && result.data) {
-      return result.data;
+    if (result.success && result.apiResponse?.data) {
+      return result.apiResponse.data;
     } else {
       throw new Error("DEV ONLY");
     }
@@ -170,8 +173,8 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<ISpecie>({
       url: `${SPECIE_URL}/${specieId}`,
     });
-    if (result.success && result.data) {
-      return new Specie(result.data);
+    if (result.success && result.apiResponse?.data) {
+      return new Specie(result.apiResponse.data);
     } else {
       throw new Error("DEV ONLY");
     }

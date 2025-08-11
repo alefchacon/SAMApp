@@ -23,7 +23,8 @@ class PhotoSheetViewSet(viewsets.ModelViewSet):
     def handle_exception(self, exc):
         response = exception_handler(exc, self.request)
         if response is None:
-            return  Response({'message': 'Ha ocurrido un error inesperado.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(str(exc))
+            return  Response({'message': str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if isinstance(exc, Http404):
             response.data = {'message': 'La ficha fotográfica no fue encontrada.'}
@@ -43,7 +44,11 @@ class PhotoSheetViewSet(viewsets.ModelViewSet):
     def list(self, request):
         sheets = models.PhotoSheet.objects.all()
         serializer = self.serializer_class(sheets, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response = {
+            "message": "",
+            "data": serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
     
     @extend_schema(
     description="Obtiene una especie por medio de su id.",

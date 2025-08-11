@@ -1,4 +1,8 @@
-import { pathPrefix, serverUrl } from "../../../routing/BackendRoutes";
+import {
+  pathPrefix,
+  serverUrl,
+  simplePathPrefix,
+} from "../../../routing/BackendRoutes";
 export interface IPhotosheet {
   id: number;
   description: string;
@@ -16,16 +20,17 @@ export class Photosheet implements IPhotosheet {
     this.sheet = this.parseSheet(data?.sheet);
   }
   parseSheet(sheet: File | string) {
+    console.error(simplePathPrefix);
     if (sheet instanceof File) {
       return URL.createObjectURL(sheet);
     } else {
-      return serverUrl.concat(`${pathPrefix}${sheet}`);
+      return serverUrl.concat(`${simplePathPrefix}${sheet}`);
     }
   }
 }
 
 export const defaultPhotosheet: IPhotosheet = {
   id: 0,
-  description: "description",
-  sheet: "src/assets/images/0.webp",
+  description: "",
+  sheet: "",
 };

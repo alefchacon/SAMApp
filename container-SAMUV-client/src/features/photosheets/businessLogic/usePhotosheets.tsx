@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { IPhotosheet, Photosheet } from "../domain/Photosheet";
 import TApiParams from "@/dataAccess/domain/TApiParams";
 import { defaultCloseParams } from "@/components/contexts/IOnCloseProps";
-
+import { Trash, ArrowLeft } from "lucide-react";
 export default function usePhotosheets() {
   const [photosheets, setPhotosheets] = useState<Photosheet[]>([]);
 
@@ -19,6 +19,7 @@ export default function usePhotosheets() {
   useEffect(() => {
     getPhotosheets().then((response) => {
       const fetchedPhotosheets = response.apiResponse?.data || [];
+      console.error(fetchedPhotosheets);
       const newPhotosheets = fetchedPhotosheets.map(
         (photosheet) => new Photosheet(photosheet)
       );
@@ -106,14 +107,17 @@ export default function usePhotosheets() {
     showModal({
       title: "Eliminar ficha fotográfica",
       content: (
-        <div className="flex-col w-100">
+        <div className="flex flex-col w-100">
           ¿Está seguro de eliminar la ficha fotográfica?
           <div className="button-row">
+            <Button variant={"outline"}>
+              <ArrowLeft /> Cancelar
+            </Button>
             <Button
-              className="danger"
+              variant={"destructive"}
               onClick={() => deletePhotosheet(photosheetId)}
             >
-              Sí, elimínala
+              <Trash></Trash> Eliminar ficha
             </Button>
           </div>
         </div>
@@ -123,14 +127,13 @@ export default function usePhotosheets() {
 
   const deletePhotosheet = async (photosheetId: number = 0) => {
     closeModal(defaultCloseParams);
-    const response = await apiWrapper.delete(
-      `${PHOTOSHEETS_URL}${photosheetId}/`
-    );
-    if (response.request.status === HttpStatus.NO_CONTENT) {
+    const response = await apiWrapper.delete<IPhotosheet>({
+      url: `${PHOTOSHEETS_URL}${photosheetId}/`,
+    });
+    if (response.success) {
       setPhotosheets((previous) =>
         previous.filter((photosheet) => photosheet.id !== photosheetId)
       );
-      showSnackbar("La ficha fotográfica se ha eliminado", false, "check");
     }
   };
 

@@ -132,14 +132,27 @@ export default function useApi() {
         }
       },
 
-      async delete<T>(params: TApiParams) {
+      async delete<T>(params: TApiParams): Promise<IApiResult<T>> {
         setLoading(true);
         try {
           const response = await api.delete(params.url);
-          showSnackbar(response.data.message);
-          return response;
+          const apiResult: IApiResult<T> = {
+            success: true,
+            apiResponse: {
+              data: response.data,
+              message: response.data.message,
+            },
+          };
+          toast(response.data.message);
+          return apiResult;
         } catch (error) {
           handleError(error as AxiosError, params.config);
+          const axiosError = error as AxiosError;
+          const apiResult: IApiResult<T> = {
+            success: true,
+            error: axiosError,
+          };
+          return apiResult;
         } finally {
           setLoading(false);
         }

@@ -35,7 +35,7 @@ urlpatterns = [
       'get': 'get_migration_format',
       'post': 'migrate_collection'
     }), name='species-migrate'),
-    path('ranks-preview', views.SpecieViewSet.as_view({'get': 'get_ranks_preview'}), name='ranks-preview'),
+    path('ranks-preview', views.SpecieViewSet.as_view({'get': 'get_taxa'}), name='taxa'),
     path('species/taxon/<str:taxon>', views.SpecieViewSet.as_view({'get': 'get_taxon_by_name'}), name='taxon'),
     path('genders-by-family/<str:family>', views.SpecieViewSet.as_view({'get': 'get_genders_by_family'}), name='genders'),
 

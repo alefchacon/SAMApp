@@ -83,37 +83,16 @@ class SpecieViewSet(viewsets.ModelViewSet):
             404: 'No encontrado - El especie no fue encontrado.'
         }
     )
-
-    def get_ranks_preview(self, request):
-        size = request.query_params.get('size', 5)
-        try:
-            size = int(size) if size else None
-        except ValueError:
-            size = 5
-        taxa_by_rank = self.get_taxa(size)
-        for rank, taxa in taxa_by_rank.items():
-            taxa_by_rank[rank] = sorted([value for value in taxa if value is not None and value is not ''])
-            result = []
-            for taxon in taxa:
-                filter_kwargs = {f"{rank}__istartswith": taxon}
-                species = models.Specie.objects.filter(**filter_kwargs).order_by('gender', 'gender')
-                result.append({
-                    "rank": rank,
-                    "taxon": taxon,
-                    "specimen_count": models.Specimen.objects.filter(specie_id__in=[specie.id for specie in species]).count()
-                })
-                taxa_by_rank[rank] = result
-        return JsonResponse(taxa_by_rank, status=status.HTTP_200_OK)
-    
     def get_taxa(self, size = 5):
-        return {
-            'class_specie': list(models.Specie.objects.values_list('class_specie', flat=True).distinct()[:size]),
-            'orden': list(models.Specie.objects.values_list('orden', flat=True).distinct()[:size]),
-            'family': list(models.Specie.objects.values_list('family', flat=True).distinct()[:size]),
-            'gender': list(models.Specie.objects.values_list('gender', flat=True).distinct()[:size]),
-            'specie_specie': list(models.Specie.objects.values_list('specie_specie', flat=True).distinct()[:size]),
-            'subspecie': list(models.Specie.objects.values_list('subspecie', flat=True).distinct()[:size]),
+        taxa = {
+            'class_specie': list(models.Specie.objects.values_list('class_specie', flat=True).distinct()),
+            'orden': list(models.Specie.objects.values_list('orden', flat=True).distinct()),
+            'family': list(models.Specie.objects.values_list('family', flat=True).distinct()),
+            'gender': list(models.Specie.objects.values_list('gender', flat=True).distinct()),
+            'specie_specie': list(models.Specie.objects.values_list('specie_specie', flat=True).distinct()),
+            'subspecie': list(models.Specie.objects.values_list('subspecie', flat=True).distinct()),
         }
+        return JsonResponse({"data": taxa})
 
     def get_taxon_by_name(self, request, taxon):
         hierarchy = ['orden', 'family', 'gender', 'specie_specie', 'subspecie']
@@ -165,19 +144,18 @@ class SpecieViewSet(viewsets.ModelViewSet):
             'children_ranks': children,
         }
         
-        return JsonResponse(taxon_data, status=status.HTTP_200_OK, safe=False)
+        return JsonResponse({"data": taxon_data}, status=status.HTTP_200_OK, safe=False)
     
     def search_species(self, request):
         taxon_name = request.query_params.get('query', 'mammalia')
         specie_data = self.get_species_by_taxon(taxon_name)
 
-        return JsonResponse(specie_data, status=status.HTTP_200_OK, safe=False)
+        return JsonResponse({"data": specie_data}, status=status.HTTP_200_OK, safe=False)
     
     def get_visitor_metrics_by_taxon(self, request):
-        taxon_name = request.query_params.get('query', 'mammalia')
-        
+        taxon_name = request.query_params.get('query', 'mammalia')        
         taxon_species = self.get_species_by_taxon(taxon_name)["species"]
-
+    
         species_ids = [species['id'] for species in taxon_species]
         
         taxon_specimens = models.Specimen.objects.filter(
@@ -245,7 +223,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
         }
 
         
-        return JsonResponse(response, safe=False)
+        return JsonResponse({"data": response}, safe=False)
 
     def get_species_by_taxon(self, taxon_name):
         hierarchy = ['orden', 'family', 'gender', 'specie_specie']
@@ -296,7 +274,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
                 "taxon_name": orden_name,
                 "specimen_count": models.Specimen.objects.filter(specie_id__in=[specie.id for specie in species]).count()
             })
-        return JsonResponse(species_list, status=status.HTTP_200_OK, safe=False)
+        return JsonResponse({"data": species_list}, status=status.HTTP_200_OK, safe=False)
     
     def get_genders_by_family(self, request, family):
         gender_names = models.Specie.objects.filter(family__istartswith=family).order_by('family', 'gender').values().values_list('gender', flat=True).distinct()
@@ -330,7 +308,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
         species_list = models.Specie.objects.filter(family__istartswith=family).order_by('family', 'gender').values()
         species_data = list(species_list)  
-        return JsonResponse(species_data, safe=False)
+        return JsonResponse({"data": species_data}, safe=False)
 
     @extend_schema(
     description="Obtiene una lista de especie por la género.",
@@ -345,7 +323,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
         species_list = models.Specie.objects.filter(gender__istartswith=gender).order_by('gender', 'gender').values()
         species_data = list(species_list) 
-        return JsonResponse(species_data, safe=False)
+        return JsonResponse({"data": species_data}, safe=False)
 
     @extend_schema(
     description="Obtiene una lista de especie por el orden.",
@@ -360,7 +338,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
         species_list = models.Specie.objects.filter(orden__istartswith=orden).order_by('orden', 'gender').values()
         species_data = list(species_list)  
-        return JsonResponse(species_data, safe=False)
+        return JsonResponse({"data": species_data}, safe=False)
 
     @extend_schema(
     description="Obtiene una lista de especie por la nombre científico.",
@@ -378,7 +356,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             epithet=Concat('gender', Value(' '), 'specie_specie', Value(' '), 'subspecie')
         ).filter(epithet__icontains=scientific_name).values())
         species_data = species_list  
-        return JsonResponse(species_data, safe=False)
+        return JsonResponse({"data": species_data}, safe=False)
     
     @extend_schema(
     description="Obtiene una lista de especie por la subespecie.",
@@ -393,7 +371,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             return JsonResponse(error_data, status=status.HTTP_400_BAD_REQUEST)
         species_list = models.Specie.objects.filter(subspecie__istartswith=subspecie).order_by('subspecie', 'gender').values()
         species_data = list(species_list)  
-        return JsonResponse(species_data, safe=False)
+        return JsonResponse({"data": species_data}, safe=False)
 
     @extend_schema(
         description="Obtiene una lista de elementos especie.",
@@ -402,9 +380,10 @@ class SpecieViewSet(viewsets.ModelViewSet):
     def list(self, request):
         species = models.Specie.objects.all()
         serializer = SpecieSerializer(species, many=True)
-        for data in serializer.data:
-            data['id'] = species.get(id=data['id']).id
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse({
+            "message": "",
+            "data": serializer.data
+        }, safe=False)
 
     @extend_schema(
     description="Crear una nueva especie.",
@@ -521,7 +500,10 @@ class SpecieViewSet(viewsets.ModelViewSet):
         self.permission_classes = [IsAuthenticated]
         specimen_list = models.Specimen.objects.filter(specie=id_specie)
         serializer = SpecimenSerializer(specimen_list, many=True)
-        return JsonResponse(serializer.data, safe=False) 
+        return JsonResponse({
+            "message": "",
+            "data": serializer.data
+        }, safe=False) 
     
 
     @extend_schema(

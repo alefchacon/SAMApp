@@ -781,6 +781,7 @@ fieldset.hasError {
 }
 
 .button-row {
+  padding-top: 2rem;
   gap: 1rem;
   width: 100%;
   display: flex;
@@ -979,7 +980,7 @@ fieldset.hasError {
 
 .img-container {
   width: 100%;
-  height: 500px;
+
   position: relative;
   overflow: hidden;
 }

@@ -1,4 +1,4 @@
-const SPECIMEN_KEYS = Object.freeze({
+const SPECIMEN_KEYS: { [K in keyof Specimen]: string } = {
   catalog_id: "CAT_NUM",
   geographical_coordinates_x: "LW",
   geographical_coordinates_y: "LN",
@@ -32,14 +32,13 @@ const SPECIMEN_KEYS = Object.freeze({
   altitude: "ALTITUD",
   colection_date: "FECHA",
   nature: "N.E",
-  
+
   colection_number: "#COL",
   comment: "OBSERVACIONES _GRALES",
   colector_code: "COLECTOR",
   colector_name: "COLECTOR (NOMBRE)",
   preparator_code: "PREPARADOR",
   preparator_name: "PREPARADOR (nombre)",
-}
-)
+};
 
 export default SPECIMEN_KEYS;

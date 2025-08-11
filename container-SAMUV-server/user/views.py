@@ -142,7 +142,7 @@ class TechnicalPersonViewSet(viewsets.ModelViewSet):
     def handle_exception(self, exc):
         response = exception_handler(exc, self.request)
         if response is None:
-            return  Response({'error': 'Ha ocurrido un error inesperado.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return  Response({'error': str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if isinstance(exc, Http404):
             response.data = {'error': 'El personal técnico no fue encontrado.'}
@@ -206,18 +206,19 @@ class TechnicalPersonViewSet(viewsets.ModelViewSet):
         if not serializer.is_valid():
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer.save()
+        # serializer.save()
 
         resend.api_key = os.environ["RESEND_API_KEY"]
 
         params: resend.Emails.SendParams = {
             "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
-            "to": [email],
+            "to": ["zs20015745@estudiantes.uv.mx"],
             "subject": "Bienvenido a la biocolección",
-            'text': f'Puede iniciar sesión utilizando las siguientes credenciales \n\n Nombre de usuario: {username} \nContraseña: {random_password} \n\nProcure actualizar su contraseña tan pronto le sea posible.',
+            'text': "sadf",
         }
 
         resend.Emails.send(params)
+        return JsonResponse({"message": email}, status=status.HTTP_400_BAD_REQUEST, safe=False)
 
         headers = self.get_success_headers(serializer.data)
         message = "El personal técnico fue registrado con éxito"
@@ -403,26 +404,29 @@ class RequestViewSet(viewsets.ModelViewSet):
             return JsonResponse({'message': f'La solicitud ya fue {access_request.status}.'}, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
         access_request.status = 'aprobada'
-        access_request.save()
+        # access_request.save()
     
         user = models.User.objects.get(id=access_request.academic.user.id)
         user.is_active = 't'
-        user.save()
+        # user.save()
         
         resend.api_key = os.environ["RESEND_API_KEY"]
 
         params: resend.Emails.SendParams = {
-            "from": f'Biocolección IIB-UV <{os.environ["RESEND_EMAIL"]}>',
-            "to": [user.email],
-            "subject": "Solicitud aprobada",
-            'text': f'Le agradecemos su paciencia. Ahora puede iniciar sesión con las credenciales que ingresó durante el proceso de registro y consultar información más detallada de los especímenes en la biocolección del Instituto de Investigaciones Biológicas de la Universidad Veracruzana.',
+            "from": os.environ["RESEND_EMAIL"],
+            "to": ["delivered@resend.dev"],
+            "subject": "Test",
+            'text': 'Test',
         }
+        try:
+            resend.Emails.send(params)
+        except Exception as e: 
+            return JsonResponse({"message": str(e)}, status=status.HTTP_200_OK)
 
-        resend.Emails.send(params)
 
         message = 'La solicitud fue concedida con éxito'
-
         return JsonResponse({"message": message}, status=status.HTTP_200_OK)
+
         
 
     @extend_schema(
