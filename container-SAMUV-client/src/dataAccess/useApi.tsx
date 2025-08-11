@@ -89,7 +89,6 @@ export default function useApi() {
             success: true,
             apiResponse: response.data,
           };
-          console.error(response.data);
           if (apiResult.apiResponse?.message) {
             toast.success(apiResult.apiResponse?.message);
           }
@@ -114,13 +113,13 @@ export default function useApi() {
             params.body,
             params.config
           );
-          if (params.config && !params.config.noConfirmation) {
-            showSnackbar(response.data.message);
-          }
           const apiResult: IApiResult<T> = {
             success: true,
             apiResponse: response.data,
           };
+          if (apiResult.apiResponse?.message) {
+            toast.success(apiResult.apiResponse?.message);
+          }
           return apiResult;
         } catch (error) {
           const axiosError = error as AxiosError;

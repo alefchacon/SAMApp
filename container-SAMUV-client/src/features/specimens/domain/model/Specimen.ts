@@ -28,7 +28,7 @@ export interface ISpecimen extends IDatedObject {
   colection_number: string;
   catalog_id: string;
   colection_date: moment.Moment | string;
-  preparation_date: moment.Moment | string;
+  preparation_date?: moment.Moment | string;
   hour?: string;
   status?: boolean | string;
   sex: string;
@@ -60,7 +60,7 @@ class Specimen implements ISpecimen {
   colection_number: string = "";
   catalog_id: string = "";
   colection_date: moment.Moment | string = "";
-  preparation_date: moment.Moment | string = "";
+  preparation_date?: moment.Moment | string = "";
   hour?: string = "";
   status?: boolean | string = false;
   sex: string = ESex.ND;
@@ -144,7 +144,7 @@ export const defaultSpecimen: ISpecimen = {
   colection_number: "",
   catalog_id: "0",
   colection_date: "",
-  preparation_date: "",
+  preparation_date: undefined,
   hour: "",
   status: false,
   sex: ESex.ND,

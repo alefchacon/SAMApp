@@ -130,4 +130,4 @@ class PhotoSheetViewSet(viewsets.ModelViewSet):
         photosheet.image.delete()
         photosheet.delete()
         success_message = "La ficha fotográfica fue eliminada "
-        return JsonResponse({"message": success_message}, status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({"message": success_message}, status=status.HTTP_200_OK)

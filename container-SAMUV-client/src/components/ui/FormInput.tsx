@@ -22,10 +22,6 @@ export default function FormInput(props: IFormInputProps) {
     children,
   } = props;
 
-  const inputWrapperStyle = hasError
-    ? "border rounded-sm border-destructive"
-    : "";
-
   return (
     <div className="flex flex-col gap-2 relative pb-5">
       <div className="flex flex-row gap-2">
@@ -39,7 +35,8 @@ export default function FormInput(props: IFormInputProps) {
         )}
       </div>
       {helperText && <p className="text-sm color-gray">{helperText}</p>}
-      <span className={`input-wrapper ${inputWrapperStyle}`}>{children}</span>
+
+      {children}
 
       {hasError && (
         <>

@@ -17,6 +17,7 @@ import IOnCloseParams, {
   defaultCloseParams,
 } from "@/components/contexts/IOnCloseProps";
 import FormInput from "@/components/ui/FormInput";
+import { Input } from "@/components/ui/input";
 
 interface IContributorFormProps {
   onSubmit: (values: Contributor) => Promise<IApiResult<Contributor>>;
@@ -54,29 +55,32 @@ export default function ContributorForm({
       {({ values, errors, touched, handleSubmit, handleChange, resetForm }) => (
         <Form action="" autoComplete="off">
           <FormInput
-            inputClassName="w-[200px]"
             name="code"
-            id="code"
             label={"Clave"}
-            value={values.code}
-            onChange={handleChange}
             errorMessage={errors.code}
             hasError={Boolean(errors.code && touched.code)}
             required
-            maxLength={100}
-            isFormik
-          ></FormInput>
+          >
+            <Input
+              id="code"
+              value={values.code}
+              onChange={handleChange}
+              maxLength={100}
+            ></Input>
+          </FormInput>
           <FormInput
             name="name"
-            id="name"
             label={"Nombre completo"}
-            value={values.name}
-            onChange={handleChange}
             errorMessage={errors.name}
             hasError={Boolean(errors.name && touched.name)}
-            maxLength={200}
-            isFormik
-          ></FormInput>
+          >
+            <Input
+              id="name"
+              value={values.name}
+              onChange={handleChange}
+              maxLength={100}
+            ></Input>
+          </FormInput>
           <div className="button-row">
             <Button
               variant={"outline"}
@@ -84,7 +88,7 @@ export default function ContributorForm({
             >
               Cancelar
             </Button>
-            <Button type="submit">
+            <Button type="submit" onClick={() => console.error(contributor)}>
               {isEdit ? "Editar" : "Agregar"} contribuidor
             </Button>
           </div>

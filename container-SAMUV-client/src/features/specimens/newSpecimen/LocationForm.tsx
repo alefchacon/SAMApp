@@ -4,6 +4,8 @@ import TextField from "../../../components/ui/TextField";
 import { FormikErrors, FormikTouched, useFormikContext } from "formik";
 import { ISpecimen } from "../domain/model/Specimen";
 import Location from "../domain/model/Location";
+import FormInput from "@/components/ui/FormInput";
+import { Input } from "@/components/ui/input";
 
 export default function LocationForm({ inputWidth = "" }) {
   const { values, errors, touched, handleChange, handleBlur } =
@@ -17,245 +19,288 @@ export default function LocationForm({ inputWidth = "" }) {
     <div>
       <div className="input-group">
         <h2>Coordenadas cartesianas</h2>
-        <TextField
+        <FormInput
           label={"UTM X"}
-          id="location.coordinates_cartesian_plane_x"
           name="location.coordinates_cartesian_plane_x"
+          hasError={Boolean(locationErrors?.coordinates_cartesian_plane_x)}
           errorMessage={locationErrors?.coordinates_cartesian_plane_x}
-          onChange={handleChange}
-          value={locationValues.coordinates_cartesian_plane_x}
-          onBlur={handleBlur}
-          hasError={Boolean(
-            locationErrors?.coordinates_cartesian_plane_x &&
-              locationTouched?.coordinates_cartesian_plane_x
-          )}
           required
-          isFormik
-          type="number"
-        ></TextField>
-        <TextField
-          id="location.coordinates_cartesian_plane_y"
+        >
+          <Input
+            type="number"
+            name="location.coordinates_cartesian_plane_x"
+            id="location.coordinates_cartesian_plane_x"
+            value={locationValues.coordinates_cartesian_plane_x}
+            defaultValue={locationValues.coordinates_cartesian_plane_x}
+            onChange={handleChange}
+            step={0.001}
+            min={0}
+            max={99.999}
+          ></Input>
+        </FormInput>
+        <FormInput
+          label="UTM Y"
           name="location.coordinates_cartesian_plane_y"
-          onChange={handleChange}
-          value={locationValues.coordinates_cartesian_plane_y}
+          hasError={Boolean(locationErrors?.coordinates_cartesian_plane_y)}
           errorMessage={locationErrors?.coordinates_cartesian_plane_y}
-          onBlur={handleBlur}
-          hasError={Boolean(
-            locationErrors?.coordinates_cartesian_plane_y &&
-              locationTouched?.coordinates_cartesian_plane_y
-          )}
-          label={"UTM Y"}
           required
-          isFormik
-          type="number"
-        ></TextField>
+        >
+          <Input
+            type="number"
+            name="location.coordinates_cartesian_plane_y"
+            id="location.coordinates_cartesian_plane_y"
+            value={locationValues.coordinates_cartesian_plane_y}
+            defaultValue={locationValues.coordinates_cartesian_plane_y}
+            onChange={handleChange}
+            step={0.001}
+            min={0}
+            max={99.999}
+          />
+        </FormInput>
 
-        <TextField
-          label={"Región UTM"}
-          id="location.utm_region"
+        <FormInput
+          label="Región UTM"
           name="location.utm_region"
-          onChange={handleChange}
-          value={locationValues.utm_region}
-          onBlur={handleBlur}
+          hasError={Boolean(locationErrors?.utm_region)}
           errorMessage={locationErrors?.utm_region}
-          hasError={Boolean(
-            locationErrors?.utm_region && locationTouched?.utm_region
-          )}
-          maxLength={4}
           required
-          isFormik
-        ></TextField>
+        >
+          <Input
+            type="text"
+            name="location.utm_region"
+            id="location.utm_region"
+            value={locationValues.utm_region}
+            defaultValue={locationValues.utm_region}
+            onChange={handleChange}
+            maxLength={4}
+          />
+        </FormInput>
       </div>
       <div className="input-group">
         <h2>Coordenadas geográficas</h2>
-        <TextField
-          label={"Latitud (LN)"}
-          id="location.geographical_coordinates_y"
+        <FormInput
+          label="Latitud (LN)"
           name="location.geographical_coordinates_y"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.geographical_coordinates_y}
+          hasError={Boolean(locationErrors?.geographical_coordinates_y)}
           errorMessage={locationErrors?.geographical_coordinates_y}
-          hasError={Boolean(
-            locationErrors?.geographical_coordinates_y &&
-              locationTouched?.geographical_coordinates_y
-          )}
           required
-          isFormik
-          type="number"
-        ></TextField>
-        <TextField
-          label={"Longitud (LW)"}
-          id="location.geographical_coordinates_x"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.geographical_coordinates_x}
+        >
+          <Input
+            type="number"
+            name="location.geographical_coordinates_y"
+            id="location.geographical_coordinates_y"
+            value={locationValues.geographical_coordinates_y}
+            defaultValue={locationValues.geographical_coordinates_y}
+            onChange={handleChange}
+            step={0.000001} // you can adjust precision if needed
+            min={-90}
+            max={90}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Longitud (LW)"
           name="location.geographical_coordinates_x"
+          hasError={Boolean(locationErrors?.geographical_coordinates_x)}
           errorMessage={locationErrors?.geographical_coordinates_x}
-          hasError={Boolean(
-            locationErrors?.geographical_coordinates_x &&
-              locationTouched?.geographical_coordinates_x
-          )}
           required
-          isFormik
-          type="number"
-        ></TextField>
+        >
+          <Input
+            type="number"
+            name="location.geographical_coordinates_x"
+            id="location.geographical_coordinates_x"
+            value={locationValues.geographical_coordinates_x}
+            defaultValue={locationValues.geographical_coordinates_x}
+            onChange={handleChange}
+            step={0.000001} // precision for long values
+            min={-180}
+            max={180}
+          />
+        </FormInput>
       </div>
       <div className="input-group">
         <h2>Elevación</h2>
-        <TextField
-          label={"MSNM Google"}
-          id="location.msnm_google"
+        <FormInput
+          label="MSNM Google"
           name="location.msnm_google"
-          type="number"
-          step={1}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={locationValues.msnm_google}
+          hasError={Boolean(locationErrors?.msnm_google)}
           errorMessage={locationErrors?.msnm_google}
-          hasError={Boolean(
-            locationErrors?.msnm_google && locationTouched?.msnm_google
-          )}
           required
-          isFormik
-        ></TextField>
-        <TextField
-          label={"Altitud"}
-          id="location.altitude"
+        >
+          <Input
+            type="number"
+            name="location.msnm_google"
+            id="location.msnm_google"
+            value={locationValues.msnm_google}
+            defaultValue={locationValues.msnm_google}
+            onChange={handleChange}
+            step={1}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Altitud"
           name="location.altitude"
-          type="number"
-          step={1}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.altitude}
+          hasError={Boolean(locationErrors?.altitude)}
           errorMessage={locationErrors?.altitude}
-          hasError={Boolean(
-            locationErrors?.altitude && locationTouched?.altitude
-          )}
           required
-          isFormik
-        ></TextField>
+        >
+          <Input
+            type="number"
+            name="location.altitude"
+            id="location.altitude"
+            value={locationValues.altitude}
+            defaultValue={locationValues.altitude}
+            onChange={handleChange}
+            step={1}
+          />
+        </FormInput>
       </div>
       <div className="input-group">
         <h2>Región</h2>
-        <TextField
-          label={"País"}
-          id="location.country"
+        <FormInput
+          label="País"
           name="location.country"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.country}
+          hasError={Boolean(locationErrors?.country)}
           errorMessage={locationErrors?.country}
-          hasError={Boolean(
-            locationErrors?.country && locationTouched?.country
-          )}
-          maxLength={100}
-          isFormik
           required
-        ></TextField>
-        <TextField
-          label={"Estado"}
-          id="location.state"
-          name="location.state"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={locationValues.state}
-          errorMessage={locationErrors?.state}
-          hasError={Boolean(locationErrors?.state && locationTouched?.state)}
-          maxLength={100}
-          isFormik
-          required
-        ></TextField>
+        >
+          <Input
+            type="text"
+            name="location.country"
+            id="location.country"
+            value={locationValues.country}
+            defaultValue={locationValues.country}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
 
-        <TextField
-          label={"Municipio"}
-          id="location.municipality"
+        <FormInput
+          label="Estado"
+          name="location.state"
+          hasError={Boolean(locationErrors?.state)}
+          errorMessage={locationErrors?.state}
+          required
+        >
+          <Input
+            type="text"
+            name="location.state"
+            id="location.state"
+            value={locationValues.state}
+            defaultValue={locationValues.state}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Municipio"
           name="location.municipality"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.municipality}
+          hasError={Boolean(locationErrors?.municipality)}
           errorMessage={locationErrors?.municipality}
-          hasError={Boolean(
-            locationErrors?.municipality && locationTouched?.municipality
-          )}
-          maxLength={100}
-          isFormik
-        ></TextField>
-        <TextField
-          label={"Lugar específico"}
-          id="location.specific_location"
+        >
+          <Input
+            type="text"
+            name="location.municipality"
+            id="location.municipality"
+            value={locationValues.municipality}
+            defaultValue={locationValues.municipality}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Lugar específico"
           name="location.specific_location"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.specific_location}
+          hasError={Boolean(locationErrors?.specific_location)}
           errorMessage={locationErrors?.specific_location}
-          hasError={Boolean(
-            locationErrors?.specific_location &&
-              locationTouched?.specific_location
-          )}
-          maxLength={100}
-          isFormik
-        ></TextField>
-        <TextField
-          label={"Kilómetro"}
-          id="location.kilometer"
+        >
+          <Input
+            type="text"
+            name="location.specific_location"
+            id="location.specific_location"
+            value={locationValues.specific_location}
+            defaultValue={locationValues.specific_location}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Kilómetro"
           name="location.kilometer"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.kilometer}
+          hasError={Boolean(locationErrors?.kilometer)}
           errorMessage={locationErrors?.kilometer}
-          hasError={Boolean(
-            locationErrors?.kilometer && locationTouched?.kilometer
-          )}
-          maxLength={100}
-          isFormik
-        ></TextField>
+        >
+          <Input
+            type="text"
+            name="location.kilometer"
+            id="location.kilometer"
+            value={locationValues.kilometer}
+            defaultValue={locationValues.kilometer}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
       </div>
       <div className="input-group">
         <h2>Instituto</h2>
-        <TextField
-          label={"Nombre del instituto"}
-          id="location.institute"
+        <FormInput
+          label="Nombre del instituto"
           name="location.institute"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.institute}
+          hasError={Boolean(locationErrors?.institute)}
           errorMessage={locationErrors?.institute}
-          hasError={Boolean(
-            locationErrors?.institute && locationTouched?.institute
-          )}
-          maxLength={150}
           required
-          isFormik
-        ></TextField>
-        <TextField
-          id="location.institute_code"
+        >
+          <Input
+            type="text"
+            name="location.institute"
+            id="location.institute"
+            value={locationValues.institute}
+            defaultValue={locationValues.institute}
+            onChange={handleChange}
+            maxLength={150}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Código del instituto"
+          required
           name="location.institute_code"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={locationValues.institute_code}
+          hasError={Boolean(locationErrors?.institute_code)}
           errorMessage={locationErrors?.institute_code}
-          hasError={Boolean(
-            locationErrors?.institute_code && locationTouched?.institute_code
-          )}
-          label={"Código del instituto"}
-          maxLength={100}
-          required
-          isFormik
-        ></TextField>
-        <TextField
-          label={"Código de la colección"}
-          required
-          isFormik
+        >
+          <Input
+            type="text"
+            name="location.institute_code"
+            id="location.institute_code"
+            value={locationValues.institute_code}
+            defaultValue={locationValues.institute_code}
+            onChange={handleChange}
+            maxLength={100}
+          />
+        </FormInput>
+
+        <FormInput
+          label="Código de la colección"
           name="colection_code"
-          value={values.colection_code}
-          onChange={handleChange}
-          hasError={Boolean(errors.colection_code && touched.colection_code)}
+          hasError={Boolean(errors.colection_code)}
           errorMessage={errors.colection_code}
-          maxWidth={inputWidth}
-          onBlur={handleBlur}
-          maxLength={20}
-        ></TextField>
+          required
+        >
+          <Input
+            type="text"
+            name="colection_code"
+            id="colection_code"
+            value={values.colection_code}
+            defaultValue={values.colection_code}
+            onChange={handleChange}
+            maxLength={20}
+            style={{ maxWidth: inputWidth }}
+          />
+        </FormInput>
       </div>
     </div>
   );

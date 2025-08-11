@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <SnackbarProvider>
         <ModalProvider>
           <App />
-          <Toaster position="top-center" richColors />
+          <Toaster position="top-right" richColors />
         </ModalProvider>
       </SnackbarProvider>
     </StatusProvider>

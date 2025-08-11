@@ -54,12 +54,12 @@ export const useSpecie = () => {
     ]);
   }, []);
 
-  const updateSpecie = useCallback(async (newSpecie: Specie) => {
+  const updateSpecie = async (newSpecie: Specie) => {
     const response = await apiWrapper.put({
       url: `${SPECIE_URL}/${newSpecie.id}/`,
       body: newSpecie,
     });
-
+    debugger;
     if (!response.success) {
       return;
     }
@@ -68,7 +68,7 @@ export const useSpecie = () => {
       specie.id === newSpecie.id ? newSpecie : specie
     );
     setSpecies(newSpecies);
-  }, []);
+  };
 
   const migrateColection = useCallback(async (species: Specie[]) => {
     const config = {

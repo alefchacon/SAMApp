@@ -59,7 +59,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
     () =>
       species?.find((specie) => specie.id === selectedSpecieId) ??
       defaultSpecie,
-    [selectedSpecieId]
+    [selectedSpecieId, updateSpecie]
   );
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
           <PawPrint></PawPrint> Agregar espécimen
         </Button>
 
-        <Button onClick={downloadSpecimens} variant={"outline"}>
+        <Button onClick={showSpecieUpdateModal} variant={"outline"}>
           <Edit></Edit> Editar especie
         </Button>
 
@@ -124,30 +124,18 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
       content: <SpecieForm onSubmit={addSpecie} />,
     });
 
-  const showSpecieUpdateModal = (specie: Specie) => {
+  const showSpecieUpdateModal = () => {
     showModal({
       title: "Editar especie",
-      content: <SpecieForm specie={specie} onSubmit={updateSpecie} isUpdate />,
+      content: (
+        <SpecieForm specie={selectedSpecie} onSubmit={updateSpecie} isUpdate />
+      ),
     });
   };
 
   const handleSelectedSpecieChange = async (newSelectedIndex: number) => {
     setSelectedSpecieId(newSelectedIndex);
   };
-
-  const memoizedTable = useMemo(
-    () => (
-      <EditableTable
-        isTechnicalPerson={role === ROLE_TYPES.TECHNICAL_PERSON}
-        data={specimens}
-        defaultColumns={editableSpecimenColumns(
-          setSpecimenToSwitch,
-          setSpecimenToDelete
-        )}
-      ></EditableTable>
-    ),
-    [specimens]
-  );
 
   return (
     <>
@@ -157,8 +145,6 @@ export default function SpecieDashboard(props: ISpecieDashboardProps) {
         onSelectionChange={handleSelectedSpecieChange}
         selectedSpecieId={selectedSpecieId}
         onAdd={showSpecieAddModal}
-        onEdit={showSpecieUpdateModal}
-        onAddSpecimen={navigateToAddSpecimen}
         onFold={setSpecieListFolded}
       ></SpecieSidebar>
       <div

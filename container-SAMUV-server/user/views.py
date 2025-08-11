@@ -414,7 +414,7 @@ class RequestViewSet(viewsets.ModelViewSet):
 
         params: resend.Emails.SendParams = {
             "from": os.environ["RESEND_EMAIL"],
-            "to": ["delivered@resend.dev"],
+            "to": ["maledict@protonmail.com"],
             "subject": "Test",
             'text': 'Test',
         }

@@ -35,7 +35,7 @@ export default function ContributorPanel() {
   };
   const handleEditContributorModal = (contributor: Contributor) => {
     showModal({
-      title: "Editar contribuidor",
+      title: "Editar colaborador",
       content: (
         <ContributorForm
           onSubmit={updateContributor}
@@ -50,11 +50,11 @@ export default function ContributorPanel() {
       <div className="flex-row gap-1rem align-items-center justify-content-center">
         <TextField
           iconType="search"
-          placeholder="Buscar contribuidores"
+          placeholder="Buscar colaboradores"
           onChange={handleFilterChange}
         ></TextField>
         <Button onClick={handleShowContributorModal}>
-          Agregar contribuidor
+          Agregar colaborador
         </Button>
       </div>
       <br />

@@ -62,7 +62,7 @@ export default function Migrate() {
             endButtonLabel="Migrar colección"
             onEndButtonClick={handleSubmit}
           >
-            <Step label={"Contribuidores"} id="colaboradores">
+            <Step label={"Colaboradores"} id="colaboradores">
               <>
                 Antes de comenzar, se recomienda que ya estén registrados en el
                 sistema todos los colectores y preparadores cuyos códigos

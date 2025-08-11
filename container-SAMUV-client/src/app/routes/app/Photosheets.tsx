@@ -17,6 +17,7 @@ import {
   IPhotosheet,
   Photosheet as PhotosheetModel,
 } from "@/features/photosheets/domain/Photosheet";
+import { Input } from "@/components/ui/input";
 
 export default function Photosheets({ isTechnicalPerson = false }) {
   const { showModal } = useModal();
@@ -40,8 +41,9 @@ export default function Photosheets({ isTechnicalPerson = false }) {
       actions: FormikHelpers<IPhotosheet>
     ) => {
       if (isEdit) {
-        await updatePhotosheet(values);
+        // await updatePhotosheet(values);
       } else {
+        debugger;
         await addPhotosheet(values);
       }
       actions.resetForm();
@@ -71,22 +73,22 @@ export default function Photosheets({ isTechnicalPerson = false }) {
                 onUpload={(sheet) => setFieldValue("sheet", sheet)}
               ></UploaderImage>
               <FormInput
-                label={"Descripción de la ficha"}
-                id="description"
                 name="description"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.description}
+                label={"Descripción de la ficha"}
                 errorMessage={errors.description}
                 hasError={Boolean(errors.description && touched.description)}
-                maxLength={100}
-              ></FormInput>
+              >
+                <Input
+                  id="description"
+                  name="description"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.description}
+                  maxLength={100}
+                ></Input>
+              </FormInput>
               <div className="button-row">
-                <Button
-                  onClick={(sheet) => {
-                    submitForm();
-                  }}
-                >
+                <Button>
                   {isEdit ? "Editar" : "Agregar"} ficha de fotocolecta
                 </Button>
               </div>
@@ -114,8 +116,6 @@ export default function Photosheets({ isTechnicalPerson = false }) {
       content: <PhotosheetForm photosheet={photosheet} isEdit />,
     });
   };
-
-  console.error(photosheets);
 
   return (
     <Page title={"Fichas de fotocolecta"}>

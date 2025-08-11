@@ -16,7 +16,6 @@ export default function useContributorsAndRoles() {
       url: CONTRIBUTORS_URL,
     });
 
-    console.error(response);
     if (response.error || !response.apiResponse?.data) {
       return;
     }
@@ -24,6 +23,7 @@ export default function useContributorsAndRoles() {
     const contributorModels = response.apiResponse.data.map(
       (contributor) => new Contributor(contributor)
     );
+
     setContributors(contributorModels);
   };
 

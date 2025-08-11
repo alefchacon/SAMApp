@@ -27,8 +27,6 @@ interface ISpecieListProps {
   onSelectionChange: (newSelectedIndex: number) => void;
   selectedSpecieId: number;
   onAdd: () => void;
-  onEdit: (specie: Specie) => void;
-  onAddSpecimen: () => void;
   onFold: (fold: boolean) => void;
 }
 export default function SpecieSidebar(props: ISpecieListProps) {
@@ -38,8 +36,6 @@ export default function SpecieSidebar(props: ISpecieListProps) {
     onSelectionChange,
     selectedSpecieId = 0,
     onAdd,
-    onEdit,
-    onAddSpecimen,
     onFold = null,
   } = props;
 

@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from "react";
 
 import Button from "./ButtonCustom";
+import { Badge } from "./Badge";
+import { ChevronRight } from "lucide-react";
 
 interface IStepperProps {
   children: React.ReactNode;
@@ -86,21 +88,26 @@ export default function Stepper({
               }
             >
               <div
-                className={`stepper-circle ${
+                className={`stepper-circle relative ${
                   selectedId === (tab as ReactElement).props.id
                     ? "selected"
                     : ""
                 }`}
               >
                 {invalidSteps.includes((tab as ReactElement).props.id) && (
-                  <div>!</div>
+                  <Badge
+                    variant={"destructive"}
+                    className="absolute bottom-4 left-4"
+                  >
+                    !
+                  </Badge>
                 )}
                 {index + 1}
               </div>
               <h3
                 className={`${
                   selectedId === (tab as ReactElement).props.id
-                    ? "selected"
+                    ? "font-semibold"
                     : ""
                 }`}
               >
@@ -108,9 +115,7 @@ export default function Stepper({
               </h3>
             </div>
 
-            {index < childArray.length - 1 && (
-              <span className="material-symbols-outlined">chevron_right</span>
-            )}
+            {index < childArray.length - 1 && <ChevronRight />}
           </div>
         ))}
       </ul>

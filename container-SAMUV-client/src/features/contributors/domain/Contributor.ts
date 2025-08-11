@@ -35,6 +35,9 @@ export class Contributor implements IContributor {
   }
 }
 
-export const defaultContributor: Contributor = {};
+export const defaultContributor: Contributor = {
+  code: "",
+  name: "",
+};
 
 export default Contributor;

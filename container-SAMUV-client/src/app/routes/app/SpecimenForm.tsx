@@ -23,8 +23,6 @@ import Specimen, {
 import { useState } from "react";
 import Step from "@/components/ui/Step";
 import Button from "@/components/ui/ButtonCustom";
-import { decimalRegex } from "@/validation/regexes";
-import DialogNewSpecimen from "@/features/specimens/newSpecimen2/DialogNewSpecimen";
 
 interface ISpecimenFormProps {
   onResetScroll: () => void;
@@ -37,8 +35,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
   const location = useLocation();
   const selectedSpecie = location.state?.specie;
 
-  const handleSubmit = async (values: ISpecimen) => {
-    console.error("submitting");
+  const handleSubmit = async (values: Specimen) => {
     const responseSpecimen = await addSpecimen(values, selectedSpecie.id);
   };
 
@@ -80,7 +77,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
     setInvalidSteps(newInvalidSteps);
   };
 
-  const handleValidation = async (formik: FormikProps<ISpecimen>) => {
+  const handleValidation = async (formik: FormikProps<Specimen>) => {
     const errors = await formik.validateForm().then((errors) => {
       const allFieldsTouched = markAllFieldsTouched(formik.values);
       formik.setTouched(allFieldsTouched);
@@ -133,7 +130,9 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
   return (
     <Page
       title={"Agregar espécimen"}
-      subtitle={<CardSpecie specie={new Specie(selectedSpecie)} />}
+      subtitle={
+        <CardSpecie specie={new Specie(selectedSpecie)} canNavigate={false} />
+      }
     >
       <Formik
         validationSchema={specimenSchema}
@@ -162,7 +161,7 @@ export default function SpecimenForm({ onResetScroll }: ISpecimenFormProps) {
                 <ContributorsForm></ContributorsForm>
               </Step>
             </Stepper>
-            <Button onClick={() => handleValidation(formik)}>Test</Button>
+            <Button onClick={() => console.error(formik.values)}>Test</Button>
           </Form>
         )}
       </Formik>

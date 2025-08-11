@@ -47,14 +47,26 @@ export default function SpecieForm(props: ISpecieFormProps) {
         return;
       }
       const { data } = response.apiResponse;
-      console.error(data);
+
       setRanks({
-        orden: data.orden?.map((o) => ({ value: o, label: o })) ?? [],
-        family: data.family?.map((f) => ({ value: f, label: f })) ?? [],
-        gender: data.gender?.map((g) => ({ value: g, label: g })) ?? [],
+        orden:
+          data.orden?.map((orden) => ({ value: orden, label: orden })) ?? [],
+        family:
+          data.family?.map((family) => ({ value: family, label: family })) ??
+          [],
+        gender:
+          data.gender?.map((gender) => ({ value: gender, label: gender })) ??
+          [],
         specie_specie:
-          data.specie_specie?.map((s) => ({ value: s, label: s })) ?? [],
-        subspecie: data.subspecie?.map((s) => ({ value: s, label: s })) ?? [],
+          data.specie_specie?.map((specie_specie) => ({
+            value: specie_specie,
+            label: specie_specie,
+          })) ?? [],
+        subspecie:
+          data.subspecie?.map((subspecie) => ({
+            value: subspecie,
+            label: subspecie,
+          })) ?? [],
       });
     });
   };
@@ -63,14 +75,6 @@ export default function SpecieForm(props: ISpecieFormProps) {
     fetchTaxonomyRanks();
     setIsReady(true);
   }, []);
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
-  console.error(ranks);
 
   return (
     <Formik

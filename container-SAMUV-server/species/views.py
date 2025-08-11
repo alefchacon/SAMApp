@@ -426,7 +426,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            success_message = "La especie fue actualizado con éxito"
+            success_message = "La especie fue actualizada con éxito"
             return JsonResponse({"message": success_message, "data": serializer.data})
         except ValidationError as error:
             error_details = error.detail 
@@ -781,7 +781,7 @@ class ContributorViewSet(viewsets.ModelViewSet):
         }
     )
    def list(self, request):
-        serializer = self.serializer_class(self.queryset, many=True)
+        serializer = self.serializer_class(models.Contributor.objects.all(), many=True)
         response = {
             "message": "",
             "data": serializer.data
@@ -845,7 +845,7 @@ class ContributorViewSet(viewsets.ModelViewSet):
         if existing_user and existing_user.first().id != int_pk:
             return JsonResponse({'message': 'Ya existe un contribuidor con este código.'}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            contributor = self.queryset.get(pk=pk)
+            contributor = models.Contributor.objects.get(pk=pk)
         except models.Contributor.DoesNotExist:
             return JsonResponse({"error": "El contribuidor no fue encontrado"}, status=status.HTTP_404_NOT_FOUND)
         serializer = ContributorSerializer(contributor, data=request.data, partial=True)

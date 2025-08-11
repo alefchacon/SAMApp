@@ -8,6 +8,7 @@ import {
   ITechnicalPerson,
   TechnicalPerson,
 } from "../domain/TechnicalPerson";
+import { Input } from "@/components/ui/input";
 
 interface ITechnicalPersonFormProps {
   onSubmit: (technicalPerson: TechnicalPerson) => void;
@@ -48,58 +49,70 @@ export default function TehnicalPersonForm({
           <FormInput
             required
             label={"Nombre(s)"}
-            id="user.first_name"
             name="user.first_name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.user.first_name}
             errorMessage={errors.user?.first_name}
             hasError={Boolean(
               errors.user?.first_name && touched.user?.first_name
             )}
-            maxLength={50}
-          ></FormInput>
+          >
+            <Input
+              id="user.first_name"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.user.first_name}
+              maxLength={50}
+            ></Input>
+          </FormInput>
           <FormInput
             required
             label={"Apellido paterno"}
-            id="user.last_name"
             name="user.last_name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.user.last_name}
             errorMessage={errors.user?.last_name}
             hasError={Boolean(
               errors.user?.last_name && touched.user?.last_name
             )}
-            maxLength={50}
-          ></FormInput>
+          >
+            <Input
+              id="user.last_name"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.user.last_name}
+              maxLength={50}
+            ></Input>
+          </FormInput>
           <FormInput
             required
             label={"Puesto"}
-            id="position"
-            name="position"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.position}
+            name="user.position"
             errorMessage={errors.position}
             hasError={Boolean(errors.position && touched.position)}
-            maxLength={50}
-          ></FormInput>
+          >
+            <Input
+              id="user.position"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.position}
+              maxLength={50}
+            ></Input>
+          </FormInput>
           <br />
 
           <FormInput
             required
             label={"Email"}
-            maxLength={100}
-            id="user.email"
             name="user.email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.user.email}
             errorMessage={errors.user?.email}
             hasError={Boolean(errors.user?.email && touched.user?.email)}
             helperText="El sistema enviara un mensaje a la dirección que usted proporcione, incluyendo una contraseña provicional que permita al nuevo técnico iniciar sesión."
-          ></FormInput>
+          >
+            <Input
+              id="user.email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.user.email}
+              maxLength={100}
+            ></Input>
+          </FormInput>
 
           <div className="button-row">
             <Button type="submit">Agregar técnico</Button>
