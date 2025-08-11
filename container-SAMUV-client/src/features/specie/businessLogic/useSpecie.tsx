@@ -44,13 +44,14 @@ export const useSpecie = () => {
       body: new Specie(newSpecie),
     });
 
-    if (!response.success) {
+    if (!response.success || !response.apiResponse?.data) {
       return;
     }
 
-    // DEV ONLY: change back so it returns full DTO instead of just id.
-    //newSpecie.id = response.data!.specie_id;
-    setSpecies((previousSpecies) => [newSpecie, ...previousSpecies]);
+    setSpecies((previousSpecies) => [
+      response.apiResponse!.data,
+      ...previousSpecies,
+    ]);
   }, []);
 
   const updateSpecie = useCallback(async (newSpecie: Specie) => {
@@ -128,7 +129,7 @@ export const useSpecie = () => {
     const result = await apiWrapper.get<Specie[]>({
       url: SPECIE_BY_TAXON_URL({ taxon, query }),
     });
-    console.error(result);
+
     if (result.success && result.apiResponse?.data) {
       return result.apiResponse.data;
     } else {

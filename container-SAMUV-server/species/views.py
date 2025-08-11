@@ -402,7 +402,7 @@ class SpecieViewSet(viewsets.ModelViewSet):
             specie_id = instance.id
             headers = self.get_success_headers(serializer.data)
             message = "La especie fue guardada con éxito"
-            return JsonResponse({"message": message, "specie_id": specie_id}, status=status.HTTP_201_CREATED, headers=headers)
+            return JsonResponse({"message": message, "data": serializer.data}, status=status.HTTP_201_CREATED, headers=headers)
         
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -756,7 +756,7 @@ class SpecimenViewSet(viewsets.ModelViewSet):
         except models.Specimen.DoesNotExist:
             return JsonResponse(status=status.HTTP_404_NOT_FOUND)
         specimen.delete()
-        return JsonResponse(status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({"message": "Espécimen eliminado"}, status=status.HTTP_200_OK)
    
 
 class ContributorViewSet(viewsets.ModelViewSet):

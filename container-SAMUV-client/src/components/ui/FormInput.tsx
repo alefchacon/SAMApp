@@ -3,41 +3,28 @@ import { Input } from "./input";
 import { Label } from "./label";
 import { Check } from "lucide-react";
 interface IFormInputProps {
-  id?: string;
   label?: string;
   name: string;
   hasError?: boolean;
   errorMessage?: string;
-  type?: "text" | "number" | "date" | "password";
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
-  value?: any;
-  inputClassName?: string;
-  maxLength?: number;
   helperText?: string;
   required?: boolean;
+  children?: React.ReactNode;
 }
 export default function FormInput(props: IFormInputProps) {
   const {
-    id,
     name,
     label = "Label",
     hasError = false,
     errorMessage = "Error message",
-    type = "text",
-    onChange,
-    onBlur,
-    value,
-    inputClassName = "",
-    maxLength,
     helperText,
     required,
+    children,
   } = props;
 
-  let style = inputClassName;
-  if (hasError) {
-    style = style.concat(" border-2 border-destructive");
-  }
+  const inputWrapperStyle = hasError
+    ? "border rounded-sm border-destructive"
+    : "";
 
   return (
     <div className="flex flex-col gap-2 relative pb-5">
@@ -52,16 +39,7 @@ export default function FormInput(props: IFormInputProps) {
         )}
       </div>
       {helperText && <p className="text-sm color-gray">{helperText}</p>}
-      <Input
-        id={id}
-        name={name}
-        className={style}
-        type={type}
-        onChange={onChange}
-        onBlur={onBlur}
-        value={value}
-        maxLength={maxLength}
-      ></Input>
+      <span className={`input-wrapper ${inputWrapperStyle}`}>{children}</span>
 
       {hasError && (
         <>

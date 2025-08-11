@@ -85,11 +85,14 @@ export default function useApi() {
             params.body,
             params.config
           );
-          // showSnackbar(response.data.message);
           const apiResult: IApiResult<T> = {
             success: true,
             apiResponse: response.data,
           };
+          console.error(response.data);
+          if (apiResult.apiResponse?.message) {
+            toast.success(apiResult.apiResponse?.message);
+          }
           return apiResult;
         } catch (error) {
           handleError(error as AxiosError, params.config);

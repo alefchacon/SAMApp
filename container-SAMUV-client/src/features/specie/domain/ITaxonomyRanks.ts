@@ -1,7 +1,7 @@
 export interface ITaxonomyRanks {
-  ordens: string[];
-  families: string[];
-  genders: string[];
-  species_specie: string[];
-  subspecies: string[];
+  orden: any[];
+  family: any[];
+  gender: any[];
+  specie_specie: any[];
+  subspecie: any[];
 }

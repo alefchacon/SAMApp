@@ -37,21 +37,23 @@ export default function LogInForm({ onSubmit }: ILogInFormProps) {
     >
       {({ values, errors, touched, handleChange, handleBlur }) => (
         <Form autoComplete="off">
-          <FormInput
-            label="Nombre de usuario"
-            name="username"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.username}
-          ></FormInput>
-          <FormInput
-            label="Contraseña"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            type="password"
-          ></FormInput>
+          <FormInput label="Nombre de usuario" name="username">
+            <Input
+              id="username"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.username}
+            ></Input>
+          </FormInput>
+          <FormInput label="Contraseña" name="password">
+            <Input
+              id="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
+              type="password"
+            ></Input>
+          </FormInput>
 
           <div className="flex flex-col gap-3 w-full items-center">
             <Button type="submit" className="w-[200px]">

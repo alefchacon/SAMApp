@@ -35,13 +35,13 @@ export class Specie implements ISpecie {
 
 export const defaultSpecie: Specie = new Specie(
   {
-    id: 1,
-    class_specie: "CLASE",
-    orden: "ORDEN",
-    family: "FAMILIA",
-    gender: "GÉNERO",
-    subspecie: "SUBESPECIE",
-    specie_specie: "ESPECIE",
+    id: 0,
+    class_specie: "",
+    orden: "",
+    family: "",
+    gender: "",
+    subspecie: "",
+    specie_specie: "",
   },
   []
 );
