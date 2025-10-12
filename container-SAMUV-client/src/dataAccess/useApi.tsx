@@ -40,7 +40,7 @@ export default function useApi() {
         Authorization: token ? `Bearer ${token}` : "",
       },
     });
-  }, [token]); // recreate api if token refreshes
+  }, [token]);
 
   const apiWrapper = useMemo(
     () => ({
